@@ -92,6 +92,6 @@ struct IImage: Identifiable {
 }
 
 enum MyImageEnum {
-    case remote(String)
+    case remote(URL)
     case local(Image)
 }

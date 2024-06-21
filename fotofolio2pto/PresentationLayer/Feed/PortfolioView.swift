@@ -11,45 +11,52 @@ struct PortfolioView: View {
     
     private let portfolio: Portfolio
     private let mediaWidth: CGFloat?
+    private let isFlagged: Bool
+    private let flagAction: () -> Void
+    private let unflagAction: () -> Void
+    private let openProfileAction: () -> Void
     
     init(
         portfolio: Portfolio,
-        mediaWidth: CGFloat?
+        mediaWidth: CGFloat?,
+        isFlagged: Bool,
+        flagAction: @escaping () -> Void,
+        unflagAction: @escaping () -> Void,
+        openProfileAction: @escaping () -> Void
     ) {
         self.portfolio = portfolio
         self.mediaWidth = mediaWidth
+        self.isFlagged = isFlagged
+        self.flagAction = flagAction
+        self.unflagAction = unflagAction
+        self.openProfileAction = openProfileAction
     }
     
     var body: some View {
         VStack(spacing: Constants.Dimens.spaceMedium) {
+            /// Top bar
             HStack {
-                Button(action: {
-                    // navigate to profile
-                }, label: {
+                Button(action: openProfileAction, label: {
                     Text("@" + portfolio.authorUsername)
                         .font(.title2)
                         .foregroundColor(.pink)
                 })
-                
                 Spacer()
-                
-                Button(action: {
-                    // move to/from flagged
-                }) {
-//                    Image(systemName: portfolioViewModel.flagged.contains(portfolio) ? "bookmark.fill" : "bookmark")
-                    Image(systemName: "bookmark")
+                Button(action: isFlagged ? unflagAction : flagAction) {
+                    Image(systemName: isFlagged ? "bookmark.fill" : "bookmark")
                         .font(.title3)
-//                        .foregroundColor(portfolioViewModel.flagged.contains(portfolio) ? .red : .gray)
+                        .foregroundColor(isFlagged ? .red : .gray)
                         .transition(.opacity)
                 }
             }
             .padding([.leading, .trailing], Constants.Dimens.spaceLarge)
             
+            /// Media
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: Constants.Dimens.spaceMedium) {
                     ForEach(portfolio.photos) { photo in
                         if case MyImageEnum.remote(let url) = photo.src {
-                            AsyncImage(url: URL(string: url)!) { image in
+                            AsyncImage(url: url) { image in
                                 image
                                     .resizable()
                                     .aspectRatio(1.0, contentMode: .fill)
@@ -77,13 +84,12 @@ struct PortfolioView: View {
                 }
                 .padding([.leading, .trailing], Constants.Dimens.spaceMedium)
             }
-            .onTapGesture(count: 2) {
-                // flag
-            }
+            .onTapGesture(count: 2) { flagAction() }
             
+            /// Description
             HStack {
                 Text(portfolio.description)
-                    .foregroundColor(Color(uiColor: UIColor.systemGray))
+                    .foregroundColor(.gray)
                 
                 Spacer()
             }
@@ -95,5 +101,12 @@ struct PortfolioView: View {
 }
 
 #Preview {
-    PortfolioView(portfolio: .dummyPortfolio1, mediaWidth: 350)
+    PortfolioView(
+        portfolio: .dummyPortfolio2,
+        mediaWidth: 350,
+        isFlagged: true,
+        flagAction: {},
+        unflagAction: {},
+        openProfileAction: {}
+    )
 }

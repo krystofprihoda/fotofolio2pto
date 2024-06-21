@@ -35,7 +35,11 @@ struct FeedView: View {
                         ForEach(viewModel.state.portfolios, id: \.id) { portfolio in
                             PortfolioView(
                                 portfolio: portfolio,
-                                mediaWidth: geo.size.width - Constants.Dimens.spaceMedium * 3
+                                mediaWidth: geo.size.width - Constants.Dimens.spaceXXLarge,
+                                isFlagged: false,
+                                flagAction: {},
+                                unflagAction: {},
+                                openProfileAction: {}
                             )
                         }
                     }
