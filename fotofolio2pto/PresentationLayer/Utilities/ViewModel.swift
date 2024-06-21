@@ -24,7 +24,7 @@ protocol ViewModel {
 
 /// Template ViewModel
 
-//final class FeedViewModel: BaseViewModel, ViewModel, ObservableObject {
+//final class TemplateViewModel: BaseViewModel, ViewModel, ObservableObject {
 //    // MARK: Stored properties
 //    
 //    // MARK: Dependencies
@@ -36,7 +36,7 @@ protocol ViewModel {
 //    // MARK: Init
 //    
 //    init(
-//        flowController: FeedFlowController?
+//        flowController: TemplateFlowController?
 //    ) {
 //        self.flowController = flowController
 //        super.init()

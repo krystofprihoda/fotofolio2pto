@@ -51,6 +51,7 @@ final class FeedViewModel: BaseViewModel, ViewModel, ObservableObject {
         case fetchPortfolios
         case sortByDate
         case sortByRating
+        case filter
     }
     
     @discardableResult
@@ -60,6 +61,7 @@ final class FeedViewModel: BaseViewModel, ViewModel, ObservableObject {
             case .fetchPortfolios: fetchPortfolios()
             case .sortByDate: withAnimation { sortByDate() }
             case .sortByRating: withAnimation { sortByRating() }
+            case .filter: showFilter()
             }
         })
     }
@@ -83,6 +85,10 @@ final class FeedViewModel: BaseViewModel, ViewModel, ObservableObject {
     
     private func sortByRating() {
         
+    }
+    
+    private func showFilter() {
+        flowController?.presentFilter()
     }
 }
 

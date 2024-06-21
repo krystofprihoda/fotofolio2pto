@@ -38,6 +38,10 @@
 		FEC94DE52C2594E200FFEB11 /* PortfolioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC94DE42C2594E200FFEB11 /* PortfolioView.swift */; };
 		FEC94DEA2C25BF4B00FFEB11 /* View+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC94DE92C25BF4B00FFEB11 /* View+Extensions.swift */; };
 		FEC94DEC2C25DC1600FFEB11 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC94DEB2C25DC1600FFEB11 /* Constants.swift */; };
+		FEC94DEE2C25ECDC00FFEB11 /* BottomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC94DED2C25ECDC00FFEB11 /* BottomSheetView.swift */; };
+		FEC94DF02C25ED5C00FFEB11 /* RoundedCorner.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC94DEF2C25ED5C00FFEB11 /* RoundedCorner.swift */; };
+		FEC94DF22C25EF7900FFEB11 /* FilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC94DF12C25EF7900FFEB11 /* FilterView.swift */; };
+		FEC94DF42C25F57700FFEB11 /* FilterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC94DF32C25F57700FFEB11 /* FilterViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -74,6 +78,10 @@
 		FEC94DE42C2594E200FFEB11 /* PortfolioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioView.swift; sourceTree = "<group>"; };
 		FEC94DE92C25BF4B00FFEB11 /* View+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extensions.swift"; sourceTree = "<group>"; };
 		FEC94DEB2C25DC1600FFEB11 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		FEC94DED2C25ECDC00FFEB11 /* BottomSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetView.swift; sourceTree = "<group>"; };
+		FEC94DEF2C25ED5C00FFEB11 /* RoundedCorner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedCorner.swift; sourceTree = "<group>"; };
+		FEC94DF12C25EF7900FFEB11 /* FilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterView.swift; sourceTree = "<group>"; };
+		FEC94DF32C25F57700FFEB11 /* FilterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -140,6 +148,8 @@
 			isa = PBXGroup;
 			children = (
 				FEC94DAD2C243EAE00FFEB11 /* BaseHostingController */,
+				FEC94DED2C25ECDC00FFEB11 /* BottomSheetView.swift */,
+				FEC94DEF2C25ED5C00FFEB11 /* RoundedCorner.swift */,
 			);
 			path = BaseViews;
 			sourceTree = "<group>";
@@ -170,6 +180,8 @@
 				FEC94DC02C246D8600FFEB11 /* FeedView.swift */,
 				FEC94DC22C246DC000FFEB11 /* FeedViewModel.swift */,
 				FEC94DE42C2594E200FFEB11 /* PortfolioView.swift */,
+				FEC94DF12C25EF7900FFEB11 /* FilterView.swift */,
+				FEC94DF32C25F57700FFEB11 /* FilterViewModel.swift */,
 			);
 			path = Feed;
 			sourceTree = "<group>";
@@ -319,12 +331,15 @@
 				FEC94DE52C2594E200FFEB11 /* PortfolioView.swift in Sources */,
 				FEC94DDD2C247D7600FFEB11 /* ProfileViewModel.swift in Sources */,
 				FEC94DB62C2447F000FFEB11 /* BaseFlowController.swift in Sources */,
+				FEC94DEE2C25ECDC00FFEB11 /* BottomSheetView.swift in Sources */,
+				FEC94DF22C25EF7900FFEB11 /* FilterView.swift in Sources */,
 				FEC94DEA2C25BF4B00FFEB11 /* View+Extensions.swift in Sources */,
 				FEC94DCD2C2479CD00FFEB11 /* SelectionViewModel.swift in Sources */,
 				FEC94DC52C246DF400FFEB11 /* BaseViewModel.swift in Sources */,
 				FEC94DC72C24712400FFEB11 /* ViewModel.swift in Sources */,
 				FEC94DC32C246DC000FFEB11 /* FeedViewModel.swift in Sources */,
 				FEC94DD72C247CB200FFEB11 /* MessagesView.swift in Sources */,
+				FEC94DF42C25F57700FFEB11 /* FilterViewModel.swift in Sources */,
 				FEC94DB82C244E9E00FFEB11 /* MainFlowController.swift in Sources */,
 				FEC94DD92C247CCA00FFEB11 /* MessagesFlowController.swift in Sources */,
 				FEC94DB32C24475100FFEB11 /* AppFlowController.swift in Sources */,
@@ -333,6 +348,7 @@
 				FEC94DDF2C247D9800FFEB11 /* ProfileFlowController.swift in Sources */,
 				FEC94DDB2C247D4B00FFEB11 /* ProfileView.swift in Sources */,
 				FEC94DC92C2479B300FFEB11 /* SelectionFlowController.swift in Sources */,
+				FEC94DF02C25ED5C00FFEB11 /* RoundedCorner.swift in Sources */,
 				FEC94DCF2C247C4C00FFEB11 /* SearchViewModel.swift in Sources */,
 				FEC94DD12C247C5500FFEB11 /* SearchFlowController.swift in Sources */,
 				FEC94D952C24398200FFEB11 /* AppDelegate.swift in Sources */,
