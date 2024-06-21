@@ -72,6 +72,7 @@ final class FeedViewModel: BaseViewModel, ViewModel, ObservableObject {
         state.isLoading = true
         defer { state.isLoading.toggle() }
         
+        // this will move to service/ucs
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) { [weak self] in
             withAnimation {
                 self?.state.portfolios = Portfolio.sampleData

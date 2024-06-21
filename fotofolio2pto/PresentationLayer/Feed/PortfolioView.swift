@@ -37,7 +37,7 @@ struct PortfolioView: View {
             /// Top bar
             HStack {
                 Button(action: openProfileAction, label: {
-                    Text("@" + portfolio.authorUsername)
+                    Text("@" + portfolio.author.username)
                         .font(.title2)
                         .foregroundColor(.pink)
                 })
@@ -52,39 +52,8 @@ struct PortfolioView: View {
             .padding([.leading, .trailing], Constants.Dimens.spaceLarge)
             
             /// Media
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: Constants.Dimens.spaceMedium) {
-                    ForEach(portfolio.photos) { photo in
-                        if case MyImageEnum.remote(let url) = photo.src {
-                            AsyncImage(url: url) { image in
-                                image
-                                    .resizable()
-                                    .aspectRatio(1.0, contentMode: .fill)
-                                    .frame(width: mediaWidth)
-                                    .cornerRadius(Constants.Dimens.radiusXSmall)
-                            } placeholder: {
-                                ZStack {
-                                    RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
-                                        .fill(Color.gray).brightness(0.25)
-                                        .aspectRatio(1.0, contentMode: .fill)
-                                        .frame(width: mediaWidth)
-
-                                    ProgressView()
-                                        .progressViewStyle(CircularProgressViewStyle())
-                                }
-                            }
-                        } else if case MyImageEnum.local(let image) = photo.src {
-                            image
-                                .resizable()
-                                .aspectRatio(1.0, contentMode: .fill)
-                                .frame(width: mediaWidth)
-                                .cornerRadius(Constants.Dimens.radiusXSmall)
-                        }
-                    }
-                }
-                .padding([.leading, .trailing], Constants.Dimens.spaceMedium)
-            }
-            .onTapGesture(count: 2) { flagAction() }
+            PhotoCarouselView(mediaWidth: mediaWidth, photos: portfolio.photos)
+                .onTapGesture(count: 2) { flagAction() }
             
             /// Description
             HStack {

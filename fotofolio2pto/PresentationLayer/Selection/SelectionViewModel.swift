@@ -34,7 +34,7 @@ final class SelectionViewModel: BaseViewModel, ViewModel, ObservableObject {
     // MARK: State
     
     struct State {
-        var isLoading: Bool = false
+        var portfolios: [Portfolio] = []
     }
     
     @Published private(set) var state = State()

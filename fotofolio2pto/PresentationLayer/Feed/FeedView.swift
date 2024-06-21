@@ -11,7 +11,7 @@ struct FeedView: View {
     
     @ObservedObject private var viewModel: FeedViewModel
     
-    public init(viewModel: FeedViewModel) {
+    init(viewModel: FeedViewModel) {
         self.viewModel = viewModel
     }
     

@@ -12,7 +12,7 @@ class SelectionFlowController: BaseFlowController {
     override func setup() -> UIViewController {
         let vm = SelectionViewModel(flowController: self)
         let view = SelectionView(viewModel: vm)
-        let vc = BaseHostingController(rootView: view, showsNavigationBar: false)
+        let vc = BaseHostingController(rootView: view)
         return vc
     }
 }

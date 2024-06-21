@@ -13,7 +13,7 @@ let LOREMFLICKR = "https://loremflickr.com/1000/1000/"
 
 struct Portfolio: Identifiable, Equatable {
     let id: UUID
-    var authorUsername: String
+    var author: User
     var name: String
     var photos: [IImage]
     var description: String
@@ -21,7 +21,7 @@ struct Portfolio: Identifiable, Equatable {
     let timestamp: Date
     
     static func == (lhs: Portfolio, rhs: Portfolio) -> Bool {
-        lhs.id == rhs.id && lhs.authorUsername == rhs.authorUsername
+        lhs.id == rhs.id
     }
 }
 
@@ -40,7 +40,7 @@ extension Portfolio {
     static var dummyPortfolio1: Portfolio {
         Portfolio(
             id: UUID(),
-            authorUsername: "vojtafoti",
+            author: .dummy1,
             name: "Portréty",
             photos: [
                 IImage(src: .remote(URL(string: LOREMFLICKR + "/portrait")!)),
@@ -57,7 +57,7 @@ extension Portfolio {
     static var dummyPortfolio2: Portfolio {
         Portfolio(
             id: UUID(),
-            authorUsername: "ad.fotograf",
+            author: .dummy2,
             name: "Lifestyle",
             photos: [
                 IImage(src: .remote(URL(string: LOREMFLICKR + "/animal")!)),
@@ -73,7 +73,7 @@ extension Portfolio {
     static var dummyPortfolio3: Portfolio {
         Portfolio(
             id: UUID(),
-            authorUsername: "vojtafoti",
+            author: .dummy1,
             name: "Svatby",
             photos: [
                 IImage(src: .remote(URL(string: LOREMFLICKR + "/wedding")!)),
@@ -89,7 +89,7 @@ extension Portfolio {
     static var dummyPortfolio4: Portfolio {
         Portfolio(
             id: UUID(),
-            authorUsername: "karel__foti",
+            author: .dummy3,
             name: "karlova architektura",
             photos: [
                 IImage(src: .remote(URL(string: LOREMFLICKR + "/architecture")!)),
@@ -105,7 +105,7 @@ extension Portfolio {
     static var dummyPortfolio5: Portfolio {
         Portfolio(
             id: UUID(),
-            authorUsername: "nejfotograf",
+            author: .dummy5,
             name: "Svatby",
             photos: [
                 IImage(src: .remote(URL(string: LOREMFLICKR + "/wedding")!)),
@@ -121,7 +121,7 @@ extension Portfolio {
     static var dummyPortfolio6: Portfolio {
         Portfolio(
             id: UUID(),
-            authorUsername: "ad.fotograf",
+            author: .dummy2,
             name: "Svatby",
             photos: [
                 IImage(src: .remote(URL(string: LOREMFLICKR + "/wedding")!)),
@@ -137,7 +137,7 @@ extension Portfolio {
     static var dummyPortfolio7: Portfolio {
         Portfolio(
             id: UUID(),
-            authorUsername: "vojtafoti",
+            author: .dummy1,
             name: "Architektura",
             photos: [
                 IImage(src: .remote(URL(string: LOREMFLICKR + "/architecture")!)),
@@ -153,7 +153,7 @@ extension Portfolio {
     static var dummyPortfolio8: Portfolio {
         Portfolio(
             id: UUID(),
-            authorUsername: "portretyodmilana",
+            author: .dummy6,
             name: "Portréty",
             photos: [
                 IImage(src: .remote(URL(string: LOREMFLICKR + "/portrait")!)),

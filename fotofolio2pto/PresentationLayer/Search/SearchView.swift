@@ -11,7 +11,7 @@ struct SearchView: View {
     
     @ObservedObject private var viewModel: SearchViewModel
     
-    public init(viewModel: SearchViewModel) {
+    init(viewModel: SearchViewModel) {
         self.viewModel = viewModel
     }
     

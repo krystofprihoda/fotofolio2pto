@@ -21,7 +21,7 @@ public class BaseFlowController: NSObject {
     
     private(set) var rootViewController: UIViewController?
     
-    public init(navigationController: UINavigationController) {
+    init(navigationController: UINavigationController) {
         self.navigationController = navigationController
         Logger.lifecycle.info("👶 | \(type(of: self)) initialized 🌊")
     }

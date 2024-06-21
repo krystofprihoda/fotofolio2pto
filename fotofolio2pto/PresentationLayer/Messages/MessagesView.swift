@@ -11,7 +11,7 @@ struct MessagesView: View {
     
     @ObservedObject private var viewModel: MessagesViewModel
     
-    public init(viewModel: MessagesViewModel) {
+    init(viewModel: MessagesViewModel) {
         self.viewModel = viewModel
     }
     
