@@ -34,6 +34,10 @@
 		FEC94DDB2C247D4B00FFEB11 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC94DDA2C247D4B00FFEB11 /* ProfileView.swift */; };
 		FEC94DDD2C247D7600FFEB11 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC94DDC2C247D7600FFEB11 /* ProfileViewModel.swift */; };
 		FEC94DDF2C247D9800FFEB11 /* ProfileFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC94DDE2C247D9800FFEB11 /* ProfileFlowController.swift */; };
+		FEC94DE32C25917200FFEB11 /* Portfolio.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC94DE22C25917200FFEB11 /* Portfolio.swift */; };
+		FEC94DE52C2594E200FFEB11 /* PortfolioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC94DE42C2594E200FFEB11 /* PortfolioView.swift */; };
+		FEC94DEA2C25BF4B00FFEB11 /* View+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC94DE92C25BF4B00FFEB11 /* View+Extensions.swift */; };
+		FEC94DEC2C25DC1600FFEB11 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC94DEB2C25DC1600FFEB11 /* Constants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -66,6 +70,10 @@
 		FEC94DDA2C247D4B00FFEB11 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		FEC94DDC2C247D7600FFEB11 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		FEC94DDE2C247D9800FFEB11 /* ProfileFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileFlowController.swift; sourceTree = "<group>"; };
+		FEC94DE22C25917200FFEB11 /* Portfolio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Portfolio.swift; path = fotofolio2pto/PresentationLayer/Profile/Portfolio.swift; sourceTree = SOURCE_ROOT; };
+		FEC94DE42C2594E200FFEB11 /* PortfolioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioView.swift; sourceTree = "<group>"; };
+		FEC94DE92C25BF4B00FFEB11 /* View+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extensions.swift"; sourceTree = "<group>"; };
+		FEC94DEB2C25DC1600FFEB11 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +106,7 @@
 		FEC94D932C24398200FFEB11 /* fotofolio2pto */ = {
 			isa = PBXGroup;
 			children = (
+				FEC94DE02C25914F00FFEB11 /* DomainLayer */,
 				FEC94DB22C24475100FFEB11 /* AppFlowController.swift */,
 				FEC94DAB2C243E9A00FFEB11 /* PresentationLayer */,
 				FEC94D942C24398200FFEB11 /* AppDelegate.swift */,
@@ -113,6 +122,7 @@
 		FEC94DAB2C243E9A00FFEB11 /* PresentationLayer */ = {
 			isa = PBXGroup;
 			children = (
+				FEC94DE82C25BF3D00FFEB11 /* Extensions */,
 				FEC94DBD2C246C4B00FFEB11 /* Profile */,
 				FEC94DBC2C246C4700FFEB11 /* Messages */,
 				FEC94DBB2C246C3E00FFEB11 /* Search */,
@@ -148,6 +158,7 @@
 				FEC94DB52C2447F000FFEB11 /* BaseFlowController.swift */,
 				FEC94DC42C246DF400FFEB11 /* BaseViewModel.swift */,
 				FEC94DC62C24712400FFEB11 /* ViewModel.swift */,
+				FEC94DEB2C25DC1600FFEB11 /* Constants.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -158,6 +169,7 @@
 				FEC94DBE2C246C5C00FFEB11 /* FeedFlowController.swift */,
 				FEC94DC02C246D8600FFEB11 /* FeedView.swift */,
 				FEC94DC22C246DC000FFEB11 /* FeedViewModel.swift */,
+				FEC94DE42C2594E200FFEB11 /* PortfolioView.swift */,
 			);
 			path = Feed;
 			sourceTree = "<group>";
@@ -200,6 +212,30 @@
 				FEC94DDE2C247D9800FFEB11 /* ProfileFlowController.swift */,
 			);
 			path = Profile;
+			sourceTree = "<group>";
+		};
+		FEC94DE02C25914F00FFEB11 /* DomainLayer */ = {
+			isa = PBXGroup;
+			children = (
+				FEC94DE12C25916600FFEB11 /* DomainModels */,
+			);
+			path = DomainLayer;
+			sourceTree = "<group>";
+		};
+		FEC94DE12C25916600FFEB11 /* DomainModels */ = {
+			isa = PBXGroup;
+			children = (
+				FEC94DE22C25917200FFEB11 /* Portfolio.swift */,
+			);
+			path = DomainModels;
+			sourceTree = "<group>";
+		};
+		FEC94DE82C25BF3D00FFEB11 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				FEC94DE92C25BF4B00FFEB11 /* View+Extensions.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -272,14 +308,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FEC94DE32C25917200FFEB11 /* Portfolio.swift in Sources */,
 				FEC94DC12C246D8600FFEB11 /* FeedView.swift in Sources */,
 				FEC94DD32C247C6100FFEB11 /* SearchView.swift in Sources */,
 				FEC94DD52C247C9500FFEB11 /* MessagesViewModel.swift in Sources */,
 				FEC94D9F2C24398200FFEB11 /* fotofolio2pto.xcdatamodeld in Sources */,
+				FEC94DEC2C25DC1600FFEB11 /* Constants.swift in Sources */,
 				FEC94DAF2C243EC100FFEB11 /* BaseHostingController.swift in Sources */,
 				FEC94DB12C243F6F00FFEB11 /* BasicView.swift in Sources */,
+				FEC94DE52C2594E200FFEB11 /* PortfolioView.swift in Sources */,
 				FEC94DDD2C247D7600FFEB11 /* ProfileViewModel.swift in Sources */,
 				FEC94DB62C2447F000FFEB11 /* BaseFlowController.swift in Sources */,
+				FEC94DEA2C25BF4B00FFEB11 /* View+Extensions.swift in Sources */,
 				FEC94DCD2C2479CD00FFEB11 /* SelectionViewModel.swift in Sources */,
 				FEC94DC52C246DF400FFEB11 /* BaseViewModel.swift in Sources */,
 				FEC94DC72C24712400FFEB11 /* ViewModel.swift in Sources */,

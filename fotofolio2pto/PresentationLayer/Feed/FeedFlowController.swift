@@ -12,7 +12,7 @@ class FeedFlowController: BaseFlowController {
     override func setup() -> UIViewController {
         let vm = FeedViewModel(flowController: self)
         let view = FeedView(viewModel: vm)
-        let vc = BaseHostingController(rootView: view, showsNavigationBar: false)
+        let vc = BaseHostingController(rootView: view)
         return vc
     }
 }

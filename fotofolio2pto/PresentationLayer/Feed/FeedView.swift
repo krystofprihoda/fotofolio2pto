@@ -16,7 +16,54 @@ struct FeedView: View {
     }
     
     var body: some View {
-        Text("Feed")
+        GeometryReader { geo in
+            ScrollView(showsIndicators: false) {
+                if viewModel.state.portfolios.isEmpty {
+                    VStack(alignment: .center) {
+                        if viewModel.state.isFiltering {
+                            Text("Filtrování neodpovídá žádný výsledek.")
+                                .foregroundColor(.red)
+                        } else {
+                            ProgressView()
+                                .progressViewStyle(CircularProgressViewStyle())
+                        }
+                    }
+                    .frame(width: geo.size.width)
+                    .frame(minHeight: geo.size.height)
+                } else {
+                    LazyVStack {
+                        ForEach(viewModel.state.portfolios, id: \.id) { portfolio in
+                            PortfolioView(
+                                portfolio: portfolio,
+                                mediaWidth: geo.size.width - Constants.Dimens.spaceMedium * 3
+                            )
+                        }
+                    }
+                    .frame(width: geo.size.width)
+                    .frame(minHeight: geo.size.height)
+                    .padding(.top)
+                }
+            }
+            .refreshable(action: { viewModel.onIntent(.fetchPortfolios) })
+        }
+        .toolbar {
+            ToolbarItemGroup(placement: .navigationBarLeading) {
+                Menu("Seřadit") {
+                    Button("Podle data", action: { viewModel.onIntent(.sortByDate) })
+                    Button("Podle hodnocení", action: { viewModel.onIntent(.sortByRating) })
+                }
+                .padding(.leading, 5)
+            }
+            
+            ToolbarItemGroup(placement: .navigationBarTrailing) {
+                Button("Filtrovat", action: {
+                    // FilterView(showFilter: $showFilter, usedFilter: $usedFilter)
+                })
+                .padding(.trailing, 5)
+            }
+        }
+        .setupNavBarAndTitle("Feed")
+        .lifecycle(viewModel)
     }
 }
 

@@ -20,7 +20,7 @@ class BaseHostingController<Content>: UIHostingController<AnyView>, UIGestureRec
     init(
         rootView: Content,
         showsNavigationBar: Bool = true,
-        navigationBarTransparent: Bool = true
+        navigationBarTransparent: Bool = false
     ) {
         self.showsNavigationBar = showsNavigationBar
         self.navigationBarTransparent = navigationBarTransparent
@@ -31,6 +31,7 @@ class BaseHostingController<Content>: UIHostingController<AnyView>, UIGestureRec
         super.viewDidLoad()
         setupBackButton()
         navigationController?.navigationBar.setTransparency(navigationBarTransparent)
+        UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: UIColor.black]
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -67,8 +68,8 @@ class BaseHostingController<Content>: UIHostingController<AnyView>, UIGestureRec
 
 public extension UINavigationBar {
     func setTransparency(_ transparent: Bool) {
-        setBackgroundImage(transparent ? UIImage() : nil, for: .default)
-        shadowImage = transparent ? UIImage() : nil
+//        setBackgroundImage(transparent ? UIImage() : nil, for: .default)
+//        shadowImage = transparent ? UIImage() : nil
         isTranslucent = transparent
     }
 }
