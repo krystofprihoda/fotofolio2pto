@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 enum SearchOption: String, CaseIterable {
     case username = "Uživatelské jméno"
@@ -61,7 +62,7 @@ final class SearchViewModel: BaseViewModel, ViewModel, ObservableObject {
             switch intent {
             case .setSearchOption(let option): setSearchOption(option)
             case .setTextInput(let input): setTextInput(input)
-            case .setIsSearching(let value): setIsSearching(value)
+            case .setIsSearching(let value): withAnimation { setIsSearching(value) }
             }
         })
     }

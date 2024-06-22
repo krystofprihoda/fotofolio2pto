@@ -18,7 +18,13 @@ struct SearchView: View {
     var body: some View {
         ScrollView {
             VStack {
-                Picker("Vyhledávat podle", selection: Binding(get: { viewModel.state.searchOption }, set: { viewModel.onIntent(.setSearchOption($0)) })) {
+                Picker(
+                    "Vyhledávat podle",
+                    selection: Binding(
+                        get: { viewModel.state.searchOption },
+                        set: { viewModel.onIntent(.setSearchOption($0)) }
+                    )
+                ) {
                     ForEach(SearchOption.allCases, id: \.self) { option in
                         Text(option.rawValue)
                     }
@@ -58,15 +64,15 @@ struct SearchView: View {
         }
         .padding([.leading, .trailing])
         .toolbar {
-//            if searchViewModel.searching {
-//                Button("Zrušit") {
-//                    searchViewModel.searchString = ""
-//                    searchViewModel.searching = false
-//                    
-//                    UIApplication.shared.dismissKeyboard()
-//                }
-//                .transition(.opacity)
-//            }
+            if viewModel.state.isSearching {
+                Button("Zrušit") {
+                    viewModel.onIntent(.setTextInput(""))
+                    viewModel.onIntent(.setIsSearching(false))
+                    
+                    UIApplication.shared.dismissKeyboard()
+                }
+                .transition(.opacity)
+            }
         }
 //        .onChange(of: searchViewModel.searchString, perform: { _ in
 //            withAnimation {
