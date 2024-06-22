@@ -15,22 +15,22 @@ struct SelectionView: View {
         self.viewModel = viewModel
     }
     
-    @AppStorage("username") var username: String = "default"
-    @State private var clearSelection = false
-    
     var body: some View {
         GeometryReader { geo in
             ScrollView {
-                if !viewModel.state.portfolios.isEmpty {
-                    ForEach(viewModel.state.portfolios, id: \.id) { portfolio in
-                        PortfolioDetailView(mediaWidth: geo.size.width, portfolio: portfolio)
+                VStack {
+                    if !viewModel.state.portfolios.isEmpty {
+                        ForEach(viewModel.state.portfolios, id: \.id) { portfolio in
+                            PortfolioDetailView(mediaWidth: geo.size.width - Constants.Dimens.spaceXXLarge, portfolio: portfolio)
+                        }
+                    } else {
+                        Text("Není co zobrazovat, vyberte si portfolia ve Feedu!")
+                            .frame(width: geo.size.width, height: geo.size.height)
+                            .font(.system(size: 15))
+                            .foregroundColor(.gray)
                     }
-                } else {
-                    Text("Není co zobrazovat, vyberte si portfolia ve Feedu!")
-                        .frame(width: geo.size.width, height: geo.size.height)
-                        .font(.system(size: 15))
-                        .foregroundColor(.gray)
                 }
+                .padding(.top)
             }
         }
         .toolbar {
@@ -46,7 +46,7 @@ struct SelectionView: View {
             }
         }
         .setupNavBarAndTitle("Výběr")
-        .alert("Opravdu chcete odstranit všechna portfolia ze svého výběru?", isPresented: $clearSelection) {
+        .alert("Opravdu chcete odstranit všechna portfolia ze svého výběru?", isPresented: .constant(false)) {
             Button("Ano") {
 //                portfolioViewModel.clearFlagged()
             }

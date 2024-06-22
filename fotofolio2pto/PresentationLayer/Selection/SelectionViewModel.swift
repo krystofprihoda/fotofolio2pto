@@ -34,7 +34,7 @@ final class SelectionViewModel: BaseViewModel, ViewModel, ObservableObject {
     // MARK: State
     
     struct State {
-        var portfolios: [Portfolio] = []
+        var portfolios: [Portfolio] = [.dummyPortfolio2, .dummyPortfolio3]
     }
     
     @Published private(set) var state = State()
