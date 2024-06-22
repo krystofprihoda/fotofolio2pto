@@ -20,10 +20,7 @@ extension View {
                 viewModel.onDisappear()
             }
     }
-}
-
-@MainActor
-extension View {
+    
     func setupNavBarAndTitle(_ title: String) -> some View {
         self
             .navigationTitle(title)
@@ -31,5 +28,11 @@ extension View {
             .toolbarBackground(.visible, for: .navigationBar)
             .toolbarBackground(.white, for: .navigationBar)
             .accentColor(.gray)
+    }
+}
+
+extension UIApplication {
+    func dismissKeyboard() {
+        sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
     }
 }

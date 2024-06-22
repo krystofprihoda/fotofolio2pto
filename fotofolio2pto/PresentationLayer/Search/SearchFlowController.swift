@@ -12,7 +12,7 @@ class SearchFlowController: BaseFlowController {
     override func setup() -> UIViewController {
         let vm = SearchViewModel(flowController: self)
         let view = SearchView(viewModel: vm)
-        let vc = BaseHostingController(rootView: view, showsNavigationBar: false)
+        let vc = BaseHostingController(rootView: view)
         return vc
     }
 }

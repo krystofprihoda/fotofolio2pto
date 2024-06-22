@@ -12,7 +12,7 @@ class ProfileFlowController: BaseFlowController {
     override func setup() -> UIViewController {
         let vm = ProfileViewModel(flowController: self)
         let view = ProfileView(viewModel: vm)
-        let vc = BaseHostingController(rootView: view, showsNavigationBar: false)
+        let vc = BaseHostingController(rootView: view)
         return vc
     }
 }

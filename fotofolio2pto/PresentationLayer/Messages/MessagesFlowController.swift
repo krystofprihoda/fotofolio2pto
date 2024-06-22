@@ -12,7 +12,7 @@ class MessagesFlowController: BaseFlowController {
     override func setup() -> UIViewController {
         let vm = MessagesViewModel(flowController: self)
         let view = MessagesView(viewModel: vm)
-        let vc = BaseHostingController(rootView: view, showsNavigationBar: false)
+        let vc = BaseHostingController(rootView: view)
         return vc
     }
 }

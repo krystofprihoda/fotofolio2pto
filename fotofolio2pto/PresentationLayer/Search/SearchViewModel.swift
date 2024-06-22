@@ -7,6 +7,11 @@
 
 import Foundation
 
+enum SearchOption: String, CaseIterable {
+    case username = "Uživatelské jméno"
+    case location = "Poloha"
+}
+
 final class SearchViewModel: BaseViewModel, ViewModel, ObservableObject {
     // MARK: Stored properties
     
@@ -34,7 +39,10 @@ final class SearchViewModel: BaseViewModel, ViewModel, ObservableObject {
     // MARK: State
     
     struct State {
-        var isLoading: Bool = false
+        var searchOption: SearchOption = .username
+        var textInput: String = ""
+        var isSearching: Bool = false
+        var searchResults: [User] = []
     }
     
     @Published private(set) var state = State()
@@ -42,21 +50,33 @@ final class SearchViewModel: BaseViewModel, ViewModel, ObservableObject {
     // MARK: Intent
     
     enum Intent {
-        case doSomething(sth: Int)
+        case setSearchOption(SearchOption)
+        case setTextInput(String)
+        case setIsSearching(Bool)
     }
     
     @discardableResult
     func onIntent(_ intent: Intent) -> Task<Void, Never> {
         executeTask(Task {
             switch intent {
-            case .doSomething(let sth): doSomething(sth)
+            case .setSearchOption(let option): setSearchOption(option)
+            case .setTextInput(let input): setTextInput(input)
+            case .setIsSearching(let value): setIsSearching(value)
             }
         })
     }
     
     // MARK: Additional methods
     
-    private func doSomething(_ sth: Int) {
-        
+    private func setSearchOption(_ option: SearchOption) {
+        state.searchOption = option
+    }
+    
+    private func setIsSearching(_ value: Bool) {
+        state.isSearching = value
+    }
+    
+    private func setTextInput(_ input: String) {
+        state.textInput = input
     }
 }
