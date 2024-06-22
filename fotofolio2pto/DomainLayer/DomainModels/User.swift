@@ -9,7 +9,11 @@ import Foundation
 
 let PROFILE_PIC = URL(string: "https://loremflickr.com/320/320/person")!
 
-struct User: Identifiable {
+struct User: Identifiable, Equatable {
+    static func == (lhs: User, rhs: User) -> Bool {
+        lhs.id == rhs.id
+    }
+    
     let id: UUID
     var username: String
     var fullName: String

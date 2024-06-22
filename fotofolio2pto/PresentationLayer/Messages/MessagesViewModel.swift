@@ -6,9 +6,12 @@
 //
 
 import Foundation
+import SwiftUI
 
 final class MessagesViewModel: BaseViewModel, ViewModel, ObservableObject {
     // MARK: Stored properties
+    
+    @AppStorage("username") var username: String = "ad.fotograf"
     
     // MARK: Dependencies
     
@@ -29,12 +32,15 @@ final class MessagesViewModel: BaseViewModel, ViewModel, ObservableObject {
     
     override func onAppear() {
         super.onAppear()
+        fetchChats(for: username)
     }
     
     // MARK: State
     
     struct State {
         var isLoading: Bool = false
+        var chats: [Chat] = []
+        @AppStorage("username") var username: String = "ad.fotograf"
     }
     
     @Published private(set) var state = State()
@@ -42,21 +48,21 @@ final class MessagesViewModel: BaseViewModel, ViewModel, ObservableObject {
     // MARK: Intent
     
     enum Intent {
-        case doSomething(sth: Int)
+//        case doSomething(sth: Int)
     }
     
     @discardableResult
     func onIntent(_ intent: Intent) -> Task<Void, Never> {
         executeTask(Task {
             switch intent {
-            case .doSomething(let sth): doSomething(sth)
+//            case .doSomething(let sth): doSomething(sth)
             }
         })
     }
     
     // MARK: Additional methods
     
-    private func doSomething(_ sth: Int) {
-        
+    private func fetchChats(for: String) {
+        state.chats = [.dummy1]
     }
 }

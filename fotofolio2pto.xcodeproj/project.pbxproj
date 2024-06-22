@@ -49,6 +49,8 @@
 		FEC94DFF2C262E8F00FFEB11 /* Creator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC94DFE2C262E8F00FFEB11 /* Creator.swift */; };
 		FEC94E012C26DD2F00FFEB11 /* SearchResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC94E002C26DD2F00FFEB11 /* SearchResultsView.swift */; };
 		FEC94E032C26DD7900FFEB11 /* ProfilePictureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC94E022C26DD7900FFEB11 /* ProfilePictureView.swift */; };
+		FEC94E052C2701DF00FFEB11 /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC94E042C2701DF00FFEB11 /* Chat.swift */; };
+		FEC94E072C2701F500FFEB11 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC94E062C2701F500FFEB11 /* Message.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -96,6 +98,8 @@
 		FEC94DFE2C262E8F00FFEB11 /* Creator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Creator.swift; sourceTree = "<group>"; };
 		FEC94E002C26DD2F00FFEB11 /* SearchResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsView.swift; sourceTree = "<group>"; };
 		FEC94E022C26DD7900FFEB11 /* ProfilePictureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePictureView.swift; sourceTree = "<group>"; };
+		FEC94E042C2701DF00FFEB11 /* Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
+		FEC94E062C2701F500FFEB11 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -258,6 +262,8 @@
 				FEC94DE22C25917200FFEB11 /* Portfolio.swift */,
 				FEC94DFC2C262E4000FFEB11 /* User.swift */,
 				FEC94DFE2C262E8F00FFEB11 /* Creator.swift */,
+				FEC94E042C2701DF00FFEB11 /* Chat.swift */,
+				FEC94E062C2701F500FFEB11 /* Message.swift */,
 			);
 			path = DomainModels;
 			sourceTree = "<group>";
@@ -357,6 +363,7 @@
 				FEC94D9F2C24398200FFEB11 /* fotofolio2pto.xcdatamodeld in Sources */,
 				FEC94DEC2C25DC1600FFEB11 /* Constants.swift in Sources */,
 				FEC94DAF2C243EC100FFEB11 /* BaseHostingController.swift in Sources */,
+				FEC94E052C2701DF00FFEB11 /* Chat.swift in Sources */,
 				FEC94DB12C243F6F00FFEB11 /* BasicView.swift in Sources */,
 				FEC94DE52C2594E200FFEB11 /* PortfolioView.swift in Sources */,
 				FEC94DDD2C247D7600FFEB11 /* ProfileViewModel.swift in Sources */,
@@ -375,6 +382,7 @@
 				FEC94DF42C25F57700FFEB11 /* FilterViewModel.swift in Sources */,
 				FEC94DB82C244E9E00FFEB11 /* MainFlowController.swift in Sources */,
 				FEC94DFB2C262AC400FFEB11 /* AuthorDetailView.swift in Sources */,
+				FEC94E072C2701F500FFEB11 /* Message.swift in Sources */,
 				FEC94DFD2C262E4000FFEB11 /* User.swift in Sources */,
 				FEC94DD92C247CCA00FFEB11 /* MessagesFlowController.swift in Sources */,
 				FEC94DB32C24475100FFEB11 /* AppFlowController.swift in Sources */,
