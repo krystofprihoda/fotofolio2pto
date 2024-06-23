@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 final class ProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
     // MARK: Stored properties
@@ -29,12 +30,20 @@ final class ProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
     
     override func onAppear() {
         super.onAppear()
+        
+        fetchUserInfo()
+        fetchPortfolios()
     }
     
     // MARK: State
     
     struct State {
-        var isLoading: Bool = false
+        var isLoadingUser: Bool = false
+        var isLoadingPortfolios: Bool = false
+        // this will be added as a param
+        @AppStorage("username") var signedInUser: String = "ad.fotograf"
+        var userData: User? = .dummy2
+        var portfolios: [Portfolio] = [.dummyPortfolio2, .dummyPortfolio3, .dummyPortfolio5]
     }
     
     @Published private(set) var state = State()
@@ -42,21 +51,27 @@ final class ProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
     // MARK: Intent
     
     enum Intent {
-        case doSomething(sth: Int)
+        case fetchUserInfo
+        case fetchProfilePortofolios
     }
     
     @discardableResult
     func onIntent(_ intent: Intent) -> Task<Void, Never> {
         executeTask(Task {
             switch intent {
-            case .doSomething(let sth): doSomething(sth)
+            case .fetchUserInfo: fetchUserInfo()
+            case .fetchProfilePortofolios: fetchPortfolios()
             }
         })
     }
     
     // MARK: Additional methods
     
-    private func doSomething(_ sth: Int) {
+    private func fetchUserInfo() {
+        
+    }
+    
+    private func fetchPortfolios() {
         
     }
 }

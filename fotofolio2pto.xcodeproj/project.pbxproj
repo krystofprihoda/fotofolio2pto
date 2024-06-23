@@ -51,6 +51,9 @@
 		FEC94E032C26DD7900FFEB11 /* ProfilePictureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC94E022C26DD7900FFEB11 /* ProfilePictureView.swift */; };
 		FEC94E052C2701DF00FFEB11 /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC94E042C2701DF00FFEB11 /* Chat.swift */; };
 		FEC94E072C2701F500FFEB11 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC94E062C2701F500FFEB11 /* Message.swift */; };
+		FEC94E092C283D4C00FFEB11 /* NotCreatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC94E082C283D4C00FFEB11 /* NotCreatorView.swift */; };
+		FEC94E0B2C2840AA00FFEB11 /* ProfileUserInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC94E0A2C2840AA00FFEB11 /* ProfileUserInfoView.swift */; };
+		FEC94E0D2C2842F500FFEB11 /* ProfilePortfoliosView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC94E0C2C2842F500FFEB11 /* ProfilePortfoliosView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -100,6 +103,9 @@
 		FEC94E022C26DD7900FFEB11 /* ProfilePictureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePictureView.swift; sourceTree = "<group>"; };
 		FEC94E042C2701DF00FFEB11 /* Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
 		FEC94E062C2701F500FFEB11 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		FEC94E082C283D4C00FFEB11 /* NotCreatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotCreatorView.swift; sourceTree = "<group>"; };
+		FEC94E0A2C2840AA00FFEB11 /* ProfileUserInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileUserInfoView.swift; sourceTree = "<group>"; };
+		FEC94E0C2C2842F500FFEB11 /* ProfilePortfoliosView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePortfoliosView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -244,6 +250,9 @@
 				FEC94DDC2C247D7600FFEB11 /* ProfileViewModel.swift */,
 				FEC94DDE2C247D9800FFEB11 /* ProfileFlowController.swift */,
 				FEC94E022C26DD7900FFEB11 /* ProfilePictureView.swift */,
+				FEC94E082C283D4C00FFEB11 /* NotCreatorView.swift */,
+				FEC94E0A2C2840AA00FFEB11 /* ProfileUserInfoView.swift */,
+				FEC94E0C2C2842F500FFEB11 /* ProfilePortfoliosView.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -373,14 +382,17 @@
 				FEC94DEA2C25BF4B00FFEB11 /* View+Extensions.swift in Sources */,
 				FEC94DCD2C2479CD00FFEB11 /* SelectionViewModel.swift in Sources */,
 				FEC94DC52C246DF400FFEB11 /* BaseViewModel.swift in Sources */,
+				FEC94E092C283D4C00FFEB11 /* NotCreatorView.swift in Sources */,
 				FEC94DC72C24712400FFEB11 /* ViewModel.swift in Sources */,
 				FEC94DC32C246DC000FFEB11 /* FeedViewModel.swift in Sources */,
+				FEC94E0D2C2842F500FFEB11 /* ProfilePortfoliosView.swift in Sources */,
 				FEC94E032C26DD7900FFEB11 /* ProfilePictureView.swift in Sources */,
 				FEC94DFF2C262E8F00FFEB11 /* Creator.swift in Sources */,
 				FEC94DF72C26283400FFEB11 /* PortfolioDetailView.swift in Sources */,
 				FEC94DD72C247CB200FFEB11 /* MessagesView.swift in Sources */,
 				FEC94DF42C25F57700FFEB11 /* FilterViewModel.swift in Sources */,
 				FEC94DB82C244E9E00FFEB11 /* MainFlowController.swift in Sources */,
+				FEC94E0B2C2840AA00FFEB11 /* ProfileUserInfoView.swift in Sources */,
 				FEC94DFB2C262AC400FFEB11 /* AuthorDetailView.swift in Sources */,
 				FEC94E072C2701F500FFEB11 /* Message.swift in Sources */,
 				FEC94DFD2C262E4000FFEB11 /* User.swift in Sources */,
