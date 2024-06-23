@@ -20,10 +20,12 @@ final class ProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
     // MARK: Init
     
     init(
-        flowController: ProfileFlowController?
+        flowController: ProfileFlowController?,
+        user: String
     ) {
         self.flowController = flowController
         super.init()
+        state.username = user
     }
     
     // MARK: Lifecycle
@@ -40,8 +42,7 @@ final class ProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
     struct State {
         var isLoadingUser: Bool = false
         var isLoadingPortfolios: Bool = false
-        // this will be added as a param
-        @AppStorage("username") var signedInUser: String = "ad.fotograf"
+        var username: String = ""
         var userData: User? = .dummy2
         var portfolios: [Portfolio] = [.dummyPortfolio2, .dummyPortfolio3, .dummyPortfolio5]
     }
@@ -53,6 +54,7 @@ final class ProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
     enum Intent {
         case fetchUserInfo
         case fetchProfilePortofolios
+        case signOut
     }
     
     @discardableResult
@@ -61,6 +63,7 @@ final class ProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
             switch intent {
             case .fetchUserInfo: fetchUserInfo()
             case .fetchProfilePortofolios: fetchPortfolios()
+            case .signOut: signOut()
             }
         })
     }
@@ -68,10 +71,14 @@ final class ProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
     // MARK: Additional methods
     
     private func fetchUserInfo() {
-        
+        print(state.username)
     }
     
     private func fetchPortfolios() {
-        
+        print(state.username)
+    }
+    
+    private func signOut() {
+        flowController?.flowDelegate?.signOut()
     }
 }

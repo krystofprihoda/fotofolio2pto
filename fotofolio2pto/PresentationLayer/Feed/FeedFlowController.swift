@@ -8,8 +8,6 @@
 import UIKit
 
 class FeedFlowController: BaseFlowController {
-    
-    // weak var flowDelegate: MyAccountFlowControllerDelegate?
 
     private var backgroundTapView: UIView?
 
@@ -30,7 +28,6 @@ class FeedFlowController: BaseFlowController {
             sheet.prefersEdgeAttachedInCompactHeight = true
             sheet.widthFollowsPreferredContentSizeWhenEdgeAttached = true
             sheet.prefersGrabberVisible = true
-            sheet.delegate = self // Set the delegate
         }
         
         addBackgroundTapView()
@@ -39,40 +36,27 @@ class FeedFlowController: BaseFlowController {
     
     func dismissFilter() {
         navigationController.dismiss(animated: true)
-        removeBackgroundTapView()
     }
 }
 
 /// Hack for recognizing taps outside the bottom sheet
-extension FeedFlowController: UISheetPresentationControllerDelegate {
-    // Implement the delegate methods to handle dismissal
-    func presentationControllerShouldDismiss(_ presentationController: UIPresentationController) -> Bool {
-        return true // Allow dismissal
-    }
-
-    func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
-        // Additional actions after dismissal if needed
-        removeBackgroundTapView()
-    }
-    
+extension FeedFlowController {
     private func addBackgroundTapView() {
         guard let window = UIApplication.shared.keyWindow else { return }
         
         let tapView = UIView(frame: window.bounds)
         tapView.backgroundColor = UIColor.clear
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleBackgroundTap))
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleFilterBackgroundTap))
         tapView.addGestureRecognizer(tapGesture)
         
         window.addSubview(tapView)
         backgroundTapView = tapView
     }
 
-    private func removeBackgroundTapView() {
+    @objc private func handleFilterBackgroundTap() {
+        dismissFilter()
+        
         backgroundTapView?.removeFromSuperview()
         backgroundTapView = nil
-    }
-
-    @objc private func handleBackgroundTap() {
-        dismissFilter()
     }
 }

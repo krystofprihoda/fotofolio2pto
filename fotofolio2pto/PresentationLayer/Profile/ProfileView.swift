@@ -24,7 +24,7 @@ struct ProfileView: View {
                             .padding()
                             .frame(width: geo.size.width, height: geo.size.height)
                     } else {
-                        ProfileUserInfoView(user: viewModel.state.userData, profileOwner: viewModel.state.userData?.username == viewModel.state.signedInUser)
+                        ProfileUserInfoView(user: viewModel.state.userData, profileOwner: viewModel.state.userData?.username == viewModel.state.username)
                             .padding(.top)
                         
                         if viewModel.state.userData?.creator != nil {
@@ -39,7 +39,7 @@ struct ProfileView: View {
         .setupNavBarAndTitle("@\(viewModel.state.userData?.username ?? "")")
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarTrailing) {
-                if viewModel.state.userData?.username == viewModel.state.signedInUser && viewModel.state.userData?.creator != nil {
+                if viewModel.state.userData?.username == viewModel.state.username && viewModel.state.userData?.creator != nil {
                     Button(action: {
                         // NewPortfolioView()
                     }) {
@@ -52,7 +52,7 @@ struct ProfileView: View {
                 }
                 
                 HStack {
-                    if viewModel.state.userData?.username == viewModel.state.signedInUser {
+                    if viewModel.state.userData?.username == viewModel.state.username {
                         Menu(content: {
                             Button(action: {
                                 // // EditProfileView()
@@ -62,7 +62,7 @@ struct ProfileView: View {
                             }
                             
                             Button(action: {
-                                // Sign out delegate
+                                viewModel.onIntent(.signOut)
                             }, label: {
                                 Text("Odhlásit se")
                             })
@@ -94,5 +94,5 @@ struct ProfileView: View {
 }
 
 #Preview {
-    ProfileView(viewModel: .init(flowController: nil))
+    ProfileView(viewModel: .init(flowController: nil, user: ""))
 }

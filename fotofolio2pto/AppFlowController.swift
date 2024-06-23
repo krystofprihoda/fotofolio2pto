@@ -8,20 +8,24 @@
 import Foundation
 import UIKit
 
-public class AppFlowController: BaseFlowController {
+public class AppFlowController: BaseFlowController, OnboardingFlowControllerDelegate, ProfileFlowControllerDelegate, MainFlowControllerDelegate {
     public func start() {
         setupAppearance()
         
-        if true {
-            setupMain()
+        let user = UserDefaults.standard.string(forKey: "signedInUser")
+        
+        if let user {
+            setupMain(for: user)
         } else {
             presentOnboarding()
         }
     }
     
-    private func setupMain() {
+    public func setupMain(for user: String) {
         let flowController = MainFlowController(
-            navigationController: navigationController
+            navigationController: navigationController,
+            flowDelegate: self,
+            user: user
         )
         let rootVc = startChildFlow(flowController)
         navigationController.navigationBar.isHidden = true
@@ -29,6 +33,18 @@ public class AppFlowController: BaseFlowController {
     }
     
     private func presentOnboarding() {
+        let flowController = OnboardingFlowController(
+            navigationController: navigationController,
+            flowDelegate: self
+        )
+        let rootVc = startChildFlow(flowController)
+        navigationController.navigationBar.isHidden = true
+        navigationController.viewControllers = [rootVc]
+    }
+    
+    public func signOut() {
+        UserDefaults.standard.removeObject(forKey: "signedInUser")
+        presentOnboarding()
         
     }
     

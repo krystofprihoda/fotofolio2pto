@@ -54,6 +54,10 @@
 		FEC94E092C283D4C00FFEB11 /* NotCreatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC94E082C283D4C00FFEB11 /* NotCreatorView.swift */; };
 		FEC94E0B2C2840AA00FFEB11 /* ProfileUserInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC94E0A2C2840AA00FFEB11 /* ProfileUserInfoView.swift */; };
 		FEC94E0D2C2842F500FFEB11 /* ProfilePortfoliosView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC94E0C2C2842F500FFEB11 /* ProfilePortfoliosView.swift */; };
+		FEC94E132C28504900FFEB11 /* LoginCredentialsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC94E122C28504900FFEB11 /* LoginCredentialsView.swift */; };
+		FEC94E152C28521D00FFEB11 /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC94E142C28521D00FFEB11 /* SignInView.swift */; };
+		FEC94E172C2857D100FFEB11 /* OnboardingFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC94E162C2857D100FFEB11 /* OnboardingFlowController.swift */; };
+		FEC94E192C28661100FFEB11 /* SignInViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC94E182C28661100FFEB11 /* SignInViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -106,6 +110,10 @@
 		FEC94E082C283D4C00FFEB11 /* NotCreatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotCreatorView.swift; sourceTree = "<group>"; };
 		FEC94E0A2C2840AA00FFEB11 /* ProfileUserInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileUserInfoView.swift; sourceTree = "<group>"; };
 		FEC94E0C2C2842F500FFEB11 /* ProfilePortfoliosView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePortfoliosView.swift; sourceTree = "<group>"; };
+		FEC94E122C28504900FFEB11 /* LoginCredentialsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginCredentialsView.swift; sourceTree = "<group>"; };
+		FEC94E142C28521D00FFEB11 /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
+		FEC94E162C2857D100FFEB11 /* OnboardingFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingFlowController.swift; sourceTree = "<group>"; };
+		FEC94E182C28661100FFEB11 /* SignInViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -154,6 +162,7 @@
 		FEC94DAB2C243E9A00FFEB11 /* PresentationLayer */ = {
 			isa = PBXGroup;
 			children = (
+				FEC94E112C28502E00FFEB11 /* Onboarding */,
 				FEC94DE82C25BF3D00FFEB11 /* Extensions */,
 				FEC94DBD2C246C4B00FFEB11 /* Profile */,
 				FEC94DBC2C246C4700FFEB11 /* Messages */,
@@ -310,6 +319,17 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		FEC94E112C28502E00FFEB11 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				FEC94E122C28504900FFEB11 /* LoginCredentialsView.swift */,
+				FEC94E142C28521D00FFEB11 /* SignInView.swift */,
+				FEC94E162C2857D100FFEB11 /* OnboardingFlowController.swift */,
+				FEC94E182C28661100FFEB11 /* SignInViewModel.swift */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -381,12 +401,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				FEC94DE32C25917200FFEB11 /* Portfolio.swift in Sources */,
+				FEC94E152C28521D00FFEB11 /* SignInView.swift in Sources */,
 				FEC94DC12C246D8600FFEB11 /* FeedView.swift in Sources */,
 				FEC94DD32C247C6100FFEB11 /* SearchView.swift in Sources */,
 				FEC94DD52C247C9500FFEB11 /* MessagesViewModel.swift in Sources */,
 				FEC94E012C26DD2F00FFEB11 /* SearchResultsView.swift in Sources */,
 				FEC94D9F2C24398200FFEB11 /* fotofolio2pto.xcdatamodeld in Sources */,
 				FEC94DEC2C25DC1600FFEB11 /* Constants.swift in Sources */,
+				FEC94E132C28504900FFEB11 /* LoginCredentialsView.swift in Sources */,
 				FEC94DAF2C243EC100FFEB11 /* BaseHostingController.swift in Sources */,
 				FEC94E052C2701DF00FFEB11 /* Chat.swift in Sources */,
 				FEC94DB12C243F6F00FFEB11 /* BasicView.swift in Sources */,
@@ -402,6 +424,7 @@
 				FEC94DC72C24712400FFEB11 /* ViewModel.swift in Sources */,
 				FEC94DC32C246DC000FFEB11 /* FeedViewModel.swift in Sources */,
 				FEC94E0D2C2842F500FFEB11 /* ProfilePortfoliosView.swift in Sources */,
+				FEC94E172C2857D100FFEB11 /* OnboardingFlowController.swift in Sources */,
 				FEC94E032C26DD7900FFEB11 /* ProfilePictureView.swift in Sources */,
 				FEC94DFF2C262E8F00FFEB11 /* Creator.swift in Sources */,
 				FEC94DF72C26283400FFEB11 /* PortfolioDetailView.swift in Sources */,
@@ -413,6 +436,7 @@
 				FEC94E072C2701F500FFEB11 /* Message.swift in Sources */,
 				FEC94DFD2C262E4000FFEB11 /* User.swift in Sources */,
 				FEC94DD92C247CCA00FFEB11 /* MessagesFlowController.swift in Sources */,
+				FEC94E192C28661100FFEB11 /* SignInViewModel.swift in Sources */,
 				FEC94DB32C24475100FFEB11 /* AppFlowController.swift in Sources */,
 				FEC94DF92C26291E00FFEB11 /* PhotoCarouselView.swift in Sources */,
 				FEC94D992C24398200FFEB11 /* ViewController.swift in Sources */,

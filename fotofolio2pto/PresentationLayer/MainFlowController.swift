@@ -16,7 +16,25 @@ public enum MainTab: Int {
     case profile = 4
 }
 
-public class MainFlowController: BaseFlowController {
+public protocol MainFlowControllerDelegate: AnyObject {
+    func signOut()
+}
+
+public class MainFlowController: BaseFlowController, ProfileFlowControllerDelegate {
+    
+    private let user: String
+    weak var flowDelegate: MainFlowControllerDelegate?
+    
+    init(
+        navigationController: UINavigationController,
+        flowDelegate: MainFlowControllerDelegate? = nil,
+        user: String
+    ) {
+        self.user = user
+        self.flowDelegate = flowDelegate
+        super.init(navigationController: navigationController)
+    }
+    
     public override func setup() -> UIViewController {
         setupMainTabBarController()
     }
@@ -47,7 +65,7 @@ public class MainFlowController: BaseFlowController {
         
         // MARK: Profile
         
-        let profileNavController = getProfileNavigationController()
+        let profileNavController = getProfileNavigationController(for: user)
         navViewControllers.append(profileNavController)
         
         tabBarVC.setViewControllers(navViewControllers, animated: true)
@@ -111,14 +129,18 @@ public class MainFlowController: BaseFlowController {
         return messagesNavController
     }
     
-    private func getProfileNavigationController() -> UINavigationController {
+    private func getProfileNavigationController(for: String) -> UINavigationController {
         let profileNavController = UINavigationController()
         profileNavController.tabBarItem = UITabBarItem(
             title: "Profil",
             image: UIImage(systemName: "person.crop.square"),
             tag: MainTab.profile.rawValue
         )
-        let profileFlowController = ProfileFlowController(navigationController: profileNavController)
+        let profileFlowController = ProfileFlowController(
+            navigationController: profileNavController,
+            flowDelegate: self,
+            user: user
+        )
         let profileRootVC = startChildFlow(profileFlowController)
         profileNavController.viewControllers = [profileRootVC]
         
@@ -200,6 +222,12 @@ public class MainFlowController: BaseFlowController {
         for child in tabFc.childControllers {
             child.stopFlow()
         }
+    }
+    
+    public func signOut() {
+        flowDelegate?.signOut()
+        stopFlow()
+//        navigationController.viewControllers = []
     }
     
     func dismiss(animated: Bool = true) {

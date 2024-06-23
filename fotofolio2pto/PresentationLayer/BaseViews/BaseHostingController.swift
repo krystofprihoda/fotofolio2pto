@@ -68,8 +68,6 @@ class BaseHostingController<Content>: UIHostingController<AnyView>, UIGestureRec
 
 public extension UINavigationBar {
     func setTransparency(_ transparent: Bool) {
-//        setBackgroundImage(transparent ? UIImage() : nil, for: .default)
-//        shadowImage = transparent ? UIImage() : nil
         isTranslucent = transparent
     }
 }
