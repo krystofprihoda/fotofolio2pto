@@ -20,7 +20,7 @@ public protocol MainFlowControllerDelegate: AnyObject {
     func signOut()
 }
 
-public class MainFlowController: BaseFlowController, ProfileFlowControllerDelegate {
+public class MainFlowController: BaseFlowController {
     
     private let user: String
     weak var flowDelegate: MainFlowControllerDelegate?
@@ -224,13 +224,14 @@ public class MainFlowController: BaseFlowController, ProfileFlowControllerDelega
         }
     }
     
+    func dismiss(animated: Bool = true) {
+        navigationController.dismiss(animated: animated)
+    }
+}
+
+extension MainFlowController: ProfileFlowControllerDelegate {
     public func signOut() {
         flowDelegate?.signOut()
         stopFlow()
-//        navigationController.viewControllers = []
-    }
-    
-    func dismiss(animated: Bool = true) {
-        navigationController.dismiss(animated: animated)
     }
 }

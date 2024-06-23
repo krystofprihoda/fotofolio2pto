@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-public class AppFlowController: BaseFlowController, OnboardingFlowControllerDelegate, ProfileFlowControllerDelegate, MainFlowControllerDelegate {
+public class AppFlowController: BaseFlowController, OnboardingFlowControllerDelegate {
     public func start() {
         setupAppearance()
         
@@ -42,12 +42,6 @@ public class AppFlowController: BaseFlowController, OnboardingFlowControllerDele
         navigationController.viewControllers = [rootVc]
     }
     
-    public func signOut() {
-        UserDefaults.standard.removeObject(forKey: "signedInUser")
-        presentOnboarding()
-        
-    }
-    
     private func setupAppearance() {
         // Replace with AppTheme
         
@@ -64,5 +58,12 @@ public class AppFlowController: BaseFlowController, OnboardingFlowControllerDele
         UITabBar.appearance().shadowImage = UIImage()
         UITabBar.appearance().backgroundImage = UIImage()
         UITabBar.appearance().backgroundColor = .white
+    }
+}
+
+extension AppFlowController: MainFlowControllerDelegate {
+    public func signOut() {
+        UserDefaults.standard.removeObject(forKey: "signedInUser")
+        presentOnboarding()
     }
 }
