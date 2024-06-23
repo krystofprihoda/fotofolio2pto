@@ -171,19 +171,11 @@
 		FEC94DAC2C243EA400FFEB11 /* BaseViews */ = {
 			isa = PBXGroup;
 			children = (
-				FEC94DAD2C243EAE00FFEB11 /* BaseHostingController */,
+				FEC94DAE2C243EC100FFEB11 /* BaseHostingController.swift */,
 				FEC94DED2C25ECDC00FFEB11 /* BottomSheetView.swift */,
 				FEC94DEF2C25ED5C00FFEB11 /* RoundedCorner.swift */,
 			);
 			path = BaseViews;
-			sourceTree = "<group>";
-		};
-		FEC94DAD2C243EAE00FFEB11 /* BaseHostingController */ = {
-			isa = PBXGroup;
-			children = (
-				FEC94DAE2C243EC100FFEB11 /* BaseHostingController.swift */,
-			);
-			path = BaseHostingController;
 			sourceTree = "<group>";
 		};
 		FEC94DB42C2447AA00FFEB11 /* Utilities */ = {
@@ -203,10 +195,7 @@
 				FEC94DBE2C246C5C00FFEB11 /* FeedFlowController.swift */,
 				FEC94DC02C246D8600FFEB11 /* FeedView.swift */,
 				FEC94DC22C246DC000FFEB11 /* FeedViewModel.swift */,
-				FEC94DE42C2594E200FFEB11 /* PortfolioView.swift */,
-				FEC94DF12C25EF7900FFEB11 /* FilterView.swift */,
-				FEC94DF32C25F57700FFEB11 /* FilterViewModel.swift */,
-				FEC94DF82C26291E00FFEB11 /* PhotoCarouselView.swift */,
+				FEC94E102C2847ED00FFEB11 /* Views */,
 			);
 			path = Feed;
 			sourceTree = "<group>";
@@ -214,7 +203,7 @@
 		FEC94DBA2C246C3800FFEB11 /* Selection */ = {
 			isa = PBXGroup;
 			children = (
-				FEC94DF52C26282000FFEB11 /* Detail */,
+				FEC94DF52C26282000FFEB11 /* Views */,
 				FEC94DC82C2479B300FFEB11 /* SelectionFlowController.swift */,
 				FEC94DCA2C2479BE00FFEB11 /* SelectionView.swift */,
 				FEC94DCC2C2479CD00FFEB11 /* SelectionViewModel.swift */,
@@ -228,7 +217,7 @@
 				FEC94DCE2C247C4C00FFEB11 /* SearchViewModel.swift */,
 				FEC94DD02C247C5500FFEB11 /* SearchFlowController.swift */,
 				FEC94DD22C247C6100FFEB11 /* SearchView.swift */,
-				FEC94E002C26DD2F00FFEB11 /* SearchResultsView.swift */,
+				FEC94E0F2C2847D300FFEB11 /* Views */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -249,10 +238,7 @@
 				FEC94DDA2C247D4B00FFEB11 /* ProfileView.swift */,
 				FEC94DDC2C247D7600FFEB11 /* ProfileViewModel.swift */,
 				FEC94DDE2C247D9800FFEB11 /* ProfileFlowController.swift */,
-				FEC94E022C26DD7900FFEB11 /* ProfilePictureView.swift */,
-				FEC94E082C283D4C00FFEB11 /* NotCreatorView.swift */,
-				FEC94E0A2C2840AA00FFEB11 /* ProfileUserInfoView.swift */,
-				FEC94E0C2C2842F500FFEB11 /* ProfilePortfoliosView.swift */,
+				FEC94E0E2C2847BF00FFEB11 /* Views */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -285,13 +271,43 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
-		FEC94DF52C26282000FFEB11 /* Detail */ = {
+		FEC94DF52C26282000FFEB11 /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				FEC94DF62C26283400FFEB11 /* PortfolioDetailView.swift */,
 				FEC94DFA2C262AC400FFEB11 /* AuthorDetailView.swift */,
 			);
-			path = Detail;
+			path = Views;
+			sourceTree = "<group>";
+		};
+		FEC94E0E2C2847BF00FFEB11 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				FEC94E022C26DD7900FFEB11 /* ProfilePictureView.swift */,
+				FEC94E082C283D4C00FFEB11 /* NotCreatorView.swift */,
+				FEC94E0A2C2840AA00FFEB11 /* ProfileUserInfoView.swift */,
+				FEC94E0C2C2842F500FFEB11 /* ProfilePortfoliosView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		FEC94E0F2C2847D300FFEB11 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				FEC94E002C26DD2F00FFEB11 /* SearchResultsView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		FEC94E102C2847ED00FFEB11 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				FEC94DE42C2594E200FFEB11 /* PortfolioView.swift */,
+				FEC94DF12C25EF7900FFEB11 /* FilterView.swift */,
+				FEC94DF32C25F57700FFEB11 /* FilterViewModel.swift */,
+				FEC94DF82C26291E00FFEB11 /* PhotoCarouselView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
