@@ -12,7 +12,7 @@ final class SignInViewModel: BaseViewModel, ViewModel, ObservableObject {
 
     // MARK: Dependencies
 
-    // UCs
+    private let loginWithCredentialsUseCase = LoginWithCredentialsUseCaseImpl()
 
     private weak var flowController: OnboardingFlowController?
 
@@ -66,6 +66,7 @@ final class SignInViewModel: BaseViewModel, ViewModel, ObservableObject {
 
     private func signIn() {
         // checks
+        loginWithCredentialsUseCase.execute(username: state.username, password: state.password)
         flowController?.signIn(username: state.username)
     }
     

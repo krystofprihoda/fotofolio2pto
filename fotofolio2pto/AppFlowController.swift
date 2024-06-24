@@ -63,7 +63,6 @@ public class AppFlowController: BaseFlowController, OnboardingFlowControllerDele
 
 extension AppFlowController: MainFlowControllerDelegate {
     public func signOut() {
-        UserDefaults.standard.removeObject(forKey: "signedInUser")
         presentOnboarding()
     }
 }

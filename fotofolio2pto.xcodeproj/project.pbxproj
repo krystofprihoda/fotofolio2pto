@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FE5F8A782C296D81001EE8AF /* AuthRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE5F8A772C296D81001EE8AF /* AuthRepository.swift */; };
+		FE5F8A7C2C296ECA001EE8AF /* LoginWithCredentialsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE5F8A7B2C296ECA001EE8AF /* LoginWithCredentialsUseCase.swift */; };
+		FE5F8A802C2971C7001EE8AF /* AuthRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE5F8A7F2C2971C7001EE8AF /* AuthRepositoryImpl.swift */; };
+		FE5F8A842C297338001EE8AF /* UserDefaultsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE5F8A832C297338001EE8AF /* UserDefaultsProvider.swift */; };
+		FE5F8A862C29737F001EE8AF /* SystemUserDefaultsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE5F8A852C29737F001EE8AF /* SystemUserDefaultsProvider.swift */; };
+		FE5F8A892C2975FC001EE8AF /* LogoutUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE5F8A882C2975FC001EE8AF /* LogoutUseCase.swift */; };
 		FEC94D952C24398200FFEB11 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC94D942C24398200FFEB11 /* AppDelegate.swift */; };
 		FEC94D992C24398200FFEB11 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC94D982C24398200FFEB11 /* ViewController.swift */; };
 		FEC94D9F2C24398200FFEB11 /* fotofolio2pto.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FEC94D9D2C24398200FFEB11 /* fotofolio2pto.xcdatamodeld */; };
@@ -61,6 +67,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		FE5F8A772C296D81001EE8AF /* AuthRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRepository.swift; sourceTree = "<group>"; };
+		FE5F8A7B2C296ECA001EE8AF /* LoginWithCredentialsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginWithCredentialsUseCase.swift; sourceTree = "<group>"; };
+		FE5F8A7F2C2971C7001EE8AF /* AuthRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRepositoryImpl.swift; sourceTree = "<group>"; };
+		FE5F8A832C297338001EE8AF /* UserDefaultsProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsProvider.swift; sourceTree = "<group>"; };
+		FE5F8A852C29737F001EE8AF /* SystemUserDefaultsProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemUserDefaultsProvider.swift; sourceTree = "<group>"; };
+		FE5F8A882C2975FC001EE8AF /* LogoutUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoutUseCase.swift; sourceTree = "<group>"; };
 		FEC94D912C24398200FFEB11 /* fotofolio2pto.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = fotofolio2pto.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FEC94D942C24398200FFEB11 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FEC94D982C24398200FFEB11 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -127,6 +139,73 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		FE5F8A762C296D6C001EE8AF /* Repositories */ = {
+			isa = PBXGroup;
+			children = (
+				FE5F8A772C296D81001EE8AF /* AuthRepository.swift */,
+			);
+			path = Repositories;
+			sourceTree = "<group>";
+		};
+		FE5F8A792C296EAC001EE8AF /* UseCases */ = {
+			isa = PBXGroup;
+			children = (
+				FE5F8A872C2975E9001EE8AF /* User */,
+				FE5F8A7A2C296EB7001EE8AF /* Auth */,
+			);
+			path = UseCases;
+			sourceTree = "<group>";
+		};
+		FE5F8A7A2C296EB7001EE8AF /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				FE5F8A7B2C296ECA001EE8AF /* LoginWithCredentialsUseCase.swift */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
+		FE5F8A7D2C297186001EE8AF /* DataLayer */ = {
+			isa = PBXGroup;
+			children = (
+				FE5F8A812C29731A001EE8AF /* Providers */,
+				FE5F8A7E2C2971B7001EE8AF /* Repositories */,
+			);
+			path = DataLayer;
+			sourceTree = "<group>";
+		};
+		FE5F8A7E2C2971B7001EE8AF /* Repositories */ = {
+			isa = PBXGroup;
+			children = (
+				FE5F8A7F2C2971C7001EE8AF /* AuthRepositoryImpl.swift */,
+			);
+			path = Repositories;
+			sourceTree = "<group>";
+		};
+		FE5F8A812C29731A001EE8AF /* Providers */ = {
+			isa = PBXGroup;
+			children = (
+				FE5F8A822C297325001EE8AF /* UserDefaults */,
+			);
+			path = Providers;
+			sourceTree = "<group>";
+		};
+		FE5F8A822C297325001EE8AF /* UserDefaults */ = {
+			isa = PBXGroup;
+			children = (
+				FE5F8A832C297338001EE8AF /* UserDefaultsProvider.swift */,
+				FE5F8A852C29737F001EE8AF /* SystemUserDefaultsProvider.swift */,
+			);
+			path = UserDefaults;
+			sourceTree = "<group>";
+		};
+		FE5F8A872C2975E9001EE8AF /* User */ = {
+			isa = PBXGroup;
+			children = (
+				FE5F8A882C2975FC001EE8AF /* LogoutUseCase.swift */,
+			);
+			path = User;
+			sourceTree = "<group>";
+		};
 		FEC94D882C24398200FFEB11 = {
 			isa = PBXGroup;
 			children = (
@@ -146,6 +225,7 @@
 		FEC94D932C24398200FFEB11 /* fotofolio2pto */ = {
 			isa = PBXGroup;
 			children = (
+				FE5F8A7D2C297186001EE8AF /* DataLayer */,
 				FEC94DE02C25914F00FFEB11 /* DomainLayer */,
 				FEC94DB22C24475100FFEB11 /* AppFlowController.swift */,
 				FEC94DAB2C243E9A00FFEB11 /* PresentationLayer */,
@@ -255,6 +335,8 @@
 		FEC94DE02C25914F00FFEB11 /* DomainLayer */ = {
 			isa = PBXGroup;
 			children = (
+				FE5F8A792C296EAC001EE8AF /* UseCases */,
+				FE5F8A762C296D6C001EE8AF /* Repositories */,
 				FEC94DE12C25916600FFEB11 /* DomainModels */,
 			);
 			path = DomainLayer;
@@ -403,13 +485,16 @@
 				FEC94DE32C25917200FFEB11 /* Portfolio.swift in Sources */,
 				FEC94E152C28521D00FFEB11 /* SignInView.swift in Sources */,
 				FEC94DC12C246D8600FFEB11 /* FeedView.swift in Sources */,
+				FE5F8A782C296D81001EE8AF /* AuthRepository.swift in Sources */,
 				FEC94DD32C247C6100FFEB11 /* SearchView.swift in Sources */,
 				FEC94DD52C247C9500FFEB11 /* MessagesViewModel.swift in Sources */,
 				FEC94E012C26DD2F00FFEB11 /* SearchResultsView.swift in Sources */,
 				FEC94D9F2C24398200FFEB11 /* fotofolio2pto.xcdatamodeld in Sources */,
+				FE5F8A862C29737F001EE8AF /* SystemUserDefaultsProvider.swift in Sources */,
 				FEC94DEC2C25DC1600FFEB11 /* Constants.swift in Sources */,
 				FEC94E132C28504900FFEB11 /* LoginCredentialsView.swift in Sources */,
 				FEC94DAF2C243EC100FFEB11 /* BaseHostingController.swift in Sources */,
+				FE5F8A892C2975FC001EE8AF /* LogoutUseCase.swift in Sources */,
 				FEC94E052C2701DF00FFEB11 /* Chat.swift in Sources */,
 				FEC94DB12C243F6F00FFEB11 /* BasicView.swift in Sources */,
 				FEC94DE52C2594E200FFEB11 /* PortfolioView.swift in Sources */,
@@ -424,14 +509,17 @@
 				FEC94DC72C24712400FFEB11 /* ViewModel.swift in Sources */,
 				FEC94DC32C246DC000FFEB11 /* FeedViewModel.swift in Sources */,
 				FEC94E0D2C2842F500FFEB11 /* ProfilePortfoliosView.swift in Sources */,
+				FE5F8A802C2971C7001EE8AF /* AuthRepositoryImpl.swift in Sources */,
 				FEC94E172C2857D100FFEB11 /* OnboardingFlowController.swift in Sources */,
 				FEC94E032C26DD7900FFEB11 /* ProfilePictureView.swift in Sources */,
 				FEC94DFF2C262E8F00FFEB11 /* Creator.swift in Sources */,
 				FEC94DF72C26283400FFEB11 /* PortfolioDetailView.swift in Sources */,
+				FE5F8A7C2C296ECA001EE8AF /* LoginWithCredentialsUseCase.swift in Sources */,
 				FEC94DD72C247CB200FFEB11 /* MessagesView.swift in Sources */,
 				FEC94DF42C25F57700FFEB11 /* FilterViewModel.swift in Sources */,
 				FEC94DB82C244E9E00FFEB11 /* MainFlowController.swift in Sources */,
 				FEC94E0B2C2840AA00FFEB11 /* ProfileUserInfoView.swift in Sources */,
+				FE5F8A842C297338001EE8AF /* UserDefaultsProvider.swift in Sources */,
 				FEC94DFB2C262AC400FFEB11 /* AuthorDetailView.swift in Sources */,
 				FEC94E072C2701F500FFEB11 /* Message.swift in Sources */,
 				FEC94DFD2C262E4000FFEB11 /* User.swift in Sources */,

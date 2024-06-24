@@ -13,6 +13,7 @@ final class ProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
     
     // MARK: Dependencies
     
+    private let logOutUseCase = LogoutUseCaseImpl()
     // UCs
     
     private weak var flowController: ProfileFlowController?
@@ -79,6 +80,7 @@ final class ProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
     }
     
     private func signOut() {
+        logOutUseCase.execute()
         flowController?.flowDelegate?.signOut()
     }
 }

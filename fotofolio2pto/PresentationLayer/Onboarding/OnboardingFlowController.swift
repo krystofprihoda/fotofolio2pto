@@ -36,7 +36,6 @@ class OnboardingFlowController: BaseFlowController {
     }
     
     public func signIn(username: String) {
-        UserDefaults.standard.set(username, forKey: "signedInUser")
         finishOnboarding()
         flowDelegate?.setupMain(for: username)
     }
