@@ -35,28 +35,41 @@ class FeedFlowController: BaseFlowController {
     }
     
     func dismissFilter() {
+        removeBackgroundTapView()
         navigationController.dismiss(animated: true)
     }
 }
 
 /// Hack for recognizing taps outside the bottom sheet
-extension FeedFlowController {
+extension FeedFlowController: UISheetPresentationControllerDelegate {
+    // Implement the delegate methods to handle dismissal
+    func presentationControllerShouldDismiss(_ presentationController: UIPresentationController) -> Bool {
+        return true // Allow dismissal
+    }
+
+    func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
+        // Additional actions after dismissal if needed
+        removeBackgroundTapView()
+    }
+    
     private func addBackgroundTapView() {
         guard let window = UIApplication.shared.keyWindow else { return }
         
         let tapView = UIView(frame: window.bounds)
         tapView.backgroundColor = UIColor.clear
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleFilterBackgroundTap))
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleBackgroundTap))
         tapView.addGestureRecognizer(tapGesture)
         
         window.addSubview(tapView)
         backgroundTapView = tapView
     }
 
-    @objc private func handleFilterBackgroundTap() {
-        dismissFilter()
-        
+    private func removeBackgroundTapView() {
         backgroundTapView?.removeFromSuperview()
         backgroundTapView = nil
+    }
+
+    @objc private func handleBackgroundTap() {
+        dismissFilter()
     }
 }
