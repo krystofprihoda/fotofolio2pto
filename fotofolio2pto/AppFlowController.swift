@@ -30,6 +30,7 @@ public class AppFlowController: BaseFlowController, OnboardingFlowControllerDele
         let rootVc = startChildFlow(flowController)
         navigationController.navigationBar.isHidden = true
         navigationController.viewControllers = [rootVc]
+        navigationController.overrideUserInterfaceStyle = .light
     }
     
     private func presentOnboarding() {
@@ -40,6 +41,7 @@ public class AppFlowController: BaseFlowController, OnboardingFlowControllerDele
         let rootVc = startChildFlow(flowController)
         navigationController.navigationBar.isHidden = true
         navigationController.viewControllers = [rootVc]
+        navigationController.overrideUserInterfaceStyle = .light
     }
     
     private func setupAppearance() {
