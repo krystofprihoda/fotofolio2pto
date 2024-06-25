@@ -24,7 +24,7 @@ struct ProfileView: View {
                             .padding()
                             .frame(width: geo.size.width, height: geo.size.height)
                     } else {
-                        ProfileUserInfoView(user: viewModel.state.userData, profileOwner: viewModel.state.userData?.username == viewModel.state.username)
+                        ProfileUserInfoView(user: viewModel.state.userData, profileOwner: viewModel.state.isProfileOwner)
                             .padding(.top)
                         
                         if viewModel.state.userData?.creator != nil {
@@ -36,10 +36,9 @@ struct ProfileView: View {
                 }
             }
         }
-        .setupNavBarAndTitle("@\(viewModel.state.userData?.username ?? "")")
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarTrailing) {
-                if viewModel.state.userData?.username == viewModel.state.username && viewModel.state.userData?.creator != nil {
+                if viewModel.state.isProfileOwner && viewModel.state.userData?.creator != nil {
                     Button(action: {
                         // NewPortfolioView()
                     }) {
@@ -52,7 +51,7 @@ struct ProfileView: View {
                 }
                 
                 HStack {
-                    if viewModel.state.userData?.username == viewModel.state.username {
+                    if viewModel.state.isProfileOwner {
                         Menu(content: {
                             Button(action: {
                                 // // EditProfileView()
@@ -89,6 +88,7 @@ struct ProfileView: View {
                 .padding(.trailing, 5)
             }
         }
+        .setupNavBarAndTitle("@\(viewModel.state.userData?.username ?? "")")
         .lifecycle(viewModel)
     }
 }

@@ -46,6 +46,16 @@ class FeedFlowController: BaseFlowController {
         removeBackgroundTapView()
         navigationController.dismiss(animated: true)
     }
+    
+    func showProfile(user: User) {
+        let fc = ProfileFlowController(navigationController: navigationController, user: user.username)
+        let vc = startChildFlow(fc)
+//        navigationController.setNavigationBarHidden(true, animated: true)
+        navigationController.navigationBar.tintColor = .black
+        navigationController.navigationBar.barStyle = .black
+        navigationController.navigationBar.tintColor = .black
+        navigationController.pushViewController(vc, animated: true)
+    }
 }
 
 /// Hack for recognizing taps outside the bottom sheet

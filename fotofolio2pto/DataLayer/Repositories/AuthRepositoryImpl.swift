@@ -22,4 +22,8 @@ public class AuthRepositoryImpl: AuthRepository {
     public func loginWithCredentials(username: String, password: String) {
         defaults.update(.signedInUser, value: username)
     }
+    
+    public func getLoggedInUser() -> String? {
+        return defaults.read(.signedInUser)
+    }
 }

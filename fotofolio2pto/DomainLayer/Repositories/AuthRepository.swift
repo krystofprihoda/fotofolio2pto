@@ -10,4 +10,5 @@ import Foundation
 public protocol AuthRepository {
     func logout()
     func loginWithCredentials(username: String, password: String)
+    func getLoggedInUser() -> String?
 }

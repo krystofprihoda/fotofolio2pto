@@ -23,11 +23,13 @@ final class ProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
     
     init(
         flowController: ProfileFlowController?,
-        user: String
+        user: String,
+        isProfileOwner: Bool = false
     ) {
         self.flowController = flowController
         super.init()
         state.username = user
+        state.isProfileOwner = isProfileOwner
     }
     
     // MARK: Lifecycle
@@ -42,9 +44,10 @@ final class ProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
     // MARK: State
     
     struct State {
-        var isLoadingUser: Bool = false
-        var isLoadingPortfolios: Bool = false
-        var username: String = ""
+        var isLoadingUser = false
+        var isLoadingPortfolios = false
+        var isProfileOwner = false
+        var username = ""
         var userData: User? = .dummy2
         var portfolios: [Portfolio] = [.dummyPortfolio2, .dummyPortfolio3, .dummyPortfolio5]
     }

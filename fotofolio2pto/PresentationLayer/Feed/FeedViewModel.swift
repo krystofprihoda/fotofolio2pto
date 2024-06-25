@@ -63,6 +63,7 @@ final class FeedViewModel: BaseViewModel, ViewModel, ObservableObject {
         case filter
         case flagPortfolio(Int)
         case unflagPortfolio(Int)
+        case showProfile(User)
     }
     
     @discardableResult
@@ -75,6 +76,7 @@ final class FeedViewModel: BaseViewModel, ViewModel, ObservableObject {
             case .filter: showFilter()
             case .flagPortfolio(let id): flagPortfolio(withId: id)
             case .unflagPortfolio(let id): unflagPortfolio(withId: id)
+            case .showProfile(let user): showProfile(user: user)
             }
         })
     }
@@ -127,6 +129,10 @@ final class FeedViewModel: BaseViewModel, ViewModel, ObservableObject {
     
     private func fetchFlaggedPortfolios() {
         state.flaggedPortfolioIds = getFlaggedPortfoliosUseCase.execute(idOnly: true)
+    }
+    
+    private func showProfile(user: User) {
+        flowController?.showProfile(user: user)
     }
 }
 

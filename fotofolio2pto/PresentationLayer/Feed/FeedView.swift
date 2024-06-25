@@ -40,7 +40,7 @@ struct FeedView: View {
                                 isFlagged: viewModel.state.flaggedPortfolioIds.contains(where: { $0 == portfolio.id }),
                                 flagAction: { viewModel.onIntent(.flagPortfolio(portfolio.id)) },
                                 unflagAction: { viewModel.onIntent(.unflagPortfolio(portfolio.id)) },
-                                openProfileAction: {}
+                                openProfileAction: { viewModel.onIntent(.showProfile(portfolio.author)) }
                             )
                         }
                     }

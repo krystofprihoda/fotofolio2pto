@@ -13,6 +13,7 @@ public extension Resolver {
         /// Auth
         register { LogoutUseCaseImpl(authRepository: resolve()) as LogoutUseCase }
         register { LoginWithCredentialsUseCaseImpl(authRepository: resolve()) as LoginWithCredentialsUseCase }
+        register { GetLoggedInUserUseCaseImpl(authRepository: resolve()) as GetLoggedInUserUseCase }
         
         /// Portfolios
         register { GetAllPortfoliosUseCaseImpl(feedRepository: resolve()) as GetAllPortfoliosUseCase }

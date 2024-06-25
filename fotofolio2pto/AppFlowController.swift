@@ -7,12 +7,16 @@
 
 import Foundation
 import UIKit
+import Resolver
 
 public class AppFlowController: BaseFlowController, OnboardingFlowControllerDelegate {
+    
+    @LazyInjected private var getLoggedInUserUseCase: GetLoggedInUserUseCase
+    
     public func start() {
         setupAppearance()
         
-        let user = UserDefaults.standard.string(forKey: "signedInUser")
+        let user = getLoggedInUserUseCase.execute()
         
         if let user {
             setupMain(for: user)

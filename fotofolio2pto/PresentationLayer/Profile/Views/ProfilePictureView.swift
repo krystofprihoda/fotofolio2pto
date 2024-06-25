@@ -26,11 +26,11 @@ struct ProfilePictureView: View {
                         Circle()
                             .foregroundColor(.gray).brightness(0.33)
                             .aspectRatio(1.0, contentMode: .fit)
-                            .frame(width: width)
 
                         ProgressView()
                             .progressViewStyle(CircularProgressViewStyle())
                     }
+                    .frame(width: width)
                 }
             } else if case MyImageEnum.local(let img) = pic.src {
                 img

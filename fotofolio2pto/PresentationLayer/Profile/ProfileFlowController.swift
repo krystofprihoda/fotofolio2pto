@@ -15,20 +15,24 @@ public protocol ProfileFlowControllerDelegate: AnyObject {
 class ProfileFlowController: BaseFlowController {
     
     private let user: String
-    weak var flowDelegate: ProfileFlowControllerDelegate?
+    private let isProfileOwner: Bool
     
+    weak var flowDelegate: ProfileFlowControllerDelegate?
+
     init(
         navigationController: UINavigationController,
         flowDelegate: ProfileFlowControllerDelegate? = nil,
-        user: String
+        user: String,
+        isProfileOwner: Bool = false
     ) {
         self.user = user
         self.flowDelegate = flowDelegate
+        self.isProfileOwner = isProfileOwner
         super.init(navigationController: navigationController)
     }
     
     override func setup() -> UIViewController {
-        let vm = ProfileViewModel(flowController: self, user: user)
+        let vm = ProfileViewModel(flowController: self, user: user, isProfileOwner: isProfileOwner)
         let view = ProfileView(viewModel: vm)
         let vc = BaseHostingController(rootView: view)
         return vc
