@@ -50,7 +50,7 @@ final class SelectionViewModel: BaseViewModel, ViewModel, ObservableObject {
     enum Intent {
         case getFlagged
         case removeAllFlagged
-        case removeFromFlagged(UUID)
+        case removeFromFlagged(Int)
     }
     
     @discardableResult
@@ -86,7 +86,7 @@ final class SelectionViewModel: BaseViewModel, ViewModel, ObservableObject {
         }
     }
     
-    private func removeFromFlagged(id: UUID) {
+    private func removeFromFlagged(id: Int) {
         do {
             try unflagPortfolioUseCase.execute(id: id)
             state.portfolios.removeAll(where: { $0.id == id })

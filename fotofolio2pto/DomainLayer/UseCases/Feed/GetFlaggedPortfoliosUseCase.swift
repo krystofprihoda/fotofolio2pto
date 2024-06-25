@@ -9,7 +9,7 @@ import Foundation
 
 public protocol GetFlaggedPortfoliosUseCase {
     func execute() async throws -> [Portfolio]
-    func execute(idOnly: Bool) -> [UUID]
+    func execute(idOnly: Bool) -> [Int]
 }
 
 public struct GetFlaggedPortfoliosUseCaseImpl: GetFlaggedPortfoliosUseCase {
@@ -24,7 +24,7 @@ public struct GetFlaggedPortfoliosUseCaseImpl: GetFlaggedPortfoliosUseCase {
         try await feedRepository.getFlagged()
     }
     
-    public func execute(idOnly: Bool) -> [UUID] {
+    public func execute(idOnly: Bool) -> [Int] {
         feedRepository.getFlaggedIds()
     }
 }

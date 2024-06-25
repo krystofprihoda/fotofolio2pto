@@ -10,7 +10,6 @@ import Foundation
 public class FeedRepositoryImpl: FeedRepository {
     
     private static var portfolios: [Portfolio] = Portfolio.sampleData
-    private static var flagged: [UUID] = []
     
     private let defaults: UserDefaultsProvider
     
@@ -34,44 +33,42 @@ public class FeedRepositoryImpl: FeedRepository {
         }
     }
     
-    public func getById(_ id: UUID) async throws -> Portfolio {
+    public func getById(_ id: Int) async throws -> Portfolio {
         try await Task.sleep(for: .seconds(0.5))
         guard let folio = FeedRepositoryImpl.portfolios.first(where: { $0.id == id }) else { throw ObjectError.nonExistent }
         return folio
     }
     
-    public func addToFlagged(portfolioId: UUID) throws {
-        guard !FeedRepositoryImpl.flagged.contains(where: { $0 == portfolioId }) else { return }
-        FeedRepositoryImpl.flagged.append(portfolioId)
+    public func addToFlagged(portfolioId: Int) throws {
+//        guard !FeedRepositoryImpl.flagged.contains(where: { $0 == portfolioId }) else { return }
+//        FeedRepositoryImpl.flagged.append(portfolioId)
         
-//        let flagged: FlaggedPortfolios? = defaults.read(.flagged) ?? nil
-//       guard let flagged else { throw ObjectError.nonExistent }
-//        var toBeFlagged: [UUID] = flagged?.portfolios ?? []
-//        toBeFlagged.append(portfolioId)
-//        defaults.update(.flagged, value: FlaggedPortfolios(portfolios: [portfolioId]))
+        var flagged = getFlaggedIds()
+        guard !flagged.contains(where: { $0 == portfolioId }) else { return }
+        flagged.append(portfolioId)
+        defaults.update(.flagged, value: flagged)
     }
     
-    public func removeFromFlagged(portfolioId: UUID) throws {
-        FeedRepositoryImpl.flagged.removeAll(where: { $0 == portfolioId })
+    public func removeFromFlagged(portfolioId: Int) throws {
+//        FeedRepositoryImpl.flagged.removeAll(where: { $0 == portfolioId })
         
-//        let flagged: FlaggedPortfolios? = defaults.read(.flagged) ?? nil
-//        guard let flagged else { throw ObjectError.nonExistent }
-//        var updatedFlagged: [UUID] = flagged.portfolios
-//        updatedFlagged.removeAll(where: { $0 == portfolioId })
-//        defaults.update(.flagged, value: FlaggedPortfolios(portfolios: updatedFlagged))
+        var flagged = getFlaggedIds()
+        flagged.removeAll(where: { $0 == portfolioId })
+        defaults.update(.flagged, value: flagged)
     }
     
     public func getFlagged() async throws -> [Portfolio] {
-        return try await FeedRepositoryImpl.flagged.asyncMap({ id in
+        let flagged = getFlaggedIds()
+        return try await flagged.asyncMap({ id in
             try await getById(id)
         })
     }
-    
-    public func getFlaggedIds() -> [UUID] {
-        return FeedRepositoryImpl.flagged
+        
+    public func getFlaggedIds() -> [Int] {
+        return defaults.read(.flagged) ?? []
     }
     
     public func removeAllFlagged() throws {
-        FeedRepositoryImpl.flagged.removeAll()
+        defaults.delete(.flagged)
     }
 }

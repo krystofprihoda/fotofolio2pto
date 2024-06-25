@@ -12,7 +12,7 @@ import SwiftUI
 let LOREMFLICKR = "https://loremflickr.com/1000/1000/"
 
 public struct Portfolio: Identifiable, Equatable {
-    public let id: UUID
+    public let id: Int
     public var author: User
     public var name: String
     public var photos: [IImage]
@@ -22,7 +22,7 @@ public struct Portfolio: Identifiable, Equatable {
     public var isFlagged: Bool
     
     init(
-        id: UUID,
+        id: Int,
         author: User,
         name: String,
         photos: [IImage],
@@ -60,7 +60,7 @@ extension Portfolio {
     
     static var dummyPortfolio1: Portfolio {
         Portfolio(
-            id: UUID(),
+            id: 1,
             author: .dummy1,
             name: "Portréty",
             photos: [
@@ -77,7 +77,7 @@ extension Portfolio {
 
     static var dummyPortfolio2: Portfolio {
         Portfolio(
-            id: UUID(),
+            id: 2,
             author: .dummy2,
             name: "Lifestyle",
             photos: [
@@ -93,7 +93,7 @@ extension Portfolio {
 
     static var dummyPortfolio3: Portfolio {
         Portfolio(
-            id: UUID(),
+            id: 3,
             author: .dummy1,
             name: "Svatby",
             photos: [
@@ -109,7 +109,7 @@ extension Portfolio {
 
     static var dummyPortfolio4: Portfolio {
         Portfolio(
-            id: UUID(),
+            id: 4,
             author: .dummy3,
             name: "karlova architektura",
             photos: [
@@ -125,7 +125,7 @@ extension Portfolio {
 
     static var dummyPortfolio5: Portfolio {
         Portfolio(
-            id: UUID(),
+            id: 4,
             author: .dummy5,
             name: "Svatby",
             photos: [
@@ -141,7 +141,7 @@ extension Portfolio {
 
     static var dummyPortfolio6: Portfolio {
         Portfolio(
-            id: UUID(),
+            id: 5,
             author: .dummy2,
             name: "Svatby",
             photos: [
@@ -157,7 +157,7 @@ extension Portfolio {
 
     static var dummyPortfolio7: Portfolio {
         Portfolio(
-            id: UUID(),
+            id: 6,
             author: .dummy1,
             name: "Architektura",
             photos: [
@@ -173,7 +173,7 @@ extension Portfolio {
     
     static var dummyPortfolio8: Portfolio {
         Portfolio(
-            id: UUID(),
+            id: 7,
             author: .dummy6,
             name: "Portréty",
             photos: [

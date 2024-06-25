@@ -10,10 +10,10 @@ import Foundation
 public protocol FeedRepository {
     func getAll() async throws -> [Portfolio]
     func getAll(sorted: SortByEnum) async throws -> [Portfolio]
-    func getById(_ id: UUID) async throws -> Portfolio
-    func addToFlagged(portfolioId: UUID) throws
-    func removeFromFlagged(portfolioId: UUID) throws
+    func getById(_ id: Int) async throws -> Portfolio
+    func addToFlagged(portfolioId: Int) throws
+    func removeFromFlagged(portfolioId: Int) throws
     func getFlagged() async throws -> [Portfolio]
-    func getFlaggedIds() -> [UUID]
+    func getFlaggedIds() -> [Int]
     func removeAllFlagged() throws
 }

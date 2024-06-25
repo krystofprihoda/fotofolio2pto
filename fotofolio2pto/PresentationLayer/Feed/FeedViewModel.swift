@@ -47,7 +47,7 @@ final class FeedViewModel: BaseViewModel, ViewModel, ObservableObject {
     struct State {
         var isLoading: Bool = false
         var portfolios: [Portfolio] = []
-        var flaggedPortfolioIds: [UUID] = []
+        var flaggedPortfolioIds: [Int] = []
         var isFiltering: Bool = false
         var arrowAngle: Int = 0
     }
@@ -61,8 +61,8 @@ final class FeedViewModel: BaseViewModel, ViewModel, ObservableObject {
         case sortByDate
         case sortByRating
         case filter
-        case flagPortfolio(UUID)
-        case unflagPortfolio(UUID)
+        case flagPortfolio(Int)
+        case unflagPortfolio(Int)
     }
     
     @discardableResult
@@ -107,7 +107,7 @@ final class FeedViewModel: BaseViewModel, ViewModel, ObservableObject {
         flowController?.presentFilter()
     }
     
-    private func flagPortfolio(withId id: UUID) {
+    private func flagPortfolio(withId id: Int) {
         do {
             try flagPortfolioUseCase.execute(id: id)
             fetchFlaggedPortfolios()
@@ -116,7 +116,7 @@ final class FeedViewModel: BaseViewModel, ViewModel, ObservableObject {
         }
     }
     
-    private func unflagPortfolio(withId id: UUID) {
+    private func unflagPortfolio(withId id: Int) {
         do {
             try unflagPortfolioUseCase.execute(id: id)
             fetchFlaggedPortfolios()
