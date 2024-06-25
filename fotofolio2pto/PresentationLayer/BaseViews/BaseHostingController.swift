@@ -29,7 +29,7 @@ class BaseHostingController<Content>: UIHostingController<AnyView>, UIGestureRec
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupBackButton()
+        setupSwipeBackGesture()
         navigationController?.navigationBar.setTransparency(navigationBarTransparent)
         UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: UIColor.black]
     }
@@ -46,15 +46,7 @@ class BaseHostingController<Content>: UIHostingController<AnyView>, UIGestureRec
     }
     
     /// Setup custom back button arrow
-    private func setupBackButton() {
-        guard let nav = navigationController, nav.viewControllers.count > 1 else { return }
-        navigationItem.leftBarButtonItem = UIBarButtonItem(
-            // Replace with better asset
-            image: UIImage(systemName: "arrowtriangle.left"),
-            style: .plain,
-            target: nil,
-            action: #selector(UINavigationController.popViewController(animated:))
-        )
+    private func setupSwipeBackGesture() {
         navigationController?.interactivePopGestureRecognizer?.delegate = self
     }
     

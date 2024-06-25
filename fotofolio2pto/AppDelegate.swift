@@ -18,13 +18,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // App starts from here
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        
-        appAppearance()
-        
         // DI
         Resolver.registerProviders()
         Resolver.registerRepositories()
         Resolver.registerUseCases()
+        
+        // Fix for flickering black navBar: https://stackoverflow.com/questions/30763979/why-is-the-uinavigationbar-turning-black
+        let navBarAppearance = UINavigationBarAppearance()
+        navBarAppearance.configureWithOpaqueBackground()
+        UINavigationBar.appearance().standardAppearance = navBarAppearance
+        UINavigationBar.appearance().scrollEdgeAppearance = navBarAppearance
         
         // Init main window with navigation controller
         let navController = UINavigationController()
@@ -39,12 +42,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         flowController.start()
         
         return true
-    }
-    
-    // MARK: - Appearance
-    
-    private func appAppearance() {
-        // TODO
     }
 
     // MARK: - Core Data stack
