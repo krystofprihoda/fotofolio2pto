@@ -71,4 +71,17 @@ public class FeedRepositoryImpl: FeedRepository {
     public func removeAllFlagged() throws {
         defaults.delete(.flagged)
     }
+    
+    public func getFilteredPortfolios(filter: [String]) async throws -> [Portfolio] {
+        try await Task.sleep(for: .seconds(0.5))
+        
+        guard !filter.isEmpty else { return FeedRepositoryImpl.portfolios }
+        return FeedRepositoryImpl.portfolios.filter({ portfolio in
+            portfolio.tags.contains(where: { tag in
+                filter.contains(where: { filterTag in
+                    tag == filterTag
+                })
+            })
+        })
+    }
 }

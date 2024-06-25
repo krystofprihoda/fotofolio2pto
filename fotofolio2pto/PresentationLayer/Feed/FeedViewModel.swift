@@ -18,6 +18,7 @@ final class FeedViewModel: BaseViewModel, ViewModel, ObservableObject {
     @LazyInjected private var flagPortfolioUseCase: FlagPortfolioUseCase
     @LazyInjected private var unflagPortfolioUseCase: UnflagPortfolioUseCase
     @LazyInjected private var getFlaggedPortfoliosUseCase: GetFlaggedPortfoliosUseCase
+    @LazyInjected private var getFilteredPortfoliosUseCase: GetFilteredPortfoliosUseCase
     
     private weak var flowController: FeedFlowController?
     
@@ -48,8 +49,7 @@ final class FeedViewModel: BaseViewModel, ViewModel, ObservableObject {
         var isLoading: Bool = false
         var portfolios: [Portfolio] = []
         var flaggedPortfolioIds: [Int] = []
-        var isFiltering: Bool = false
-        var arrowAngle: Int = 0
+        var filter: [String] = []
     }
     
     @Published private(set) var state = State()
@@ -104,7 +104,7 @@ final class FeedViewModel: BaseViewModel, ViewModel, ObservableObject {
     }
     
     private func showFilter() {
-        flowController?.presentFilter()
+        flowController?.presentFilter(with: state.filter)
     }
     
     private func flagPortfolio(withId id: Int) {
@@ -127,6 +127,26 @@ final class FeedViewModel: BaseViewModel, ViewModel, ObservableObject {
     
     private func fetchFlaggedPortfolios() {
         state.flaggedPortfolioIds = getFlaggedPortfoliosUseCase.execute(idOnly: true)
+    }
+}
+
+extension FeedViewModel: FeedFlowControllerDelegate {
+    func filterFeedPortfolios(_ filter: [String]) async {
+        state.isLoading = true
+        defer { state.isLoading.toggle() }
+        
+        state.filter = filter
+        
+        do {
+            state.portfolios = try await getFilteredPortfoliosUseCase.execute(filter: filter)
+        } catch {
+            
+        }
+    }
+    
+    func removeFilterTag(_ tag: String) async {
+        state.filter.removeAll(where: { $0 == tag })
+        await filterFeedPortfolios(state.filter)
     }
 }
 

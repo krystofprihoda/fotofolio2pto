@@ -7,19 +7,27 @@
 
 import UIKit
 
+public protocol FeedFlowControllerDelegate: AnyObject {
+    func filterFeedPortfolios(_ filter: [String]) async
+    func removeFilterTag(_ tag: String) async
+}
+
 class FeedFlowController: BaseFlowController {
 
     private var backgroundTapView: UIView?
-
+    
+    weak var feedFlowDelegate: FeedFlowControllerDelegate?
+    
     override func setup() -> UIViewController {
         let vm = FeedViewModel(flowController: self)
+        feedFlowDelegate = vm
         let view = FeedView(viewModel: vm)
         let vc = BaseHostingController(rootView: view)
         return vc
     }
 
-    public func presentFilter() {
-        let vm = FilterViewModel(flowController: self)
+    public func presentFilter(with filter: [String]) {
+        let vm = FilterViewModel(flowController: self, with: filter)
         let vc = BaseHostingController(rootView: FilterView(viewModel: vm))
         if let sheet = vc.sheetPresentationController {
             sheet.detents = [.medium(), .large()]

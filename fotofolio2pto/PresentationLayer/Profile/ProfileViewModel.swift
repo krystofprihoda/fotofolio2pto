@@ -73,11 +73,11 @@ final class ProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
     // MARK: Additional methods
     
     private func fetchUserInfo() {
-        print(state.username)
+        
     }
     
     private func fetchPortfolios() {
-        print(state.username)
+        
     }
     
     private func signOut() {

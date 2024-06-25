@@ -25,7 +25,7 @@ struct FeedView: View {
                     }
                     .frame(width: geo.size.width, height: geo.size.height)
                 }
-                else if viewModel.state.isFiltering && viewModel.state.portfolios.isEmpty {
+                else if !viewModel.state.filter.isEmpty && viewModel.state.portfolios.isEmpty {
                     VStack(alignment: .center) {
                         Text("Filtrování neodpovídá žádný výsledek.")
                             .foregroundColor(.red)

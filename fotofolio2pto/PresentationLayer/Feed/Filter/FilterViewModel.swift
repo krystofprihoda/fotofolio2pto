@@ -20,10 +20,12 @@ final class FilterViewModel: BaseViewModel, ViewModel, ObservableObject {
     // MARK: Init
 
     init(
-        flowController: FeedFlowController?
+        flowController: FeedFlowController?,
+        with filter: [String] = []
     ) {
         self.flowController = flowController
         super.init()
+        state.tags = filter
     }
 
     // MARK: Lifecycle
@@ -55,8 +57,8 @@ final class FilterViewModel: BaseViewModel, ViewModel, ObservableObject {
         executeTask(Task {
             switch intent {
             case .dismiss: dismiss()
-            case .addTag: withAnimation { addTag() }
-            case .removeTag(let tag): withAnimation { removeTag(tag) }
+            case .addTag: await addTag()
+            case .removeTag(let tag): await removeTag(tag)
             case .registerTextInput(let input): registerTextInput(input)
             }
         })
@@ -64,17 +66,19 @@ final class FilterViewModel: BaseViewModel, ViewModel, ObservableObject {
 
     // MARK: Additional methods
     
-    private func addTag() {
+    private func addTag() async {
         guard !state.tags.contains(where: { $0 == state.textInput }), state.tags.count < 6 else { return }
         
-        state.tags.append(state.textInput)
+        withAnimation { state.tags.append(state.textInput) }
         state.textInput = ""
+        
+        await flowController?.feedFlowDelegate?.filterFeedPortfolios(state.tags)
     }
     
-    private func removeTag(_ tag: String) {
-        state.tags.removeAll(where: {
-            $0 == tag
-        })
+    private func removeTag(_ tag: String) async {
+        withAnimation { state.tags.removeAll(where: { $0 == tag }) }
+        
+        await flowController?.feedFlowDelegate?.removeFilterTag(tag)
     }
     
     private func registerTextInput(_ text: String) {

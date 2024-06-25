@@ -11,19 +11,22 @@ struct PortfolioDetailView: View {
     
     private let mediaWidth: CGFloat?
     private let portfolio: Portfolio
+    private let unflagPortfolio: () -> Void
     
     init(
         mediaWidth: CGFloat?,
-        portfolio: Portfolio
+        portfolio: Portfolio,
+        unflagPortfolio: @escaping () -> Void
     ) {
         self.mediaWidth = mediaWidth
         self.portfolio = portfolio
+        self.unflagPortfolio = unflagPortfolio
     }
     
     var body: some View {
         VStack {
             /// Folio Author
-            AuthorDetailView(author: portfolio.author)
+            AuthorDetailView(author: portfolio.author, unflagPortfolio: unflagPortfolio)
             
             /// Carousel
             PhotoCarouselView(mediaWidth: mediaWidth, photos: portfolio.photos)
@@ -41,17 +44,9 @@ struct PortfolioDetailView: View {
             .padding(.trailing, 21)
         }
         .padding(.bottom, 10)
-        .alert("Opravdu chcete odstranit portfolio z výběru?", isPresented: .constant(false)) {
-            Button("Ano") {
-                // remove from flagged
-            }
-            .foregroundColor(.red)
-            
-            Button("Ne") { }
-        }
     }
 }
 
 #Preview {
-    PortfolioDetailView(mediaWidth: 350, portfolio: .dummyPortfolio1)
+    PortfolioDetailView(mediaWidth: 350, portfolio: .dummyPortfolio1, unflagPortfolio: {})
 }

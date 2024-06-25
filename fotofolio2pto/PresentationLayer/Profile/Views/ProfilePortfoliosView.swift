@@ -22,15 +22,15 @@ struct ProfilePortfoliosView: View {
                 .foregroundColor(.gray)
                 .font(.system(size: 16))
         } else {
-            VStack {
+            VStack(spacing: Constants.Dimens.spaceNone) {
                 ForEach(portfolios, id: \.id) { portfolio in
-                    VStack(alignment: .leading) {
+                    VStack(alignment: .leading, spacing: Constants.Dimens.spaceNone) {
                         if showText {
                             HStack {
                                 Text(portfolio.name)
                                     .font(.system(size: 20))
-                                    .padding(.top, 5)
-                                    .padding(.leading, 25)
+                                    .padding([.top, .bottom], Constants.Dimens.spaceSmall)
+                                    .padding([.leading, .trailing], Constants.Dimens.spaceXLarge)
                                     .foregroundColor(.black).brightness(0.3)
                                     .transition(.opacity)
 
@@ -39,27 +39,21 @@ struct ProfilePortfoliosView: View {
                         }
                         
                         ScrollView(.horizontal, showsIndicators: false) {
-                            HStack {
-                                ForEach(portfolio.photos, id: \.id) { photo in
-                                    let last = portfolio.photos.last!.id == photo.id
-                                    
+                            HStack(spacing: Constants.Dimens.spaceMedium) {
+                                ForEach(portfolio.photos) { photo in
                                     if case MyImageEnum.remote(let url) = photo.src {
                                         AsyncImage(url: url) { image in
                                             image
                                                 .resizable()
                                                 .aspectRatio(1.0, contentMode: .fill)
                                                 .frame(width: 150, height: 150)
-                                                .cornerRadius(CGFloat(9))
-                                                .padding(.leading, 5)
-                                                .padding(.trailing, last ? 10 : 0)
+                                                .cornerRadius(Constants.Dimens.radiusXSmall)
                                         } placeholder: {
                                             ZStack {
-                                                RoundedRectangle(cornerRadius: 9)
+                                                RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
                                                     .fill(Color.gray).brightness(0.25)
                                                     .aspectRatio(1.0, contentMode: .fit)
                                                     .frame(width: 150, height: 150)
-                                                    .padding(.leading, 5)
-                                                    .padding(.trailing, last ? 10 : 0)
 
                                                 ProgressView()
                                                     .progressViewStyle(CircularProgressViewStyle())
@@ -70,22 +64,20 @@ struct ProfilePortfoliosView: View {
                                             .resizable()
                                             .aspectRatio(1.0, contentMode: .fill)
                                             .frame(width: 150, height: 150)
-                                            .cornerRadius(CGFloat(9))
-                                            .padding(.leading, 5)
-                                            .padding(.trailing, last ? 10 : 0)
+                                            .cornerRadius(Constants.Dimens.radiusXSmall)
                                     }
                                 }
                             }
+                            .padding([.leading, .trailing], Constants.Dimens.spaceMedium)
+                            .padding(.bottom, Constants.Dimens.spaceMedium)
                         }
-                        .padding(.leading, 20)
-                        .padding(.bottom, 5)
                         
                         if showText {
                             Text(portfolio.description)
                                 .font(.system(size: 15))
-                                .padding(.top, 5)
-                                .padding(.leading, 25)
-                                .padding(.trailing, 21)
+                                .padding(.top, Constants.Dimens.spaceXSmall)
+                                .padding([.leading, .trailing], Constants.Dimens.spaceXLarge)
+                                .padding(.bottom, Constants.Dimens.spaceXSmall)
                                 .foregroundColor(.gray).brightness(0.1)
                                 .transition(.opacity)
                         }

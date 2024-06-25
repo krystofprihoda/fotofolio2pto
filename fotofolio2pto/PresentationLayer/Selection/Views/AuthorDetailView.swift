@@ -10,9 +10,14 @@ import SwiftUI
 struct AuthorDetailView: View {
     
     private let author: User
+    private let unflagPortfolio: () -> Void
     
-    init(author: User) {
+    init(
+        author: User,
+        unflagPortfolio: @escaping () -> Void
+    ) {
         self.author = author
+        self.unflagPortfolio = unflagPortfolio
     }
     
     var body: some View {
@@ -36,9 +41,7 @@ struct AuthorDetailView: View {
                         .foregroundColor(.cyan)
                 }
                 
-                Button(action: {
-                    // remove folio
-                }) {
+                Button(action: unflagPortfolio) {
                     Image(systemName: "bookmark.slash")
                         .foregroundColor(.black)
                 }
@@ -89,5 +92,5 @@ struct AuthorDetailView: View {
 }
 
 #Preview {
-    AuthorDetailView(author: .dummy1)
+    AuthorDetailView(author: .dummy1, unflagPortfolio: {})
 }

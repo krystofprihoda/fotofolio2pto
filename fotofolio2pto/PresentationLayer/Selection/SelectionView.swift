@@ -27,7 +27,11 @@ struct SelectionView: View {
                         .frame(width: geo.size.width, height: geo.size.height)
                     } else if !viewModel.state.portfolios.isEmpty {
                         ForEach(viewModel.state.portfolios, id: \.id) { portfolio in
-                            PortfolioDetailView(mediaWidth: geo.size.width - Constants.Dimens.spaceXXLarge, portfolio: portfolio)
+                            PortfolioDetailView(
+                                mediaWidth: geo.size.width - Constants.Dimens.spaceXXLarge,
+                                portfolio: portfolio,
+                                unflagPortfolio: { viewModel.onIntent(.removeFromFlagged(portfolio.id)) }
+                            )
                         }
                     } else {
                         Text("Není co zobrazovat, vyberte si portfolia ve Feedu!")
