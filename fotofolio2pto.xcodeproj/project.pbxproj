@@ -13,6 +13,21 @@
 		FE5F8A842C297338001EE8AF /* UserDefaultsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE5F8A832C297338001EE8AF /* UserDefaultsProvider.swift */; };
 		FE5F8A862C29737F001EE8AF /* SystemUserDefaultsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE5F8A852C29737F001EE8AF /* SystemUserDefaultsProvider.swift */; };
 		FE5F8A892C2975FC001EE8AF /* LogoutUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE5F8A882C2975FC001EE8AF /* LogoutUseCase.swift */; };
+		FEA53C962C29BF2F006F0116 /* Providers+Injection.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53C952C29BF2F006F0116 /* Providers+Injection.swift */; };
+		FEA53C982C29BF97006F0116 /* Repositories+Injection.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53C972C29BF97006F0116 /* Repositories+Injection.swift */; };
+		FEA53C9A2C29BFDF006F0116 /* UseCase+Injection.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53C992C29BFDF006F0116 /* UseCase+Injection.swift */; };
+		FEA53C9D2C29C1BA006F0116 /* Resolver in Frameworks */ = {isa = PBXBuildFile; productRef = FEA53C9C2C29C1BA006F0116 /* Resolver */; };
+		FEA53CA12C29C70B006F0116 /* GetAllPortfoliosUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CA02C29C70B006F0116 /* GetAllPortfoliosUseCase.swift */; };
+		FEA53CA32C29C76E006F0116 /* FeedRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CA22C29C76E006F0116 /* FeedRepository.swift */; };
+		FEA53CA52C29C792006F0116 /* FeedRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CA42C29C792006F0116 /* FeedRepositoryImpl.swift */; };
+		FEA53CA72C29D667006F0116 /* FlagPortfolioUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CA62C29D667006F0116 /* FlagPortfolioUseCase.swift */; };
+		FEA53CA92C29D7E8006F0116 /* UnflagPortfolioUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CA82C29D7E8006F0116 /* UnflagPortfolioUseCase.swift */; };
+		FEA53CAB2C29DE1E006F0116 /* GetFlaggedPortfoliosUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CAA2C29DE1E006F0116 /* GetFlaggedPortfoliosUseCase.swift */; };
+		FEA53CAE2C29E08D006F0116 /* Sequence+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CAD2C29E08D006F0116 /* Sequence+Extensions.swift */; };
+		FEA53CB12C29E57A006F0116 /* ObjectError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CB02C29E57A006F0116 /* ObjectError.swift */; };
+		FEA53CB42C2AE81C006F0116 /* AlertData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CB32C2AE81C006F0116 /* AlertData.swift */; };
+		FEA53CB62C2AE84F006F0116 /* AlertData+SwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CB52C2AE84F006F0116 /* AlertData+SwiftUI.swift */; };
+		FEA53CB82C2AE9B1006F0116 /* UnflagAllPortfoliosUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CB72C2AE9B1006F0116 /* UnflagAllPortfoliosUseCase.swift */; };
 		FEC94D952C24398200FFEB11 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC94D942C24398200FFEB11 /* AppDelegate.swift */; };
 		FEC94D992C24398200FFEB11 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC94D982C24398200FFEB11 /* ViewController.swift */; };
 		FEC94D9F2C24398200FFEB11 /* fotofolio2pto.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FEC94D9D2C24398200FFEB11 /* fotofolio2pto.xcdatamodeld */; };
@@ -73,6 +88,20 @@
 		FE5F8A832C297338001EE8AF /* UserDefaultsProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsProvider.swift; sourceTree = "<group>"; };
 		FE5F8A852C29737F001EE8AF /* SystemUserDefaultsProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemUserDefaultsProvider.swift; sourceTree = "<group>"; };
 		FE5F8A882C2975FC001EE8AF /* LogoutUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoutUseCase.swift; sourceTree = "<group>"; };
+		FEA53C952C29BF2F006F0116 /* Providers+Injection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Providers+Injection.swift"; sourceTree = "<group>"; };
+		FEA53C972C29BF97006F0116 /* Repositories+Injection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Repositories+Injection.swift"; sourceTree = "<group>"; };
+		FEA53C992C29BFDF006F0116 /* UseCase+Injection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UseCase+Injection.swift"; sourceTree = "<group>"; };
+		FEA53CA02C29C70B006F0116 /* GetAllPortfoliosUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAllPortfoliosUseCase.swift; sourceTree = "<group>"; };
+		FEA53CA22C29C76E006F0116 /* FeedRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedRepository.swift; sourceTree = "<group>"; };
+		FEA53CA42C29C792006F0116 /* FeedRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedRepositoryImpl.swift; sourceTree = "<group>"; };
+		FEA53CA62C29D667006F0116 /* FlagPortfolioUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlagPortfolioUseCase.swift; sourceTree = "<group>"; };
+		FEA53CA82C29D7E8006F0116 /* UnflagPortfolioUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnflagPortfolioUseCase.swift; sourceTree = "<group>"; };
+		FEA53CAA2C29DE1E006F0116 /* GetFlaggedPortfoliosUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetFlaggedPortfoliosUseCase.swift; sourceTree = "<group>"; };
+		FEA53CAD2C29E08D006F0116 /* Sequence+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sequence+Extensions.swift"; sourceTree = "<group>"; };
+		FEA53CB02C29E57A006F0116 /* ObjectError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectError.swift; sourceTree = "<group>"; };
+		FEA53CB32C2AE81C006F0116 /* AlertData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertData.swift; sourceTree = "<group>"; };
+		FEA53CB52C2AE84F006F0116 /* AlertData+SwiftUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AlertData+SwiftUI.swift"; sourceTree = "<group>"; };
+		FEA53CB72C2AE9B1006F0116 /* UnflagAllPortfoliosUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnflagAllPortfoliosUseCase.swift; sourceTree = "<group>"; };
 		FEC94D912C24398200FFEB11 /* fotofolio2pto.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = fotofolio2pto.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FEC94D942C24398200FFEB11 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FEC94D982C24398200FFEB11 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -133,6 +162,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FEA53C9D2C29C1BA006F0116 /* Resolver in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -143,6 +173,7 @@
 			isa = PBXGroup;
 			children = (
 				FE5F8A772C296D81001EE8AF /* AuthRepository.swift */,
+				FEA53CA22C29C76E006F0116 /* FeedRepository.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -150,6 +181,7 @@
 		FE5F8A792C296EAC001EE8AF /* UseCases */ = {
 			isa = PBXGroup;
 			children = (
+				FEA53C9F2C29C6FE006F0116 /* Feed */,
 				FE5F8A872C2975E9001EE8AF /* User */,
 				FE5F8A7A2C296EB7001EE8AF /* Auth */,
 			);
@@ -177,6 +209,7 @@
 			isa = PBXGroup;
 			children = (
 				FE5F8A7F2C2971C7001EE8AF /* AuthRepositoryImpl.swift */,
+				FEA53CA42C29C792006F0116 /* FeedRepositoryImpl.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -206,6 +239,70 @@
 			path = User;
 			sourceTree = "<group>";
 		};
+		FEA53C932C29BF13006F0116 /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				FEA53C942C29BF19006F0116 /* DependencyInjection */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
+		FEA53C942C29BF19006F0116 /* DependencyInjection */ = {
+			isa = PBXGroup;
+			children = (
+				FEA53C952C29BF2F006F0116 /* Providers+Injection.swift */,
+				FEA53C972C29BF97006F0116 /* Repositories+Injection.swift */,
+				FEA53C992C29BFDF006F0116 /* UseCase+Injection.swift */,
+			);
+			path = DependencyInjection;
+			sourceTree = "<group>";
+		};
+		FEA53C9E2C29C5F2006F0116 /* Filter */ = {
+			isa = PBXGroup;
+			children = (
+				FEC94DF32C25F57700FFEB11 /* FilterViewModel.swift */,
+				FEC94DF12C25EF7900FFEB11 /* FilterView.swift */,
+			);
+			path = Filter;
+			sourceTree = "<group>";
+		};
+		FEA53C9F2C29C6FE006F0116 /* Feed */ = {
+			isa = PBXGroup;
+			children = (
+				FEA53CA02C29C70B006F0116 /* GetAllPortfoliosUseCase.swift */,
+				FEA53CA62C29D667006F0116 /* FlagPortfolioUseCase.swift */,
+				FEA53CA82C29D7E8006F0116 /* UnflagPortfolioUseCase.swift */,
+				FEA53CAA2C29DE1E006F0116 /* GetFlaggedPortfoliosUseCase.swift */,
+				FEA53CB72C2AE9B1006F0116 /* UnflagAllPortfoliosUseCase.swift */,
+			);
+			path = Feed;
+			sourceTree = "<group>";
+		};
+		FEA53CAC2C29E073006F0116 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				FEA53CAD2C29E08D006F0116 /* Sequence+Extensions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		FEA53CAF2C29E4DC006F0116 /* Error */ = {
+			isa = PBXGroup;
+			children = (
+				FEA53CB02C29E57A006F0116 /* ObjectError.swift */,
+			);
+			path = Error;
+			sourceTree = "<group>";
+		};
+		FEA53CB22C2AE812006F0116 /* Alerts */ = {
+			isa = PBXGroup;
+			children = (
+				FEA53CB32C2AE81C006F0116 /* AlertData.swift */,
+				FEA53CB52C2AE84F006F0116 /* AlertData+SwiftUI.swift */,
+			);
+			path = Alerts;
+			sourceTree = "<group>";
+		};
 		FEC94D882C24398200FFEB11 = {
 			isa = PBXGroup;
 			children = (
@@ -225,6 +322,7 @@
 		FEC94D932C24398200FFEB11 /* fotofolio2pto */ = {
 			isa = PBXGroup;
 			children = (
+				FEA53C932C29BF13006F0116 /* Application */,
 				FE5F8A7D2C297186001EE8AF /* DataLayer */,
 				FEC94DE02C25914F00FFEB11 /* DomainLayer */,
 				FEC94DB22C24475100FFEB11 /* AppFlowController.swift */,
@@ -270,6 +368,7 @@
 		FEC94DB42C2447AA00FFEB11 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				FEA53CB22C2AE812006F0116 /* Alerts */,
 				FEC94DB52C2447F000FFEB11 /* BaseFlowController.swift */,
 				FEC94DC42C246DF400FFEB11 /* BaseViewModel.swift */,
 				FEC94DC62C24712400FFEB11 /* ViewModel.swift */,
@@ -281,6 +380,7 @@
 		FEC94DB92C246C3300FFEB11 /* Feed */ = {
 			isa = PBXGroup;
 			children = (
+				FEA53C9E2C29C5F2006F0116 /* Filter */,
 				FEC94DBE2C246C5C00FFEB11 /* FeedFlowController.swift */,
 				FEC94DC02C246D8600FFEB11 /* FeedView.swift */,
 				FEC94DC22C246DC000FFEB11 /* FeedViewModel.swift */,
@@ -335,6 +435,8 @@
 		FEC94DE02C25914F00FFEB11 /* DomainLayer */ = {
 			isa = PBXGroup;
 			children = (
+				FEA53CAF2C29E4DC006F0116 /* Error */,
+				FEA53CAC2C29E073006F0116 /* Extensions */,
 				FE5F8A792C296EAC001EE8AF /* UseCases */,
 				FE5F8A762C296D6C001EE8AF /* Repositories */,
 				FEC94DE12C25916600FFEB11 /* DomainModels */,
@@ -394,8 +496,6 @@
 			isa = PBXGroup;
 			children = (
 				FEC94DE42C2594E200FFEB11 /* PortfolioView.swift */,
-				FEC94DF12C25EF7900FFEB11 /* FilterView.swift */,
-				FEC94DF32C25F57700FFEB11 /* FilterViewModel.swift */,
 				FEC94DF82C26291E00FFEB11 /* PhotoCarouselView.swift */,
 			);
 			path = Views;
@@ -428,6 +528,9 @@
 			dependencies = (
 			);
 			name = fotofolio2pto;
+			packageProductDependencies = (
+				FEA53C9C2C29C1BA006F0116 /* Resolver */,
+			);
 			productName = fotofolio2pto;
 			productReference = FEC94D912C24398200FFEB11 /* fotofolio2pto.app */;
 			productType = "com.apple.product-type.application";
@@ -456,6 +559,9 @@
 				Base,
 			);
 			mainGroup = FEC94D882C24398200FFEB11;
+			packageReferences = (
+				FEA53C9B2C29C1BA006F0116 /* XCRemoteSwiftPackageReference "Resolver" */,
+			);
 			productRefGroup = FEC94D922C24398200FFEB11 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -485,8 +591,11 @@
 				FEC94DE32C25917200FFEB11 /* Portfolio.swift in Sources */,
 				FEC94E152C28521D00FFEB11 /* SignInView.swift in Sources */,
 				FEC94DC12C246D8600FFEB11 /* FeedView.swift in Sources */,
+				FEA53CA32C29C76E006F0116 /* FeedRepository.swift in Sources */,
 				FE5F8A782C296D81001EE8AF /* AuthRepository.swift in Sources */,
+				FEA53C982C29BF97006F0116 /* Repositories+Injection.swift in Sources */,
 				FEC94DD32C247C6100FFEB11 /* SearchView.swift in Sources */,
+				FEA53CA92C29D7E8006F0116 /* UnflagPortfolioUseCase.swift in Sources */,
 				FEC94DD52C247C9500FFEB11 /* MessagesViewModel.swift in Sources */,
 				FEC94E012C26DD2F00FFEB11 /* SearchResultsView.swift in Sources */,
 				FEC94D9F2C24398200FFEB11 /* fotofolio2pto.xcdatamodeld in Sources */,
@@ -501,14 +610,21 @@
 				FEC94DDD2C247D7600FFEB11 /* ProfileViewModel.swift in Sources */,
 				FEC94DB62C2447F000FFEB11 /* BaseFlowController.swift in Sources */,
 				FEC94DEE2C25ECDC00FFEB11 /* BottomSheetView.swift in Sources */,
+				FEA53CAE2C29E08D006F0116 /* Sequence+Extensions.swift in Sources */,
 				FEC94DF22C25EF7900FFEB11 /* FilterView.swift in Sources */,
 				FEC94DEA2C25BF4B00FFEB11 /* View+Extensions.swift in Sources */,
 				FEC94DCD2C2479CD00FFEB11 /* SelectionViewModel.swift in Sources */,
+				FEA53CA72C29D667006F0116 /* FlagPortfolioUseCase.swift in Sources */,
 				FEC94DC52C246DF400FFEB11 /* BaseViewModel.swift in Sources */,
 				FEC94E092C283D4C00FFEB11 /* NotCreatorView.swift in Sources */,
+				FEA53C962C29BF2F006F0116 /* Providers+Injection.swift in Sources */,
 				FEC94DC72C24712400FFEB11 /* ViewModel.swift in Sources */,
+				FEA53CA52C29C792006F0116 /* FeedRepositoryImpl.swift in Sources */,
 				FEC94DC32C246DC000FFEB11 /* FeedViewModel.swift in Sources */,
+				FEA53CAB2C29DE1E006F0116 /* GetFlaggedPortfoliosUseCase.swift in Sources */,
+				FEA53CA12C29C70B006F0116 /* GetAllPortfoliosUseCase.swift in Sources */,
 				FEC94E0D2C2842F500FFEB11 /* ProfilePortfoliosView.swift in Sources */,
+				FEA53C9A2C29BFDF006F0116 /* UseCase+Injection.swift in Sources */,
 				FE5F8A802C2971C7001EE8AF /* AuthRepositoryImpl.swift in Sources */,
 				FEC94E172C2857D100FFEB11 /* OnboardingFlowController.swift in Sources */,
 				FEC94E032C26DD7900FFEB11 /* ProfilePictureView.swift in Sources */,
@@ -518,13 +634,16 @@
 				FEC94DD72C247CB200FFEB11 /* MessagesView.swift in Sources */,
 				FEC94DF42C25F57700FFEB11 /* FilterViewModel.swift in Sources */,
 				FEC94DB82C244E9E00FFEB11 /* MainFlowController.swift in Sources */,
+				FEA53CB82C2AE9B1006F0116 /* UnflagAllPortfoliosUseCase.swift in Sources */,
 				FEC94E0B2C2840AA00FFEB11 /* ProfileUserInfoView.swift in Sources */,
 				FE5F8A842C297338001EE8AF /* UserDefaultsProvider.swift in Sources */,
 				FEC94DFB2C262AC400FFEB11 /* AuthorDetailView.swift in Sources */,
 				FEC94E072C2701F500FFEB11 /* Message.swift in Sources */,
 				FEC94DFD2C262E4000FFEB11 /* User.swift in Sources */,
+				FEA53CB12C29E57A006F0116 /* ObjectError.swift in Sources */,
 				FEC94DD92C247CCA00FFEB11 /* MessagesFlowController.swift in Sources */,
 				FEC94E192C28661100FFEB11 /* SignInViewModel.swift in Sources */,
+				FEA53CB62C2AE84F006F0116 /* AlertData+SwiftUI.swift in Sources */,
 				FEC94DB32C24475100FFEB11 /* AppFlowController.swift in Sources */,
 				FEC94DF92C26291E00FFEB11 /* PhotoCarouselView.swift in Sources */,
 				FEC94D992C24398200FFEB11 /* ViewController.swift in Sources */,
@@ -533,6 +652,7 @@
 				FEC94DDB2C247D4B00FFEB11 /* ProfileView.swift in Sources */,
 				FEC94DC92C2479B300FFEB11 /* SelectionFlowController.swift in Sources */,
 				FEC94DF02C25ED5C00FFEB11 /* RoundedCorner.swift in Sources */,
+				FEA53CB42C2AE81C006F0116 /* AlertData.swift in Sources */,
 				FEC94DCF2C247C4C00FFEB11 /* SearchViewModel.swift in Sources */,
 				FEC94DD12C247C5500FFEB11 /* SearchFlowController.swift in Sources */,
 				FEC94D952C24398200FFEB11 /* AppDelegate.swift in Sources */,
@@ -686,8 +806,8 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -715,8 +835,8 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -753,6 +873,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		FEA53C9B2C29C1BA006F0116 /* XCRemoteSwiftPackageReference "Resolver" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/hmlongco/Resolver.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.5.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		FEA53C9C2C29C1BA006F0116 /* Resolver */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FEA53C9B2C29C1BA006F0116 /* XCRemoteSwiftPackageReference "Resolver" */;
+			productName = Resolver;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		FEC94D9D2C24398200FFEB11 /* fotofolio2pto.xcdatamodeld */ = {

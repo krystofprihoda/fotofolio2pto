@@ -9,28 +9,28 @@ import Foundation
 
 let PROFILE_PIC = URL(string: "https://loremflickr.com/320/320/person")!
 
-struct User: Identifiable, Equatable {
-    static func == (lhs: User, rhs: User) -> Bool {
+public struct User: Identifiable, Equatable {
+    public static func == (lhs: User, rhs: User) -> Bool {
         lhs.id == rhs.id
     }
     
-    let id: UUID
-    var username: String
-    var fullName: String
-    var email: String
-    var location: String
-    var profilePicture: IImage?
-    var ratings: [String:Int]
-    var creator: Creator?
+    public let id: UUID
+    public var username: String
+    public var fullName: String
+    public var email: String
+    public var location: String
+    public var profilePicture: IImage?
+    public var ratings: [String:Int]
+    public var creator: Creator?
     
-    func calculateRating() -> Double {
+    public func calculateRating() -> Double {
         if ratings.isEmpty { return 0 }
         
         let sum = ratings.values.reduce(0, +)
         return Double(sum) / Double(ratings.count)
     }
     
-    func isCreator() -> Bool {
+    public func isCreator() -> Bool {
         return creator != nil
     }
 }

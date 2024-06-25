@@ -12,7 +12,12 @@ public protocol LogoutUseCase {
 }
 
 public struct LogoutUseCaseImpl: LogoutUseCase {
-    private let authRepository = AuthRepositoryImpl(defaults: SystemUserDefaultsProvider())
+    
+    private let authRepository: AuthRepository
+    
+    init(authRepository: AuthRepository) {
+        self.authRepository = authRepository
+    }
     
     public func execute() {
         authRepository.logout()

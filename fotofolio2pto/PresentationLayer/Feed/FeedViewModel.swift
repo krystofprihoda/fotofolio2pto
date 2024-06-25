@@ -7,13 +7,17 @@
 
 import Foundation
 import SwiftUI
+import Resolver
 
 final class FeedViewModel: BaseViewModel, ViewModel, ObservableObject {
     // MARK: Stored properties
     
     // MARK: Dependencies
     
-    // UCs
+    @LazyInjected private var getAllPortfolios: GetAllPortfoliosUseCase
+    @LazyInjected private var flagPortfolioUseCase: FlagPortfolioUseCase
+    @LazyInjected private var unflagPortfolioUseCase: UnflagPortfolioUseCase
+    @LazyInjected private var getFlaggedPortfoliosUseCase: GetFlaggedPortfoliosUseCase
     
     private weak var flowController: FeedFlowController?
     
@@ -30,8 +34,12 @@ final class FeedViewModel: BaseViewModel, ViewModel, ObservableObject {
     
     override func onAppear() {
         super.onAppear()
-
-        fetchPortfolios()
+        
+        fetchFlaggedPortfolios()
+        
+        if state.portfolios.isEmpty {
+            executeTask(Task { await fetchPortfolios() })
+        }
     }
     
     // MARK: State
@@ -39,6 +47,7 @@ final class FeedViewModel: BaseViewModel, ViewModel, ObservableObject {
     struct State {
         var isLoading: Bool = false
         var portfolios: [Portfolio] = []
+        var flaggedPortfolioIds: [UUID] = []
         var isFiltering: Bool = false
         var arrowAngle: Int = 0
     }
@@ -52,53 +61,81 @@ final class FeedViewModel: BaseViewModel, ViewModel, ObservableObject {
         case sortByDate
         case sortByRating
         case filter
+        case flagPortfolio(UUID)
+        case unflagPortfolio(UUID)
     }
     
     @discardableResult
     func onIntent(_ intent: Intent) -> Task<Void, Never> {
         executeTask(Task {
             switch intent {
-            case .fetchPortfolios: fetchPortfolios()
-            case .sortByDate: withAnimation { sortByDate() }
-            case .sortByRating: withAnimation { sortByRating() }
+            case .fetchPortfolios: await fetchPortfolios()
+            case .sortByDate: await fetchPortfoliosSortedBy(.date)
+            case .sortByRating: await fetchPortfoliosSortedBy(.rating)
             case .filter: showFilter()
+            case .flagPortfolio(let id): flagPortfolio(withId: id)
+            case .unflagPortfolio(let id): unflagPortfolio(withId: id)
             }
         })
     }
     
     // MARK: Additional methods
     
-    private func fetchPortfolios() {
+    private func fetchPortfolios() async {
         state.isLoading = true
         defer { state.isLoading.toggle() }
         
-        // this will move to service/ucs
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) { [weak self] in
-            withAnimation {
-                self?.state.portfolios = Portfolio.sampleData
-            }
+        do {
+            state.portfolios = try await getAllPortfolios.execute()
+        } catch {
+            // handle error
         }
     }
     
-    private func sortByDate() {
+    private func fetchPortfoliosSortedBy(_ sortBy: SortByEnum) async {
+        state.isLoading = true
+        defer { state.isLoading.toggle() }
         
-    }
-    
-    private func sortByRating() {
-        
+        do {
+            state.portfolios = try await getAllPortfolios.execute(sortBy: sortBy)
+        } catch {
+            // handle error
+        }
     }
     
     private func showFilter() {
         flowController?.presentFilter()
     }
+    
+    private func flagPortfolio(withId id: UUID) {
+        do {
+            try flagPortfolioUseCase.execute(id: id)
+            fetchFlaggedPortfolios()
+        } catch {
+        
+        }
+    }
+    
+    private func unflagPortfolio(withId id: UUID) {
+        do {
+            try unflagPortfolioUseCase.execute(id: id)
+            fetchFlaggedPortfolios()
+        } catch {
+            
+        }
+    }
+    
+    private func fetchFlaggedPortfolios() {
+        state.flaggedPortfolioIds = getFlaggedPortfoliosUseCase.execute(idOnly: true)
+    }
 }
 
-struct IImage: Identifiable {
-    let id = UUID()
-    var src: MyImageEnum
+public struct IImage: Identifiable {
+    public let id = UUID()
+    public var src: MyImageEnum
 }
 
-enum MyImageEnum {
+public enum MyImageEnum {
     case remote(URL)
     case local(Image)
 }

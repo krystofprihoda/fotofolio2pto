@@ -18,27 +18,28 @@ struct FeedView: View {
     var body: some View {
         GeometryReader { geo in
             ScrollView(showsIndicators: false) {
-                if viewModel.state.portfolios.isEmpty {
+                if viewModel.state.isLoading {
                     VStack(alignment: .center) {
-                        if viewModel.state.isFiltering {
-                            Text("Filtrování neodpovídá žádný výsledek.")
-                                .foregroundColor(.red)
-                        } else {
-                            ProgressView()
-                                .progressViewStyle(CircularProgressViewStyle())
-                        }
+                        ProgressView()
+                            .progressViewStyle(CircularProgressViewStyle())
                     }
-                    .frame(width: geo.size.width)
-                    .frame(minHeight: geo.size.height)
+                    .frame(width: geo.size.width, height: geo.size.height)
+                }
+                else if viewModel.state.isFiltering && viewModel.state.portfolios.isEmpty {
+                    VStack(alignment: .center) {
+                        Text("Filtrování neodpovídá žádný výsledek.")
+                            .foregroundColor(.red)
+                    }
+                    .frame(width: geo.size.width, height: geo.size.height)
                 } else {
                     LazyVStack {
                         ForEach(viewModel.state.portfolios, id: \.id) { portfolio in
                             PortfolioView(
                                 portfolio: portfolio,
                                 mediaWidth: geo.size.width - Constants.Dimens.spaceXXLarge,
-                                isFlagged: false,
-                                flagAction: {},
-                                unflagAction: {},
+                                isFlagged: viewModel.state.flaggedPortfolioIds.contains(where: { $0 == portfolio.id }),
+                                flagAction: { viewModel.onIntent(.flagPortfolio(portfolio.id)) },
+                                unflagAction: { viewModel.onIntent(.unflagPortfolio(portfolio.id)) },
                                 openProfileAction: {}
                             )
                         }

@@ -7,9 +7,9 @@
 
 import Foundation
 
-struct Creator {
-    var profileText: String
-    var yearsOfExperience: Int
+public struct Creator {
+    public var profileText: String
+    public var yearsOfExperience: Int
 }
 
 extension Creator {

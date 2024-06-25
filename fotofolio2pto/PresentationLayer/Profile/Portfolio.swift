@@ -11,16 +11,37 @@ import SwiftUI
 // Move
 let LOREMFLICKR = "https://loremflickr.com/1000/1000/"
 
-struct Portfolio: Identifiable, Equatable {
-    let id: UUID
-    var author: User
-    var name: String
-    var photos: [IImage]
-    var description: String
-    var tags: [String]
-    let timestamp: Date
+public struct Portfolio: Identifiable, Equatable {
+    public let id: UUID
+    public var author: User
+    public var name: String
+    public var photos: [IImage]
+    public var description: String
+    public var tags: [String]
+    public let timestamp: Date
+    public var isFlagged: Bool
     
-    static func == (lhs: Portfolio, rhs: Portfolio) -> Bool {
+    init(
+        id: UUID,
+        author: User,
+        name: String,
+        photos: [IImage],
+        description: String,
+        tags: [String],
+        timestamp: Date,
+        isFlagged: Bool = false
+    ) {
+        self.id = id
+        self.author = author
+        self.name = name
+        self.photos = photos
+        self.description = description
+        self.tags = tags
+        self.timestamp = timestamp
+        self.isFlagged = isFlagged
+    }
+    
+    public static func == (lhs: Portfolio, rhs: Portfolio) -> Bool {
         lhs.id == rhs.id
     }
 }

@@ -19,7 +19,13 @@ struct SelectionView: View {
         GeometryReader { geo in
             ScrollView {
                 VStack {
-                    if !viewModel.state.portfolios.isEmpty {
+                    if viewModel.state.isLoading {
+                        VStack(alignment: .center) {
+                            ProgressView()
+                                .progressViewStyle(CircularProgressViewStyle())
+                        }
+                        .frame(width: geo.size.width, height: geo.size.height)
+                    } else if !viewModel.state.portfolios.isEmpty {
                         ForEach(viewModel.state.portfolios, id: \.id) { portfolio in
                             PortfolioDetailView(mediaWidth: geo.size.width - Constants.Dimens.spaceXXLarge, portfolio: portfolio)
                         }
@@ -37,7 +43,7 @@ struct SelectionView: View {
             ToolbarItemGroup(placement: .navigationBarTrailing) {
                 if !viewModel.state.portfolios.isEmpty {
                     Button(action: {
-                        // clearSelection
+                        viewModel.onIntent(.removeAllFlagged)
                     }) {
                         Text("Odstranit vše")
                     }
@@ -46,13 +52,7 @@ struct SelectionView: View {
             }
         }
         .setupNavBarAndTitle("Výběr")
-        .alert("Opravdu chcete odstranit všechna portfolia ze svého výběru?", isPresented: .constant(false)) {
-            Button("Ano") {
-//                portfolioViewModel.clearFlagged()
-            }
-            
-            Button("Ne") { }
-        }
+        .lifecycle(viewModel)
     }
 }
 

@@ -8,17 +8,16 @@
 import Foundation
 
 public protocol LoginWithCredentialsUseCase {
-    func execute(username: String, password: String) async throws
+    func execute(username: String, password: String)
 }
 
 public struct LoginWithCredentialsUseCaseImpl: LoginWithCredentialsUseCase {
     
-    // Resolver solves this later
-    private let authRepository: AuthRepository = AuthRepositoryImpl(defaults: SystemUserDefaultsProvider())
+    private let authRepository: AuthRepository
     
-//    init(authRepository: AuthRepository) {
-//        self.authRepository = authRepository
-//    }
+    init(authRepository: AuthRepository) {
+        self.authRepository = authRepository
+    }
     
     public func execute(username: String, password: String) {
         authRepository.loginWithCredentials(username: username, password: password)

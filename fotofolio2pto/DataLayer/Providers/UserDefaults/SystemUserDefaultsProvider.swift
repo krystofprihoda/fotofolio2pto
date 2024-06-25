@@ -12,12 +12,20 @@ public struct SystemUserDefaultsProvider {
 }
 
 extension SystemUserDefaultsProvider: UserDefaultsProvider {
+    public func read<T>(_ key: UserDefaultsCoding) -> T? {
+        return UserDefaults.standard.object(forKey: key.rawValue) as? T
+    }
+    
     public func update<T>(_ key: UserDefaultsCoding, value: T) {
         UserDefaults.standard.set(value, forKey: key.rawValue)
     }
     
-    public func read<T>(_ key: UserDefaultsCoding) -> T? {
-        return UserDefaults.standard.object(forKey: key.rawValue) as? T
+    public func read<T>(_ key: UserDefaultsCoding) -> [T]? {
+        return UserDefaults.standard.array(forKey: key.rawValue) as? [T]
+    }
+    
+    public func update<T>(_ key: UserDefaultsCoding, value: [T]) {
+        UserDefaults.standard.set(value, forKey: key.rawValue)
     }
     
     public func delete(_ key: UserDefaultsCoding) {

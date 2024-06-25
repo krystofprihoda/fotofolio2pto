@@ -7,13 +7,14 @@
 
 import Foundation
 import SwiftUI
+import Resolver
 
 final class ProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
     // MARK: Stored properties
     
     // MARK: Dependencies
     
-    private let logOutUseCase = LogoutUseCaseImpl()
+    @LazyInjected private var logOutUseCase: LogoutUseCase
     // UCs
     
     private weak var flowController: ProfileFlowController?

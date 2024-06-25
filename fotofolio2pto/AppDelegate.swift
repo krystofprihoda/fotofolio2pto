@@ -8,6 +8,7 @@
 import UIKit
 import CoreData
 import SwiftUI
+import Resolver
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -19,6 +20,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         appAppearance()
+        
+        // DI
+        Resolver.registerProviders()
+        Resolver.registerRepositories()
+        Resolver.registerUseCases()
         
         // Init main window with navigation controller
         let navController = UINavigationController()

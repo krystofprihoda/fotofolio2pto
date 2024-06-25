@@ -9,6 +9,7 @@ import Foundation
 
 public enum UserDefaultsCoding: String, CaseIterable {
     case signedInUser
+    case flagged
 }
 
 public protocol UserDefaultsProvider {

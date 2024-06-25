@@ -6,13 +6,14 @@
 //
 
 import Foundation
+import Resolver
 
 final class SignInViewModel: BaseViewModel, ViewModel, ObservableObject {
     // MARK: Stored properties
 
     // MARK: Dependencies
 
-    private let loginWithCredentialsUseCase = LoginWithCredentialsUseCaseImpl()
+    @LazyInjected private var loginWithCredentialsUseCase: LoginWithCredentialsUseCase
 
     private weak var flowController: OnboardingFlowController?
 
