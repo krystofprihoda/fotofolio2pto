@@ -63,5 +63,5 @@ struct SearchView: View {
 }
 
 #Preview {
-    SearchView(viewModel: .init(flowController: nil))
+    SearchView(viewModel: .init(flowController: nil, signedInUser: ""))
 }

@@ -21,7 +21,7 @@ class SearchFlowController: BaseFlowController {
     }
     
     override func setup() -> UIViewController {
-        let vm = SearchViewModel(flowController: self)
+        let vm = SearchViewModel(flowController: self, signedInUser: signedInUser)
         let view = SearchView(viewModel: vm)
         let vc = BaseHostingController(rootView: view)
         return vc

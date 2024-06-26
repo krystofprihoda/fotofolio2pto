@@ -25,10 +25,12 @@ final class FeedViewModel: BaseViewModel, ViewModel, ObservableObject {
     // MARK: Init
     
     init(
-        flowController: FeedFlowController?
+        flowController: FeedFlowController?,
+        signedInUser: String
     ) {
         self.flowController = flowController
         super.init()
+        state.signedInUser = signedInUser
     }
     
     // MARK: Lifecycle
@@ -46,6 +48,7 @@ final class FeedViewModel: BaseViewModel, ViewModel, ObservableObject {
     // MARK: State
     
     struct State {
+        var signedInUser = ""
         var isLoading: Bool = false
         var portfolios: [Portfolio] = []
         var flaggedPortfolioIds: [Int] = []

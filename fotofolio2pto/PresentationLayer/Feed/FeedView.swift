@@ -37,6 +37,7 @@ struct FeedView: View {
                             PortfolioView(
                                 portfolio: portfolio,
                                 mediaWidth: geo.size.width - Constants.Dimens.spaceXXLarge,
+                                hideFlag: viewModel.state.signedInUser == portfolio.author.username,
                                 isFlagged: viewModel.state.flaggedPortfolioIds.contains(where: { $0 == portfolio.id }),
                                 flagAction: { viewModel.onIntent(.flagPortfolio(portfolio.id)) },
                                 unflagAction: { viewModel.onIntent(.unflagPortfolio(portfolio.id)) },
@@ -71,5 +72,5 @@ struct FeedView: View {
 }
 
 #Preview {
-    FeedView(viewModel: .init(flowController: nil))
+    FeedView(viewModel: .init(flowController: nil, signedInUser: ""))
 }

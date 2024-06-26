@@ -11,6 +11,7 @@ struct PortfolioView: View {
     
     private let portfolio: Portfolio
     private let mediaWidth: CGFloat?
+    private let hideFlag: Bool
     private let isFlagged: Bool
     private let flagAction: () -> Void
     private let unflagAction: () -> Void
@@ -19,6 +20,7 @@ struct PortfolioView: View {
     init(
         portfolio: Portfolio,
         mediaWidth: CGFloat?,
+        hideFlag: Bool,
         isFlagged: Bool,
         flagAction: @escaping () -> Void,
         unflagAction: @escaping () -> Void,
@@ -26,6 +28,7 @@ struct PortfolioView: View {
     ) {
         self.portfolio = portfolio
         self.mediaWidth = mediaWidth
+        self.hideFlag = hideFlag
         self.isFlagged = isFlagged
         self.flagAction = flagAction
         self.unflagAction = unflagAction
@@ -41,19 +44,23 @@ struct PortfolioView: View {
                         .font(.title2)
                         .foregroundColor(.pink)
                 })
+                
                 Spacer()
-                Button(action: isFlagged ? unflagAction : flagAction) {
-                    Image(systemName: isFlagged ? "bookmark.fill" : "bookmark")
-                        .font(.title3)
-                        .foregroundColor(isFlagged ? .red : .gray)
-                        .transition(.opacity)
+                
+                if !hideFlag {
+                    Button(action: isFlagged ? unflagAction : flagAction) {
+                        Image(systemName: isFlagged ? "bookmark.fill" : "bookmark")
+                            .font(.title3)
+                            .foregroundColor(isFlagged ? .red : .gray)
+                            .transition(.opacity)
+                    }
                 }
             }
             .padding([.leading, .trailing], Constants.Dimens.spaceLarge)
             
             /// Media
             PhotoCarouselView(mediaWidth: mediaWidth, photos: portfolio.photos)
-                .onTapGesture(count: 2) { flagAction() }
+                .onTapGesture(count: 2) { if !hideFlag { flagAction() } }
             
             /// Description
             HStack {
@@ -73,6 +80,7 @@ struct PortfolioView: View {
     PortfolioView(
         portfolio: .dummyPortfolio2,
         mediaWidth: 350,
+        hideFlag: false,
         isFlagged: true,
         flagAction: {},
         unflagAction: {},

@@ -28,10 +28,12 @@ final class SearchViewModel: BaseViewModel, ViewModel, ObservableObject {
     // MARK: Init
     
     init(
-        flowController: SearchFlowController?
+        flowController: SearchFlowController?,
+        signedInUser: String
     ) {
         self.flowController = flowController
         super.init()
+        state.signedInUser = signedInUser
     }
     
     // MARK: Lifecycle
@@ -43,6 +45,7 @@ final class SearchViewModel: BaseViewModel, ViewModel, ObservableObject {
     // MARK: State
     
     struct State {
+        var signedInUser = ""
         var searchOption: SearchOption = .username
         var textInput: String = ""
         var searchResults: [User] = []
@@ -87,7 +90,8 @@ final class SearchViewModel: BaseViewModel, ViewModel, ObservableObject {
         searchTask = Task {
             do {
                 try await Task.sleep(for: .seconds(0.3))
-                state.searchResults = try await getUsersFromQueryUseCase.execute(query: state.textInput, type: state.searchOption)
+                let results = try await getUsersFromQueryUseCase.execute(query: state.textInput, type: state.searchOption)
+                state.searchResults = results.filter({ $0.username != state.signedInUser })
             } catch {
                 
             }

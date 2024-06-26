@@ -88,7 +88,8 @@ final class NewChatSearchViewModel: BaseViewModel, ViewModel, ObservableObject {
         searchTask = Task {
             do {
                 try await Task.sleep(for: .seconds(0.3))
-                state.searchResults = try await getUsersFromQueryUseCase.execute(query: state.textInput, type: .username)
+                let results = try await getUsersFromQueryUseCase.execute(query: state.textInput, type: .username)
+                state.searchResults = results.filter({ $0.username != state.sender })
             } catch {
                 
             }
