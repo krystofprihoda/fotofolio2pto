@@ -36,12 +36,12 @@ struct MessagesView: View {
                                             ProfilePictureView(profilePicture: viewModel.getReceiverProfilePicture(chat: chat), width: 40)
                                             
                                             VStack(alignment: .leading, spacing: 3) {
-                                                Text("@" + (chat.getReceiver(sender: viewModel.state.signedInUser) ?? ""))
+                                                Text("@" + (chat.getReceiver(sender: viewModel.state.sender) ?? ""))
                                                     .font(.system(size: 17))
                                                     .fontWeight(.medium)
                                                     .foregroundColor(.red).brightness(0.1)
                                                 
-                                                Text(message.from == viewModel.state.signedInUser ? "Vy: \"\(message.body)\"" : "\"\(message.body)\"")
+                                                Text(message.from == viewModel.state.sender ? "Vy: \"\(message.body)\"" : "\"\(message.body)\"")
                                                     .foregroundColor(.gray)
                                                     .font(.system(size: 14))
                                             }
@@ -58,6 +58,7 @@ struct MessagesView: View {
                     }
                 }
             }
+            .refreshable { viewModel.onIntent(.refreshChats) }
         }
         .lifecycle(viewModel)
         .toolbar {
@@ -77,5 +78,5 @@ struct MessagesView: View {
 }
 
 #Preview {
-    MessagesView(viewModel: .init(flowController: nil, signedInUser: ""))
+    MessagesView(viewModel: .init(flowController: nil, sender: ""))
 }

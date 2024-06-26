@@ -30,7 +30,7 @@ class MessagesFlowController: BaseFlowController {
             let vc = BaseHostingController(rootView: view)
             return vc
         } else {
-            let vm = MessagesViewModel(flowController: self, signedInUser: sender)
+            let vm = MessagesViewModel(flowController: self, sender: sender)
             let view = MessagesView(viewModel: vm)
             let vc = BaseHostingController(rootView: view)
             return vc

@@ -23,21 +23,17 @@ final class MessagesViewModel: BaseViewModel, ViewModel, ObservableObject {
     
     init(
         flowController: MessagesFlowController?,
-        signedInUser: String
+        sender: String
     ) {
         self.flowController = flowController
         super.init()
-        state.signedInUser = signedInUser
+        state.sender = sender
     }
     
     // MARK: Lifecycle
     
     override func onAppear() {
         super.onAppear()
-        
-//        if state.userData == nil {
-//            executeTask(Task { await fetchUserData() })
-//        }
         
         executeTask(Task { await fetchChats() })
     }
@@ -47,8 +43,7 @@ final class MessagesViewModel: BaseViewModel, ViewModel, ObservableObject {
     struct State {
         var isLoading: Bool = true
         var chats: [Chat] = []
-        var signedInUser = ""
-//        var userData: User? = nil
+        var sender = ""
     }
     
     @Published private(set) var state = State()
@@ -58,6 +53,7 @@ final class MessagesViewModel: BaseViewModel, ViewModel, ObservableObject {
     enum Intent {
         case showChat(Chat)
         case showNewChat
+        case refreshChats
     }
     
     @discardableResult
@@ -66,6 +62,7 @@ final class MessagesViewModel: BaseViewModel, ViewModel, ObservableObject {
             switch intent {
             case .showChat(let chat): showChat(chat)
             case .showNewChat: showNewChat()
+            case .refreshChats: await fetchChats()
             }
         })
     }
@@ -76,31 +73,18 @@ final class MessagesViewModel: BaseViewModel, ViewModel, ObservableObject {
         state.isLoading = true
         defer { state.isLoading = false }
         
-        guard !state.signedInUser.isEmpty else { return }
+        guard !state.sender.isEmpty else { return }
         
         do {
-            state.chats = try await getChatsForUserUseCase.execute(user: state.signedInUser)
+            state.chats = try await getChatsForUserUseCase.execute(user: state.sender)
         } catch {
             
         }
     }
     
-//    private func fetchUserData() async {
-//        state.isLoading = true
-//        defer { state.isLoading = false }
-//        
-//        guard !state.signedInUser.isEmpty else { return }
-//        
-//        do {
-//            state.userData = try await getUserDataFromUsernameUseCase.execute(state.signedInUser)
-//        } catch {
-//            
-//        }
-//    }
-    
     private func showChat(_ chat: Chat) {
-        guard let receiver = chat.getReceiver(sender: state.signedInUser) else { return }
-        flowController?.showChat(sender: state.signedInUser, receiver: receiver)
+        guard let receiver = chat.getReceiver(sender: state.sender) else { return }
+        flowController?.showChat(sender: state.sender, receiver: receiver)
     }
     
     private func showNewChat() {
@@ -108,6 +92,6 @@ final class MessagesViewModel: BaseViewModel, ViewModel, ObservableObject {
     }
     
     public func getReceiverProfilePicture(chat: Chat) -> IImage? {
-        return chat.chatOwners.first(where: { state.signedInUser != $0.username })?.profilePicture
+        return chat.chatOwners.first(where: { state.sender != $0.username })?.profilePicture
     }
 }

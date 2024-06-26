@@ -80,7 +80,7 @@ public class MainFlowController: BaseFlowController {
             image: UIImage(systemName: "square.text.square"),
             tag: MainTab.feed.rawValue
         )
-        let feedFlowController = FeedFlowController(navigationController: feedNavController)
+        let feedFlowController = FeedFlowController(navigationController: feedNavController, signedInUser: user)
         let feedRootVC = startChildFlow(feedFlowController)
         feedNavController.viewControllers = [feedRootVC]
         
@@ -139,8 +139,8 @@ public class MainFlowController: BaseFlowController {
         let profileFlowController = ProfileFlowController(
             navigationController: profileNavController,
             flowDelegate: self,
-            user: user,
-            isProfileOwner: true
+            signedInUser: user,
+            displayedUser: user
         )
         let profileRootVC = startChildFlow(profileFlowController)
         profileNavController.viewControllers = [profileRootVC]

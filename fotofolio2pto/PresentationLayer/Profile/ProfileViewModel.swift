@@ -15,6 +15,8 @@ final class ProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
     // MARK: Dependencies
     
     @LazyInjected private var logOutUseCase: LogoutUseCase
+    @LazyInjected private var getUserDataFromUsernameUseCase: GetUserDataFromUsernameUseCase
+    @LazyInjected private var getUserPortfoliosUseCase: GetUserPortfoliosUseCase
     
     private weak var flowController: ProfileFlowController?
     
@@ -22,13 +24,13 @@ final class ProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
     
     init(
         flowController: ProfileFlowController?,
-        user: String,
-        isProfileOwner: Bool = false
+        signedInUser: String,
+        displayedUser: String
     ) {
         self.flowController = flowController
         super.init()
-        state.username = user
-        state.isProfileOwner = isProfileOwner
+        state.displayedUser = displayedUser
+        state.signedInUser = signedInUser
     }
     
     // MARK: Lifecycle
@@ -36,19 +38,20 @@ final class ProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
     override func onAppear() {
         super.onAppear()
         
-        fetchUserInfo()
-        fetchPortfolios()
+        if state.userData == nil {
+            executeTask(Task { await fetchProfileData() })
+        }
     }
     
     // MARK: State
     
     struct State {
-        var isLoadingUser = false
-        var isLoadingPortfolios = false
-        var isProfileOwner = false
-        var username = ""
-        var userData: User? = .dummy2
-        var portfolios: [Portfolio] = [.dummyPortfolio2, .dummyPortfolio3, .dummyPortfolio5]
+        var isLoading = false
+        var signedInUser = ""
+        var displayedUser = ""
+        var isProfileOwner: Bool { signedInUser == displayedUser }
+        var userData: User? = nil
+        var portfolios: [Portfolio] = []
     }
     
     @Published private(set) var state = State()
@@ -56,8 +59,8 @@ final class ProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
     // MARK: Intent
     
     enum Intent {
-        case fetchUserInfo
-        case fetchProfilePortofolios
+        case fetchProfileData
+        case sendMessage
         case signOut
     }
     
@@ -65,8 +68,8 @@ final class ProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
     func onIntent(_ intent: Intent) -> Task<Void, Never> {
         executeTask(Task {
             switch intent {
-            case .fetchUserInfo: fetchUserInfo()
-            case .fetchProfilePortofolios: fetchPortfolios()
+            case .fetchProfileData: await fetchProfileData()
+            case .sendMessage: sendMessage()
             case .signOut: signOut()
             }
         })
@@ -74,12 +77,20 @@ final class ProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
     
     // MARK: Additional methods
     
-    private func fetchUserInfo() {
+    private func fetchProfileData() async {
+        state.isLoading = true
+        defer { state.isLoading = false }
         
+        do {
+            state.userData = try await getUserDataFromUsernameUseCase.execute(state.displayedUser)
+            state.portfolios = try await getUserPortfoliosUseCase.execute(username: state.displayedUser)
+        } catch {
+            
+        }
     }
     
-    private func fetchPortfolios() {
-        
+    private func sendMessage() {
+        flowController?.sendMessage(from: state.signedInUser, to: state.displayedUser)
     }
     
     private func signOut() {

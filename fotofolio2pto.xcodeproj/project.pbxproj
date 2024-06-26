@@ -44,6 +44,7 @@
 		FEA53CDA2C2C3526006F0116 /* SendMessageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CD92C2C3526006F0116 /* SendMessageUseCase.swift */; };
 		FEA53CDC2C2C39F0006F0116 /* GetLatestChatMessagesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CDB2C2C39F0006F0116 /* GetLatestChatMessagesUseCase.swift */; };
 		FEA53CDE2C2C49DF006F0116 /* GetChatUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CDD2C2C49DF006F0116 /* GetChatUseCase.swift */; };
+		FEA53CE02C2C6A20006F0116 /* GetUserPortfoliosUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CDF2C2C6A20006F0116 /* GetUserPortfoliosUseCase.swift */; };
 		FEC94D952C24398200FFEB11 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC94D942C24398200FFEB11 /* AppDelegate.swift */; };
 		FEC94D9F2C24398200FFEB11 /* fotofolio2pto.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FEC94D9D2C24398200FFEB11 /* fotofolio2pto.xcdatamodeld */; };
 		FEC94DA12C24398400FFEB11 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FEC94DA02C24398400FFEB11 /* Assets.xcassets */; };
@@ -133,6 +134,7 @@
 		FEA53CD92C2C3526006F0116 /* SendMessageUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendMessageUseCase.swift; sourceTree = "<group>"; };
 		FEA53CDB2C2C39F0006F0116 /* GetLatestChatMessagesUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLatestChatMessagesUseCase.swift; sourceTree = "<group>"; };
 		FEA53CDD2C2C49DF006F0116 /* GetChatUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetChatUseCase.swift; sourceTree = "<group>"; };
+		FEA53CDF2C2C6A20006F0116 /* GetUserPortfoliosUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUserPortfoliosUseCase.swift; sourceTree = "<group>"; };
 		FEC94D912C24398200FFEB11 /* fotofolio2pto.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = fotofolio2pto.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FEC94D942C24398200FFEB11 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FEC94D9E2C24398200FFEB11 /* fotofolio2pto.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = fotofolio2pto.xcdatamodel; sourceTree = "<group>"; };
@@ -312,6 +314,7 @@
 				FEA53CAA2C29DE1E006F0116 /* GetFlaggedPortfoliosUseCase.swift */,
 				FEA53CB72C2AE9B1006F0116 /* UnflagAllPortfoliosUseCase.swift */,
 				FEA53CBB2C2B0B3D006F0116 /* GetFilteredPortfoliosUseCase.swift */,
+				FEA53CDF2C2C6A20006F0116 /* GetUserPortfoliosUseCase.swift */,
 			);
 			path = Feed;
 			sourceTree = "<group>";
@@ -702,6 +705,7 @@
 				FEC94E0D2C2842F500FFEB11 /* ProfilePortfoliosView.swift in Sources */,
 				FEA53C9A2C29BFDF006F0116 /* UseCase+Injection.swift in Sources */,
 				FE5F8A802C2971C7001EE8AF /* AuthRepositoryImpl.swift in Sources */,
+				FEA53CE02C2C6A20006F0116 /* GetUserPortfoliosUseCase.swift in Sources */,
 				FEC94E172C2857D100FFEB11 /* OnboardingFlowController.swift in Sources */,
 				FEC94E032C26DD7900FFEB11 /* ProfilePictureView.swift in Sources */,
 				FEC94DFF2C262E8F00FFEB11 /* Creator.swift in Sources */,

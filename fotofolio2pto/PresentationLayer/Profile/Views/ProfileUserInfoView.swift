@@ -54,7 +54,7 @@ struct ProfileUserInfoView: View {
                         if !profileOwner {
                             Button(action: { }, label: {
                                 Text("Udělit hodnocení")
-                                    .font(.system(size: 14))
+                                    .font(.system(size: 12))
                                     .underline()
                                     .foregroundColor(.red).brightness(0.25)
                             })
@@ -67,10 +67,8 @@ struct ProfileUserInfoView: View {
                 .padding(.top, 10)
                 
                 Divider()
-                    .padding(.leading, 18)
-                    .padding(.trailing, 18)
-                    .padding(.bottom, 2)
-                    .padding(.top, 5)
+                    .padding([.leading, .trailing], Constants.Dimens.spaceLarge)
+                    .padding([.top, .bottom], Constants.Dimens.spaceXSmall)
                 
                 if let creator = user.creator {
                     VStack(alignment: .leading, spacing: 0) {

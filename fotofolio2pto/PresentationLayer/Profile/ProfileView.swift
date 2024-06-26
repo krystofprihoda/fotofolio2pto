@@ -19,14 +19,13 @@ struct ProfileView: View {
         GeometryReader { geo in
             ScrollView(showsIndicators: false) {
                 VStack {
-                    if viewModel.state.isLoadingUser || viewModel.state.isLoadingPortfolios {
+                    if viewModel.state.isLoading {
                         ProgressView()
                             .padding()
                             .frame(width: geo.size.width, height: geo.size.height)
                     } else {
                         ProfileUserInfoView(user: viewModel.state.userData, profileOwner: viewModel.state.isProfileOwner)
-                            .padding(.top)
-                        
+                            .padding(.top, Constants.Dimens.spaceSmall)
                         if viewModel.state.userData?.creator != nil {
                             ProfilePortfoliosView(portfolios: viewModel.state.portfolios)
                         } else {
@@ -35,6 +34,7 @@ struct ProfileView: View {
                     }
                 }
             }
+            .refreshable { viewModel.onIntent(.fetchProfileData) }
         }
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarTrailing) {
@@ -74,7 +74,7 @@ struct ProfileView: View {
                         })
                     } else {
                         Button(action: {
-                            // ChatView(receiver: user)
+                            viewModel.onIntent(.sendMessage)
                         }, label: {
                             Image(systemName: "paperplane")
                                 .resizable()
@@ -88,11 +88,11 @@ struct ProfileView: View {
                 .padding(.trailing, 5)
             }
         }
-        .setupNavBarAndTitle("@\(viewModel.state.userData?.username ?? "")")
+        .setupNavBarAndTitle("@\(viewModel.state.displayedUser)")
         .lifecycle(viewModel)
     }
 }
 
 #Preview {
-    ProfileView(viewModel: .init(flowController: nil, user: ""))
+    ProfileView(viewModel: .init(flowController: nil, signedInUser: "", displayedUser: ""))
 }

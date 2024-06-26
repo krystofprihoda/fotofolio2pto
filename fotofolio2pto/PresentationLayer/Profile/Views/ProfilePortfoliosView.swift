@@ -29,7 +29,7 @@ struct ProfilePortfoliosView: View {
                             HStack {
                                 Text(portfolio.name)
                                     .font(.system(size: 20))
-                                    .padding([.top, .bottom], Constants.Dimens.spaceSmall)
+                                    .padding(.bottom, Constants.Dimens.spaceSmall)
                                     .padding([.leading, .trailing], Constants.Dimens.spaceXLarge)
                                     .foregroundColor(.black).brightness(0.3)
                                     .transition(.opacity)
@@ -46,7 +46,7 @@ struct ProfilePortfoliosView: View {
                                             image
                                                 .resizable()
                                                 .aspectRatio(1.0, contentMode: .fill)
-                                                .frame(width: 150, height: 150)
+                                                .frame(width: 150)
                                                 .cornerRadius(Constants.Dimens.radiusXSmall)
                                         } placeholder: {
                                             ZStack {
@@ -54,7 +54,7 @@ struct ProfilePortfoliosView: View {
                                                     .fill(.gray)
                                                     .brightness(Double.random(in: 0.15...0.4))
                                                     .aspectRatio(1.0, contentMode: .fit)
-                                                    .frame(width: 150, height: 150)
+                                                    .frame(width: 150)
 
                                                 ProgressView()
                                                     .progressViewStyle(CircularProgressViewStyle())
@@ -64,7 +64,7 @@ struct ProfilePortfoliosView: View {
                                         image
                                             .resizable()
                                             .aspectRatio(1.0, contentMode: .fill)
-                                            .frame(width: 150, height: 150)
+                                            .frame(width: 150)
                                             .cornerRadius(Constants.Dimens.radiusXSmall)
                                     }
                                 }
@@ -76,11 +76,14 @@ struct ProfilePortfoliosView: View {
                         if showText {
                             Text(portfolio.description)
                                 .font(.system(size: 15))
-                                .padding(.top, Constants.Dimens.spaceXSmall)
                                 .padding([.leading, .trailing], Constants.Dimens.spaceXLarge)
                                 .padding(.bottom, Constants.Dimens.spaceXSmall)
                                 .foregroundColor(.gray).brightness(0.1)
                                 .transition(.opacity)
+                            
+                            Divider()
+                                .padding([.leading, .trailing], Constants.Dimens.spaceXLarge)
+                                .padding([.top, .bottom], Constants.Dimens.spaceSmall)
                         }
                     }
                 }

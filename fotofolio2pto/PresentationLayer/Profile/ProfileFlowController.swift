@@ -14,27 +14,34 @@ public protocol ProfileFlowControllerDelegate: AnyObject {
 
 class ProfileFlowController: BaseFlowController {
     
-    private let user: String
-    private let isProfileOwner: Bool
+    private let signedInUser: String
+    private let displayedUser: String
     
     weak var flowDelegate: ProfileFlowControllerDelegate?
 
     init(
         navigationController: UINavigationController,
         flowDelegate: ProfileFlowControllerDelegate? = nil,
-        user: String,
-        isProfileOwner: Bool = false
+        signedInUser: String,
+        displayedUser: String
     ) {
-        self.user = user
         self.flowDelegate = flowDelegate
-        self.isProfileOwner = isProfileOwner
+        self.signedInUser = signedInUser
+        self.displayedUser = displayedUser
         super.init(navigationController: navigationController)
     }
     
     override func setup() -> UIViewController {
-        let vm = ProfileViewModel(flowController: self, user: user, isProfileOwner: isProfileOwner)
+        let vm = ProfileViewModel(flowController: self, signedInUser: signedInUser, displayedUser: displayedUser)
         let view = ProfileView(viewModel: vm)
         let vc = BaseHostingController(rootView: view)
         return vc
+    }
+    
+    public func sendMessage(from sender: String, to receiver: String) {
+        let fc = MessagesFlowController(navigationController: navigationController, sender: sender, receiver: receiver)
+        let vc = startChildFlow(fc)
+        navigationController.navigationBar.tintColor = .gray
+        navigationController.pushViewController(vc, animated: true)
     }
 }

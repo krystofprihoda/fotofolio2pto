@@ -40,9 +40,6 @@ public class FeedRepositoryImpl: FeedRepository {
     }
     
     public func addToFlagged(portfolioId: Int) throws {
-//        guard !FeedRepositoryImpl.flagged.contains(where: { $0 == portfolioId }) else { return }
-//        FeedRepositoryImpl.flagged.append(portfolioId)
-        
         var flagged = getFlaggedIds()
         guard !flagged.contains(where: { $0 == portfolioId }) else { return }
         flagged.append(portfolioId)
@@ -50,8 +47,6 @@ public class FeedRepositoryImpl: FeedRepository {
     }
     
     public func removeFromFlagged(portfolioId: Int) throws {
-//        FeedRepositoryImpl.flagged.removeAll(where: { $0 == portfolioId })
-        
         var flagged = getFlaggedIds()
         flagged.removeAll(where: { $0 == portfolioId })
         defaults.update(.flagged, value: flagged)
@@ -82,6 +77,12 @@ public class FeedRepositoryImpl: FeedRepository {
                     tag == filterTag
                 })
             })
+        })
+    }
+    
+    public func getUserPortfolios(for username: String) async throws -> [Portfolio] {
+        return FeedRepositoryImpl.portfolios.filter({ portfolio in
+            portfolio.author.username == username
         })
     }
 }

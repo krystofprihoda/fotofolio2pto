@@ -14,9 +14,18 @@ public protocol FeedFlowControllerDelegate: AnyObject {
 
 class FeedFlowController: BaseFlowController {
 
+    private let signedInUser: String
     private var backgroundFilterTapView: UIView?
     
     weak var feedFlowDelegate: FeedFlowControllerDelegate?
+    
+    init(
+        navigationController: UINavigationController,
+        signedInUser: String
+    ) {
+        self.signedInUser = signedInUser
+        super.init(navigationController: navigationController)
+    }
     
     override func setup() -> UIViewController {
         let vm = FeedViewModel(flowController: self)
@@ -48,7 +57,7 @@ class FeedFlowController: BaseFlowController {
     }
     
     func showProfile(user: User) {
-        let fc = ProfileFlowController(navigationController: navigationController, user: user.username)
+        let fc = ProfileFlowController(navigationController: navigationController, signedInUser: signedInUser, displayedUser: user.username)
         let vc = startChildFlow(fc)
         navigationController.navigationBar.tintColor = .gray
         navigationController.pushViewController(vc, animated: true)

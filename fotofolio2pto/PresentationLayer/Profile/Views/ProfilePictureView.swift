@@ -42,7 +42,8 @@ struct ProfilePictureView: View {
         } else {
             Circle()
                 .foregroundColor(.gray).brightness(0.33)
-                .frame(width: width, height: width)
+                .aspectRatio(1.0, contentMode: .fit)
+                .frame(width: width)
         }
     }
 }

@@ -16,31 +16,28 @@ struct NewChatSearchView: View {
     }
     
     var body: some View {
-        ScrollView {
-            VStack {
-                ZStack {
-                    Rectangle()
-                       .foregroundColor(.gray).brightness(0.37)
-                    
-                    HStack {
-                        Image(systemName: "magnifyingglass")
-                        TextField("Hledat", text: .constant("ad.foto")) { editing in
-                            if editing {
-//                                searchViewModel.searching = true
-                            }
-                        } onCommit: {
-//                            searchViewModel.searching = false
-                        }
+        VStack {
+            ZStack {
+                Rectangle()
+                   .foregroundColor(.gray).brightness(0.37)
+                
+                HStack {
+                    Image(systemName: "magnifyingglass")
+                    TextField("Hledat", text: Binding(get: { viewModel.state.textInput }, set: { viewModel.onIntent(.setTextInput($0)) }))
                         .autocapitalization(.none)
                         .disableAutocorrection(true)
-                    }
-                    .padding()
-                 }
-                .frame(height: 45)
-                .cornerRadius(10)
-                .padding([.leading, .trailing])
-                
-                //results
+                        .onChange(of: viewModel.state.textInput) { _ in
+                            viewModel.onIntent(.search)
+                        }
+                }
+                .padding()
+             }
+            .frame(height: 45)
+            .cornerRadius(10)
+            .padding([.leading, .trailing])
+            
+            //results
+            ScrollView(showsIndicators: false) {
                 ForEach(viewModel.state.searchResults) { user in
                     Button(action: { viewModel.onIntent(.showNewChatWithUser(user)) }) {
                         HStack {
@@ -67,8 +64,8 @@ struct NewChatSearchView: View {
                     }
                 }
             }
-            .padding(.top)
         }
+        .padding(.top)
         .setupNavBarAndTitle("Nový chat")
         .toolbar {
 //            if searchViewModel.searching {

@@ -11,6 +11,8 @@ import Resolver
 final class NewChatSearchViewModel: BaseViewModel, ViewModel, ObservableObject {
     // MARK: Stored properties
 
+    private var searchTask: Task<Void, Error>?
+    
     // MARK: Dependencies
 
     @LazyInjected private var createNewChatUseCase: CreateNewChatUseCase
@@ -39,7 +41,8 @@ final class NewChatSearchViewModel: BaseViewModel, ViewModel, ObservableObject {
     struct State {
         var isLoading: Bool = false
         var sender = ""
-        var searchResults: [User] = [.dummy3]
+        var textInput = ""
+        var searchResults: [User] = []
     }
 
     @Published private(set) var state = State()
@@ -48,6 +51,8 @@ final class NewChatSearchViewModel: BaseViewModel, ViewModel, ObservableObject {
 
     enum Intent {
         case showNewChatWithUser(User)
+        case setTextInput(String)
+        case search
     }
 
     @discardableResult
@@ -55,6 +60,8 @@ final class NewChatSearchViewModel: BaseViewModel, ViewModel, ObservableObject {
         executeTask(Task {
             switch intent {
             case .showNewChatWithUser(let user): await showNewChatWithUser(user)
+            case .setTextInput(let input): setTextInput(input)
+            case .search: search()
             }
         })
     }
@@ -62,12 +69,24 @@ final class NewChatSearchViewModel: BaseViewModel, ViewModel, ObservableObject {
     // MARK: Additional methods
 
     private func showNewChatWithUser(_ receiver: User) async {
-        // UC
         do {
             let _ = try await createNewChatUseCase.execute(sender: state.sender, receiver: receiver)
             flowController?.showChat(sender: state.sender, receiver: receiver.username)
         } catch {
             
+        }
+    }
+    
+    private func setTextInput(_ input: String) {
+        state.textInput = input
+    }
+    
+    private func search() {
+        searchTask?.cancel()
+        
+        searchTask = Task {
+            try await Task.sleep(for: .seconds(0.4))
+            state.searchResults = Int.random(in: 0...1) > 0 ? [.dummy1] : [.dummy2, .dummy4]
         }
     }
 }
