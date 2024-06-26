@@ -61,9 +61,7 @@ struct FeedView: View {
             }
             
             ToolbarItemGroup(placement: .navigationBarTrailing) {
-                Button("Filtrovat", action: {
-                    viewModel.onIntent(.filter)
-                })
+                Button("Filtrovat", action: { viewModel.onIntent(.filter) })
                 .padding(.trailing, 5)
             }
         }

@@ -45,7 +45,7 @@ struct ProfileView: View {
                         Image(systemName: "plus")
                             .resizable()
                             .aspectRatio(1, contentMode: .fit)
-                            .frame(height: 15)
+                            .frame(height: Constants.Dimens.frameSizeXSmall)
                             .foregroundColor(.gray)
                     }
                 }
@@ -69,7 +69,7 @@ struct ProfileView: View {
                             Image(systemName: "slider.horizontal.3")
                                 .resizable()
                                 .aspectRatio(1, contentMode: .fit)
-                                .frame(height: 15)
+                                .frame(height: Constants.Dimens.frameSizeXSmall)
                                 .foregroundColor(.gray)
                         })
                     } else {
@@ -79,7 +79,7 @@ struct ProfileView: View {
                             Image(systemName: "paperplane")
                                 .resizable()
                                 .aspectRatio(1, contentMode: .fit)
-                                .frame(height: 18)
+                                .frame(height: Constants.Dimens.frameSizeXSmall)
                                 .foregroundColor(.gray)
                         })
                     }

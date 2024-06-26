@@ -45,6 +45,7 @@
 		FEA53CDC2C2C39F0006F0116 /* GetLatestChatMessagesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CDB2C2C39F0006F0116 /* GetLatestChatMessagesUseCase.swift */; };
 		FEA53CDE2C2C49DF006F0116 /* GetChatUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CDD2C2C49DF006F0116 /* GetChatUseCase.swift */; };
 		FEA53CE02C2C6A20006F0116 /* GetUserPortfoliosUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CDF2C2C6A20006F0116 /* GetUserPortfoliosUseCase.swift */; };
+		FEA53CE22C2C88EE006F0116 /* GetUsersFromQueryUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CE12C2C88EE006F0116 /* GetUsersFromQueryUseCase.swift */; };
 		FEC94D952C24398200FFEB11 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC94D942C24398200FFEB11 /* AppDelegate.swift */; };
 		FEC94D9F2C24398200FFEB11 /* fotofolio2pto.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FEC94D9D2C24398200FFEB11 /* fotofolio2pto.xcdatamodeld */; };
 		FEC94DA12C24398400FFEB11 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FEC94DA02C24398400FFEB11 /* Assets.xcassets */; };
@@ -135,6 +136,7 @@
 		FEA53CDB2C2C39F0006F0116 /* GetLatestChatMessagesUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLatestChatMessagesUseCase.swift; sourceTree = "<group>"; };
 		FEA53CDD2C2C49DF006F0116 /* GetChatUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetChatUseCase.swift; sourceTree = "<group>"; };
 		FEA53CDF2C2C6A20006F0116 /* GetUserPortfoliosUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUserPortfoliosUseCase.swift; sourceTree = "<group>"; };
+		FEA53CE12C2C88EE006F0116 /* GetUsersFromQueryUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUsersFromQueryUseCase.swift; sourceTree = "<group>"; };
 		FEC94D912C24398200FFEB11 /* fotofolio2pto.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = fotofolio2pto.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FEC94D942C24398200FFEB11 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FEC94D9E2C24398200FFEB11 /* fotofolio2pto.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = fotofolio2pto.xcdatamodel; sourceTree = "<group>"; };
@@ -274,6 +276,7 @@
 			children = (
 				FE5F8A882C2975FC001EE8AF /* LogoutUseCase.swift */,
 				FEA53CC72C2C16E2006F0116 /* GetUserDataFromUsernameUseCase.swift */,
+				FEA53CE12C2C88EE006F0116 /* GetUsersFromQueryUseCase.swift */,
 			);
 			path = User;
 			sourceTree = "<group>";
@@ -660,6 +663,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FEA53CE22C2C88EE006F0116 /* GetUsersFromQueryUseCase.swift in Sources */,
 				FEC94DE32C25917200FFEB11 /* Portfolio.swift in Sources */,
 				FEC94E152C28521D00FFEB11 /* SignInView.swift in Sources */,
 				FEC94DC12C246D8600FFEB11 /* FeedView.swift in Sources */,

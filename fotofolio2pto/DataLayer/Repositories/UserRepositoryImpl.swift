@@ -17,4 +17,18 @@ public class UserRepositoryImpl: UserRepository {
             user.username == username
         })
     }
+    
+    public func getUsersFromUsernameQuery(query: String, type: SearchOption) async throws -> [User] {
+        try await Task.sleep(for: .seconds(0.3))
+        return UserRepositoryImpl.users.filter({ user in
+            user.username.lowercased().hasPrefix(query.lowercased())
+        })
+    }
+    
+    public func getUsersFromLocationQuery(query: String, type: SearchOption) async throws -> [User] {
+        try await Task.sleep(for: .seconds(0.3))
+        return UserRepositoryImpl.users.filter({ user in
+            user.location.lowercased().hasPrefix(query.lowercased())
+        })
+    }
 }

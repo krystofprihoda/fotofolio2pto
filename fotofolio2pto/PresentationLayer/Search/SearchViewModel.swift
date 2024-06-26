@@ -7,8 +7,9 @@
 
 import Foundation
 import SwiftUI
+import Resolver
 
-enum SearchOption: String, CaseIterable {
+public enum SearchOption: String, CaseIterable {
     case username = "Uživatelské jméno"
     case location = "Poloha"
 }
@@ -20,7 +21,7 @@ final class SearchViewModel: BaseViewModel, ViewModel, ObservableObject {
     
     // MARK: Dependencies
     
-    // UCs
+    @LazyInjected private var getUsersFromQueryUseCase: GetUsersFromQueryUseCase
     
     private weak var flowController: SearchFlowController?
     
@@ -44,7 +45,6 @@ final class SearchViewModel: BaseViewModel, ViewModel, ObservableObject {
     struct State {
         var searchOption: SearchOption = .username
         var textInput: String = ""
-        var isSearching: Bool = false
         var searchResults: [User] = []
     }
     
@@ -55,7 +55,6 @@ final class SearchViewModel: BaseViewModel, ViewModel, ObservableObject {
     enum Intent {
         case setSearchOption(SearchOption)
         case setTextInput(String)
-        case setIsSearching(Bool)
         case search
         case showProfile(of: User)
     }
@@ -66,7 +65,6 @@ final class SearchViewModel: BaseViewModel, ViewModel, ObservableObject {
             switch intent {
             case .setSearchOption(let option): setSearchOption(option)
             case .setTextInput(let input): setTextInput(input)
-            case .setIsSearching(let value): withAnimation { setIsSearching(value) }
             case .search: search()
             case .showProfile(let user): showProfile(of: user)
             }
@@ -79,10 +77,6 @@ final class SearchViewModel: BaseViewModel, ViewModel, ObservableObject {
         state.searchOption = option
     }
     
-    private func setIsSearching(_ value: Bool) {
-        state.isSearching = value
-    }
-    
     private func setTextInput(_ input: String) {
         state.textInput = input
     }
@@ -91,8 +85,12 @@ final class SearchViewModel: BaseViewModel, ViewModel, ObservableObject {
         searchTask?.cancel()
         
         searchTask = Task {
-            try await Task.sleep(for: .seconds(0.4))
-            state.searchResults = Int.random(in: 0...1) > 0 ? [.dummy1] : [.dummy2, .dummy4]
+            do {
+                try await Task.sleep(for: .seconds(0.3))
+                state.searchResults = try await getUsersFromQueryUseCase.execute(query: state.textInput, type: state.searchOption)
+            } catch {
+                
+            }
         }
     }
     

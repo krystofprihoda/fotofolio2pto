@@ -18,6 +18,7 @@ public extension Resolver {
         /// User
         register { GetUserDataFromUsernameUseCaseImpl(userRepository: resolve()) as GetUserDataFromUsernameUseCase }
         register { GetUserPortfoliosUseCaseImpl(feedRepository: resolve()) as GetUserPortfoliosUseCase }
+        register { GetUsersFromQueryUseCaseImpl(userRepository: resolve()) as GetUsersFromQueryUseCase }
         
         /// Portfolios
         register { GetAllPortfoliosUseCaseImpl(feedRepository: resolve()) as GetAllPortfoliosUseCase }

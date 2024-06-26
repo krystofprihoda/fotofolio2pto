@@ -16,6 +16,7 @@ final class NewChatSearchViewModel: BaseViewModel, ViewModel, ObservableObject {
     // MARK: Dependencies
 
     @LazyInjected private var createNewChatUseCase: CreateNewChatUseCase
+    @LazyInjected private var getUsersFromQueryUseCase: GetUsersFromQueryUseCase
 
     private weak var flowController: MessagesFlowController?
 
@@ -85,8 +86,12 @@ final class NewChatSearchViewModel: BaseViewModel, ViewModel, ObservableObject {
         searchTask?.cancel()
         
         searchTask = Task {
-            try await Task.sleep(for: .seconds(0.4))
-            state.searchResults = Int.random(in: 0...1) > 0 ? [.dummy1] : [.dummy2, .dummy4]
+            do {
+                try await Task.sleep(for: .seconds(0.3))
+                state.searchResults = try await getUsersFromQueryUseCase.execute(query: state.textInput, type: .username)
+            } catch {
+                
+            }
         }
     }
 }

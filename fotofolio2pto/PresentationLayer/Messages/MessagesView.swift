@@ -67,7 +67,7 @@ struct MessagesView: View {
                     Image(systemName: "square.and.pencil")
                         .resizable()
                         .aspectRatio(1, contentMode: .fit)
-                        .frame(height: 15)
+                        .frame(height: Constants.Dimens.frameSizeXSmall)
                         .foregroundColor(.gray)
                 }
                 .padding(.trailing, 5)
