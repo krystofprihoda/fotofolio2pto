@@ -28,39 +28,33 @@ struct MessagesView: View {
                             .font(.system(size: 15))
                             .foregroundColor(.gray)
                     } else {
-                        VStack {
+                        VStack(spacing: Constants.Dimens.spaceNone) {
                             ForEach(viewModel.state.chats) { chat in
-                                Button(action: {
-                                    // ChatView(receiver: receiver)
-                                }) {
-                                    HStack {
-                                        ProfilePictureView(profilePicture: chat.receiver.profilePicture, width: 40)
-                                        
-                                        VStack(alignment: .leading, spacing: 3) {
-                                            Text("@" + chat.receiver.username)
-                                                .font(.system(size: 17))
-                                                .fontWeight(.medium)
-                                                .foregroundColor(.red).brightness(0.1)
+                                if let message = chat.messages.last {
+                                    Button(action: { viewModel.onIntent(.showChat(chat)) }) {
+                                        HStack {
+                                            ProfilePictureView(profilePicture: viewModel.getReceiverProfilePicture(chat: chat), width: 40)
                                             
-                                            if let message = chat.messages.last {
-                                                Text(message.from == chat.sender.username ? "Vy: \"\(message.body)\"" : "\"\(message.body)\"")
+                                            VStack(alignment: .leading, spacing: 3) {
+                                                Text("@" + (chat.getReceiver(sender: viewModel.state.signedInUser) ?? ""))
+                                                    .font(.system(size: 17))
+                                                    .fontWeight(.medium)
+                                                    .foregroundColor(.red).brightness(0.1)
+                                                
+                                                Text(message.from == viewModel.state.signedInUser ? "Vy: \"\(message.body)\"" : "\"\(message.body)\"")
                                                     .foregroundColor(.gray)
                                                     .font(.system(size: 14))
-                                            } else {
-                                                Text("\"Poslední zpráva\"")
-                                                    .foregroundColor(.gray)
-                                                    .font(.system(size: 15))
                                             }
+                                            .padding(.leading, 10)
+                                            
+                                            Spacer()
                                         }
-                                        .padding(.leading, 10)
-                                        
-                                        Spacer()
                                     }
-                                    .padding([.top, .bottom], 10)
                                 }
                             }
-                            .padding()
+                            .padding(.bottom)
                         }
+                        .padding()
                     }
                 }
             }
@@ -68,9 +62,7 @@ struct MessagesView: View {
         .lifecycle(viewModel)
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarTrailing) {
-                Button(action: {
-                    // NewChatSearchView()
-                }) {
+                Button(action: { viewModel.onIntent(.showNewChat) }) {
                     Image(systemName: "square.and.pencil")
                         .resizable()
                         .aspectRatio(1, contentMode: .fit)
@@ -85,5 +77,5 @@ struct MessagesView: View {
 }
 
 #Preview {
-    MessagesView(viewModel: .init(flowController: nil))
+    MessagesView(viewModel: .init(flowController: nil, signedInUser: ""))
 }

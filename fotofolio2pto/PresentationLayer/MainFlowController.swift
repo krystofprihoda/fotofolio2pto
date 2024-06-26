@@ -65,7 +65,7 @@ public class MainFlowController: BaseFlowController {
         
         // MARK: Profile
         
-        let profileNavController = getProfileNavigationController(for: user)
+        let profileNavController = getProfileNavigationController()
         navViewControllers.append(profileNavController)
         
         tabBarVC.setViewControllers(navViewControllers, animated: true)
@@ -94,7 +94,7 @@ public class MainFlowController: BaseFlowController {
             image: UIImage(systemName: "star.square"),
             tag: MainTab.selection.rawValue
         )
-        let selectionFlowController = SelectionFlowController(navigationController: selectionNavController)
+        let selectionFlowController = SelectionFlowController(navigationController: selectionNavController, signedInUser: user)
         let selectionRootVC = startChildFlow(selectionFlowController)
         selectionNavController.viewControllers = [selectionRootVC]
         
@@ -122,14 +122,14 @@ public class MainFlowController: BaseFlowController {
             image: UIImage(systemName: "message"),
             tag: MainTab.messages.rawValue
         )
-        let messagesFlowController = MessagesFlowController(navigationController: messagesNavController)
+        let messagesFlowController = MessagesFlowController(navigationController: messagesNavController, sender: user)
         let messagesRootVC = startChildFlow(messagesFlowController)
         messagesNavController.viewControllers = [messagesRootVC]
         
         return messagesNavController
     }
     
-    private func getProfileNavigationController(for: String) -> UINavigationController {
+    private func getProfileNavigationController() -> UINavigationController {
         let profileNavController = UINavigationController()
         profileNavController.tabBarItem = UITabBarItem(
             title: "Profil",

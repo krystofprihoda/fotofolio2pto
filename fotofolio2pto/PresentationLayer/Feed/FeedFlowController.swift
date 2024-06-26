@@ -14,7 +14,7 @@ public protocol FeedFlowControllerDelegate: AnyObject {
 
 class FeedFlowController: BaseFlowController {
 
-    private var backgroundTapView: UIView?
+    private var backgroundFilterTapView: UIView?
     
     weak var feedFlowDelegate: FeedFlowControllerDelegate?
     
@@ -50,10 +50,7 @@ class FeedFlowController: BaseFlowController {
     func showProfile(user: User) {
         let fc = ProfileFlowController(navigationController: navigationController, user: user.username)
         let vc = startChildFlow(fc)
-//        navigationController.setNavigationBarHidden(true, animated: true)
-        navigationController.navigationBar.tintColor = .black
-        navigationController.navigationBar.barStyle = .black
-        navigationController.navigationBar.tintColor = .black
+        navigationController.navigationBar.tintColor = .gray
         navigationController.pushViewController(vc, animated: true)
     }
 }
@@ -79,12 +76,12 @@ extension FeedFlowController: UISheetPresentationControllerDelegate {
         tapView.addGestureRecognizer(tapGesture)
         
         window.addSubview(tapView)
-        backgroundTapView = tapView
+        backgroundFilterTapView = tapView
     }
 
     private func removeBackgroundTapView() {
-        backgroundTapView?.removeFromSuperview()
-        backgroundTapView = nil
+        backgroundFilterTapView?.removeFromSuperview()
+        backgroundFilterTapView = nil
     }
 
     @objc private func handleBackgroundTap() {

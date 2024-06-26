@@ -7,12 +7,12 @@
 
 import Foundation
 
-struct Message: Identifiable, Equatable {
-    let id = UUID()
-    var from: String
-    var to: String
-    var body: String
-    let timestamp: Date
+public struct Message: Identifiable, Equatable {
+    public let id = UUID()
+    public var from: String
+    public var to: String
+    public var body: String
+    public let timestamp: Date
 }
 
 extension Message {

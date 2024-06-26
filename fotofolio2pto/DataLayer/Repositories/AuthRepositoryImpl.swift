@@ -17,6 +17,7 @@ public class AuthRepositoryImpl: AuthRepository {
     
     public func logout() {
         defaults.delete(.signedInUser)
+        defaults.delete(.flagged)
     }
     
     public func loginWithCredentials(username: String, password: String) {

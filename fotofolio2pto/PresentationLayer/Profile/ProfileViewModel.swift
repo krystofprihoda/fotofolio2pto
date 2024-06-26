@@ -15,7 +15,6 @@ final class ProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
     // MARK: Dependencies
     
     @LazyInjected private var logOutUseCase: LogoutUseCase
-    // UCs
     
     private weak var flowController: ProfileFlowController?
     

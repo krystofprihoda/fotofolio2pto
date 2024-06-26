@@ -51,6 +51,8 @@ final class SelectionViewModel: BaseViewModel, ViewModel, ObservableObject {
         case getFlagged
         case removeAllFlagged
         case removeFromFlagged(Int)
+        case showProfile(User)
+        case sendMessage(to: User)
     }
     
     @discardableResult
@@ -60,6 +62,8 @@ final class SelectionViewModel: BaseViewModel, ViewModel, ObservableObject {
             case .getFlagged: await getFlaggedPortfolios()
             case .removeAllFlagged: removeAllFlagged()
             case .removeFromFlagged(let id): removeFromFlagged(id: id)
+            case .showProfile(let user): showProfile(user: user)
+            case .sendMessage(let user): sendMessage(to: user)
             }
         })
     }
@@ -93,5 +97,13 @@ final class SelectionViewModel: BaseViewModel, ViewModel, ObservableObject {
         } catch {
             
         }
+    }
+    
+    private func showProfile(user: User) {
+        flowController?.showProfile(user: user)
+    }
+    
+    private func sendMessage(to user: User) {
+        flowController?.sendMessage(to: user)
     }
 }

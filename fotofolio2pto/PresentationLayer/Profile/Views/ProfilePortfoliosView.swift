@@ -51,7 +51,7 @@ struct ProfilePortfoliosView: View {
                                         } placeholder: {
                                             ZStack {
                                                 RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
-                                                    .fill(Color.gray)
+                                                    .fill(.gray)
                                                     .brightness(Double.random(in: 0.15...0.4))
                                                     .aspectRatio(1.0, contentMode: .fit)
                                                     .frame(width: 150, height: 150)

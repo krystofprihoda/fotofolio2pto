@@ -11,6 +11,8 @@ import Resolver
 public extension Resolver {
     static func registerRepositories() {
         register { AuthRepositoryImpl(defaults: resolve()) as AuthRepository }
+        register { UserRepositoryImpl() as UserRepository }
         register { FeedRepositoryImpl(defaults: resolve()) as FeedRepository }
+        register { MessageRepositoryImpl() as MessageRepository }
     }
 }

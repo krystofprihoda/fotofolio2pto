@@ -11,32 +11,34 @@ struct AuthorDetailView: View {
     
     private let author: User
     private let unflagPortfolio: () -> Void
+    private let showProfile: () -> Void
+    private let sendMessage: () -> Void
     
     init(
         author: User,
-        unflagPortfolio: @escaping () -> Void
+        unflagPortfolio: @escaping () -> Void,
+        showProfile: @escaping () -> Void,
+        sendMessage: @escaping () -> Void
     ) {
         self.author = author
         self.unflagPortfolio = unflagPortfolio
+        self.showProfile = showProfile
+        self.sendMessage = sendMessage
     }
     
     var body: some View {
         VStack {
             HStack {
-                Button(action: {
-                    // profile view
-                }, label: {
+                Button(action: showProfile) {
                     Text("@\(author.username)")
                         .font(.title3)
                         .padding(.leading, 20)
                         .foregroundColor(.pink)
-                })
+                }
                 
                 Spacer()
                 
-                Button(action: {
-                    // chat view
-                }) {
+                Button(action: sendMessage) {
                     Text("Napsat zprávu")
                         .foregroundColor(.cyan)
                 }
@@ -92,5 +94,5 @@ struct AuthorDetailView: View {
 }
 
 #Preview {
-    AuthorDetailView(author: .dummy1, unflagPortfolio: {})
+    AuthorDetailView(author: .dummy1, unflagPortfolio: {}, showProfile: {}, sendMessage: {})
 }

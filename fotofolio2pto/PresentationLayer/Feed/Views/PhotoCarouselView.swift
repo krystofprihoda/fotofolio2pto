@@ -33,7 +33,7 @@ struct PhotoCarouselView: View {
                         } placeholder: {
                             ZStack {
                                 RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
-                                    .fill(Color.gray).brightness(Double.random(in: 0.15...0.4))
+                                    .fill(.gray).brightness(Double.random(in: 0.15...0.4))
                                     .aspectRatio(1.0, contentMode: .fill)
                                     .frame(width: mediaWidth)
 

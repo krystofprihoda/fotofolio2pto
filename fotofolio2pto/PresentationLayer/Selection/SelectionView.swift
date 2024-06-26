@@ -30,7 +30,9 @@ struct SelectionView: View {
                             PortfolioDetailView(
                                 mediaWidth: geo.size.width - Constants.Dimens.spaceXXLarge,
                                 portfolio: portfolio,
-                                unflagPortfolio: { viewModel.onIntent(.removeFromFlagged(portfolio.id)) }
+                                unflagPortfolio: { viewModel.onIntent(.removeFromFlagged(portfolio.id)) },
+                                showProfile: { viewModel.onIntent(.showProfile(portfolio.author)) },
+                                sendMessage: { viewModel.onIntent(.sendMessage(to: portfolio.author)) }
                             )
                         }
                     } else {

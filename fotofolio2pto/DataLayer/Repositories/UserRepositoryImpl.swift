@@ -1,0 +1,20 @@
+//
+//  UserRepositoryImpl.swift
+//  fotofolio2pto
+//
+//  Created by Kryštof Příhoda on 26.06.2024.
+//
+
+import Foundation
+
+public class UserRepositoryImpl: UserRepository {
+    
+    private static var users = User.sampleData
+    
+    public func getUserByUsername(_ username: String) async throws -> User? {
+        try await Task.sleep(for: .seconds(0.3))
+        return UserRepositoryImpl.users.first(where: { user in
+            user.username == username
+        })
+    }
+}
