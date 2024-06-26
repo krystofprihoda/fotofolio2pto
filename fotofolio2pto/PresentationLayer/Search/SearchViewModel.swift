@@ -16,6 +16,8 @@ enum SearchOption: String, CaseIterable {
 final class SearchViewModel: BaseViewModel, ViewModel, ObservableObject {
     // MARK: Stored properties
     
+    private var searchTask: Task<Void, Error>?
+    
     // MARK: Dependencies
     
     // UCs
@@ -54,6 +56,8 @@ final class SearchViewModel: BaseViewModel, ViewModel, ObservableObject {
         case setSearchOption(SearchOption)
         case setTextInput(String)
         case setIsSearching(Bool)
+        case search
+        case showProfile(of: User)
     }
     
     @discardableResult
@@ -63,6 +67,8 @@ final class SearchViewModel: BaseViewModel, ViewModel, ObservableObject {
             case .setSearchOption(let option): setSearchOption(option)
             case .setTextInput(let input): setTextInput(input)
             case .setIsSearching(let value): withAnimation { setIsSearching(value) }
+            case .search: search()
+            case .showProfile(let user): showProfile(of: user)
             }
         })
     }
@@ -79,5 +85,18 @@ final class SearchViewModel: BaseViewModel, ViewModel, ObservableObject {
     
     private func setTextInput(_ input: String) {
         state.textInput = input
+    }
+    
+    private func search() {
+        searchTask?.cancel()
+        
+        searchTask = Task {
+            try await Task.sleep(for: .seconds(0.4))
+            state.searchResults = Int.random(in: 0...1) > 0 ? [.dummy1] : [.dummy2, .dummy4]
+        }
+    }
+    
+    private func showProfile(of user: User) {
+        flowController?.showProfile(of: user)
     }
 }

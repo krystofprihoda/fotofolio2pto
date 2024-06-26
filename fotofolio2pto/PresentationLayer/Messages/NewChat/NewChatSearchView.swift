@@ -17,6 +17,7 @@ struct NewChatSearchView: View {
     
     var body: some View {
         VStack {
+            // Search
             ZStack {
                 Rectangle()
                    .foregroundColor(.gray).brightness(0.37)
@@ -36,7 +37,7 @@ struct NewChatSearchView: View {
             .cornerRadius(10)
             .padding([.leading, .trailing])
             
-            //results
+            // Results
             ScrollView(showsIndicators: false) {
                 ForEach(viewModel.state.searchResults) { user in
                     Button(action: { viewModel.onIntent(.showNewChatWithUser(user)) }) {
@@ -67,31 +68,6 @@ struct NewChatSearchView: View {
         }
         .padding(.top)
         .setupNavBarAndTitle("Nový chat")
-        .toolbar {
-//            if searchViewModel.searching {
-//                Button("Zrušit") {
-//                    searchViewModel.searchString = ""
-//                    searchViewModel.searching = false
-//                    
-//                    UIApplication.shared.dismissKeyboard()
-//                }
-//                .transition(.opacity)
-//            }
-        }
-//        .onChange(of: searchViewModel.searchString, perform: { _ in
-//            withAnimation {
-//                searchViewModel.searchedUsers = searchViewModel.fetchUsersBySubstring(input: searchViewModel.searchString, mode: searchViewModel.searchMode)
-//            }
-//        })
-//        .gesture(DragGesture()
-//                    .onChanged({ _ in
-//            UIApplication.shared.dismissKeyboard()
-//            
-//            withAnimation {
-//                searchViewModel.searching = false
-//            }
-//        })
-//        )
     }
 }
 

@@ -108,7 +108,7 @@ public class MainFlowController: BaseFlowController {
             image: UIImage(systemName: "magnifyingglass"),
             tag: MainTab.search.rawValue
         )
-        let searchFlowController = SearchFlowController(navigationController: searchNavController)
+        let searchFlowController = SearchFlowController(navigationController: searchNavController, signedInUser: user)
         let searchRootVC = startChildFlow(searchFlowController)
         searchNavController.viewControllers = [searchRootVC]
         

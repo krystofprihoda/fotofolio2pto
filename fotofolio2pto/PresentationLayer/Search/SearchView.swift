@@ -16,69 +16,48 @@ struct SearchView: View {
     }
     
     var body: some View {
-        ScrollView {
-            VStack {
-                Picker(
-                    "Vyhledávat podle",
-                    selection: Binding(
-                        get: { viewModel.state.searchOption },
-                        set: { viewModel.onIntent(.setSearchOption($0)) }
+        VStack {
+            Picker(
+                "Vyhledávat podle",
+                selection: Binding(
+                    get: { viewModel.state.searchOption },
+                    set: { viewModel.onIntent(.setSearchOption($0)) }
+                )
+            ) {
+                ForEach(SearchOption.allCases, id: \.self) { option in
+                    Text(option.rawValue)
+                }
+            }
+            .pickerStyle(.segmented)
+            .padding(.top)
+            
+            ZStack {
+                Rectangle()
+                   .foregroundColor(.gray).brightness(0.37)
+                
+                HStack {
+                    Image(systemName: "magnifyingglass")
+                    TextField(
+                        "Hledat",
+                        text: Binding(
+                            get: { viewModel.state.textInput },
+                            set: { viewModel.onIntent(.setTextInput($0)) }
+                        )
                     )
-                ) {
-                    ForEach(SearchOption.allCases, id: \.self) { option in
-                        Text(option.rawValue)
+                    .autocapitalization(.none)
+                    .disableAutocorrection(true)
+                    .onChange(of: viewModel.state.textInput) { _ in
+                        viewModel.onIntent(.search)
                     }
                 }
-                .pickerStyle(.segmented)
-                .padding(.top)
-                
-                ZStack {
-                    Rectangle()
-                       .foregroundColor(.gray).brightness(0.37)
-                    
-                    HStack {
-                        Image(systemName: "magnifyingglass")
-                        TextField(
-                            "Hledat",
-                            text: Binding(
-                                    get: { viewModel.state.textInput },
-                                    set: { viewModel.onIntent(.setTextInput($0)) }
-                            )
-                        ) { editing in
-                            if editing {
-                                viewModel.onIntent(.setIsSearching(true))
-                            }
-                        } onCommit: {
-                            viewModel.onIntent(.setIsSearching(false))
-                        }
-                        .autocapitalization(.none)
-                        .disableAutocorrection(true)
-                    }
-                    .padding()
-                 }
-                .frame(height: 45)
-                .cornerRadius(10)
-                
-                SearchResultsView(results: viewModel.state.searchResults)
-            }
+                .padding()
+             }
+            .frame(height: 45)
+            .cornerRadius(10)
+            
+            SearchResultsView(results: viewModel.state.searchResults, showProfile: { user in viewModel.onIntent(.showProfile(of: user))})
         }
         .padding([.leading, .trailing])
-        .toolbar {
-            if viewModel.state.isSearching {
-                Button("Zrušit") {
-                    viewModel.onIntent(.setTextInput(""))
-                    viewModel.onIntent(.setIsSearching(false))
-                    
-                    UIApplication.shared.dismissKeyboard()
-                }
-                .transition(.opacity)
-            }
-        }
-//        .onChange(of: searchViewModel.searchString, perform: { _ in
-//            withAnimation {
-//                searchViewModel.searchedUsers = searchViewModel.fetchUsersBySubstring(input: searchViewModel.searchString, mode: searchViewModel.searchMode)
-//            }
-//        })
         .setupNavBarAndTitle("Vyhledávání")
     }
 }
