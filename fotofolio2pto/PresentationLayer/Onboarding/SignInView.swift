@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SignInView: View {
     
-    private let viewModel: SignInViewModel
+    @ObservedObject private var viewModel: SignInViewModel
     
     init(viewModel: SignInViewModel) {
         self.viewModel = viewModel
@@ -19,10 +19,17 @@ struct SignInView: View {
         NavigationView {
             VStack {
                 //Logo
-                RoundedRectangle(cornerRadius: 9)
-                    .frame(width: 150, height: 150)
-                    .padding(.bottom, 10)
-                    .foregroundColor(.gray).brightness(0.15)
+                ZStack {
+                    RoundedRectangle(cornerRadius: 9)
+                        .frame(width: 150, height: 150)
+                        .padding(.bottom, 10)
+                        .foregroundColor(.gray).brightness(0.15)
+                    
+                    if viewModel.state.isSigningIn {
+                        ProgressView()
+                            .progressViewStyle(.circular)
+                    }
+                }
                 
                 VStack {
                     Text("Přihlášení.")
@@ -51,6 +58,13 @@ struct SignInView: View {
                 // Move to whisper/alert
 //                Text("Uživatelské jméno neexistuje!")
 //                Text("Nesprávné heslo!")
+                
+                if !viewModel.state.error.isEmpty {
+                    Text(viewModel.state.error)
+                        .foregroundColor(.red)
+                        .font(.system(size: 13))
+                        .padding(.top)
+                }
                 
                 Button(action: {
                     viewModel.onIntent(.signIn)

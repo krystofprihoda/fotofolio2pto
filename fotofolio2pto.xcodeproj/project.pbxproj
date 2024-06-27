@@ -46,6 +46,15 @@
 		FEA53CDE2C2C49DF006F0116 /* GetChatUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CDD2C2C49DF006F0116 /* GetChatUseCase.swift */; };
 		FEA53CE02C2C6A20006F0116 /* GetUserPortfoliosUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CDF2C2C6A20006F0116 /* GetUserPortfoliosUseCase.swift */; };
 		FEA53CE22C2C88EE006F0116 /* GetUsersFromQueryUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CE12C2C88EE006F0116 /* GetUsersFromQueryUseCase.swift */; };
+		FEA53CE42C2D5A46006F0116 /* EditProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CE32C2D5A46006F0116 /* EditProfileView.swift */; };
+		FEA53CE72C2D5A92006F0116 /* EditPersonalDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CE62C2D5A92006F0116 /* EditPersonalDetailsView.swift */; };
+		FEA53CEB2C2D5B65006F0116 /* EditProfileDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CEA2C2D5B65006F0116 /* EditProfileDetailsView.swift */; };
+		FEA53CED2C2D5BAC006F0116 /* EditPortfolioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CEC2C2D5BAC006F0116 /* EditPortfolioView.swift */; };
+		FEA53CEF2C2D6123006F0116 /* MediaPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CEE2C2D6123006F0116 /* MediaPickerView.swift */; };
+		FEA53CF12C2D6280006F0116 /* EditProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CF02C2D6280006F0116 /* EditProfileViewModel.swift */; };
+		FEA53CF42C2D791F006F0116 /* NewPortfolioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CF32C2D791F006F0116 /* NewPortfolioView.swift */; };
+		FEA53CF72C2D7960006F0116 /* NewPortfolioViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CF62C2D795F006F0116 /* NewPortfolioViewModel.swift */; };
+		FEA53CF92C2D896F006F0116 /* CreatePortfolioUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CF82C2D896F006F0116 /* CreatePortfolioUseCase.swift */; };
 		FEC94D952C24398200FFEB11 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC94D942C24398200FFEB11 /* AppDelegate.swift */; };
 		FEC94D9F2C24398200FFEB11 /* fotofolio2pto.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FEC94D9D2C24398200FFEB11 /* fotofolio2pto.xcdatamodeld */; };
 		FEC94DA12C24398400FFEB11 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FEC94DA02C24398400FFEB11 /* Assets.xcassets */; };
@@ -137,6 +146,15 @@
 		FEA53CDD2C2C49DF006F0116 /* GetChatUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetChatUseCase.swift; sourceTree = "<group>"; };
 		FEA53CDF2C2C6A20006F0116 /* GetUserPortfoliosUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUserPortfoliosUseCase.swift; sourceTree = "<group>"; };
 		FEA53CE12C2C88EE006F0116 /* GetUsersFromQueryUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUsersFromQueryUseCase.swift; sourceTree = "<group>"; };
+		FEA53CE32C2D5A46006F0116 /* EditProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileView.swift; sourceTree = "<group>"; };
+		FEA53CE62C2D5A92006F0116 /* EditPersonalDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPersonalDetailsView.swift; sourceTree = "<group>"; };
+		FEA53CEA2C2D5B65006F0116 /* EditProfileDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileDetailsView.swift; sourceTree = "<group>"; };
+		FEA53CEC2C2D5BAC006F0116 /* EditPortfolioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPortfolioView.swift; sourceTree = "<group>"; };
+		FEA53CEE2C2D6123006F0116 /* MediaPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaPickerView.swift; sourceTree = "<group>"; };
+		FEA53CF02C2D6280006F0116 /* EditProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewModel.swift; sourceTree = "<group>"; };
+		FEA53CF32C2D791F006F0116 /* NewPortfolioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPortfolioView.swift; sourceTree = "<group>"; };
+		FEA53CF62C2D795F006F0116 /* NewPortfolioViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPortfolioViewModel.swift; sourceTree = "<group>"; };
+		FEA53CF82C2D896F006F0116 /* CreatePortfolioUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePortfolioUseCase.swift; sourceTree = "<group>"; };
 		FEC94D912C24398200FFEB11 /* fotofolio2pto.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = fotofolio2pto.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FEC94D942C24398200FFEB11 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FEC94D9E2C24398200FFEB11 /* fotofolio2pto.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = fotofolio2pto.xcdatamodel; sourceTree = "<group>"; };
@@ -318,6 +336,7 @@
 				FEA53CB72C2AE9B1006F0116 /* UnflagAllPortfoliosUseCase.swift */,
 				FEA53CBB2C2B0B3D006F0116 /* GetFilteredPortfoliosUseCase.swift */,
 				FEA53CDF2C2C6A20006F0116 /* GetUserPortfoliosUseCase.swift */,
+				FEA53CF82C2D896F006F0116 /* CreatePortfolioUseCase.swift */,
 			);
 			path = Feed;
 			sourceTree = "<group>";
@@ -377,6 +396,35 @@
 			path = Chat;
 			sourceTree = "<group>";
 		};
+		FEA53CE52C2D5A7C006F0116 /* Edit */ = {
+			isa = PBXGroup;
+			children = (
+				FEA53CF22C2D628E006F0116 /* Views */,
+				FEA53CE32C2D5A46006F0116 /* EditProfileView.swift */,
+				FEA53CF02C2D6280006F0116 /* EditProfileViewModel.swift */,
+			);
+			path = Edit;
+			sourceTree = "<group>";
+		};
+		FEA53CF22C2D628E006F0116 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				FEA53CE62C2D5A92006F0116 /* EditPersonalDetailsView.swift */,
+				FEA53CEA2C2D5B65006F0116 /* EditProfileDetailsView.swift */,
+				FEA53CEC2C2D5BAC006F0116 /* EditPortfolioView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		FEA53CF52C2D794F006F0116 /* NewPortfolio */ = {
+			isa = PBXGroup;
+			children = (
+				FEA53CF32C2D791F006F0116 /* NewPortfolioView.swift */,
+				FEA53CF62C2D795F006F0116 /* NewPortfolioViewModel.swift */,
+			);
+			path = NewPortfolio;
+			sourceTree = "<group>";
+		};
 		FEC94D882C24398200FFEB11 = {
 			isa = PBXGroup;
 			children = (
@@ -434,6 +482,7 @@
 				FEC94DAE2C243EC100FFEB11 /* BaseHostingController.swift */,
 				FEC94DED2C25ECDC00FFEB11 /* BottomSheetView.swift */,
 				FEC94DEF2C25ED5C00FFEB11 /* RoundedCorner.swift */,
+				FEA53CEE2C2D6123006F0116 /* MediaPickerView.swift */,
 			);
 			path = BaseViews;
 			sourceTree = "<group>";
@@ -499,6 +548,8 @@
 		FEC94DBD2C246C4B00FFEB11 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				FEA53CF52C2D794F006F0116 /* NewPortfolio */,
+				FEA53CE52C2D5A7C006F0116 /* Edit */,
 				FEC94DDA2C247D4B00FFEB11 /* ProfileView.swift */,
 				FEC94DDC2C247D7600FFEB11 /* ProfileViewModel.swift */,
 				FEC94DDE2C247D9800FFEB11 /* ProfileFlowController.swift */,
@@ -703,6 +754,7 @@
 				FEA53CD82C2C30BD006F0116 /* ChatViewModel.swift in Sources */,
 				FEA53CA52C29C792006F0116 /* FeedRepositoryImpl.swift in Sources */,
 				FEC94DC32C246DC000FFEB11 /* FeedViewModel.swift in Sources */,
+				FEA53CF72C2D7960006F0116 /* NewPortfolioViewModel.swift in Sources */,
 				FEA53CD42C2C2722006F0116 /* ChatView.swift in Sources */,
 				FEA53CAB2C29DE1E006F0116 /* GetFlaggedPortfoliosUseCase.swift in Sources */,
 				FEA53CA12C29C70B006F0116 /* GetAllPortfoliosUseCase.swift in Sources */,
@@ -712,9 +764,11 @@
 				FEA53CE02C2C6A20006F0116 /* GetUserPortfoliosUseCase.swift in Sources */,
 				FEC94E172C2857D100FFEB11 /* OnboardingFlowController.swift in Sources */,
 				FEC94E032C26DD7900FFEB11 /* ProfilePictureView.swift in Sources */,
+				FEA53CEF2C2D6123006F0116 /* MediaPickerView.swift in Sources */,
 				FEC94DFF2C262E8F00FFEB11 /* Creator.swift in Sources */,
 				FEC94DF72C26283400FFEB11 /* PortfolioDetailView.swift in Sources */,
 				FE5F8A7C2C296ECA001EE8AF /* LoginWithCredentialsUseCase.swift in Sources */,
+				FEA53CEB2C2D5B65006F0116 /* EditProfileDetailsView.swift in Sources */,
 				FEC94DD72C247CB200FFEB11 /* MessagesView.swift in Sources */,
 				FEC94DF42C25F57700FFEB11 /* FilterViewModel.swift in Sources */,
 				FEC94DB82C244E9E00FFEB11 /* MainFlowController.swift in Sources */,
@@ -730,15 +784,20 @@
 				FEA53CB12C29E57A006F0116 /* ObjectError.swift in Sources */,
 				FEC94DD92C247CCA00FFEB11 /* MessagesFlowController.swift in Sources */,
 				FEC94E192C28661100FFEB11 /* SignInViewModel.swift in Sources */,
+				FEA53CE72C2D5A92006F0116 /* EditPersonalDetailsView.swift in Sources */,
 				FEA53CDA2C2C3526006F0116 /* SendMessageUseCase.swift in Sources */,
 				FEA53CB62C2AE84F006F0116 /* AlertData+SwiftUI.swift in Sources */,
 				FEC94DB32C24475100FFEB11 /* AppFlowController.swift in Sources */,
 				FEC94DF92C26291E00FFEB11 /* PhotoCarouselView.swift in Sources */,
 				FEC94DBF2C246C5C00FFEB11 /* FeedFlowController.swift in Sources */,
+				FEA53CE42C2D5A46006F0116 /* EditProfileView.swift in Sources */,
 				FEC94DDF2C247D9800FFEB11 /* ProfileFlowController.swift in Sources */,
 				FEC94DDB2C247D4B00FFEB11 /* ProfileView.swift in Sources */,
 				FEC94DC92C2479B300FFEB11 /* SelectionFlowController.swift in Sources */,
 				FEA53CBE2C2B2D3D006F0116 /* GetLoggedInUserUseCase.swift in Sources */,
+				FEA53CF12C2D6280006F0116 /* EditProfileViewModel.swift in Sources */,
+				FEA53CF42C2D791F006F0116 /* NewPortfolioView.swift in Sources */,
+				FEA53CED2C2D5BAC006F0116 /* EditPortfolioView.swift in Sources */,
 				FEA53CCF2C2C2304006F0116 /* NewChatSearchView.swift in Sources */,
 				FEA53CC22C2C12C8006F0116 /* GetChatsForUserUseCase.swift in Sources */,
 				FEC94DF02C25ED5C00FFEB11 /* RoundedCorner.swift in Sources */,
@@ -747,6 +806,7 @@
 				FEC94DCF2C247C4C00FFEB11 /* SearchViewModel.swift in Sources */,
 				FEC94DD12C247C5500FFEB11 /* SearchFlowController.swift in Sources */,
 				FEC94D952C24398200FFEB11 /* AppDelegate.swift in Sources */,
+				FEA53CF92C2D896F006F0116 /* CreatePortfolioUseCase.swift in Sources */,
 				FEA53CCC2C2C1752006F0116 /* UserRepository.swift in Sources */,
 				FEC94DCB2C2479BE00FFEB11 /* SelectionView.swift in Sources */,
 			);

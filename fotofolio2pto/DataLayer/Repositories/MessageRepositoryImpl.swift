@@ -22,7 +22,7 @@ public class MessageRepositoryImpl: MessageRepository {
     
     public func createNewChat(sender: User, receiver: User) async throws -> Chat {
         try await Task.sleep(for: .seconds(0.3))
-        guard let latestId = MessageRepositoryImpl.chats.last?.id else { throw ObjectError.nonExistent }
+        let latestId = MessageRepositoryImpl.chats.last?.id ?? 0
         let chat = Chat(id: latestId + 1, chatOwners: [sender, receiver])
         MessageRepositoryImpl.chats.append(chat)
         return chat

@@ -12,7 +12,7 @@ public extension Resolver {
     static func registerUseCases() {
         /// Auth
         register { LogoutUseCaseImpl(authRepository: resolve()) as LogoutUseCase }
-        register { LoginWithCredentialsUseCaseImpl(authRepository: resolve()) as LoginWithCredentialsUseCase }
+        register { LoginWithCredentialsUseCaseImpl(authRepository: resolve(), userRepository: resolve()) as LoginWithCredentialsUseCase }
         register { GetLoggedInUserUseCaseImpl(authRepository: resolve()) as GetLoggedInUserUseCase }
         
         /// User
@@ -27,6 +27,7 @@ public extension Resolver {
         register { GetFlaggedPortfoliosUseCaseImpl(feedRepository: resolve()) as GetFlaggedPortfoliosUseCase }
         register { UnflagAllPortfoliosUseCaseImpl(feedRepository: resolve()) as UnflagAllPortfoliosUseCase }
         register { GetFilteredPortfoliosUseCaseImpl(feedRepository: resolve()) as GetFilteredPortfoliosUseCase }
+        register { CreatePortfolioUseCaseImpl(feedRepository: resolve()) as CreatePortfolioUseCase }
         
         /// Messages
         register { GetChatsForUserUseCaseImpl(messageRepository: resolve()) as GetChatsForUserUseCase }

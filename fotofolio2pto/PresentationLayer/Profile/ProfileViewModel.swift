@@ -62,6 +62,8 @@ final class ProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
         case fetchProfileData
         case sendMessage
         case signOut
+        case editProfile
+        case createNewPortfolio
     }
     
     @discardableResult
@@ -71,6 +73,8 @@ final class ProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
             case .fetchProfileData: await fetchProfileData()
             case .sendMessage: sendMessage()
             case .signOut: signOut()
+            case .editProfile: editProfile()
+            case .createNewPortfolio: createNewPortfolio()
             }
         })
     }
@@ -91,6 +95,16 @@ final class ProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
     
     private func sendMessage() {
         flowController?.sendMessage(from: state.signedInUser, to: state.displayedUser)
+    }
+    
+    private func editProfile() {
+        guard let userData = state.userData else { return }
+        flowController?.showProfileEdit(userData: userData, portfolios: state.portfolios)
+    }
+    
+    private func createNewPortfolio() {
+        guard let userData = state.userData else { return }
+        flowController?.showCreateNewPortfolio(user: userData)
     }
     
     private func signOut() {

@@ -8,18 +8,24 @@
 import Foundation
 
 public protocol LoginWithCredentialsUseCase {
-    func execute(username: String, password: String)
+    func execute(username: String, password: String) async throws
 }
 
 public struct LoginWithCredentialsUseCaseImpl: LoginWithCredentialsUseCase {
     
     private let authRepository: AuthRepository
+    private let userRepository: UserRepository
     
-    init(authRepository: AuthRepository) {
+    init(
+        authRepository: AuthRepository,
+        userRepository: UserRepository
+    ) {
         self.authRepository = authRepository
+        self.userRepository = userRepository
     }
     
-    public func execute(username: String, password: String) {
+    public func execute(username: String, password: String) async throws {
+        let user = try await userRepository.getUserByUsername(username)
         authRepository.loginWithCredentials(username: username, password: password)
     }
 }

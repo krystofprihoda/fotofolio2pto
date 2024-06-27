@@ -85,4 +85,11 @@ public class FeedRepositoryImpl: FeedRepository {
             portfolio.author.username == username
         })
     }
+    
+    public func createPortfolio(for user: User, name: String, photos: [IImage], description: String, tags: [String]) async throws {
+        try await Task.sleep(for: .seconds(0.5))
+        let latestId = FeedRepositoryImpl.portfolios.last?.id ?? 0
+        let new = Portfolio(id: latestId + 1, author: user, name: name, photos: photos, description: description, tags: tags, timestamp: .now)
+        FeedRepositoryImpl.portfolios.append(new)
+    }
 }

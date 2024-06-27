@@ -40,7 +40,7 @@ struct ProfileView: View {
             ToolbarItemGroup(placement: .navigationBarTrailing) {
                 if viewModel.state.isProfileOwner && viewModel.state.userData?.creator != nil {
                     Button(action: {
-                        // NewPortfolioView()
+                        viewModel.onIntent(.createNewPortfolio)
                     }) {
                         Image(systemName: "plus")
                             .resizable()
@@ -54,7 +54,7 @@ struct ProfileView: View {
                     if viewModel.state.isProfileOwner {
                         Menu(content: {
                             Button(action: {
-                                // // EditProfileView()
+                                viewModel.onIntent(.editProfile)
                             }) {
                                 Text("Upravit profil")
                                     .foregroundColor(.gray)

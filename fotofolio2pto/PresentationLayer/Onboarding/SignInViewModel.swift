@@ -40,6 +40,8 @@ final class SignInViewModel: BaseViewModel, ViewModel, ObservableObject {
         var hiddenPassword = true
         var fillUsernameAlert = false
         var fillPasswordAlert = false
+        var isSigningIn = false
+        var error = ""
     }
 
     @Published private(set) var state = State()
@@ -56,7 +58,7 @@ final class SignInViewModel: BaseViewModel, ViewModel, ObservableObject {
     func onIntent(_ intent: Intent) -> Task<Void, Never> {
         executeTask(Task {
             switch intent {
-            case .signIn: signIn()
+            case .signIn: await signIn()
             case .setUsername(let username): setUsername(username)
             case .setPassword(let password): setPassword(password)
             }
@@ -65,10 +67,20 @@ final class SignInViewModel: BaseViewModel, ViewModel, ObservableObject {
 
     // MARK: Additional methods
 
-    private func signIn() {
-        // checks
-        loginWithCredentialsUseCase.execute(username: state.username, password: state.password)
-        flowController?.signIn(username: state.username)
+    private func signIn() async {
+        guard !state.username.isEmpty, !state.password.isEmpty else { return }
+        
+        state.isSigningIn = true
+        defer { state.isSigningIn = true }
+        
+        do {
+            try await loginWithCredentialsUseCase.execute(username: state.username, password: state.password)
+            flowController?.signIn(username: state.username)
+        } catch {
+            state.error = "Špatné přihlašovací údaje."
+            state.username = ""
+            state.password = ""
+        }
     }
     
     private func setUsername(_ username: String) {

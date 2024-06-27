@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import SwiftUI
 
 public protocol ProfileFlowControllerDelegate: AnyObject {
     func signOut()
@@ -43,5 +44,31 @@ class ProfileFlowController: BaseFlowController {
         let vc = startChildFlow(fc)
         navigationController.navigationBar.tintColor = .gray
         navigationController.pushViewController(vc, animated: true)
+    }
+    
+    public func showProfileEdit(userData: User, portfolios: [Portfolio]) {
+        let vm = EditProfileViewModel(flowController: self, userData: userData, portfolios: portfolios)
+        let view = EditProfileView(viewModel: vm)
+        let vc = BaseHostingController(rootView: view)
+        navigationController.navigationBar.tintColor = .gray
+        navigationController.pushViewController(vc, animated: true)
+    }
+    
+    public func showCreateNewPortfolio(user: User) {
+        let vm = NewPortfolioViewModel(flowController: self, userData: user)
+        let view = NewPortfolioView(viewModel: vm)
+        let vc = BaseHostingController(rootView: view)
+        navigationController.navigationBar.tintColor = .gray
+        navigationController.pushViewController(vc, animated: true)
+    }
+    
+    public func presentPickerModal(source: MediaPickerSource) {
+        let vc = BaseHostingController(
+            rootView: MediaPickerView(
+                media: source.media,
+                selectionLimit: 5
+            )
+        )
+        navigationController.present(vc, animated: true)
     }
 }

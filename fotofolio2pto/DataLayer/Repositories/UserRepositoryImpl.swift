@@ -13,9 +13,10 @@ public class UserRepositoryImpl: UserRepository {
     
     public func getUserByUsername(_ username: String) async throws -> User? {
         try await Task.sleep(for: .seconds(0.3))
-        return UserRepositoryImpl.users.first(where: { user in
+        guard let user = UserRepositoryImpl.users.first(where: { user in
             user.username == username
-        })
+        }) else { throw ObjectError.nonExistent }
+        return user
     }
     
     public func getUsersFromUsernameQuery(query: String, type: SearchOption) async throws -> [User] {
