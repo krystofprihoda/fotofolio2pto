@@ -41,7 +41,7 @@ final class FeedViewModel: BaseViewModel, ViewModel, ObservableObject {
         fetchFlaggedPortfolios()
         
         if state.portfolios.isEmpty {
-            executeTask(Task { await fetchPortfolios() })
+            executeTask(Task { await fetchPortfolios(isRefreshing: false) })
         }
     }
     
@@ -50,6 +50,7 @@ final class FeedViewModel: BaseViewModel, ViewModel, ObservableObject {
     struct State {
         var signedInUser = ""
         var isLoading: Bool = false
+        var isRefreshing: Bool = false
         var portfolios: [Portfolio] = []
         var flaggedPortfolioIds: [Int] = []
         var filter: [String] = []
@@ -60,7 +61,7 @@ final class FeedViewModel: BaseViewModel, ViewModel, ObservableObject {
     // MARK: Intent
     
     enum Intent {
-        case fetchPortfolios
+        case fetchPortfolios(isRefreshing: Bool)
         case sortByDate
         case sortByRating
         case filter
@@ -73,7 +74,7 @@ final class FeedViewModel: BaseViewModel, ViewModel, ObservableObject {
     func onIntent(_ intent: Intent) -> Task<Void, Never> {
         executeTask(Task {
             switch intent {
-            case .fetchPortfolios: await fetchPortfolios()
+            case .fetchPortfolios(let isRefreshing): await fetchPortfolios(isRefreshing: isRefreshing)
             case .sortByDate: await fetchPortfoliosSortedBy(.date)
             case .sortByRating: await fetchPortfoliosSortedBy(.rating)
             case .filter: showFilter()
@@ -86,9 +87,20 @@ final class FeedViewModel: BaseViewModel, ViewModel, ObservableObject {
     
     // MARK: Additional methods
     
-    private func fetchPortfolios() async {
-        state.isLoading = true
-        defer { state.isLoading.toggle() }
+    private func fetchPortfolios(isRefreshing: Bool) async {
+        if isRefreshing {
+            state.isRefreshing = true
+        } else {
+            state.isLoading = true
+        }
+        
+        defer {
+            if isRefreshing {
+                state.isRefreshing.toggle()
+            } else {
+                state.isLoading.toggle()
+            }
+        }
         
         do {
             state.portfolios = try await getAllPortfolios.execute()

@@ -66,6 +66,12 @@ struct SignInView: View {
                         .padding(.top)
                 }
                 
+//                ZStack {
+//                    RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
+//                        .fill(.gray)
+//                }
+//                .frame(width: Constants.Dimens.frameSizeXXXLarge, height: Constants.Dimens.frameSizeMedium)
+                
                 Button(action: {
                     viewModel.onIntent(.signIn)
                 }) {
