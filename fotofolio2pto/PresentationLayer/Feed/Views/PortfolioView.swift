@@ -10,7 +10,7 @@ import SwiftUI
 struct PortfolioView: View {
     
     private let portfolio: Portfolio
-    private let mediaWidth: CGFloat?
+    private let mediaWidth: CGFloat
     private let hideFlag: Bool
     private let isFlagged: Bool
     private let flagAction: () -> Void
@@ -19,7 +19,7 @@ struct PortfolioView: View {
     
     init(
         portfolio: Portfolio,
-        mediaWidth: CGFloat?,
+        mediaWidth: CGFloat,
         hideFlag: Bool,
         isFlagged: Bool,
         flagAction: @escaping () -> Void,
@@ -27,7 +27,7 @@ struct PortfolioView: View {
         openProfileAction: @escaping () -> Void
     ) {
         self.portfolio = portfolio
-        self.mediaWidth = mediaWidth
+        self.mediaWidth = mediaWidth - Constants.Dimens.spaceXXLarge
         self.hideFlag = hideFlag
         self.isFlagged = isFlagged
         self.flagAction = flagAction

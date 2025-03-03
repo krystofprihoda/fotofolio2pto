@@ -36,7 +36,7 @@ struct SelectionView: View {
                             )
                         }
                     } else {
-                        Text("Není co zobrazovat, vyberte si portfolia ve Feedu!")
+                        Text("Ve svém výběru nemáte žádná portfolia.")
                             .frame(width: geo.size.width, height: geo.size.height)
                             .font(.system(size: 15))
                             .foregroundColor(.gray)

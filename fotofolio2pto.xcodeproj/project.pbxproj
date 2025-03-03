@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -208,6 +208,10 @@
 		FEC94E162C2857D100FFEB11 /* OnboardingFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingFlowController.swift; sourceTree = "<group>"; };
 		FEC94E182C28661100FFEB11 /* SignInViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		FE73EED82D71C9C10045A252 /* Modifiers */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Modifiers; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		FEC94D8E2C24398200FFEB11 /* Frameworks */ = {
@@ -461,6 +465,7 @@
 		FEC94DAB2C243E9A00FFEB11 /* PresentationLayer */ = {
 			isa = PBXGroup;
 			children = (
+				FE73EED82D71C9C10045A252 /* Modifiers */,
 				FEC94E112C28502E00FFEB11 /* Onboarding */,
 				FEC94DE82C25BF3D00FFEB11 /* Extensions */,
 				FEC94DBD2C246C4B00FFEB11 /* Profile */,
@@ -652,6 +657,9 @@
 			buildRules = (
 			);
 			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				FE73EED82D71C9C10045A252 /* Modifiers */,
 			);
 			name = fotofolio2pto;
 			packageProductDependencies = (

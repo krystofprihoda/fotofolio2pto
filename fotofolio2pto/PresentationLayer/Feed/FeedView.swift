@@ -34,15 +34,17 @@ struct FeedView: View {
                 } else {
                     LazyVStack {
                         ForEach(viewModel.state.portfolios, id: \.id) { portfolio in
+                            let isFlagHidden = viewModel.state.signedInUser == portfolio.author.username
                             PortfolioView(
                                 portfolio: portfolio,
-                                mediaWidth: geo.size.width - Constants.Dimens.spaceXXLarge,
-                                hideFlag: viewModel.state.signedInUser == portfolio.author.username,
+                                mediaWidth: geo.size.width,
+                                hideFlag: isFlagHidden,
                                 isFlagged: viewModel.state.flaggedPortfolioIds.contains(where: { $0 == portfolio.id }),
                                 flagAction: { viewModel.onIntent(.flagPortfolio(portfolio.id)) },
                                 unflagAction: { viewModel.onIntent(.unflagPortfolio(portfolio.id)) },
                                 openProfileAction: { viewModel.onIntent(.showProfile(portfolio.author)) }
                             )
+                            .skeleton(viewModel.state.isRefreshing)
                         }
                     }
                     .frame(width: geo.size.width)
@@ -50,7 +52,7 @@ struct FeedView: View {
                     .padding(.top)
                 }
             }
-            .refreshable(action: { viewModel.onIntent(.fetchPortfolios) })
+            .refreshable(action: { viewModel.onIntent(.fetchPortfolios(isRefreshing: true)) })
         }
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarLeading) {
