@@ -24,7 +24,7 @@ struct NewChatSearchView: View {
                 
                 HStack {
                     Image(systemName: "magnifyingglass")
-                    TextField("Hledat", text: Binding(get: { viewModel.state.textInput }, set: { viewModel.onIntent(.setTextInput($0)) }))
+                    TextField(L.Messages.search, text: Binding(get: { viewModel.state.textInput }, set: { viewModel.onIntent(.setTextInput($0)) }))
                         .autocapitalization(.none)
                         .disableAutocorrection(true)
                         .onChange(of: viewModel.state.textInput) { _ in
@@ -67,7 +67,7 @@ struct NewChatSearchView: View {
             }
         }
         .padding(.top)
-        .setupNavBarAndTitle("Nový chat")
+        .setupNavBarAndTitle(L.Messages.newChat)
     }
 }
 

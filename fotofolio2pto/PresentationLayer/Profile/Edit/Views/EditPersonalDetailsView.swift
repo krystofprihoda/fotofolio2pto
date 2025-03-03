@@ -37,12 +37,12 @@ struct EditPersonalDetailsView: View {
                 .padding(.leading, 20)
                 
                 VStack(alignment: .leading) {
-                    Text("@" + (viewModel.state.userData?.username ?? "Uživatelské jméno se nepodařilo načíst..."))
+                    Text("@" + (viewModel.state.userData?.username ?? L.Profile.usernameError))
                         .font(.system(size: 18))
                         .foregroundColor(.red).brightness(0.2)
                         .padding(.leading, 20)
                     
-                    Text(viewModel.state.userData?.fullName ?? "Jméno se nepodařilo načíst...")
+                    Text(viewModel.state.userData?.fullName ?? L.Profile.nameError)
                         .font(.system(size: 18))
                         .foregroundColor(.black).brightness(0.2)
                         .padding(.bottom, 4)
@@ -55,7 +55,7 @@ struct EditPersonalDetailsView: View {
             .padding(.bottom, 10)
             
             VStack(alignment: .leading) {
-                Text("Místo působení:")
+                Text(L.Profile.activePlace)
                     .font(.system(size: 16))
                     .foregroundColor(.black).brightness(0.25)
                     .padding(.leading, 20)

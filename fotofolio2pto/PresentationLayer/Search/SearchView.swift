@@ -18,7 +18,7 @@ struct SearchView: View {
     var body: some View {
         VStack {
             Picker(
-                "Vyhledávat podle",
+                L.Search.searchBy,
                 selection: Binding(
                     get: { viewModel.state.searchOption },
                     set: { viewModel.onIntent(.setSearchOption($0)) }
@@ -38,7 +38,7 @@ struct SearchView: View {
                 HStack {
                     Image(systemName: "magnifyingglass")
                     TextField(
-                        "Hledat",
+                        L.Search.search,
                         text: Binding(
                             get: { viewModel.state.textInput },
                             set: { viewModel.onIntent(.setTextInput($0)) }
@@ -58,7 +58,7 @@ struct SearchView: View {
             SearchResultsView(results: viewModel.state.searchResults, showProfile: { user in viewModel.onIntent(.showProfile(of: user))})
         }
         .padding([.leading, .trailing])
-        .setupNavBarAndTitle("Vyhledávání")
+        .setupNavBarAndTitle(L.Search.title)
     }
 }
 

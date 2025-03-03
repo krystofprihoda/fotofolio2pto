@@ -23,7 +23,7 @@ struct MessagesView: View {
                         .frame(width: geo.size.width, height: geo.size.height)
                 } else {
                     if viewModel.state.chats.isEmpty {
-                        Text("Žádné zprávy.")
+                        Text(L.Messages.noMessages)
                             .frame(width: geo.size.width, height: geo.size.height)
                             .font(.system(size: 15))
                             .foregroundColor(.gray)
@@ -41,7 +41,7 @@ struct MessagesView: View {
                                                     .fontWeight(.medium)
                                                     .foregroundColor(.red).brightness(0.1)
                                                 
-                                                Text(message.from == viewModel.state.sender ? "Vy: \"\(message.body)\"" : "\"\(message.body)\"")
+                                                Text(formatMessage(from: message.from, message.body))
                                                     .foregroundColor(.gray)
                                                     .font(.system(size: 14))
                                             }
@@ -73,7 +73,11 @@ struct MessagesView: View {
                 .padding(.trailing, 5)
             }
         }
-        .setupNavBarAndTitle("Zprávy")
+        .setupNavBarAndTitle(L.Messages.title)
+    }
+    
+    private func formatMessage(from: String, _ message: String) -> String {
+        return from == viewModel.state.sender ? "\(L.Messages.youFormat) \"\(message)\"" : "\"\(message)\""
     }
 }
 

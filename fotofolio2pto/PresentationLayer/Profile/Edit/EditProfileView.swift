@@ -23,14 +23,14 @@ struct EditProfileView: View {
                 }
             }
         }
-        .setupNavBarAndTitle("Úprava profilu")
+        .setupNavBarAndTitle(L.Profile.editTitle)
 //        .navigationBarBackButtonHidden(true)
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarTrailing) {
                 Button(action: {
                     // onIntent(.save)
                 }) {
-                    Text("Uložit")
+                    Text(L.Profile.save)
                         .foregroundColor(.gray)
                 }
                 .padding(.trailing, 5)
@@ -40,7 +40,7 @@ struct EditProfileView: View {
                 Button(action: {
                     // Cancel
                 }) {
-                    Text("Zrušit")
+                    Text(L.Profile.cancel)
                         .foregroundColor(.gray)
                 }
                 .padding(.leading, 5)

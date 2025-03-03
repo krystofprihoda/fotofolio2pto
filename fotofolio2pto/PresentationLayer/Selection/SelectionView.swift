@@ -36,7 +36,7 @@ struct SelectionView: View {
                             )
                         }
                     } else {
-                        Text("Ve svém výběru nemáte žádná portfolia.")
+                        Text(L.Selection.emptySelection)
                             .frame(width: geo.size.width, height: geo.size.height)
                             .font(.system(size: 15))
                             .foregroundColor(.gray)
@@ -51,13 +51,13 @@ struct SelectionView: View {
                     Button(action: {
                         viewModel.onIntent(.removeAllFlagged)
                     }) {
-                        Text("Odstranit vše")
+                        Text(L.Selection.removeAll)
                     }
                     .padding(.trailing, 5)
                 }
             }
         }
-        .setupNavBarAndTitle("Výběr")
+        .setupNavBarAndTitle(L.Selection.title)
         .lifecycle(viewModel)
     }
 }

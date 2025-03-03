@@ -18,7 +18,7 @@ struct FilterView: View {
     var body: some View {
         VStack(spacing: Constants.Dimens.spaceNone) {
             ZStack {
-                Text("Filtrovat portfolia")
+                Text(L.Feed.filterPortfolios)
                     .fontWeight(.medium)
                 
                 HStack {
@@ -42,7 +42,7 @@ struct FilterView: View {
                         .foregroundColor(.gray).opacity(0.1)
                     
                     TextField(
-                        "např. svatba",
+                        L.Feed.weddingExample,
                         text: Binding(
                             get: { viewModel.state.textInput },
                             set: { viewModel.onIntent(.registerTextInput($0)) }
@@ -59,7 +59,7 @@ struct FilterView: View {
                 Button(
                     action: { viewModel.onIntent(.addTag) },
                     label: {
-                        Text("Přidat")
+                        Text(L.Feed.add)
                             .padding(Constants.Dimens.spaceMedium)
                             .frame(height: 40)
                             .background(.red).brightness(0.5)

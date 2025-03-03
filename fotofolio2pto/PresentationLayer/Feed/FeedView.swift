@@ -10,7 +10,7 @@ import SwiftUI
 struct FeedView: View {
     
     @ObservedObject private var viewModel: FeedViewModel
-    
+        
     init(viewModel: FeedViewModel) {
         self.viewModel = viewModel
     }
@@ -27,7 +27,7 @@ struct FeedView: View {
                 }
                 else if !viewModel.state.filter.isEmpty && viewModel.state.portfolios.isEmpty {
                     VStack(alignment: .center) {
-                        Text("Filtrování neodpovídá žádný výsledek.")
+                        Text(L.Feed.noFilterResults)
                             .foregroundColor(.red)
                     }
                     .frame(width: geo.size.width, height: geo.size.height)
@@ -35,11 +35,13 @@ struct FeedView: View {
                     LazyVStack {
                         ForEach(viewModel.state.portfolios, id: \.id) { portfolio in
                             let isFlagHidden = viewModel.state.signedInUser == portfolio.author.username
+                            let isFlagged = viewModel.state.flaggedPortfolioIds.contains(where: { $0 == portfolio.id })
+                            
                             PortfolioView(
                                 portfolio: portfolio,
                                 mediaWidth: geo.size.width,
                                 hideFlag: isFlagHidden,
-                                isFlagged: viewModel.state.flaggedPortfolioIds.contains(where: { $0 == portfolio.id }),
+                                isFlagged: isFlagged,
                                 flagAction: { viewModel.onIntent(.flagPortfolio(portfolio.id)) },
                                 unflagAction: { viewModel.onIntent(.unflagPortfolio(portfolio.id)) },
                                 openProfileAction: { viewModel.onIntent(.showProfile(portfolio.author)) }
@@ -56,19 +58,19 @@ struct FeedView: View {
         }
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarLeading) {
-                Menu("Seřadit") {
-                    Button("Podle data", action: { viewModel.onIntent(.sortByDate) })
-                    Button("Podle hodnocení", action: { viewModel.onIntent(.sortByRating) })
+                Menu(L.Feed.sort) {
+                    Button(L.Feed.sortByDate, action: { viewModel.onIntent(.sortByDate) })
+                    Button(L.Feed.soryByRating, action: { viewModel.onIntent(.sortByRating) })
                 }
                 .padding(.leading, 5)
             }
             
             ToolbarItemGroup(placement: .navigationBarTrailing) {
-                Button("Filtrovat", action: { viewModel.onIntent(.filter) })
+                Button(L.Feed.filter, action: { viewModel.onIntent(.filter) })
                 .padding(.trailing, 5)
             }
         }
-        .setupNavBarAndTitle("Feed")
+        .setupNavBarAndTitle(L.Feed.title)
         .lifecycle(viewModel)
     }
 }

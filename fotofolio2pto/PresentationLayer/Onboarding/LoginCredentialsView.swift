@@ -10,7 +10,7 @@ import SwiftUI
 struct LoginCredentialsView: View {
     @Binding var username: String
     @Binding var password: String
-    @State var passwordSecond: String = "pwd"
+    @State var passwordSecond: String = ""
     
     @State var hiddenPassword = true
     
@@ -21,10 +21,10 @@ struct LoginCredentialsView: View {
     
     var body: some View {
         VStack {
-            Text("Uživatelské jméno")
+            Text(L.Onboarding.username)
                 .brightness(0.27)
             
-            TextField("Uživatelské jméno", text: $username)
+            TextField(L.Onboarding.username, text: $username)
                 .font(.system(size: 18))
                 .frame(height: 38)
                 .offset(x: 9)
@@ -39,12 +39,12 @@ struct LoginCredentialsView: View {
                         .opacity(fillUsernameAlert ? 1 : 0)
                 )
             
-            Text("Heslo")
+            Text(L.Onboarding.password)
                 .brightness(0.27)
             
             ZStack(alignment: .trailing) {
                 if hiddenPassword {
-                    SecureField("Heslo", text: $password)
+                    SecureField(L.Onboarding.password, text: $password)
                         .textContentType(.oneTimeCode)
                         .font(.system(size: 18))
                         .frame(height: 38)
@@ -60,7 +60,7 @@ struct LoginCredentialsView: View {
                                 .opacity(passwordAlert ? 1 : 0)
                         )
                 } else {
-                    TextField("Heslo", text: $password)
+                    TextField(L.Onboarding.password, text: $password)
                         .font(.system(size: 18))
                         .frame(height: 38)
                         .offset(x: 9)

@@ -11,27 +11,27 @@ let PROFILE_PIC = URL(string: "https://loremflickr.com/320/320/person")!
 
 public struct User: Identifiable, Equatable {
     public let id: Int
-    public var username: String
-    public var fullName: String
-    public var email: String
-    public var location: String
-    public var profilePicture: IImage?
-    public var ratings: [String:Int]
+    public let username: String
+    public let fullName: String
+    public let email: String
+    public let location: String
+    public let profilePicture: IImage?
+    public let ratings: [String:Int]
     public var creator: Creator?
     
-    public static func == (lhs: User, rhs: User) -> Bool {
-        lhs.id == rhs.id
-    }
-    
-    public func calculateRating() -> Double {
+    public var averageRating: Double {
         if ratings.isEmpty { return 0 }
         
         let sum = ratings.values.reduce(0, +)
         return Double(sum) / Double(ratings.count)
     }
     
-    public func isCreator() -> Bool {
+    public var isCreator: Bool {
         return creator != nil
+    }
+    
+    public static func == (lhs: User, rhs: User) -> Bool {
+        lhs.id == rhs.id
     }
 }
 

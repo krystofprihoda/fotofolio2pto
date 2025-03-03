@@ -56,14 +56,14 @@ struct ProfileView: View {
                             Button(action: {
                                 viewModel.onIntent(.editProfile)
                             }) {
-                                Text("Upravit profil")
+                                Text(L.Profile.editProfile)
                                     .foregroundColor(.gray)
                             }
                             
                             Button(action: {
                                 viewModel.onIntent(.signOut)
                             }, label: {
-                                Text("Odhlásit se")
+                                Text(L.Profile.signOut)
                             })
                         }, label: {
                             Image(systemName: "slider.horizontal.3")

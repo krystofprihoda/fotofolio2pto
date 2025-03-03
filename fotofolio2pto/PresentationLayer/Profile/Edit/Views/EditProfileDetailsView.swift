@@ -18,7 +18,7 @@ struct EditProfileDetailsView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             HStack {
-                Text("Počet let zkušeností:")
+                Text(L.Profile.yearsOfExperience)
                     .font(.system(size: 16))
                     .foregroundColor(.black).brightness(0.25)
                     .padding(.top, 5)
@@ -29,7 +29,13 @@ struct EditProfileDetailsView: View {
                         .foregroundColor(.gray).brightness(0.42)
                         .frame(width: 50, height: 40)
                         
-                    TextField("3", text: Binding(get: { String(viewModel.state.userData!.creator!.yearsOfExperience) }, set: { _ in }))
+                    TextField(
+                        L.Profile.yearsOfExperiencePrefill,
+                        text: Binding(
+                            get: { String(viewModel.state.userData!.creator!.yearsOfExperience) },
+                            set: { _ in }
+                        )
+                    )
                         .offset(x: 17)
                         .foregroundColor(.gray)
                         .font(.system(size: 16))
@@ -42,7 +48,7 @@ struct EditProfileDetailsView: View {
             
             VStack {
                 HStack {
-                    Text("Profilový popis:")
+                    Text(L.Profile.description)
                         .font(.system(size: 16))
                         .foregroundColor(.black).brightness(0.25)
                     

@@ -32,7 +32,7 @@ struct SignInView: View {
                 }
                 
                 VStack {
-                    Text("Přihlášení.")
+                    Text(L.Onboarding.signIn)
                         .font(.largeTitle)
                         .fontWeight(.bold)
                         .padding(.bottom, 1)
@@ -40,7 +40,7 @@ struct SignInView: View {
                     Button(action: {
                         // RegisterUserView()
                     }, label: {
-                        Text("nebo registrace zde")
+                        Text(L.Onboarding.registrationAlternative)
                             .foregroundColor(.gray)
                             .font(.system(size: 13))
                             .underline()
@@ -75,7 +75,7 @@ struct SignInView: View {
                 Button(action: {
                     viewModel.onIntent(.signIn)
                 }) {
-                    Text("Přihlásit se")
+                    Text(L.Onboarding.signInAction)
                         .foregroundColor(.white)
                         .padding([.leading, .trailing], 100)
                         .padding([.top, .bottom], 15)

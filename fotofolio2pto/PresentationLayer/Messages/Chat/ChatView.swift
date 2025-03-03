@@ -42,7 +42,7 @@ struct ChatView: View {
                                 }
                             }
                         } else {
-                            Text("Žádné zprávy.")
+                            Text(L.Messages.noMessages)
                                 .foregroundColor(.gray)
                         }
                     }
@@ -54,7 +54,7 @@ struct ChatView: View {
                     Rectangle()
                        .foregroundColor(.gray).brightness(0.37)
                     
-                    TextField("...", text: Binding(get: { viewModel.state.textInput }, set: { viewModel.onIntent(.setTextInput($0)) }))
+                    TextField(L.Messages.prefill, text: Binding(get: { viewModel.state.textInput }, set: { viewModel.onIntent(.setTextInput($0)) }))
                         .autocapitalization(.none)
                         .padding()
                  }
@@ -62,7 +62,7 @@ struct ChatView: View {
                 .cornerRadius(10)
                 
                 Button(action: { viewModel.onIntent(.sendMessage) }, label: {
-                    Text("Odeslat")
+                    Text(L.Messages.send)
                         .padding([.top, .bottom], 11)
                         .padding([.leading, .trailing], 7)
                         .background(.red).brightness(0.35)
@@ -72,7 +72,7 @@ struct ChatView: View {
             }
         }
         .padding()
-        .setupNavBarAndTitle("Chat")
+        .setupNavBarAndTitle(L.Messages.chatTitle)
         .lifecycle(viewModel)
     }
 }

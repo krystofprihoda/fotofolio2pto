@@ -39,7 +39,7 @@ struct AuthorDetailView: View {
                 Spacer()
                 
                 Button(action: sendMessage) {
-                    Text("Napsat zprávu")
+                    Text(L.Selection.typeMessage)
                         .foregroundColor(.cyan)
                 }
                 
@@ -59,7 +59,7 @@ struct AuthorDetailView: View {
                     
                     if !author.ratings.isEmpty {
                         HStack {
-                            Text("\(author.location), " + String(format: "%.1f", author.calculateRating()) + " z 5")
+                            Text("\(author.location), " + String(format: "%.1f", author.averageRating) + L.Selection.outOf5)
                                 .font(.system(size: 12))
                                 .foregroundColor(.black).brightness(0.3)
                             
@@ -69,7 +69,7 @@ struct AuthorDetailView: View {
                                 .offset(x: -5)
                         }
                     } else {
-                        Text("\(author.location), " + "Bez hodnocení")
+                        Text("\(author.location), \(L.Selection.noRating)")
                             .font(.system(size: 12))
                             .foregroundColor(.black).brightness(0.3)
                     }
@@ -80,7 +80,7 @@ struct AuthorDetailView: View {
             }
             
             HStack {
-                Text(author.creator?.profileText ?? "Profilový popis se nepodařilo nahrát, zkuste to znovu.")
+                Text(author.creator?.profileText ?? L.Selection.profileDescriptionError)
                     .font(.system(size: 16))
                     .foregroundColor(Color(uiColor: UIColor.systemGray))
                 

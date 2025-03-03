@@ -36,7 +36,7 @@ struct ProfileUserInfoView: View {
                         
                         if !user.ratings.isEmpty {
                             HStack {
-                                Text(String(format: "%.1f", user.calculateRating()) + " z 5")
+                                Text(String(format: "%.1f", user.averageRating) + " z 5")
                                     .font(.system(size: 12))
                                     .foregroundColor(.black).brightness(0.3)
                                 

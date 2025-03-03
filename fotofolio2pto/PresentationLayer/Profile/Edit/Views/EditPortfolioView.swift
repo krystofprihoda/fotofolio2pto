@@ -42,7 +42,7 @@ struct EditPortfolioView: View {
                             .foregroundColor(.gray).brightness(0.4)
                             .frame(height: 38)
                         
-                        TextField("např. Portréty", text: Binding(get: { viewModel.state.portfolios.filter({ $0.id == portfolio.id }).description }, set: { _ in }))
+                        TextField(L.Profile.portraitsExample, text: Binding(get: { viewModel.state.portfolios.filter({ $0.id == portfolio.id }).description }, set: { _ in }))
                             .font(.system(size: 18))
                             .frame(height: 38)
                             .foregroundColor(.gray)
@@ -150,7 +150,7 @@ struct EditPortfolioView: View {
                             Rectangle()
                                .foregroundColor(.gray).brightness(0.37)
                             
-                            TextField("např. svatba", text: Binding(get: { viewModel.state.portfolioTagsInput }, set: { _ in }))
+                            TextField(L.Profile.weddingExample, text: Binding(get: { viewModel.state.portfolioTagsInput }, set: { _ in }))
                                 .autocapitalization(.none)
                                 .disableAutocorrection(true)
                                 .padding()
@@ -161,7 +161,7 @@ struct EditPortfolioView: View {
                         Button(action: {
                             // add tags
                         }, label: {
-                            Text("Přidat")
+                            Text(L.Profile.add)
                                 .padding(10)
                                 .background(.red).brightness(0.5)
                                 .foregroundColor(.white)

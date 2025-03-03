@@ -28,7 +28,7 @@ public class FeedRepositoryImpl: FeedRepository {
         case .date: return FeedRepositoryImpl.portfolios.sorted(by: { $0.timestamp > $1.timestamp })
         case .rating:
             return FeedRepositoryImpl.portfolios.sorted(by: {
-                return $0.author.calculateRating() > $1.author.calculateRating()
+                return $0.author.averageRating > $1.author.averageRating
             })
         }
     }

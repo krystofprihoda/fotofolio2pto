@@ -18,7 +18,7 @@ struct NewPortfolioView: View {
     var body: some View {
         ScrollView(showsIndicators: false) {
             VStack(alignment: .leading) {
-                Text("Název")
+                Text(L.Profile.titleName)
                     .font(.system(size: 18))
                 
                 ZStack {
@@ -26,7 +26,13 @@ struct NewPortfolioView: View {
                         .foregroundColor(.gray).brightness(0.35)
                         .frame(height: 38)
                     
-                    TextField("např. Portréty", text: Binding(get: { viewModel.state.name }, set: { input in viewModel.onIntent(.setName(input)) }))
+                    TextField(
+                        L.Profile.portraitsExample,
+                        text: Binding(
+                            get: { viewModel.state.name },
+                            set: { input in viewModel.onIntent(.setName(input)) }
+                        )
+                    )
                         .font(.system(size: 18))
                         .frame(height: 38)
                         .foregroundColor(.gray)
@@ -34,7 +40,7 @@ struct NewPortfolioView: View {
                 }
                 .padding(.trailing, 15)
                 
-                Text("Fotografie")
+                Text(L.Profile.photography)
                     .font(.system(size: 18))
                 
                 ScrollView(.horizontal, showsIndicators: false) {
@@ -104,7 +110,7 @@ struct NewPortfolioView: View {
                 }
                 
                 VStack(alignment: .leading) {
-                    Text("Popis")
+                    Text(L.Profile.shortDescription)
                         .font(.system(size: 18))
                         .padding(.bottom, -2)
                         .padding(.top, 3)
@@ -128,7 +134,7 @@ struct NewPortfolioView: View {
                 }
                 .padding(.trailing, 15)
                 
-                Text("Tagy (max. 5)")
+                Text(L.Profile.maxNumberOfTags)
                 
                 if viewModel.state.tags.count < 5 {
                     HStack {
@@ -136,7 +142,10 @@ struct NewPortfolioView: View {
                             Rectangle()
                                .foregroundColor(.gray).brightness(0.37)
                             
-                            TextField("např. svatba", text: Binding(get: { viewModel.state.tagInput }, set: { viewModel.onIntent(.setTagInput($0)) }))
+                            TextField(
+                                L.Profile.weddingExample,
+                                text: Binding(get: { viewModel.state.tagInput }, set: { viewModel.onIntent(.setTagInput($0)) })
+                            )
                                 .autocapitalization(.none)
                                 .disableAutocorrection(true)
                                 .padding()
@@ -147,7 +156,7 @@ struct NewPortfolioView: View {
                         Button(action: {
                             viewModel.onIntent(.addTag)
                         }, label: {
-                            Text("Přidat")
+                            Text(L.Profile.add)
                                 .padding(10)
                                 .background(.red).brightness(0.5)
                                 .foregroundColor(.white)
@@ -188,7 +197,7 @@ struct NewPortfolioView: View {
                 Button(action: {
                     viewModel.onIntent(.close)
                 }) {
-                    Text("Zrušit")
+                    Text(L.Profile.cancel)
                 }
                 .foregroundColor(.gray)
             }
@@ -200,7 +209,7 @@ struct NewPortfolioView: View {
                     if viewModel.state.isLoading {
                         ProgressView().progressViewStyle(.circular)
                     } else {
-                        Text("Vytvořit")
+                        Text(L.Profile.createNew)
                     }
                 }
                 .foregroundColor(.gray)
@@ -208,7 +217,7 @@ struct NewPortfolioView: View {
         }
         .lifecycle(viewModel)
         .navigationBarBackButtonHidden(true)
-        .setupNavBarAndTitle("Nové portfolio")
+        .setupNavBarAndTitle(L.Profile.newPortfolioTitle)
     }
 }
 

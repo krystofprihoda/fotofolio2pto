@@ -76,7 +76,7 @@ public class MainFlowController: BaseFlowController {
     private func getFeedNavigationController() -> UINavigationController {
         let feedNavController = UINavigationController()
         feedNavController.tabBarItem = UITabBarItem(
-            title: "Feed",
+            title: L.Feed.title,
             image: UIImage(systemName: "square.text.square"),
             tag: MainTab.feed.rawValue
         )
@@ -90,7 +90,7 @@ public class MainFlowController: BaseFlowController {
     private func getSelectionNavigationController() -> UINavigationController {
         let selectionNavController = UINavigationController()
         selectionNavController.tabBarItem = UITabBarItem(
-            title: "Výběr",
+            title: L.Selection.title,
             image: UIImage(systemName: "star.square"),
             tag: MainTab.selection.rawValue
         )
@@ -104,7 +104,7 @@ public class MainFlowController: BaseFlowController {
     private func getSearchNavigationController() -> UINavigationController {
         let searchNavController = UINavigationController()
         searchNavController.tabBarItem = UITabBarItem(
-            title: "Vyhledávání",
+            title: L.Search.title,
             image: UIImage(systemName: "magnifyingglass"),
             tag: MainTab.search.rawValue
         )
@@ -118,7 +118,7 @@ public class MainFlowController: BaseFlowController {
     private func getMessagesNavigationController() -> UINavigationController {
         let messagesNavController = UINavigationController()
         messagesNavController.tabBarItem = UITabBarItem(
-            title: "Zprávy",
+            title: L.Messages.title,
             image: UIImage(systemName: "message"),
             tag: MainTab.messages.rawValue
         )
@@ -132,7 +132,7 @@ public class MainFlowController: BaseFlowController {
     private func getProfileNavigationController() -> UINavigationController {
         let profileNavController = UINavigationController()
         profileNavController.tabBarItem = UITabBarItem(
-            title: "Profil",
+            title: L.Profile.title,
             image: UIImage(systemName: "person.crop.square"),
             tag: MainTab.profile.rawValue
         )

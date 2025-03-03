@@ -55,6 +55,7 @@
 		FEA53CF42C2D791F006F0116 /* NewPortfolioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CF32C2D791F006F0116 /* NewPortfolioView.swift */; };
 		FEA53CF72C2D7960006F0116 /* NewPortfolioViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CF62C2D795F006F0116 /* NewPortfolioViewModel.swift */; };
 		FEA53CF92C2D896F006F0116 /* CreatePortfolioUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CF82C2D896F006F0116 /* CreatePortfolioUseCase.swift */; };
+		FEC8A8C02D75C5D5000181B8 /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC8A8BF2D75C5CE000181B8 /* Localization.swift */; };
 		FEC94D952C24398200FFEB11 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC94D942C24398200FFEB11 /* AppDelegate.swift */; };
 		FEC94D9F2C24398200FFEB11 /* fotofolio2pto.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FEC94D9D2C24398200FFEB11 /* fotofolio2pto.xcdatamodeld */; };
 		FEC94DA12C24398400FFEB11 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FEC94DA02C24398400FFEB11 /* Assets.xcassets */; };
@@ -155,6 +156,7 @@
 		FEA53CF32C2D791F006F0116 /* NewPortfolioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPortfolioView.swift; sourceTree = "<group>"; };
 		FEA53CF62C2D795F006F0116 /* NewPortfolioViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPortfolioViewModel.swift; sourceTree = "<group>"; };
 		FEA53CF82C2D896F006F0116 /* CreatePortfolioUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePortfolioUseCase.swift; sourceTree = "<group>"; };
+		FEC8A8BF2D75C5CE000181B8 /* Localization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localization.swift; sourceTree = "<group>"; };
 		FEC94D912C24398200FFEB11 /* fotofolio2pto.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = fotofolio2pto.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FEC94D942C24398200FFEB11 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FEC94D9E2C24398200FFEB11 /* fotofolio2pto.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = fotofolio2pto.xcdatamodel; sourceTree = "<group>"; };
@@ -495,6 +497,7 @@
 		FEC94DB42C2447AA00FFEB11 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				FEC8A8BF2D75C5CE000181B8 /* Localization.swift */,
 				FEA53CB22C2AE812006F0116 /* Alerts */,
 				FEC94DB52C2447F000FFEB11 /* BaseFlowController.swift */,
 				FEC94DC42C246DF400FFEB11 /* BaseViewModel.swift */,
@@ -734,6 +737,7 @@
 				FEC94DD52C247C9500FFEB11 /* MessagesViewModel.swift in Sources */,
 				FEA53CC82C2C16E2006F0116 /* GetUserDataFromUsernameUseCase.swift in Sources */,
 				FEC94E012C26DD2F00FFEB11 /* SearchResultsView.swift in Sources */,
+				FEC8A8C02D75C5D5000181B8 /* Localization.swift in Sources */,
 				FEC94D9F2C24398200FFEB11 /* fotofolio2pto.xcdatamodeld in Sources */,
 				FEA53CD62C2C2CEC006F0116 /* CreateNewChatUseCase.swift in Sources */,
 				FE5F8A862C29737F001EE8AF /* SystemUserDefaultsProvider.swift in Sources */,
