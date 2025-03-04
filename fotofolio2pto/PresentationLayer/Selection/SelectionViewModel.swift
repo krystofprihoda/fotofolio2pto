@@ -41,6 +41,7 @@ final class SelectionViewModel: BaseViewModel, ViewModel, ObservableObject {
     struct State {
         var isLoading = false
         var portfolios: [Portfolio] = []
+        var alertData: AlertData? = nil
     }
     
     @Published private(set) var state = State()
@@ -49,10 +50,11 @@ final class SelectionViewModel: BaseViewModel, ViewModel, ObservableObject {
     
     enum Intent {
         case getFlagged
-        case removeAllFlagged
-        case removeFromFlagged(Int)
+        case tapRemoveAllFlagged
+        case tapRemoveFromFlagged(Int)
         case showProfile(User)
         case sendMessage(to: User)
+        case onAlertDataChanged(AlertData?)
     }
     
     @discardableResult
@@ -60,10 +62,11 @@ final class SelectionViewModel: BaseViewModel, ViewModel, ObservableObject {
         executeTask(Task {
             switch intent {
             case .getFlagged: await getFlaggedPortfolios()
-            case .removeAllFlagged: removeAllFlagged()
-            case .removeFromFlagged(let id): removeFromFlagged(id: id)
+            case .tapRemoveAllFlagged: tapRemoveAllFlagged()
+            case .tapRemoveFromFlagged(let id): tapRemoveFromFlagged(id: id)
             case .showProfile(let user): showProfile(user: user)
             case .sendMessage(let user): sendMessage(to: user)
+            case .onAlertDataChanged(let alertData): onAlertDataChanged(alertData: alertData)
             }
         })
     }
@@ -81,6 +84,27 @@ final class SelectionViewModel: BaseViewModel, ViewModel, ObservableObject {
         }
     }
     
+    private func tapRemoveAllFlagged() {
+        state.alertData = .init(
+            title: "Odstranit všechna portfolia z výběru?",
+            message: nil,
+            primaryAction: .init(
+                title: "Zrušit",
+                style: .cancel,
+                handler: { [weak self] in
+                    self?.dismissAlert()
+                }
+            ),
+            secondaryAction: .init(
+                title: "Odstranit vše",
+                style: .destruction,
+                handler: { [weak self] in
+                    self?.removeAllFlagged()
+                }
+            )
+        )
+    }
+    
     private func removeAllFlagged() {
         do {
             try unflagAllPortfoliosUseCase.execute()
@@ -88,6 +112,35 @@ final class SelectionViewModel: BaseViewModel, ViewModel, ObservableObject {
         } catch {
             
         }
+    }
+    
+    private func tapRemoveFromFlagged(id: Int) {
+        state.alertData = .init(
+            title: "Odstranit portfolio z výběru?",
+            message: nil,
+            primaryAction: .init(
+                title: "Zrušit",
+                style: .cancel,
+                handler: { [weak self] in
+                    self?.dismissAlert()
+                }
+            ),
+            secondaryAction: .init(
+                title: "Odstranit",
+                style: .destruction,
+                handler: { [weak self] in
+                    self?.removeFromFlagged(id: id)
+                }
+            )
+        )
+    }
+    
+    private func onAlertDataChanged(alertData: AlertData?) {
+        state.alertData = alertData
+    }
+    
+    private func dismissAlert() {
+        state.alertData = nil
     }
     
     private func removeFromFlagged(id: Int) {

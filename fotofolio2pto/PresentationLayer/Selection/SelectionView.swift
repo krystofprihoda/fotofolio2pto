@@ -28,9 +28,9 @@ struct SelectionView: View {
                     } else if !viewModel.state.portfolios.isEmpty {
                         ForEach(viewModel.state.portfolios, id: \.id) { portfolio in
                             PortfolioDetailView(
-                                mediaWidth: geo.size.width - Constants.Dimens.spaceXXLarge,
+                                mediaWidth: geo.size.width,
                                 portfolio: portfolio,
-                                unflagPortfolio: { viewModel.onIntent(.removeFromFlagged(portfolio.id)) },
+                                unflagPortfolio: { viewModel.onIntent(.tapRemoveFromFlagged(portfolio.id)) },
                                 showProfile: { viewModel.onIntent(.showProfile(portfolio.author)) },
                                 sendMessage: { viewModel.onIntent(.sendMessage(to: portfolio.author)) }
                             )
@@ -48,17 +48,22 @@ struct SelectionView: View {
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarTrailing) {
                 if !viewModel.state.portfolios.isEmpty {
-                    Button(action: {
-                        viewModel.onIntent(.removeAllFlagged)
-                    }) {
-                        Text(L.Selection.removeAll)
+                    Button(L.Selection.removeAll) {
+                        viewModel.onIntent(.tapRemoveAllFlagged)
                     }
                     .padding(.trailing, 5)
                 }
             }
         }
         .setupNavBarAndTitle(L.Selection.title)
+        .animation(.default, value: viewModel.state.portfolios)
         .lifecycle(viewModel)
+        .alert(item: Binding<AlertData?>(
+            get: { viewModel.state.alertData },
+            set: { alertData in
+                viewModel.onIntent(.onAlertDataChanged(alertData))
+            }
+        )) { alert in .init(alert) }
     }
 }
 

@@ -9,20 +9,20 @@ import SwiftUI
 
 struct PortfolioDetailView: View {
     
-    private let mediaWidth: CGFloat?
+    private let mediaWidth: CGFloat
     private let portfolio: Portfolio
     private let unflagPortfolio: () -> Void
     private let showProfile: () -> Void
     private let sendMessage: () -> Void
     
     init(
-        mediaWidth: CGFloat?,
+        mediaWidth: CGFloat,
         portfolio: Portfolio,
         unflagPortfolio: @escaping () -> Void,
         showProfile: @escaping () -> Void,
         sendMessage: @escaping () -> Void
     ) {
-        self.mediaWidth = mediaWidth
+        self.mediaWidth = mediaWidth - Constants.Dimens.spaceXXLarge
         self.portfolio = portfolio
         self.unflagPortfolio = unflagPortfolio
         self.showProfile = showProfile
