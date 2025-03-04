@@ -86,17 +86,17 @@ final class SelectionViewModel: BaseViewModel, ViewModel, ObservableObject {
     
     private func tapRemoveAllFlagged() {
         state.alertData = .init(
-            title: "Odstranit všechna portfolia z výběru?",
+            title: L.Selection.removeAllFromSelection,
             message: nil,
             primaryAction: .init(
-                title: "Zrušit",
+                title: L.Selection.cancel,
                 style: .cancel,
                 handler: { [weak self] in
                     self?.dismissAlert()
                 }
             ),
             secondaryAction: .init(
-                title: "Odstranit vše",
+                title: L.Selection.removeAll,
                 style: .destruction,
                 handler: { [weak self] in
                     self?.removeAllFlagged()
@@ -116,17 +116,17 @@ final class SelectionViewModel: BaseViewModel, ViewModel, ObservableObject {
     
     private func tapRemoveFromFlagged(id: Int) {
         state.alertData = .init(
-            title: "Odstranit portfolio z výběru?",
+            title: L.Selection.removePortfolioFromSelection,
             message: nil,
             primaryAction: .init(
-                title: "Zrušit",
+                title: L.Selection.cancel,
                 style: .cancel,
                 handler: { [weak self] in
                     self?.dismissAlert()
                 }
             ),
             secondaryAction: .init(
-                title: "Odstranit",
+                title: L.Selection.remove,
                 style: .destruction,
                 handler: { [weak self] in
                     self?.removeFromFlagged(id: id)

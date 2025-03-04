@@ -30,10 +30,14 @@ public struct L {
         public static let title = "Výběr"
         public static let emptySelection = "Ve svém výběru nemáte žádná portfolia."
         public static let removeAll = "Odstranit vše"
+        public static let remove = "Odstranit"
         public static let typeMessage = "Napsat zprávu"
         public static let outOf5 = " z 5"
         public static let noRating = "Bez hodnocení"
         public static let profileDescriptionError = "Profilový popis se nepodařilo nahrát, zkuste to znovu."
+        public static let removeAllFromSelection = "Odstranit všechna portfolia z výběru?"
+        public static let removePortfolioFromSelection = "Odstranit portfolio z výběru?"
+        public static let cancel = "Zrušit"
     }
     
     public enum Search {
