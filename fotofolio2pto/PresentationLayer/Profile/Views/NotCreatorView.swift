@@ -19,7 +19,7 @@ struct NotCreatorView: View {
                 HStack {
                     ForEach(firstRowText, id: \.self) { text in
                         ZStack {
-                            RoundedRectangle(cornerRadius: 9)
+                            RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
                                 .fill(Color.gray).brightness(Double.random(in: 0.15...0.4))
                                 .aspectRatio(1.0, contentMode: .fit)
                                 .frame(width: 150, height: 150)
@@ -35,7 +35,7 @@ struct NotCreatorView: View {
                 HStack {
                     ForEach(secondRowText, id: \.self) { text in
                         ZStack {
-                            RoundedRectangle(cornerRadius: 9)
+                            RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
                                 .fill(Color.gray).brightness(Double.random(in: 0.15...0.25))
                                 .aspectRatio(1.0, contentMode: .fit)
                                 .frame(width: 150, height: 150)

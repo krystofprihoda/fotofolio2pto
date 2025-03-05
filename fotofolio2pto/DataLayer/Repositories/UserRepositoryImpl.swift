@@ -32,4 +32,13 @@ public class UserRepositoryImpl: UserRepository {
             user.location.lowercased().hasPrefix(query.lowercased())
         })
     }
+    
+    public func isEmailAddressTaken(_ email: String) async throws {
+        try await Task.sleep(for: .seconds(0.4))
+        guard let user = UserRepositoryImpl.users.first(where: { user in
+            user.email == email
+        }) else { return }
+        
+        // throw Error
+    }
 }

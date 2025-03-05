@@ -12,6 +12,8 @@ public struct L {
         public static let signIn = "Přihlášení."
         public static let registrationAlternative = "nebo registrace zde"
         public static let signInAction = "Přihlásit se"
+        public static let invalidEmailFormat = "Neplatný formát emailové adresy!"
+        public static let emailAddressTaken = "Emailová adresa už je registrována!"
     }
     
     public enum Feed {

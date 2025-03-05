@@ -53,7 +53,7 @@ struct FilterView: View {
                     .padding(Constants.Dimens.spaceMedium)
                  }
                 .frame(height: 40)
-                .cornerRadius(7)
+                .cornerRadius(Constants.Dimens.radiusXSmall)
                 .padding(.leading)
                 
                 Button(
@@ -64,7 +64,7 @@ struct FilterView: View {
                             .frame(height: 40)
                             .background(.red).brightness(0.5)
                             .foregroundColor(.white)
-                            .cornerRadius(7)
+                            .cornerRadius(Constants.Dimens.radiusXSmall)
                     }
                 )
                 .padding(.trailing)
@@ -81,7 +81,7 @@ struct FilterView: View {
                                 .padding([.bottom, .top], 7)
                                 .background(.red).brightness(0.5)
                                 .foregroundColor(.white)
-                                .cornerRadius(7)
+                                .cornerRadius(Constants.Dimens.radiusXSmall)
                             
                             Button(action: { viewModel.onIntent(.removeTag(tag)) }) {
                                 Image(systemName: "xmark")

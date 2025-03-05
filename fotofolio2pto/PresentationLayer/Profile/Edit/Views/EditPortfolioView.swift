@@ -23,7 +23,7 @@ struct EditPortfolioView: View {
                         // intent remove portfolio by id
                     }) {
                         ZStack {
-                            RoundedRectangle(cornerRadius: 9)
+                            RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
                                 .fill()
                                 .foregroundColor(.red).brightness(0.42)
                                 .frame(width: 45, height: 38)
@@ -38,12 +38,12 @@ struct EditPortfolioView: View {
                     }
                     
                     ZStack {
-                        RoundedRectangle(cornerRadius: 7)
+                        RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
                             .foregroundColor(.gray).brightness(0.4)
                             .frame(height: 38)
                         
                         TextField(L.Profile.portraitsExample, text: Binding(get: { viewModel.state.portfolios.filter({ $0.id == portfolio.id }).description }, set: { _ in }))
-                            .font(.system(size: 18))
+                            .font(.body)
                             .frame(height: 38)
                             .foregroundColor(.gray)
                             .offset(x: 9)
@@ -59,7 +59,7 @@ struct EditPortfolioView: View {
                             // add folio
                         }) {
                             ZStack {
-                                RoundedRectangle(cornerRadius: 9)
+                                RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
                                     .fill(Color.gray).brightness(0.34)
                                     .aspectRatio(1.0, contentMode: .fit)
                                     .frame(width: 90, height: 90)
@@ -80,18 +80,18 @@ struct EditPortfolioView: View {
                                                 .resizable()
                                                 .aspectRatio(1.0, contentMode: .fill)
                                                 .frame(width: 90, height: 90)
-                                                .cornerRadius(CGFloat(9))
+                                                .cornerRadius(Constants.Dimens.radiusXSmall)
                                                 .blur(radius: 1.5)
-                                                .clipShape(RoundedRectangle(cornerRadius: 9))
+                                                .clipShape(RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall))
                                             
-                                            RoundedRectangle(cornerRadius: 9)
+                                            RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
                                                 .fill(Color.gray)
                                                 .aspectRatio(1.0, contentMode: .fit)
                                                 .frame(width: 90, height: 90)
                                                 .opacity(0.65)
                                         }
                                     } placeholder: {
-                                        RoundedRectangle(cornerRadius: 9)
+                                        RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
                                             .fill(Color.gray).brightness(0.25)
                                             .aspectRatio(1.0, contentMode: .fit)
                                             .frame(width: 90, height: 90)
@@ -102,11 +102,11 @@ struct EditPortfolioView: View {
                                             .resizable()
                                             .aspectRatio(1.0, contentMode: .fill)
                                             .frame(width: 90, height: 90)
-                                            .cornerRadius(CGFloat(9))
+                                            .cornerRadius(Constants.Dimens.radiusXSmall)
                                             .blur(radius: 1.5)
-                                            .clipShape(RoundedRectangle(cornerRadius: 9))
+                                            .clipShape(RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall))
                                         
-                                        RoundedRectangle(cornerRadius: 9)
+                                        RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
                                             .fill(Color.gray)
                                             .aspectRatio(1.0, contentMode: .fit)
                                             .frame(width: 90, height: 90)
@@ -131,7 +131,7 @@ struct EditPortfolioView: View {
                 }
                 
                 ZStack {
-                    RoundedRectangle(cornerRadius: 7)
+                    RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
                         .foregroundColor(.gray).brightness(0.42)
                         .frame(height: 85)
                         .padding(.trailing, 7)
@@ -156,7 +156,7 @@ struct EditPortfolioView: View {
                                 .padding()
                          }
                         .frame(height: 40)
-                        .cornerRadius(7)
+                        .cornerRadius(Constants.Dimens.radiusXSmall)
                         
                         Button(action: {
                             // add tags
@@ -165,7 +165,7 @@ struct EditPortfolioView: View {
                                 .padding(10)
                                 .background(.red).brightness(0.5)
                                 .foregroundColor(.white)
-                                .cornerRadius(7)
+                                .cornerRadius(Constants.Dimens.radiusXSmall)
                         })
                             .padding(.trailing, 7)
                     }
@@ -179,7 +179,7 @@ struct EditPortfolioView: View {
                                 .padding([.leading, .trailing], 9)
                                 .padding([.bottom, .top], 7)
                                 .background(.gray).brightness(0.4)
-                                .cornerRadius(7)
+                                .cornerRadius(Constants.Dimens.radiusXSmall)
                             
                             Button(action: {
                                 // remove tags from portfolio

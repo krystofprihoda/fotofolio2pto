@@ -19,7 +19,7 @@ struct SignInView: View {
         VStack {
             //Logo
             ZStack {
-                RoundedRectangle(cornerRadius: 9)
+                RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
                     .frame(width: 150, height: 150)
                     .padding(.bottom, 10)
                     .foregroundColor(.gray).brightness(0.15)
@@ -79,7 +79,7 @@ struct SignInView: View {
                     .padding([.leading, .trailing], 100)
                     .padding([.top, .bottom], 15)
                     .background(.black).brightness(0.13)
-                    .cornerRadius(9)
+                    .cornerRadius(Constants.Dimens.radiusXSmall)
             }
             .padding(.top, 9)
         }

@@ -53,7 +53,7 @@ struct SearchView: View {
                 .padding()
              }
             .frame(height: 45)
-            .cornerRadius(10)
+            .cornerRadius(Constants.Dimens.radiusXSmall)
             
             SearchResultsView(results: viewModel.state.searchResults, showProfile: { user in viewModel.onIntent(.showProfile(of: user))})
         }

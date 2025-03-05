@@ -25,7 +25,7 @@ struct EditProfileDetailsView: View {
                     .padding(.bottom, 8)
                 
                 ZStack(alignment: .leading) {
-                    RoundedRectangle(cornerRadius: 7)
+                    RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
                         .foregroundColor(.gray).brightness(0.42)
                         .frame(width: 50, height: 40)
                         
@@ -58,7 +58,7 @@ struct EditProfileDetailsView: View {
                 .padding(.leading, 20)
                 
                 ZStack(alignment: .leading) {
-                    RoundedRectangle(cornerRadius: 7)
+                    RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
                         .foregroundColor(.gray).brightness(0.42)
                         .frame(height: 85)
                         .padding(.trailing, 7)

@@ -20,7 +20,7 @@ struct ProfilePictureView: View {
                         .resizable()
                         .aspectRatio(1.0, contentMode: .fit)
                         .frame(width: width)
-                        .cornerRadius(100)
+                        .cornerRadius(Constants.Dimens.radiusMax)
                 } placeholder: {
                     ZStack {
                         Circle()
@@ -37,7 +37,7 @@ struct ProfilePictureView: View {
                     .resizable()
                     .aspectRatio(1.0, contentMode: .fit)
                     .frame(width: width)
-                    .cornerRadius(100)
+                    .cornerRadius(Constants.Dimens.radiusMax)
             }
         } else {
             Circle()

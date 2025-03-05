@@ -38,12 +38,12 @@ struct EditPersonalDetailsView: View {
                 
                 VStack(alignment: .leading) {
                     Text("@" + (viewModel.state.userData?.username ?? L.Profile.usernameError))
-                        .font(.system(size: 18))
+                        .font(.body)
                         .foregroundColor(.red).brightness(0.2)
                         .padding(.leading, 20)
                     
                     Text(viewModel.state.userData?.fullName ?? L.Profile.nameError)
-                        .font(.system(size: 18))
+                        .font(.body)
                         .foregroundColor(.black).brightness(0.2)
                         .padding(.bottom, 4)
                         .padding(.leading, 20)
@@ -62,7 +62,7 @@ struct EditPersonalDetailsView: View {
                     .padding(.bottom, -1)
                 
                 ZStack {
-                    RoundedRectangle(cornerRadius: 7)
+                    RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
                         .foregroundColor(.gray).brightness(0.42)
                         .frame(height: 45)
                         .offset(x: -5)

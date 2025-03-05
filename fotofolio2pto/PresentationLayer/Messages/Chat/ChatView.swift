@@ -36,7 +36,7 @@ struct ChatView: View {
                                         .multilineTextAlignment(.leading)
                                         .padding(15)
                                         .background(isSender ? .red.opacity(0.13) : .gray.opacity(0.2))
-                                        .cornerRadius(9)
+                                        .cornerRadius(Constants.Dimens.radiusXSmall)
 
                                     if !isSender { Spacer() }
                                 }
@@ -59,7 +59,7 @@ struct ChatView: View {
                         .padding()
                  }
                 .frame(height: 45)
-                .cornerRadius(10)
+                .cornerRadius(Constants.Dimens.radiusXSmall)
                 
                 Button(action: { viewModel.onIntent(.sendMessage) }, label: {
                     Text(L.Messages.send)
@@ -67,7 +67,7 @@ struct ChatView: View {
                         .padding([.leading, .trailing], 7)
                         .background(.red).brightness(0.35)
                         .foregroundColor(.white)
-                        .cornerRadius(9)
+                        .cornerRadius(Constants.Dimens.radiusXSmall)
                 })
             }
         }

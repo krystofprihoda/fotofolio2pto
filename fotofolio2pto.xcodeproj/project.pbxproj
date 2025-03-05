@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FE34A64F2D78BCF200CB4CAE /* CheckEmailAddressAvailableUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE34A64E2D78BCF200CB4CAE /* CheckEmailAddressAvailableUseCase.swift */; };
 		FE5F8A782C296D81001EE8AF /* AuthRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE5F8A772C296D81001EE8AF /* AuthRepository.swift */; };
 		FE5F8A7C2C296ECA001EE8AF /* LoginWithCredentialsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE5F8A7B2C296ECA001EE8AF /* LoginWithCredentialsUseCase.swift */; };
 		FE5F8A802C2971C7001EE8AF /* AuthRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE5F8A7F2C2971C7001EE8AF /* AuthRepositoryImpl.swift */; };
@@ -113,6 +114,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		FE34A64E2D78BCF200CB4CAE /* CheckEmailAddressAvailableUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckEmailAddressAvailableUseCase.swift; sourceTree = "<group>"; };
 		FE5F8A772C296D81001EE8AF /* AuthRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRepository.swift; sourceTree = "<group>"; };
 		FE5F8A7B2C296ECA001EE8AF /* LoginWithCredentialsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginWithCredentialsUseCase.swift; sourceTree = "<group>"; };
 		FE5F8A7F2C2971C7001EE8AF /* AuthRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRepositoryImpl.swift; sourceTree = "<group>"; };
@@ -306,6 +308,7 @@
 		FE5F8A872C2975E9001EE8AF /* User */ = {
 			isa = PBXGroup;
 			children = (
+				FE34A64E2D78BCF200CB4CAE /* CheckEmailAddressAvailableUseCase.swift */,
 				FE5F8A882C2975FC001EE8AF /* LogoutUseCase.swift */,
 				FEA53CC72C2C16E2006F0116 /* GetUserDataFromUsernameUseCase.swift */,
 				FEA53CE12C2C88EE006F0116 /* GetUsersFromQueryUseCase.swift */,
@@ -468,13 +471,13 @@
 		FEC94D932C24398200FFEB11 /* fotofolio2pto */ = {
 			isa = PBXGroup;
 			children = (
-				FEA64F782D7757B100B11530 /* Colors.xcassets */,
 				FEA53C932C29BF13006F0116 /* Application */,
 				FE5F8A7D2C297186001EE8AF /* DataLayer */,
 				FEC94DE02C25914F00FFEB11 /* DomainLayer */,
 				FEC94DB22C24475100FFEB11 /* AppFlowController.swift */,
 				FEC94DAB2C243E9A00FFEB11 /* PresentationLayer */,
 				FEC94D942C24398200FFEB11 /* AppDelegate.swift */,
+				FEA64F782D7757B100B11530 /* Colors.xcassets */,
 				FEC94DA02C24398400FFEB11 /* Assets.xcassets */,
 				FEC94DA22C24398400FFEB11 /* LaunchScreen.storyboard */,
 				FEC94DA52C24398400FFEB11 /* Info.plist */,
@@ -786,6 +789,7 @@
 				FEA53C962C29BF2F006F0116 /* Providers+Injection.swift in Sources */,
 				FEC94DC72C24712400FFEB11 /* ViewModel.swift in Sources */,
 				FEA53CD82C2C30BD006F0116 /* ChatViewModel.swift in Sources */,
+				FE34A64F2D78BCF200CB4CAE /* CheckEmailAddressAvailableUseCase.swift in Sources */,
 				FEA53CA52C29C792006F0116 /* FeedRepositoryImpl.swift in Sources */,
 				FEC94DC32C246DC000FFEB11 /* FeedViewModel.swift in Sources */,
 				FEA53CF72C2D7960006F0116 /* NewPortfolioViewModel.swift in Sources */,

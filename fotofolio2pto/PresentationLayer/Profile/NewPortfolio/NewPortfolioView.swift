@@ -19,10 +19,10 @@ struct NewPortfolioView: View {
         ScrollView(showsIndicators: false) {
             VStack(alignment: .leading) {
                 Text(L.Profile.titleName)
-                    .font(.system(size: 18))
+                    .font(.body)
                 
                 ZStack {
-                    RoundedRectangle(cornerRadius: 7)
+                    RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
                         .foregroundColor(.gray).brightness(0.35)
                         .frame(height: 38)
                     
@@ -33,7 +33,7 @@ struct NewPortfolioView: View {
                             set: { input in viewModel.onIntent(.setName(input)) }
                         )
                     )
-                        .font(.system(size: 18))
+                    .font(.body)
                         .frame(height: 38)
                         .foregroundColor(.gray)
                         .offset(x: 9)
@@ -41,13 +41,13 @@ struct NewPortfolioView: View {
                 .padding(.trailing, 15)
                 
                 Text(L.Profile.photography)
-                    .font(.system(size: 18))
+                    .font(.body)
                 
                 ScrollView(.horizontal, showsIndicators: false) {
                     LazyHStack {
                         Button(action: { viewModel.onIntent(.pickMedia) }) {
                             ZStack {
-                                RoundedRectangle(cornerRadius: 9)
+                                RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
                                     .fill(Color.gray).brightness(0.34)
                                     .aspectRatio(1.0, contentMode: .fit)
                                     .frame(width: 150, height: 150)
@@ -60,12 +60,12 @@ struct NewPortfolioView: View {
                         }
                         
                         if viewModel.state.media.isEmpty {
-                            RoundedRectangle(cornerRadius: 9)
+                            RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
                                 .fill(Color.gray).brightness(0.39)
                                 .aspectRatio(1.0, contentMode: .fit)
                                 .frame(width: 150, height: 150)
                             
-                            RoundedRectangle(cornerRadius: 9)
+                            RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
                                 .fill(Color.gray).brightness(0.41)
                                 .aspectRatio(1.0, contentMode: .fit)
                                 .frame(width: 150, height: 150)
@@ -77,9 +77,9 @@ struct NewPortfolioView: View {
                                             .resizable()
                                             .aspectRatio(1.0, contentMode: .fill)
                                             .frame(width: 150, height: 150)
-                                            .cornerRadius(CGFloat(9))
+                                            .cornerRadius(Constants.Dimens.radiusXSmall)
                                     } else {
-                                        RoundedRectangle(cornerRadius: 9)
+                                        RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
                                             .fill(.red)
                                             .aspectRatio(1.0, contentMode: .fit)
                                             .frame(width: 150, height: 150)
@@ -88,7 +88,7 @@ struct NewPortfolioView: View {
                                     
                                     Button(action: {}) {
                                         ZStack {
-                                            RoundedRectangle(cornerRadius: 9)
+                                            RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
                                                 .fill(.gray)
                                                 .aspectRatio(1.0, contentMode: .fit)
                                                 .frame(width: 40, height: 40)
@@ -111,12 +111,12 @@ struct NewPortfolioView: View {
                 
                 VStack(alignment: .leading) {
                     Text(L.Profile.shortDescription)
-                        .font(.system(size: 18))
+                        .font(.body)
                         .padding(.bottom, -2)
                         .padding(.top, 3)
                     
                     ZStack {
-                        RoundedRectangle(cornerRadius: 7)
+                        RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
                             .foregroundColor(.gray).brightness(0.35)
                             .frame(height: 85)
                         
@@ -151,7 +151,7 @@ struct NewPortfolioView: View {
                                 .padding()
                          }
                         .frame(height: 40)
-                        .cornerRadius(7)
+                        .cornerRadius(Constants.Dimens.radiusXSmall)
                         
                         Button(action: {
                             viewModel.onIntent(.addTag)
@@ -160,7 +160,7 @@ struct NewPortfolioView: View {
                                 .padding(10)
                                 .background(.red).brightness(0.5)
                                 .foregroundColor(.white)
-                                .cornerRadius(7)
+                                .cornerRadius(Constants.Dimens.radiusXSmall)
                         })
                     }
                     .padding(.trailing, 15)
@@ -174,7 +174,7 @@ struct NewPortfolioView: View {
                                 .padding([.leading, .trailing], 9)
                                 .padding([.bottom, .top], 7)
                                 .background(.gray).brightness(0.4)
-                                .cornerRadius(7)
+                                .cornerRadius(Constants.Dimens.radiusXSmall)
                             
                             Button(action: { viewModel.onIntent(.removeTag(tag)) }) {
                                 Image(systemName: "xmark")

@@ -5,6 +5,7 @@
 //  Created by Kryštof Příhoda on 04.03.2025.
 //
 
+import Resolver
 import SwiftUI
 
 internal enum RegisterStageEnum {
@@ -22,7 +23,11 @@ final class RegisterViewModel: BaseViewModel, ViewModel, ObservableObject {
     
     // MARK: Stored properties
     
+    @LazyInjected private var checkEmailAddressAvailableUseCase: CheckEmailAddressAvailableUseCase
+    
     private var currentTask: Task<(), Never>?
+    
+    private let invalidEmailFormatString = ""
     
     // MARK: Dependencies
     
@@ -50,10 +55,12 @@ final class RegisterViewModel: BaseViewModel, ViewModel, ObservableObject {
         var stage: RegisterStageEnum = .nameAndEmail
         var email = ""
         var emailVerified = false
-        var showInvalidEmailFormat = false
+        var emailError = ""
         var profilePicture: MyImageEnum? = nil
         var username = ""
+        var usernameError = ""
         var name = ""
+        var showSkeleton = false
     }
     
     @Published private(set) var state = State()
@@ -64,6 +71,7 @@ final class RegisterViewModel: BaseViewModel, ViewModel, ObservableObject {
         case onNameChanged(String)
         case onEmailChanged
         case onEmailInput(String)
+        case onNameAndEmailNextTap
     }
     
     @discardableResult
@@ -73,6 +81,7 @@ final class RegisterViewModel: BaseViewModel, ViewModel, ObservableObject {
             case .onNameChanged(let name): setName(to: name)
             case .onEmailChanged: await verifyEmail()
             case .onEmailInput(let email): setEmail(email)
+            case .onNameAndEmailNextTap: await checkEmailExistanceAndContinue()
             }
         })
     }
@@ -86,11 +95,11 @@ final class RegisterViewModel: BaseViewModel, ViewModel, ObservableObject {
                 try await Task.sleep(nanoseconds: 600_000_000)
                 
                 guard isValidEmail(state.email) else {
-                    state.showInvalidEmailFormat = true
+                    state.emailError = L.Onboarding.invalidEmailFormat
                     state.emailVerified = false
                     return
                 }
-                state.showInvalidEmailFormat = false
+                state.emailError = ""
                 
                 print("VERIFYING")
                 
@@ -118,5 +127,19 @@ final class RegisterViewModel: BaseViewModel, ViewModel, ObservableObject {
     private func cancelTask() {
         currentTask?.cancel()
         currentTask = nil
+    }
+    
+    private func checkEmailExistanceAndContinue() async {
+        state.showSkeleton = true
+        defer { state.showSkeleton = false }
+        
+        do {
+            try await checkEmailAddressAvailableUseCase.execute(state.email)
+        } catch ObjectError.emailAlreadyTaken {
+            state.emailError = L.Onboarding.emailAddressTaken
+        } catch { }
+        
+        state.emailError = ""
+        state.stage = .username
     }
 }

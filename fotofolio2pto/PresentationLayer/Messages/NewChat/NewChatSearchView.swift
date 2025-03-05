@@ -34,7 +34,7 @@ struct NewChatSearchView: View {
                 .padding()
              }
             .frame(height: 45)
-            .cornerRadius(10)
+            .cornerRadius(Constants.Dimens.radiusXSmall)
             .padding([.leading, .trailing])
             
             // Results

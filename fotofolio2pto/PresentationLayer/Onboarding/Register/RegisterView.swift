@@ -16,55 +16,116 @@ struct RegisterView: View {
     
     var body: some View {
         RegisterWrapperView {
-            VStack {
-                TextField("Jméno", text: Binding(get: { viewModel.state.name }, set: { viewModel.onIntent(.onNameChanged($0)) }))
-                    .font(.system(size: 18))
-                    .frame(height: Constants.Dimens.textFieldHeight)
-                    .padding()
-                    .background(.textFieldBackground)
-                    .cornerRadius(10)
-                    .disableAutocorrection(true)
-                
-                TextField("Email", text: Binding(get: { viewModel.state.email }, set: { viewModel.onIntent(.onEmailInput($0)) }))
-                    .font(.system(size: 18))
-                    .frame(height: Constants.Dimens.textFieldHeight)
-                    .padding()
-                    .background(.textFieldBackground)
-                    .cornerRadius(10)
-                    .autocapitalization(.none)
-                    .disableAutocorrection(true)
-                    .onChange(of: viewModel.state.email) { _ in
-                        viewModel.onIntent(.onEmailChanged)
-                    }
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 10)
-                            .stroke(.mainAccent, lineWidth: 1)
-                            .opacity(viewModel.state.showInvalidEmailFormat ? 1 : 0)
-                    )
-                
-                if viewModel.state.showInvalidEmailFormat {
-                    Text("Neplatný formát emailové adresy!")
-                        .font(.system(size: 14))
-                        .foregroundColor(.mainAccent)
-                }
-                
-                Button(action: {}, label: {
-                    Text("Další")
+            switch viewModel.state.stage {
+            case .nameAndEmail:
+                VStack {
+                    TextField("Jméno", text: Binding(get: { viewModel.state.name }, set: { viewModel.onIntent(.onNameChanged($0)) }))
+                        .font(.body)
                         .frame(height: Constants.Dimens.textFieldHeight)
-                        .frame(maxWidth: .infinity)
                         .padding()
-                        .foregroundStyle(.white)
-                        .background(.mainAccent)
-                        .cornerRadius(10)
-                })
-                .disabled(!viewModel.state.emailVerified)
+                        .background(.textFieldBackground)
+                        .cornerRadius(Constants.Dimens.radiusXSmall)
+                        .disableAutocorrection(true)
+                    
+                    TextField("Email", text: Binding(get: { viewModel.state.email }, set: { viewModel.onIntent(.onEmailInput($0)) }))
+                        .font(.body)
+                        .frame(height: Constants.Dimens.textFieldHeight)
+                        .padding()
+                        .background(.textFieldBackground)
+                        .cornerRadius(Constants.Dimens.radiusXSmall)
+                        .autocapitalization(.none)
+                        .disableAutocorrection(true)
+                        .onChange(of: viewModel.state.email) { _ in
+                            viewModel.onIntent(.onEmailChanged)
+                        }
+                        .overlay(
+                            RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
+                                .stroke(.mainAccent, lineWidth: 1)
+                                .opacity(viewModel.state.emailError.isEmpty ? 0 : 1)
+                        )
+                    
+                    if !viewModel.state.emailError.isEmpty {
+                        Text(viewModel.state.emailError)
+                            .font(.system(size: 14))
+                            .foregroundColor(.mainAccent)
+                    }
+                    
+                    Button(action: { viewModel.onIntent(.onNameAndEmailNextTap)}, label: {
+                        Text("Další")
+                            .frame(height: Constants.Dimens.textFieldHeight)
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .foregroundStyle(.white)
+                            .background(.mainAccent)
+                            .cornerRadius(Constants.Dimens.radiusXSmall)
+                    })
+                    .disabled(!viewModel.state.emailVerified)
+                    .skeleton(viewModel.state.showSkeleton)
+                }
+                .animation(.default, value: viewModel.state.emailError)
+            case .username:
+                VStack {
+                    TextField("Username", text: Binding(get: { "" }, set: { _ in }))
+                        .font(.body)
+                        .frame(height: Constants.Dimens.textFieldHeight)
+                        .padding()
+                        .background(.textFieldBackground)
+                        .cornerRadius(Constants.Dimens.radiusXSmall)
+                        .disableAutocorrection(true)
+                    
+                    if !viewModel.state.emailError.isEmpty {
+                        Text(viewModel.state.emailError)
+                            .font(.system(size: 14))
+                            .foregroundColor(.mainAccent)
+                    }
+                    
+                    HStack {
+                        Button(action: { }, label: {
+                            Text("Zpět")
+                                .frame(height: Constants.Dimens.textFieldHeight)
+                                .frame(maxWidth: .infinity)
+                                .padding()
+                                .foregroundStyle(.white)
+                                .background(.mainAccent)
+                                .cornerRadius(Constants.Dimens.radiusXSmall)
+                        })
+                        
+                        Button(action: { }, label: {
+                            Text("Další")
+                                .frame(height: Constants.Dimens.textFieldHeight)
+                                .frame(maxWidth: .infinity)
+                                .padding()
+                                .foregroundStyle(.white)
+                                .background(.mainAccent)
+                                .cornerRadius(Constants.Dimens.radiusXSmall)
+                        })
+                    }
+                    .disabled(true)
+                    .skeleton(viewModel.state.showSkeleton)
+                }
+                .animation(.default, value: viewModel.state.usernameError)
+            case .password:
+                EmptyView()
+            case .location:
+                EmptyView()
+            case .profilePicture:
+                EmptyView()
+            case .isCreator:
+                EmptyView()
+            case .creatorDetails:
+                EmptyView()
+            case .done:
+                EmptyView()
             }
-            .animation(.default, value: viewModel.state.showInvalidEmailFormat)
         }
     }
 }
 
 struct RegisterWrapperView<Content: View>: View {
+    
+    private let gradientDegrees: Double = 30
+    private let duration: Double = 3
+    @State private var animateGradient: Bool = false
     
     private let content: Content
     
@@ -75,7 +136,14 @@ struct RegisterWrapperView<Content: View>: View {
     }
     var body: some View {
         ZStack(alignment: .center) {
-            Color.gray
+            LinearGradient(colors: [.mainAccent, .gray], startPoint: .topLeading, endPoint: .bottomTrailing)
+                .edgesIgnoringSafeArea(.all)
+                .hueRotation(.degrees(animateGradient ? gradientDegrees : 0))
+                .onAppear {
+                    withAnimation(.easeInOut(duration: duration).repeatForever(autoreverses: true)) {
+                        animateGradient.toggle()
+                    }
+                }
             
             VStack(alignment: .leading, spacing: Constants.Dimens.spaceNone) {
                 Text("Registrace.")
@@ -90,7 +158,7 @@ struct RegisterWrapperView<Content: View>: View {
                         .padding()
                 }
                 .background(.white)
-                .cornerRadius(10)
+                .cornerRadius(Constants.Dimens.radiusXSmall)
                 .padding()
             }
         }

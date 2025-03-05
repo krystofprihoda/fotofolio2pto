@@ -83,6 +83,10 @@ public struct Constants {
          */
         public static let radiusXLarge: CGFloat = 24
         /**
+         * Radius of 100
+         */
+        public static let radiusMax: CGFloat = 100
+        /**
         * Frame size of 20
         */
        public static let frameSizeXSmall: CGFloat = 20
