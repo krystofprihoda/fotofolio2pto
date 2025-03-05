@@ -52,6 +52,7 @@ final class SignInViewModel: BaseViewModel, ViewModel, ObservableObject {
         case signIn
         case setUsername(String)
         case setPassword(String)
+        case registerUser
     }
 
     @discardableResult
@@ -61,6 +62,7 @@ final class SignInViewModel: BaseViewModel, ViewModel, ObservableObject {
             case .signIn: await signIn()
             case .setUsername(let username): setUsername(username)
             case .setPassword(let password): setPassword(password)
+            case .registerUser: registerUser()
             }
         })
     }
@@ -89,5 +91,9 @@ final class SignInViewModel: BaseViewModel, ViewModel, ObservableObject {
     
     private func setPassword(_ password: String) {
         state.password = password
+    }
+    
+    private func registerUser() {
+        flowController?.registerUser()
     }
 }

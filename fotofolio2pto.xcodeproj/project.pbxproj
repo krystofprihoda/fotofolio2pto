@@ -55,6 +55,10 @@
 		FEA53CF42C2D791F006F0116 /* NewPortfolioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CF32C2D791F006F0116 /* NewPortfolioView.swift */; };
 		FEA53CF72C2D7960006F0116 /* NewPortfolioViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CF62C2D795F006F0116 /* NewPortfolioViewModel.swift */; };
 		FEA53CF92C2D896F006F0116 /* CreatePortfolioUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CF82C2D896F006F0116 /* CreatePortfolioUseCase.swift */; };
+		FEA64F6D2D7711D900B11530 /* RegisterFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA64F6C2D7711D900B11530 /* RegisterFlowController.swift */; };
+		FEA64F6F2D7712C700B11530 /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA64F6E2D7712C200B11530 /* RegisterView.swift */; };
+		FEA64F712D77135E00B11530 /* RegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA64F702D77135B00B11530 /* RegisterViewModel.swift */; };
+		FEA64F792D7757B100B11530 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FEA64F782D7757B100B11530 /* Colors.xcassets */; };
 		FEC8A8C02D75C5D5000181B8 /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC8A8BF2D75C5CE000181B8 /* Localization.swift */; };
 		FEC94D952C24398200FFEB11 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC94D942C24398200FFEB11 /* AppDelegate.swift */; };
 		FEC94D9F2C24398200FFEB11 /* fotofolio2pto.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FEC94D9D2C24398200FFEB11 /* fotofolio2pto.xcdatamodeld */; };
@@ -156,6 +160,10 @@
 		FEA53CF32C2D791F006F0116 /* NewPortfolioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPortfolioView.swift; sourceTree = "<group>"; };
 		FEA53CF62C2D795F006F0116 /* NewPortfolioViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPortfolioViewModel.swift; sourceTree = "<group>"; };
 		FEA53CF82C2D896F006F0116 /* CreatePortfolioUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePortfolioUseCase.swift; sourceTree = "<group>"; };
+		FEA64F6C2D7711D900B11530 /* RegisterFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterFlowController.swift; sourceTree = "<group>"; };
+		FEA64F6E2D7712C200B11530 /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
+		FEA64F702D77135B00B11530 /* RegisterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewModel.swift; sourceTree = "<group>"; };
+		FEA64F782D7757B100B11530 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		FEC8A8BF2D75C5CE000181B8 /* Localization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localization.swift; sourceTree = "<group>"; };
 		FEC94D912C24398200FFEB11 /* fotofolio2pto.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = fotofolio2pto.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FEC94D942C24398200FFEB11 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -431,6 +439,16 @@
 			path = NewPortfolio;
 			sourceTree = "<group>";
 		};
+		FEA64F6B2D77111B00B11530 /* Register */ = {
+			isa = PBXGroup;
+			children = (
+				FEA64F702D77135B00B11530 /* RegisterViewModel.swift */,
+				FEA64F6E2D7712C200B11530 /* RegisterView.swift */,
+				FEA64F6C2D7711D900B11530 /* RegisterFlowController.swift */,
+			);
+			path = Register;
+			sourceTree = "<group>";
+		};
 		FEC94D882C24398200FFEB11 = {
 			isa = PBXGroup;
 			children = (
@@ -450,6 +468,7 @@
 		FEC94D932C24398200FFEB11 /* fotofolio2pto */ = {
 			isa = PBXGroup;
 			children = (
+				FEA64F782D7757B100B11530 /* Colors.xcassets */,
 				FEA53C932C29BF13006F0116 /* Application */,
 				FE5F8A7D2C297186001EE8AF /* DataLayer */,
 				FEC94DE02C25914F00FFEB11 /* DomainLayer */,
@@ -638,6 +657,7 @@
 		FEC94E112C28502E00FFEB11 /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
+				FEA64F6B2D77111B00B11530 /* Register */,
 				FEC94E122C28504900FFEB11 /* LoginCredentialsView.swift */,
 				FEC94E142C28521D00FFEB11 /* SignInView.swift */,
 				FEC94E162C2857D100FFEB11 /* OnboardingFlowController.swift */,
@@ -714,6 +734,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FEC94DA12C24398400FFEB11 /* Assets.xcassets in Resources */,
+				FEA64F792D7757B100B11530 /* Colors.xcassets in Resources */,
 				FEC94DA42C24398400FFEB11 /* Base in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -725,6 +746,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FEA64F6F2D7712C700B11530 /* RegisterView.swift in Sources */,
 				FEA53CE22C2C88EE006F0116 /* GetUsersFromQueryUseCase.swift in Sources */,
 				FEC94DE32C25917200FFEB11 /* Portfolio.swift in Sources */,
 				FEC94E152C28521D00FFEB11 /* SignInView.swift in Sources */,
@@ -774,6 +796,7 @@
 				FEA53C9A2C29BFDF006F0116 /* UseCase+Injection.swift in Sources */,
 				FE5F8A802C2971C7001EE8AF /* AuthRepositoryImpl.swift in Sources */,
 				FEA53CE02C2C6A20006F0116 /* GetUserPortfoliosUseCase.swift in Sources */,
+				FEA64F712D77135E00B11530 /* RegisterViewModel.swift in Sources */,
 				FEC94E172C2857D100FFEB11 /* OnboardingFlowController.swift in Sources */,
 				FEC94E032C26DD7900FFEB11 /* ProfilePictureView.swift in Sources */,
 				FEA53CEF2C2D6123006F0116 /* MediaPickerView.swift in Sources */,
@@ -809,6 +832,7 @@
 				FEA53CBE2C2B2D3D006F0116 /* GetLoggedInUserUseCase.swift in Sources */,
 				FEA53CF12C2D6280006F0116 /* EditProfileViewModel.swift in Sources */,
 				FEA53CF42C2D791F006F0116 /* NewPortfolioView.swift in Sources */,
+				FEA64F6D2D7711D900B11530 /* RegisterFlowController.swift in Sources */,
 				FEA53CED2C2D5BAC006F0116 /* EditPortfolioView.swift in Sources */,
 				FEA53CCF2C2C2304006F0116 /* NewChatSearchView.swift in Sources */,
 				FEA53CC22C2C12C8006F0116 /* GetChatsForUserUseCase.swift in Sources */,

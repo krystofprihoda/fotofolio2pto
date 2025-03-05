@@ -27,7 +27,7 @@ class OnboardingFlowController: BaseFlowController {
     override func setup() -> UIViewController {
         let vm = SignInViewModel(flowController: self)
         let view = SignInView(viewModel: vm)
-        let vc = BaseHostingController(rootView: view)
+        let vc = BaseHostingController(rootView: view, showsNavigationBar: false)
         return vc
     }
     
@@ -38,5 +38,12 @@ class OnboardingFlowController: BaseFlowController {
     public func signIn(username: String) {
         finishOnboarding()
         flowDelegate?.setupMain(for: username)
+    }
+    
+    public func registerUser() {
+        let fc = RegisterFlowController(navigationController: navigationController)
+        let vc = startChildFlow(fc)
+        navigationController.navigationBar.isHidden = true
+        navigationController.pushViewController(vc, animated: true)
     }
 }

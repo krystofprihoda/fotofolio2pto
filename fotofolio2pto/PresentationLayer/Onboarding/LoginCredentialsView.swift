@@ -21,8 +21,8 @@ struct LoginCredentialsView: View {
     
     var body: some View {
         VStack {
-            Text(L.Onboarding.username)
-                .brightness(0.27)
+//            Text(L.Onboarding.username)
+//                .brightness(0.27)
             
             TextField(L.Onboarding.username, text: $username)
                 .font(.system(size: 18))
@@ -38,9 +38,10 @@ struct LoginCredentialsView: View {
                         .stroke(.red, lineWidth: 1)
                         .opacity(fillUsernameAlert ? 1 : 0)
                 )
+                .padding(.bottom)
             
-            Text(L.Onboarding.password)
-                .brightness(0.27)
+//            Text(L.Onboarding.password)
+//                .brightness(0.27)
             
             ZStack(alignment: .trailing) {
                 if hiddenPassword {
