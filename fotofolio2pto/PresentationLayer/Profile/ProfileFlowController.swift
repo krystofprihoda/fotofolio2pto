@@ -49,7 +49,7 @@ class ProfileFlowController: BaseFlowController {
     public func showProfileEdit(userData: User, portfolios: [Portfolio]) {
         let vm = EditProfileViewModel(flowController: self, userData: userData, portfolios: portfolios)
         let view = EditProfileView(viewModel: vm)
-        let vc = BaseHostingController(rootView: view)
+        let vc = BaseHostingController(rootView: view, hideBackButton: true)
         navigationController.navigationBar.tintColor = .gray
         navigationController.pushViewController(vc, animated: true)
     }

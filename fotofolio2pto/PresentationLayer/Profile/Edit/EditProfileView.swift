@@ -23,30 +23,24 @@ struct EditProfileView: View {
                 }
             }
         }
+        .navigationBarBackButtonHidden(true) // Hide default back button
+        .navigationBarItems(leading: cancelButton, trailing: saveButton) // Force immediate toolbar setup
         .setupNavBarAndTitle(L.Profile.editTitle)
-//        .navigationBarBackButtonHidden(true)
-        .toolbar {
-            ToolbarItemGroup(placement: .navigationBarTrailing) {
-                Button(action: {
-                    // onIntent(.save)
-                }) {
-                    Text(L.Profile.save)
-                        .foregroundColor(.gray)
-                }
-                .padding(.trailing, 5)
-            }
-            
-            ToolbarItemGroup(placement: .navigationBarLeading) {
-                Button(action: {
-                    // Cancel
-                }) {
-                    Text(L.Profile.cancel)
-                        .foregroundColor(.gray)
-                }
-                .padding(.leading, 5)
-            }
-        }
     }
+    
+    private var saveButton: some View {
+        Button(action: {}) {
+               Text(L.Profile.save)
+                   .foregroundColor(.gray)
+           }
+       }
+
+   private var cancelButton: some View {
+       Button(action: {}) {
+           Text(L.Profile.cancel)
+               .foregroundColor(.gray)
+       }
+   }
 }
 
 #Preview {

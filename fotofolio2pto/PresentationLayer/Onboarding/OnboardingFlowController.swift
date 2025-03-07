@@ -43,7 +43,6 @@ class OnboardingFlowController: BaseFlowController {
     public func registerUser() {
         let fc = RegisterFlowController(navigationController: navigationController)
         let vc = startChildFlow(fc)
-        navigationController.navigationBar.isHidden = true
         navigationController.pushViewController(vc, animated: true)
     }
 }

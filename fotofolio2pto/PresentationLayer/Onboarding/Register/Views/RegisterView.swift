@@ -15,7 +15,11 @@ struct RegisterView: View {
     }
     
     var body: some View {
-        RegisterWrapperView {
+        let showDismiss = viewModel.state.stage == .nameAndEmail
+        RegisterWrapperView(
+            dismissRegistrationIsShowing: showDismiss,
+            onDismissRegistrationTap: { viewModel.onIntent(.goBackToSignIn) }
+        ) {
             switch viewModel.state.stage {
             case .nameAndEmail:
                 VStack {
@@ -52,6 +56,7 @@ struct RegisterView: View {
                     
                     Button(action: { viewModel.onIntent(.onNameAndEmailNextTap)}, label: {
                         Text("Další")
+                            .font(.body)
                             .frame(height: Constants.Dimens.textFieldHeight)
                             .frame(maxWidth: .infinity)
                             .padding()
@@ -80,8 +85,9 @@ struct RegisterView: View {
                     }
                     
                     HStack {
-                        Button(action: { }, label: {
+                        Button(action: { viewModel.onIntent(.goBackToNameAndEmail) }, label: {
                             Text("Zpět")
+                                .font(.body)
                                 .frame(height: Constants.Dimens.textFieldHeight)
                                 .frame(maxWidth: .infinity)
                                 .padding()
@@ -92,6 +98,7 @@ struct RegisterView: View {
                         
                         Button(action: { }, label: {
                             Text("Další")
+                                .font(.body)
                                 .frame(height: Constants.Dimens.textFieldHeight)
                                 .frame(maxWidth: .infinity)
                                 .padding()
@@ -99,9 +106,8 @@ struct RegisterView: View {
                                 .background(.mainAccent)
                                 .cornerRadius(Constants.Dimens.radiusXSmall)
                         })
+                        .skeleton(viewModel.state.showSkeleton)
                     }
-                    .disabled(true)
-                    .skeleton(viewModel.state.showSkeleton)
                 }
                 .animation(.default, value: viewModel.state.usernameError)
             case .password:
@@ -118,50 +124,6 @@ struct RegisterView: View {
                 EmptyView()
             }
         }
-    }
-}
-
-struct RegisterWrapperView<Content: View>: View {
-    
-    private let gradientDegrees: Double = 30
-    private let duration: Double = 3
-    @State private var animateGradient: Bool = false
-    
-    private let content: Content
-    
-    init(
-        @ViewBuilder content: () -> Content
-    ) {
-        self.content = content()
-    }
-    var body: some View {
-        ZStack(alignment: .center) {
-            LinearGradient(colors: [.mainAccent, .gray], startPoint: .topLeading, endPoint: .bottomTrailing)
-                .edgesIgnoringSafeArea(.all)
-                .hueRotation(.degrees(animateGradient ? gradientDegrees : 0))
-                .onAppear {
-                    withAnimation(.easeInOut(duration: duration).repeatForever(autoreverses: true)) {
-                        animateGradient.toggle()
-                    }
-                }
-            
-            VStack(alignment: .leading, spacing: Constants.Dimens.spaceNone) {
-                Text("Registrace.")
-                    .foregroundStyle(.white)
-                    .font(.title)
-                    .bold()
-                    .padding(.leading)
-                    .padding(.leading)
-                
-                VStack {
-                    content
-                        .padding()
-                }
-                .background(.white)
-                .cornerRadius(Constants.Dimens.radiusXSmall)
-                .padding()
-            }
-        }
-        .ignoresSafeArea(.all)
+        .animation(.default, value: viewModel.state.stage)
     }
 }

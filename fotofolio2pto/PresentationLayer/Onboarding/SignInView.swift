@@ -9,6 +9,10 @@ import SwiftUI
 
 struct SignInView: View {
     
+    private let gradientDegrees: Double = 30
+    private let duration: Double = 1.5
+    @State private var animateGradient: Bool = false
+    
     @ObservedObject private var viewModel: SignInViewModel
     
     init(viewModel: SignInViewModel) {
@@ -16,74 +20,99 @@ struct SignInView: View {
     }
     
     var body: some View {
-        VStack {
-            //Logo
-            ZStack {
-                RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
-                    .frame(width: 150, height: 150)
-                    .padding(.bottom, 10)
-                    .foregroundColor(.gray).brightness(0.15)
-                
-                if viewModel.state.isSigningIn {
-                    ProgressView()
-                        .progressViewStyle(.circular)
+        ZStack(alignment: .center) {
+            LinearGradient(colors: [.white, .mainAccent], startPoint: .topLeading, endPoint: .bottomTrailing)
+                .edgesIgnoringSafeArea(.all)
+                .hueRotation(.degrees(animateGradient ? gradientDegrees : 0))
+                .onAppear {
+                    withAnimation(.easeInOut(duration: duration).repeatForever(autoreverses: true)) {
+                        animateGradient.toggle()
+                    }
                 }
-            }
             
             VStack {
-                Text(L.Onboarding.signIn)
-                    .font(.largeTitle)
-                    .fontWeight(.bold)
-                    .padding(.bottom, 1)
-                
-                Button(action: {
-                    viewModel.onIntent(.registerUser)
-                }, label: {
-                    Text(L.Onboarding.registrationAlternative)
-                        .foregroundColor(.gray)
-                        .font(.system(size: 13))
-                        .underline()
-                })
-            }
-            .padding(.bottom)
-            
-            LoginCredentialsView(
-                username: Binding(get: { viewModel.state.username }, set: { viewModel.onIntent(.setUsername($0)) }),
-                password: Binding(get: { viewModel.state.password }, set: { viewModel.onIntent(.setPassword($0)) }),
-                fillUsernameAlert: .constant(false),
-                passwordAlert: .constant(false)
-            )
-            
-            // Move to whisper/alert
-//                Text("Uživatelské jméno neexistuje!")
-//                Text("Nesprávné heslo!")
-            
-            if !viewModel.state.error.isEmpty {
-                Text(viewModel.state.error)
-                    .foregroundColor(.red)
-                    .font(.system(size: 13))
-                    .padding(.top)
-            }
-            
-//                ZStack {
-//                    RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
-//                        .fill(.gray)
-//                }
-//                .frame(width: Constants.Dimens.frameSizeXXXLarge, height: Constants.Dimens.frameSizeMedium)
-            
-            Button(action: {
-                viewModel.onIntent(.signIn)
-            }) {
-                Text(L.Onboarding.signInAction)
+                //Logo
+                ZStack {
+                    ZStack {
+                        RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
+                            .stroke(lineWidth: Constants.Dimens.lineWidthXSmall)
+                            .frame(width: 100, height: 100)
+                            .opacity(0.9)
+                        
+                        RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
+                            .stroke(lineWidth: Constants.Dimens.lineWidthXSmall)
+                            .frame(width: 150, height: 150)
+                            .opacity(0.6)
+                        
+                        RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
+                            .stroke(lineWidth: Constants.Dimens.lineWidthXSmall)
+                            .frame(width: 200, height: 200)
+                            .opacity(0.3)
+                    }
                     .foregroundColor(.white)
-                    .padding([.leading, .trailing], 100)
-                    .padding([.top, .bottom], 15)
-                    .background(.black).brightness(0.13)
-                    .cornerRadius(Constants.Dimens.radiusXSmall)
+                    .offset(y: Constants.Dimens.spaceXSmall)
+                    
+                    Image("fotofolio_text_dark")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 300)
+                }
+                
+                VStack {
+                    Text(L.Onboarding.signIn)
+                        .font(.largeTitle)
+                        .fontWeight(.bold)
+                    
+                    Button(action: {
+                        viewModel.onIntent(.registerUser)
+                    }, label: {
+                        Text(L.Onboarding.registrationAlternative)
+                            .foregroundColor(.gray)
+                            .font(.footnote)
+                            .underline()
+                    })
+                }
+                .padding(.top, Constants.Dimens.spaceNone)
+                
+                VStack {
+                    VStack(spacing: Constants.Dimens.spaceLarge) {
+                        LoginCredentialsView(
+                            username: Binding(get: { viewModel.state.username }, set: { viewModel.onIntent(.setUsername($0)) }),
+                            password: Binding(get: { viewModel.state.password }, set: { viewModel.onIntent(.setPassword($0)) }),
+                            fillUsernameAlert: .constant(false),
+                            passwordAlert: .constant(false)
+                        )
+                        
+                        if !viewModel.state.error.isEmpty {
+                            Text(viewModel.state.error)
+                                .foregroundColor(.red)
+                                .font(.system(size: 13))
+                                .padding(.top)
+                        }
+                        
+                        Button(action: {
+                            viewModel.onIntent(.signIn)
+                        }, label: {
+                            Text(L.Onboarding.signInAction)
+                                .font(.body)
+                                .frame(height: Constants.Dimens.textFieldHeight)
+                                .frame(maxWidth: .infinity)
+                                .padding()
+                                .foregroundStyle(.white)
+                                .background(.mainAccent)
+                                .cornerRadius(Constants.Dimens.radiusXSmall)
+                        })
+                        .skeleton(viewModel.state.isSigningIn)
+                    }
+                    .padding()
+                }
+                .background(.white)
+                .cornerRadius(Constants.Dimens.radiusXSmall)
+                .padding()
             }
-            .padding(.top, 9)
+            .padding()
         }
-        .padding([.leading, .trailing], 25)
+        .ignoresSafeArea(.all)
         .setupNavBarAndTitle("")
     }
 }

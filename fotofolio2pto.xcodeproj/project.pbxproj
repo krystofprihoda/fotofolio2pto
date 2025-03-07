@@ -60,6 +60,7 @@
 		FEA64F6F2D7712C700B11530 /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA64F6E2D7712C200B11530 /* RegisterView.swift */; };
 		FEA64F712D77135E00B11530 /* RegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA64F702D77135B00B11530 /* RegisterViewModel.swift */; };
 		FEA64F792D7757B100B11530 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FEA64F782D7757B100B11530 /* Colors.xcassets */; };
+		FEB945432D79F2BE00002A9B /* RegisterWrapperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEB945422D79F2BE00002A9B /* RegisterWrapperView.swift */; };
 		FEC8A8C02D75C5D5000181B8 /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC8A8BF2D75C5CE000181B8 /* Localization.swift */; };
 		FEC94D952C24398200FFEB11 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC94D942C24398200FFEB11 /* AppDelegate.swift */; };
 		FEC94D9F2C24398200FFEB11 /* fotofolio2pto.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FEC94D9D2C24398200FFEB11 /* fotofolio2pto.xcdatamodeld */; };
@@ -166,6 +167,7 @@
 		FEA64F6E2D7712C200B11530 /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
 		FEA64F702D77135B00B11530 /* RegisterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewModel.swift; sourceTree = "<group>"; };
 		FEA64F782D7757B100B11530 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
+		FEB945422D79F2BE00002A9B /* RegisterWrapperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterWrapperView.swift; sourceTree = "<group>"; };
 		FEC8A8BF2D75C5CE000181B8 /* Localization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localization.swift; sourceTree = "<group>"; };
 		FEC94D912C24398200FFEB11 /* fotofolio2pto.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = fotofolio2pto.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FEC94D942C24398200FFEB11 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -445,11 +447,20 @@
 		FEA64F6B2D77111B00B11530 /* Register */ = {
 			isa = PBXGroup;
 			children = (
+				FEB945412D79F2AC00002A9B /* Views */,
 				FEA64F702D77135B00B11530 /* RegisterViewModel.swift */,
-				FEA64F6E2D7712C200B11530 /* RegisterView.swift */,
 				FEA64F6C2D7711D900B11530 /* RegisterFlowController.swift */,
 			);
 			path = Register;
+			sourceTree = "<group>";
+		};
+		FEB945412D79F2AC00002A9B /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				FEB945422D79F2BE00002A9B /* RegisterWrapperView.swift */,
+				FEA64F6E2D7712C200B11530 /* RegisterView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		FEC94D882C24398200FFEB11 = {
@@ -833,6 +844,7 @@
 				FEC94DDF2C247D9800FFEB11 /* ProfileFlowController.swift in Sources */,
 				FEC94DDB2C247D4B00FFEB11 /* ProfileView.swift in Sources */,
 				FEC94DC92C2479B300FFEB11 /* SelectionFlowController.swift in Sources */,
+				FEB945432D79F2BE00002A9B /* RegisterWrapperView.swift in Sources */,
 				FEA53CBE2C2B2D3D006F0116 /* GetLoggedInUserUseCase.swift in Sources */,
 				FEA53CF12C2D6280006F0116 /* EditProfileViewModel.swift in Sources */,
 				FEA53CF42C2D791F006F0116 /* NewPortfolioView.swift in Sources */,

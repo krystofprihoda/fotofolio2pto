@@ -12,6 +12,7 @@ class BaseHostingController<Content>: UIHostingController<AnyView>, UIGestureRec
     
     private let showsNavigationBar: Bool
     private let navigationBarTransparent: Bool
+    private let hideBackButton: Bool
 
     /// Initializer to explicitly set the navigation bar visibility during presentation.
     /// - parameter rootView: The SwiftUI view
@@ -20,28 +21,34 @@ class BaseHostingController<Content>: UIHostingController<AnyView>, UIGestureRec
     init(
         rootView: Content,
         showsNavigationBar: Bool = true,
-        navigationBarTransparent: Bool = false
+        navigationBarTransparent: Bool = false,
+        hideBackButton: Bool = false
     ) {
         self.showsNavigationBar = showsNavigationBar
         self.navigationBarTransparent = navigationBarTransparent
+        self.hideBackButton = hideBackButton
         super.init(rootView: AnyView(rootView.navigationBarHidden(!showsNavigationBar)))
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupSwipeBackGesture()
-        navigationController?.navigationBar.setTransparency(navigationBarTransparent)
+        // navigationController?.navigationBar.setTransparency(navigationBarTransparent)
         UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: UIColor.black]
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        navigationItem.hidesBackButton = hideBackButton
         navigationController?.setNavigationBarHidden(!showsNavigationBar, animated: animated)
+        
+        if navigationBarTransparent { makeNavigationBarFullyTransparent() }
     }
     
     dynamic required init?(coder aDecoder: NSCoder) {
         self.showsNavigationBar = true
         self.navigationBarTransparent = true
+        self.hideBackButton = false
         super.init(coder: aDecoder)
     }
     
@@ -55,6 +62,24 @@ class BaseHostingController<Content>: UIHostingController<AnyView>, UIGestureRec
         shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer
     ) -> Bool {
         true
+    }
+    
+    private func makeNavigationBarFullyTransparent() {
+        guard let navBar = navigationController?.navigationBar else { return }
+
+        let transparentAppearance = UINavigationBarAppearance()
+        transparentAppearance.configureWithTransparentBackground() // True transparency
+        transparentAppearance.backgroundColor = .clear
+        transparentAppearance.shadowColor = .clear
+        transparentAppearance.shadowImage = UIImage()
+        
+        navBar.standardAppearance = transparentAppearance
+        navBar.scrollEdgeAppearance = transparentAppearance
+        navBar.compactAppearance = transparentAppearance
+
+        navBar.isTranslucent = true
+        navBar.setBackgroundImage(UIImage(), for: .default) // Removes any solid background
+        navBar.shadowImage = UIImage() // Removes the bottom shadow
     }
 }
 

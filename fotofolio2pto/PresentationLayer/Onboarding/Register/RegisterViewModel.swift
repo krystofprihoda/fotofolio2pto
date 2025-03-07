@@ -7,6 +7,7 @@
 
 import Resolver
 import SwiftUI
+import OSLog
 
 internal enum RegisterStageEnum {
     case nameAndEmail
@@ -72,6 +73,8 @@ final class RegisterViewModel: BaseViewModel, ViewModel, ObservableObject {
         case onEmailChanged
         case onEmailInput(String)
         case onNameAndEmailNextTap
+        case goBackToNameAndEmail
+        case goBackToSignIn
     }
     
     @discardableResult
@@ -82,6 +85,8 @@ final class RegisterViewModel: BaseViewModel, ViewModel, ObservableObject {
             case .onEmailChanged: await verifyEmail()
             case .onEmailInput(let email): setEmail(email)
             case .onNameAndEmailNextTap: await checkEmailExistanceAndContinue()
+            case .goBackToNameAndEmail: setStageTo(.nameAndEmail)
+            case .goBackToSignIn: dismissRegistration()
             }
         })
     }
@@ -99,14 +104,10 @@ final class RegisterViewModel: BaseViewModel, ViewModel, ObservableObject {
                     state.emailVerified = false
                     return
                 }
+                
                 state.emailError = ""
-                
-                print("VERIFYING")
-                
                 state.emailVerified = true
-            } catch {
-                
-            }
+            } catch { Logger.app.error("[FAIL] \(#file) • \(#line) • \(#function) | Task failed: \(error)") }
         })
     }
     
@@ -117,7 +118,7 @@ final class RegisterViewModel: BaseViewModel, ViewModel, ObservableObject {
     }
     
     private func setEmail(_ email: String) {
-        state.email = email
+        state.email = email.lowercased()
     }
     
     private func setName(to name: String) {
@@ -137,9 +138,18 @@ final class RegisterViewModel: BaseViewModel, ViewModel, ObservableObject {
             try await checkEmailAddressAvailableUseCase.execute(state.email)
         } catch ObjectError.emailAlreadyTaken {
             state.emailError = L.Onboarding.emailAddressTaken
+            return
         } catch { }
         
         state.emailError = ""
         state.stage = .username
+    }
+    
+    private func setStageTo(_ stage: RegisterStageEnum) {
+        state.stage = stage
+    }
+    
+    private func dismissRegistration() {
+        flowController?.navigationController.popViewController(animated: true)
     }
 }

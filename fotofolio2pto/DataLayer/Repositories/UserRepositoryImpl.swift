@@ -35,10 +35,10 @@ public class UserRepositoryImpl: UserRepository {
     
     public func isEmailAddressTaken(_ email: String) async throws {
         try await Task.sleep(for: .seconds(0.4))
-        guard let user = UserRepositoryImpl.users.first(where: { user in
+        guard let _ = UserRepositoryImpl.users.first(where: { user in
             user.email == email
         }) else { return }
         
-        // throw Error
+        throw ObjectError.emailAlreadyTaken
     }
 }

@@ -10,7 +10,6 @@ import SwiftUI
 struct LoginCredentialsView: View {
     @Binding var username: String
     @Binding var password: String
-    @State var passwordSecond: String = ""
     
     @State var hiddenPassword = true
     
@@ -21,15 +20,12 @@ struct LoginCredentialsView: View {
     
     var body: some View {
         VStack {
-//            Text(L.Onboarding.username)
-//                .brightness(0.27)
-            
             TextField(L.Onboarding.username, text: $username)
                 .font(.body)
                 .frame(height: 38)
                 .offset(x: 9)
                 .padding()
-                .background(.gray).brightness(0.35)
+                .background(.textFieldBackground)
                 .cornerRadius(Constants.Dimens.radiusXSmall)
                 .autocapitalization(.none)
                 .disableAutocorrection(true)
@@ -40,9 +36,6 @@ struct LoginCredentialsView: View {
                 )
                 .padding(.bottom)
             
-//            Text(L.Onboarding.password)
-//                .brightness(0.27)
-            
             ZStack(alignment: .trailing) {
                 if hiddenPassword {
                     SecureField(L.Onboarding.password, text: $password)
@@ -51,7 +44,7 @@ struct LoginCredentialsView: View {
                         .frame(height: 38)
                         .offset(x: 9)
                         .padding()
-                        .background(.gray).brightness(0.35)
+                        .background(.textFieldBackground)
                         .cornerRadius(Constants.Dimens.radiusXSmall)
                         .autocapitalization(.none)
                         .disableAutocorrection(true)
@@ -66,7 +59,7 @@ struct LoginCredentialsView: View {
                         .frame(height: 38)
                         .offset(x: 9)
                         .padding()
-                        .background(.gray).brightness(0.35)
+                        .background(.textFieldBackground)
                         .cornerRadius(Constants.Dimens.radiusXSmall)
                         .autocapitalization(.none)
                         .disableAutocorrection(true)
