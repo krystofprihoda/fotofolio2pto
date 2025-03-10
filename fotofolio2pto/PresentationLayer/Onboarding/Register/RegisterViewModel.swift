@@ -15,7 +15,8 @@ internal enum RegisterStageEnum {
     case password
     case isCreator
     case creatorDetails
-    case done
+    case creatingUser
+    case failed
 }
 
 final class RegisterViewModel: BaseViewModel, ViewModel, ObservableObject {
@@ -304,7 +305,7 @@ final class RegisterViewModel: BaseViewModel, ViewModel, ObservableObject {
     private func finalizeOnboarding() async {
         // register user usecase
         
-        state.stage = .done
+        state.stage = .creatingUser
         state.isCreatingUser = true
         state.hideOnboardingTitle = true
         

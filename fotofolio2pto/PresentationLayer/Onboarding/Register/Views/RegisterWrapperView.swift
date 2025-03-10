@@ -46,6 +46,7 @@ struct RegisterWrapperView<Content: View>: View {
                     }
                 }
                 .opacity(0.9)
+                .frame(maxHeight: .infinity)
             
             VStack(alignment: .leading, spacing: Constants.Dimens.spaceNone) {
                 if !hideTitle {

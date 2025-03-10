@@ -18,6 +18,10 @@
 		FE7FB1102D7B1D3900428A17 /* RegisterNameAndEmailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE7FB10F2D7B1D3900428A17 /* RegisterNameAndEmailView.swift */; };
 		FE9777D92D7EF25D0027DA60 /* RegisterUsernameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE9777D82D7EF25D0027DA60 /* RegisterUsernameView.swift */; };
 		FE9777DB2D7EFB7E0027DA60 /* RegisterPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE9777DA2D7EFB7E0027DA60 /* RegisterPasswordView.swift */; };
+		FE9777DF2D7F69240027DA60 /* HorizontalWheelPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE9777DE2D7F69240027DA60 /* HorizontalWheelPicker.swift */; };
+		FE9777E12D7F695C0027DA60 /* PulsingCircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE9777E02D7F695C0027DA60 /* PulsingCircleView.swift */; };
+		FE9777E32D7F6D940027DA60 /* RegisterCreatorDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE9777E22D7F6D940027DA60 /* RegisterCreatorDetailsView.swift */; };
+		FE9777E52D7F6DAC0027DA60 /* RegisterIsCreatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE9777E42D7F6DAC0027DA60 /* RegisterIsCreatorView.swift */; };
 		FEA53C962C29BF2F006F0116 /* Providers+Injection.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53C952C29BF2F006F0116 /* Providers+Injection.swift */; };
 		FEA53C982C29BF97006F0116 /* Repositories+Injection.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53C972C29BF97006F0116 /* Repositories+Injection.swift */; };
 		FEA53C9A2C29BFDF006F0116 /* UseCase+Injection.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53C992C29BFDF006F0116 /* UseCase+Injection.swift */; };
@@ -130,6 +134,10 @@
 		FE7FB10F2D7B1D3900428A17 /* RegisterNameAndEmailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterNameAndEmailView.swift; sourceTree = "<group>"; };
 		FE9777D82D7EF25D0027DA60 /* RegisterUsernameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterUsernameView.swift; sourceTree = "<group>"; };
 		FE9777DA2D7EFB7E0027DA60 /* RegisterPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterPasswordView.swift; sourceTree = "<group>"; };
+		FE9777DE2D7F69240027DA60 /* HorizontalWheelPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalWheelPicker.swift; sourceTree = "<group>"; };
+		FE9777E02D7F695C0027DA60 /* PulsingCircleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PulsingCircleView.swift; sourceTree = "<group>"; };
+		FE9777E22D7F6D940027DA60 /* RegisterCreatorDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterCreatorDetailsView.swift; sourceTree = "<group>"; };
+		FE9777E42D7F6DAC0027DA60 /* RegisterIsCreatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterIsCreatorView.swift; sourceTree = "<group>"; };
 		FEA53C952C29BF2F006F0116 /* Providers+Injection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Providers+Injection.swift"; sourceTree = "<group>"; };
 		FEA53C972C29BF97006F0116 /* Repositories+Injection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Repositories+Injection.swift"; sourceTree = "<group>"; };
 		FEA53C992C29BFDF006F0116 /* UseCase+Injection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UseCase+Injection.swift"; sourceTree = "<group>"; };
@@ -330,6 +338,8 @@
 		FE7FB10E2D7B1D2700428A17 /* SubViews */ = {
 			isa = PBXGroup;
 			children = (
+				FE9777E42D7F6DAC0027DA60 /* RegisterIsCreatorView.swift */,
+				FE9777E22D7F6D940027DA60 /* RegisterCreatorDetailsView.swift */,
 				FE9777DA2D7EFB7E0027DA60 /* RegisterPasswordView.swift */,
 				FE9777D82D7EF25D0027DA60 /* RegisterUsernameView.swift */,
 				FE7FB10F2D7B1D3900428A17 /* RegisterNameAndEmailView.swift */,
@@ -539,6 +549,8 @@
 		FEC94DAC2C243EA400FFEB11 /* BaseViews */ = {
 			isa = PBXGroup;
 			children = (
+				FE9777E02D7F695C0027DA60 /* PulsingCircleView.swift */,
+				FE9777DE2D7F69240027DA60 /* HorizontalWheelPicker.swift */,
 				FEC94DAE2C243EC100FFEB11 /* BaseHostingController.swift */,
 				FEC94DED2C25ECDC00FFEB11 /* BottomSheetView.swift */,
 				FEC94DEF2C25ED5C00FFEB11 /* RoundedCorner.swift */,
@@ -780,6 +792,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FE9777E52D7F6DAC0027DA60 /* RegisterIsCreatorView.swift in Sources */,
 				FEA64F6F2D7712C700B11530 /* RegisterView.swift in Sources */,
 				FE7FB10D2D7B163B00428A17 /* CheckUsernameAvailableUseCase.swift in Sources */,
 				FEA53CE22C2C88EE006F0116 /* GetUsersFromQueryUseCase.swift in Sources */,
@@ -813,6 +826,7 @@
 				FE9777D92D7EF25D0027DA60 /* RegisterUsernameView.swift in Sources */,
 				FEA53CDC2C2C39F0006F0116 /* GetLatestChatMessagesUseCase.swift in Sources */,
 				FEA53CAE2C29E08D006F0116 /* Sequence+Extensions.swift in Sources */,
+				FE9777E12D7F695C0027DA60 /* PulsingCircleView.swift in Sources */,
 				FEC94DF22C25EF7900FFEB11 /* FilterView.swift in Sources */,
 				FEA53CD12C2C2387006F0116 /* NewChatSearchViewModel.swift in Sources */,
 				FEA53CDE2C2C49DF006F0116 /* GetChatUseCase.swift in Sources */,
@@ -821,6 +835,7 @@
 				FEA53CA72C29D667006F0116 /* FlagPortfolioUseCase.swift in Sources */,
 				FEC94DC52C246DF400FFEB11 /* BaseViewModel.swift in Sources */,
 				FEC94E092C283D4C00FFEB11 /* NotCreatorView.swift in Sources */,
+				FE9777DF2D7F69240027DA60 /* HorizontalWheelPicker.swift in Sources */,
 				FEA53C962C29BF2F006F0116 /* Providers+Injection.swift in Sources */,
 				FEC94DC72C24712400FFEB11 /* ViewModel.swift in Sources */,
 				FEA53CD82C2C30BD006F0116 /* ChatViewModel.swift in Sources */,
@@ -865,6 +880,7 @@
 				FEC94DF92C26291E00FFEB11 /* PhotoCarouselView.swift in Sources */,
 				FEC94DBF2C246C5C00FFEB11 /* FeedFlowController.swift in Sources */,
 				FEA53CE42C2D5A46006F0116 /* EditProfileView.swift in Sources */,
+				FE9777E32D7F6D940027DA60 /* RegisterCreatorDetailsView.swift in Sources */,
 				FEC94DDF2C247D9800FFEB11 /* ProfileFlowController.swift in Sources */,
 				FEC94DDB2C247D4B00FFEB11 /* ProfileView.swift in Sources */,
 				FEC94DC92C2479B300FFEB11 /* SelectionFlowController.swift in Sources */,
