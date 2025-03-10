@@ -39,8 +39,15 @@ struct RegisterWrapperView<Content: View>: View {
                     }
                 }
             
+            Image("fotofolio_text_down")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(height: Constants.Dimens.frameSizeXXXXXLarge)
+                .clipped()
+                .blur(radius: Constants.Dimens.radiusSmall)
+            
             VStack(alignment: .leading, spacing: Constants.Dimens.spaceNone) {
-                Text("Registrace.")
+                Text(L.Onboarding.register)
                     .foregroundStyle(.white)
                     .font(.title)
                     .bold()
@@ -57,7 +64,7 @@ struct RegisterWrapperView<Content: View>: View {
                 
                 if dismissRegistrationIsShowing {
                     Button(action: onDismissRegistrationTap, label: {
-                        Text("Zpět na přihlášení")
+                        Text(L.Onboarding.goBackToSignIn)
                             .font(.body)
                             .frame(height: Constants.Dimens.textFieldHeight/2)
                             .frame(maxWidth: .infinity)

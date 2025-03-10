@@ -111,9 +111,17 @@ public struct Constants {
         */
         public static let frameSizeXXLarge: CGFloat = 200
         /**
-        * Frame size of 240
+        * Frame size of 320
         */
-        public static let frameSizeXXXLarge: CGFloat = 240
+        public static let frameSizeXXXLarge: CGFloat = 320
+        /**
+        * Frame size of 500
+        */
+        public static let frameSizeXXXXLarge: CGFloat = 500
+        /**
+        * Frame size of 960
+        */
+        public static let frameSizeXXXXXLarge: CGFloat = 960
         /**
         * Default TextField height
         */

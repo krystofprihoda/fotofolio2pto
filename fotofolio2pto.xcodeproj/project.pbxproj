@@ -14,6 +14,10 @@
 		FE5F8A842C297338001EE8AF /* UserDefaultsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE5F8A832C297338001EE8AF /* UserDefaultsProvider.swift */; };
 		FE5F8A862C29737F001EE8AF /* SystemUserDefaultsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE5F8A852C29737F001EE8AF /* SystemUserDefaultsProvider.swift */; };
 		FE5F8A892C2975FC001EE8AF /* LogoutUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE5F8A882C2975FC001EE8AF /* LogoutUseCase.swift */; };
+		FE7FB10D2D7B163B00428A17 /* CheckUsernameAvailableUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE7FB10C2D7B163B00428A17 /* CheckUsernameAvailableUseCase.swift */; };
+		FE7FB1102D7B1D3900428A17 /* RegisterNameAndEmailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE7FB10F2D7B1D3900428A17 /* RegisterNameAndEmailView.swift */; };
+		FE9777D92D7EF25D0027DA60 /* RegisterUsernameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE9777D82D7EF25D0027DA60 /* RegisterUsernameView.swift */; };
+		FE9777DB2D7EFB7E0027DA60 /* RegisterPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE9777DA2D7EFB7E0027DA60 /* RegisterPasswordView.swift */; };
 		FEA53C962C29BF2F006F0116 /* Providers+Injection.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53C952C29BF2F006F0116 /* Providers+Injection.swift */; };
 		FEA53C982C29BF97006F0116 /* Repositories+Injection.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53C972C29BF97006F0116 /* Repositories+Injection.swift */; };
 		FEA53C9A2C29BFDF006F0116 /* UseCase+Injection.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53C992C29BFDF006F0116 /* UseCase+Injection.swift */; };
@@ -122,6 +126,10 @@
 		FE5F8A832C297338001EE8AF /* UserDefaultsProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsProvider.swift; sourceTree = "<group>"; };
 		FE5F8A852C29737F001EE8AF /* SystemUserDefaultsProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemUserDefaultsProvider.swift; sourceTree = "<group>"; };
 		FE5F8A882C2975FC001EE8AF /* LogoutUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoutUseCase.swift; sourceTree = "<group>"; };
+		FE7FB10C2D7B163B00428A17 /* CheckUsernameAvailableUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckUsernameAvailableUseCase.swift; sourceTree = "<group>"; };
+		FE7FB10F2D7B1D3900428A17 /* RegisterNameAndEmailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterNameAndEmailView.swift; sourceTree = "<group>"; };
+		FE9777D82D7EF25D0027DA60 /* RegisterUsernameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterUsernameView.swift; sourceTree = "<group>"; };
+		FE9777DA2D7EFB7E0027DA60 /* RegisterPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterPasswordView.swift; sourceTree = "<group>"; };
 		FEA53C952C29BF2F006F0116 /* Providers+Injection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Providers+Injection.swift"; sourceTree = "<group>"; };
 		FEA53C972C29BF97006F0116 /* Repositories+Injection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Repositories+Injection.swift"; sourceTree = "<group>"; };
 		FEA53C992C29BFDF006F0116 /* UseCase+Injection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UseCase+Injection.swift"; sourceTree = "<group>"; };
@@ -310,12 +318,23 @@
 		FE5F8A872C2975E9001EE8AF /* User */ = {
 			isa = PBXGroup;
 			children = (
+				FE7FB10C2D7B163B00428A17 /* CheckUsernameAvailableUseCase.swift */,
 				FE34A64E2D78BCF200CB4CAE /* CheckEmailAddressAvailableUseCase.swift */,
 				FE5F8A882C2975FC001EE8AF /* LogoutUseCase.swift */,
 				FEA53CC72C2C16E2006F0116 /* GetUserDataFromUsernameUseCase.swift */,
 				FEA53CE12C2C88EE006F0116 /* GetUsersFromQueryUseCase.swift */,
 			);
 			path = User;
+			sourceTree = "<group>";
+		};
+		FE7FB10E2D7B1D2700428A17 /* SubViews */ = {
+			isa = PBXGroup;
+			children = (
+				FE9777DA2D7EFB7E0027DA60 /* RegisterPasswordView.swift */,
+				FE9777D82D7EF25D0027DA60 /* RegisterUsernameView.swift */,
+				FE7FB10F2D7B1D3900428A17 /* RegisterNameAndEmailView.swift */,
+			);
+			path = SubViews;
 			sourceTree = "<group>";
 		};
 		FEA53C932C29BF13006F0116 /* Application */ = {
@@ -457,6 +476,7 @@
 		FEB945412D79F2AC00002A9B /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				FE7FB10E2D7B1D2700428A17 /* SubViews */,
 				FEB945422D79F2BE00002A9B /* RegisterWrapperView.swift */,
 				FEA64F6E2D7712C200B11530 /* RegisterView.swift */,
 			);
@@ -761,10 +781,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				FEA64F6F2D7712C700B11530 /* RegisterView.swift in Sources */,
+				FE7FB10D2D7B163B00428A17 /* CheckUsernameAvailableUseCase.swift in Sources */,
 				FEA53CE22C2C88EE006F0116 /* GetUsersFromQueryUseCase.swift in Sources */,
 				FEC94DE32C25917200FFEB11 /* Portfolio.swift in Sources */,
 				FEC94E152C28521D00FFEB11 /* SignInView.swift in Sources */,
 				FEC94DC12C246D8600FFEB11 /* FeedView.swift in Sources */,
+				FE9777DB2D7EFB7E0027DA60 /* RegisterPasswordView.swift in Sources */,
 				FEA53CA32C29C76E006F0116 /* FeedRepository.swift in Sources */,
 				FE5F8A782C296D81001EE8AF /* AuthRepository.swift in Sources */,
 				FEA53C982C29BF97006F0116 /* Repositories+Injection.swift in Sources */,
@@ -779,6 +801,7 @@
 				FE5F8A862C29737F001EE8AF /* SystemUserDefaultsProvider.swift in Sources */,
 				FEC94DEC2C25DC1600FFEB11 /* Constants.swift in Sources */,
 				FEC94E132C28504900FFEB11 /* LoginCredentialsView.swift in Sources */,
+				FE7FB1102D7B1D3900428A17 /* RegisterNameAndEmailView.swift in Sources */,
 				FEC94DAF2C243EC100FFEB11 /* BaseHostingController.swift in Sources */,
 				FE5F8A892C2975FC001EE8AF /* LogoutUseCase.swift in Sources */,
 				FEC94E052C2701DF00FFEB11 /* Chat.swift in Sources */,
@@ -787,6 +810,7 @@
 				FEC94DDD2C247D7600FFEB11 /* ProfileViewModel.swift in Sources */,
 				FEC94DB62C2447F000FFEB11 /* BaseFlowController.swift in Sources */,
 				FEC94DEE2C25ECDC00FFEB11 /* BottomSheetView.swift in Sources */,
+				FE9777D92D7EF25D0027DA60 /* RegisterUsernameView.swift in Sources */,
 				FEA53CDC2C2C39F0006F0116 /* GetLatestChatMessagesUseCase.swift in Sources */,
 				FEA53CAE2C29E08D006F0116 /* Sequence+Extensions.swift in Sources */,
 				FEC94DF22C25EF7900FFEB11 /* FilterView.swift in Sources */,

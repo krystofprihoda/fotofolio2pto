@@ -22,96 +22,61 @@ struct RegisterView: View {
         ) {
             switch viewModel.state.stage {
             case .nameAndEmail:
-                VStack {
-                    TextField("Jméno", text: Binding(get: { viewModel.state.name }, set: { viewModel.onIntent(.onNameChanged($0)) }))
-                        .font(.body)
-                        .frame(height: Constants.Dimens.textFieldHeight)
-                        .padding()
-                        .background(.textFieldBackground)
-                        .cornerRadius(Constants.Dimens.radiusXSmall)
-                        .disableAutocorrection(true)
-                    
-                    TextField("Email", text: Binding(get: { viewModel.state.email }, set: { viewModel.onIntent(.onEmailInput($0)) }))
-                        .font(.body)
-                        .frame(height: Constants.Dimens.textFieldHeight)
-                        .padding()
-                        .background(.textFieldBackground)
-                        .cornerRadius(Constants.Dimens.radiusXSmall)
-                        .autocapitalization(.none)
-                        .disableAutocorrection(true)
-                        .onChange(of: viewModel.state.email) { _ in
-                            viewModel.onIntent(.onEmailChanged)
-                        }
-                        .overlay(
-                            RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
-                                .stroke(.mainAccent, lineWidth: 1)
-                                .opacity(viewModel.state.emailError.isEmpty ? 0 : 1)
-                        )
-                    
-                    if !viewModel.state.emailError.isEmpty {
-                        Text(viewModel.state.emailError)
-                            .font(.system(size: 14))
-                            .foregroundColor(.mainAccent)
-                    }
-                    
-                    Button(action: { viewModel.onIntent(.onNameAndEmailNextTap)}, label: {
-                        Text("Další")
-                            .font(.body)
-                            .frame(height: Constants.Dimens.textFieldHeight)
-                            .frame(maxWidth: .infinity)
-                            .padding()
-                            .foregroundStyle(.white)
-                            .background(.mainAccent)
-                            .cornerRadius(Constants.Dimens.radiusXSmall)
-                    })
-                    .disabled(!viewModel.state.emailVerified)
-                    .skeleton(viewModel.state.showSkeleton)
-                }
-                .animation(.default, value: viewModel.state.emailError)
+                RegisterNameAndEmailView(
+                    name: Binding(
+                        get: { viewModel.state.name },
+                        set: { viewModel.onIntent(.onNameChanged($0)) }
+                    ),
+                    email: Binding(
+                        get: { viewModel.state.email },
+                        set: { viewModel.onIntent(.onEmailInput($0)) }
+                    ),
+                    emailError: viewModel.state.emailError,
+                    emailVerified: viewModel.state.emailVerified,
+                    showSkeleton: viewModel.state.showSkeleton,
+                    onEmailChanged: { viewModel.onIntent(.onEmailChanged) },
+                    onNextTap: { viewModel.onIntent(.onNameAndEmailNextTap) }
+                )
             case .username:
-                VStack {
-                    TextField("Username", text: Binding(get: { "" }, set: { _ in }))
-                        .font(.body)
-                        .frame(height: Constants.Dimens.textFieldHeight)
-                        .padding()
-                        .background(.textFieldBackground)
-                        .cornerRadius(Constants.Dimens.radiusXSmall)
-                        .disableAutocorrection(true)
-                    
-                    if !viewModel.state.emailError.isEmpty {
-                        Text(viewModel.state.emailError)
-                            .font(.system(size: 14))
-                            .foregroundColor(.mainAccent)
-                    }
-                    
-                    HStack {
-                        Button(action: { viewModel.onIntent(.goBackToNameAndEmail) }, label: {
-                            Text("Zpět")
-                                .font(.body)
-                                .frame(height: Constants.Dimens.textFieldHeight)
-                                .frame(maxWidth: .infinity)
-                                .padding()
-                                .foregroundStyle(.white)
-                                .background(.mainAccent)
-                                .cornerRadius(Constants.Dimens.radiusXSmall)
-                        })
-                        
-                        Button(action: { }, label: {
-                            Text("Další")
-                                .font(.body)
-                                .frame(height: Constants.Dimens.textFieldHeight)
-                                .frame(maxWidth: .infinity)
-                                .padding()
-                                .foregroundStyle(.white)
-                                .background(.mainAccent)
-                                .cornerRadius(Constants.Dimens.radiusXSmall)
-                        })
-                        .skeleton(viewModel.state.showSkeleton)
-                    }
-                }
-                .animation(.default, value: viewModel.state.usernameError)
+                RegisterUsernameView(
+                    username: Binding(
+                        get: { viewModel.state.username },
+                        set: { viewModel.onIntent(.onUsernameInput($0)) }
+                    ),
+                    usernameError: viewModel.state.usernameError,
+                    usernameVerified: viewModel.state.usernameVerified,
+                    showSkeleton: viewModel.state.showSkeleton,
+                    onUsernameChanged: { viewModel.onIntent(.onUsernameChanged) },
+                    onBackTap: { viewModel.onIntent(.goBackToNameAndEmail) },
+                    onNextTap: { viewModel.onIntent(.onUsernameNextTap) }
+                )
             case .password:
-                EmptyView()
+                RegisterPasswordView(
+                   firstPassword: Binding(
+                       get: { viewModel.state.firstPassword },
+                       set: { viewModel.onIntent(.setPassword(isFirst: true, $0)) }
+                   ),
+                   firstPasswordError: viewModel.state.firstPasswordError,
+                   isFirstPasswordHidden: Binding(
+                       get: { viewModel.state.isFirstPasswordHidden },
+                       set: { _ in viewModel.onIntent(.onPasswordToggleVisibility(isFirst: true)) }
+                   ),
+                   secondPassword: Binding(
+                       get: { viewModel.state.secondPassword },
+                       set: { viewModel.onIntent(.setPassword(isFirst: false, $0)) }
+                   ),
+                   secondPasswordError: viewModel.state.secondPasswordError,
+                   isSecondPasswordHidden: Binding(
+                       get: { viewModel.state.isSecondPasswordHidden },
+                       set: { _ in viewModel.onIntent(.onPasswordToggleVisibility(isFirst: false)) }
+                   ),
+                   passwordsVerified: viewModel.state.passwordsVerified,
+                   showSkeleton: viewModel.state.showSkeleton,
+                   onFirstPasswordChanged: { viewModel.onIntent(.onPasswordChanged(isFirst: true)) },
+                   onSecondPasswordChanged: { viewModel.onIntent(.onPasswordChanged(isFirst: false)) },
+                   onBackTap: { viewModel.onIntent(.goBackToNameAndEmail) },
+                   onNextTap: { viewModel.onIntent(.onUsernameNextTap) }
+               )
             case .location:
                 EmptyView()
             case .profilePicture:

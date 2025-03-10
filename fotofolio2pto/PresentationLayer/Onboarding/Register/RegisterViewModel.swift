@@ -25,10 +25,14 @@ final class RegisterViewModel: BaseViewModel, ViewModel, ObservableObject {
     // MARK: Stored properties
     
     @LazyInjected private var checkEmailAddressAvailableUseCase: CheckEmailAddressAvailableUseCase
+    @LazyInjected private var checkUsernameAvailableUseCase: CheckUsernameAvailableUseCase
     
     private var currentTask: Task<(), Never>?
     
-    private let invalidEmailFormatString = ""
+    private let emailRegex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
+    private let usernameRegex = "^[a-z0-9_.]+$"
+    private let passwordRegex = "^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_+:.?])[A-Za-z0-9!@#$%^&*_+:.?]{8,}$"
+
     
     // MARK: Dependencies
     
@@ -53,14 +57,22 @@ final class RegisterViewModel: BaseViewModel, ViewModel, ObservableObject {
     // MARK: State
     
     struct State {
-        var stage: RegisterStageEnum = .nameAndEmail
+        var stage: RegisterStageEnum = .password
         var email = ""
         var emailVerified = false
         var emailError = ""
         var profilePicture: MyImageEnum? = nil
         var username = ""
+        var usernameVerified = false
         var usernameError = ""
         var name = ""
+        var firstPassword = ""
+        var firstPasswordError = ""
+        var isFirstPasswordHidden = true
+        var secondPassword = ""
+        var secondPasswordError = ""
+        var isSecondPasswordHidden = true
+        var passwordsVerified = false
         var showSkeleton = false
     }
     
@@ -73,6 +85,12 @@ final class RegisterViewModel: BaseViewModel, ViewModel, ObservableObject {
         case onEmailChanged
         case onEmailInput(String)
         case onNameAndEmailNextTap
+        case onUsernameChanged
+        case onUsernameInput(String)
+        case onUsernameNextTap
+        case setPassword(isFirst: Bool, String)
+        case onPasswordChanged(isFirst: Bool)
+        case onPasswordToggleVisibility(isFirst: Bool)
         case goBackToNameAndEmail
         case goBackToSignIn
     }
@@ -85,6 +103,12 @@ final class RegisterViewModel: BaseViewModel, ViewModel, ObservableObject {
             case .onEmailChanged: await verifyEmail()
             case .onEmailInput(let email): setEmail(email)
             case .onNameAndEmailNextTap: await checkEmailExistanceAndContinue()
+            case .onUsernameChanged: await verifyUsername()
+            case .onUsernameInput(let username): setUsername(username)
+            case .onUsernameNextTap: await checkUsernameExistanceAndContinue()
+            case .setPassword(let isFirst, let password): setPassword(isFirst: isFirst, password)
+            case .onPasswordChanged(let isFirst): isFirst ? await verifyFirstPassword() : await verifySecondPassword()
+            case .onPasswordToggleVisibility(let isFirst): togglePasswordVisibility(isFirst: isFirst)
             case .goBackToNameAndEmail: setStageTo(.nameAndEmail)
             case .goBackToSignIn: dismissRegistration()
             }
@@ -112,7 +136,6 @@ final class RegisterViewModel: BaseViewModel, ViewModel, ObservableObject {
     }
     
     func isValidEmail(_ email: String) -> Bool {
-        let emailRegex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
         let pred = NSPredicate(format:"SELF MATCHES %@", emailRegex)
         return pred.evaluate(with: email)
     }
@@ -143,6 +166,111 @@ final class RegisterViewModel: BaseViewModel, ViewModel, ObservableObject {
         
         state.emailError = ""
         state.stage = .username
+    }
+    
+    private func setUsername(_ username: String) {
+        state.username = username.lowercased()
+    }
+    
+    private func togglePasswordVisibility(isFirst: Bool) {
+        if isFirst {
+            state.isFirstPasswordHidden.toggle()
+            return
+        }
+        
+        state.isSecondPasswordHidden.toggle()
+    }
+    
+    private func checkUsernameExistanceAndContinue() async {
+        state.showSkeleton = true
+        defer { state.showSkeleton = false }
+        
+        guard isValidUsername(state.username) else {
+            state.usernameError = L.Onboarding.supportedUsernameChars
+            return
+        }
+        
+        do {
+            try await checkUsernameAvailableUseCase.execute(state.username)
+        } catch ObjectError.usernameAlreadyTaken {
+            state.usernameError = L.Onboarding.usernameTaken
+            return
+        } catch { }
+        
+        state.usernameError = ""
+        state.stage = .password
+    }
+    
+    private func verifyUsername() async {
+        cancelTask()
+        currentTask = executeTask(Task {
+            do {
+                try await Task.sleep(nanoseconds: 600_000_000)
+                
+                guard isValidUsername(state.username) else {
+                    state.usernameError = L.Onboarding.supportedUsernameChars
+                    state.usernameVerified = false
+                    return
+                }
+                
+                state.usernameError = ""
+                state.usernameVerified = true
+            } catch { Logger.app.error("[FAIL] \(#file) • \(#line) • \(#function) | Task failed: \(error)") }
+        })
+    }
+    
+    private func verifyFirstPassword() async {
+        cancelTask()
+        currentTask = executeTask(Task {
+            do {
+                try await Task.sleep(nanoseconds: 600_000_000)
+                
+                guard isValidPassword(state.firstPassword) else {
+                    state.firstPasswordError = L.Onboarding.invalidPasswordFormat
+                    return
+                }
+                
+                state.firstPasswordError = ""
+            } catch { Logger.app.error("[FAIL] \(#file) • \(#line) • \(#function) | Task failed: \(error)") }
+        })
+    }
+    
+    private func verifySecondPassword() async {
+        cancelTask()
+        currentTask = executeTask(Task {
+            do {
+                try await Task.sleep(nanoseconds: 600_000_000)
+                
+                guard state.firstPassword == state.secondPassword else {
+                    state.secondPasswordError = L.Onboarding.passwordMismatch
+                    return
+                }
+                
+                state.secondPasswordError = ""
+                state.passwordsVerified = true
+            } catch { Logger.app.error("[FAIL] \(#file) • \(#line) • \(#function) | Task failed: \(error)") }
+        })
+    }
+    
+    func isValidUsername(_ username: String) -> Bool {
+        guard !username.isEmpty else { return false }
+        
+        let pred = NSPredicate(format:"SELF MATCHES %@", usernameRegex)
+        return pred.evaluate(with: username)
+    }
+    
+    func isValidPassword(_ password: String) -> Bool {
+        guard !password.isEmpty else { return false }
+        return NSPredicate(format: "SELF MATCHES %@", passwordRegex).evaluate(with: password)
+    }
+    
+    private func setPassword(isFirst: Bool, _ password: String) {
+        if isFirst {
+            state.firstPassword = password
+            return
+        }
+        
+        state.secondPassword = password
     }
     
     private func setStageTo(_ stage: RegisterStageEnum) {

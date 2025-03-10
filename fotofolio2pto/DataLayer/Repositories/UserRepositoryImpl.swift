@@ -41,4 +41,13 @@ public class UserRepositoryImpl: UserRepository {
         
         throw ObjectError.emailAlreadyTaken
     }
+    
+    public func isUsernameTaken(_ username: String) async throws {
+        try await Task.sleep(for: .seconds(0.3))
+        guard let _ = UserRepositoryImpl.users.first(where: { user in
+            user.username == username
+        }) else { return }
+        
+        throw ObjectError.usernameAlreadyTaken
+    }
 }

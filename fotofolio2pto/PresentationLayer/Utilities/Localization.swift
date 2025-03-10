@@ -8,12 +8,24 @@
 public struct L {
     public enum Onboarding {
         public static let username = "Uživatelské jméno"
+        public static let usernameEng = "Username"
+        public static let name = "Jméno"
+        public static let email = "Email"
         public static let password = "Heslo"
+        public static let confirmPassword = "Potvrzení hesla"
         public static let signIn = "Přihlášení."
         public static let registrationAlternative = "nebo registrace zde"
         public static let signInAction = "Přihlásit se"
         public static let invalidEmailFormat = "Neplatný formát emailové adresy!"
         public static let emailAddressTaken = "Emailová adresa už je registrována!"
+        public static let usernameTaken = "Uživatelské jméno už je registrováno!"
+        public static let supportedUsernameChars = "Podporované znaky: a-z 0-9 _ ."
+        public static let invalidPasswordFormat = "Neplatný formát hesla!"
+        public static let passwordMismatch = "Zadaná hesla se neshodují."
+        public static let goBack = "Zpět"
+        public static let goBackToSignIn = "Zpět na přihlášení"
+        public static let next = "Další"
+        public static let register = "Registrace."
     }
     
     public enum Feed {

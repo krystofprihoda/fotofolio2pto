@@ -10,4 +10,5 @@ import Foundation
 public enum ObjectError: Error, Equatable {
     case nonExistent
     case emailAlreadyTaken
+    case usernameAlreadyTaken
 }
