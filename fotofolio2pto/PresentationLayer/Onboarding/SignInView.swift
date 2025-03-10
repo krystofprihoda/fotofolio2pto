@@ -21,6 +21,11 @@ struct SignInView: View {
     
     var body: some View {
         ZStack(alignment: .center) {
+            Image("sydney_opera_house")
+                .resizable()
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .aspectRatio(contentMode: .fill)
+            
             LinearGradient(colors: [.white, .mainAccent], startPoint: .topLeading, endPoint: .bottomTrailing)
                 .edgesIgnoringSafeArea(.all)
                 .hueRotation(.degrees(animateGradient ? gradientDegrees : 0))
@@ -29,8 +34,9 @@ struct SignInView: View {
                         animateGradient.toggle()
                     }
                 }
+                .opacity(0.9)
             
-            VStack {
+            VStack(spacing: Constants.Dimens.spaceLarge) {
                 //Logo
                 ZStack {
                     ZStack {
@@ -58,21 +64,10 @@ struct SignInView: View {
                         .frame(width: 300)
                 }
                 
-                VStack {
-                    Text(L.Onboarding.signIn)
-                        .font(.largeTitle)
-                        .fontWeight(.bold)
-                    
-                    Button(action: {
-                        viewModel.onIntent(.registerUser)
-                    }, label: {
-                        Text(L.Onboarding.registrationAlternative)
-                            .foregroundColor(.gray)
-                            .font(.footnote)
-                            .underline()
-                    })
-                }
-                .padding(.top, Constants.Dimens.spaceNone)
+                Text(L.Onboarding.signIn)
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                    .padding(.top, Constants.Dimens.spaceNone)
                 
                 VStack {
                     VStack(spacing: Constants.Dimens.spaceLarge) {
@@ -108,7 +103,16 @@ struct SignInView: View {
                 }
                 .background(.white)
                 .cornerRadius(Constants.Dimens.radiusXSmall)
-                .padding()
+                .padding(.horizontal)
+                
+                Button(action: {
+                    viewModel.onIntent(.registerUser)
+                }, label: {
+                    Text(L.Onboarding.finalizeRegistration)
+                        .font(.callout)
+                        .foregroundStyle(.white)
+                        .underline()
+                })
             }
             .padding()
         }

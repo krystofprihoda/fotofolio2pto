@@ -54,16 +54,15 @@ final class RegisterViewModel: BaseViewModel, ViewModel, ObservableObject {
     
     // MARK: State
     
-    struct State {
-        var stage: RegisterStageEnum = .password
+    struct State: Equatable {
+        var stage: RegisterStageEnum = .nameAndEmail
+        var name = ""
         var email = ""
         var emailVerified = false
         var emailError = ""
-        var profilePicture: MyImageEnum? = nil
         var username = ""
         var usernameVerified = false
         var usernameError = ""
-        var name = ""
         var firstPassword = ""
         var firstPasswordError = ""
         var isFirstPasswordHidden = true
@@ -71,6 +70,10 @@ final class RegisterViewModel: BaseViewModel, ViewModel, ObservableObject {
         var secondPasswordError = ""
         var isSecondPasswordHidden = true
         var passwordsVerified = false
+        var isCreator = false
+        var isCreatingUser = false
+        var userCreated = false
+        var hideOnboardingTitle = false
         var showSkeleton = false
     }
     
@@ -90,6 +93,9 @@ final class RegisterViewModel: BaseViewModel, ViewModel, ObservableObject {
         case onPasswordChanged(isFirst: Bool)
         case onPasswordToggleVisibility(isFirst: Bool)
         case onPasswordNextTap
+        case setIsCreator(to: Bool)
+        case onCreatorNextTap
+        case onCreatorDetailsNextTap
         case goBack(to: RegisterStageEnum)
         case dismissRegistration
     }
@@ -109,6 +115,9 @@ final class RegisterViewModel: BaseViewModel, ViewModel, ObservableObject {
             case .onPasswordChanged(let isFirst): isFirst ? await verifyFirstPassword() : await verifySecondPassword()
             case .onPasswordToggleVisibility(let isFirst): togglePasswordVisibility(isFirst: isFirst)
             case .onPasswordNextTap: await setPasswordAndContinue()
+            case .setIsCreator(let value): setIsCreator(to: value)
+            case .onCreatorNextTap: state.isCreator ? continueToCreatorDetails() : await finalizeOnboarding()
+            case .onCreatorDetailsNextTap: await finalizeOnboarding()
             case .goBack(let stage): setStageTo(stage)
             case .dismissRegistration: dismissRegistration()
             }
@@ -231,6 +240,8 @@ final class RegisterViewModel: BaseViewModel, ViewModel, ObservableObject {
                 }
                 
                 state.firstPasswordError = ""
+                
+                if !state.secondPassword.isEmpty { await verifySecondPassword() }
             } catch { Logger.app.error("[FAIL] \(#file) • \(#line) • \(#function) | Task failed: \(error)") }
         })
     }
@@ -283,6 +294,35 @@ final class RegisterViewModel: BaseViewModel, ViewModel, ObservableObject {
         state.firstPasswordError = ""
         state.secondPasswordError = ""
         state.stage = .isCreator
+    }
+    
+    private func continueToCreatorDetails() {
+        setStageTo(.creatorDetails)
+        setIsCreator(to: true)
+    }
+    
+    private func finalizeOnboarding() async {
+        // register user usecase
+        
+        state.stage = .done
+        state.isCreatingUser = true
+        state.hideOnboardingTitle = true
+        
+        defer {
+            state.isCreatingUser = false
+            state.hideOnboardingTitle = false
+        }
+        
+        do {
+            try await Task.sleep(nanoseconds: 1_000_000_000)
+            state.userCreated = true
+            try await Task.sleep(nanoseconds: 1_000_000_000)
+            dismissRegistration()
+        } catch { }
+    }
+    
+    private func setIsCreator(to value: Bool) {
+        state.isCreator = value
     }
     
     private func setStageTo(_ stage: RegisterStageEnum) {

@@ -14,7 +14,6 @@ public struct L {
         public static let password = "Heslo"
         public static let confirmPassword = "Potvrzení hesla"
         public static let signIn = "Přihlášení."
-        public static let registrationAlternative = "nebo registrace zde"
         public static let signInAction = "Přihlásit se"
         public static let invalidEmailFormat = "Neplatný formát emailové adresy!"
         public static let emailAddressTaken = "Emailová adresa už je registrována!"
@@ -26,6 +25,8 @@ public struct L {
         public static let goBackToSignIn = "Zpět na přihlášení"
         public static let next = "Další"
         public static let register = "Registrace."
+        public static let finalizeRegistration = "Registrovat"
+        public static let passwordRequirements = "Heslo musí obsahovat aspoň 1 velké písmeno, 3 číslice a 1 speciální znak: !@#$%^&*_+:.?"
     }
     
     public enum Feed {

@@ -18,6 +18,10 @@ struct RegisterPasswordView: View {
     
     var body: some View {
         VStack {
+            Text(L.Onboarding.passwordRequirements)
+                .font(.footnote)
+                .foregroundColor(.black)
+            
             HStack {
                 if isFirstPasswordHidden {
                     SecureField(L.Onboarding.password, text: firstPassword)
