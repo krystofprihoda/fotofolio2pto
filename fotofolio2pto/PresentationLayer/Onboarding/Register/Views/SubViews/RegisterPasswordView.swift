@@ -3,10 +3,12 @@ import SwiftUI
 struct RegisterPasswordView: View {
     var firstPassword: Binding<String>
     var firstPasswordError: String
-    var isFirstPasswordHidden: Binding<Bool>
+    var isFirstPasswordHidden: Bool
+    var onToggleFirstPasswordVisibility: () -> Void
     var secondPassword: Binding<String>
     var secondPasswordError: String
-    var isSecondPasswordHidden: Binding<Bool>
+    var isSecondPasswordHidden: Bool
+    var onToggleSecondPasswordVisibility: () -> Void
     var passwordsVerified: Bool
     var showSkeleton: Bool
     var onFirstPasswordChanged: () -> Void
@@ -14,25 +16,16 @@ struct RegisterPasswordView: View {
     var onBackTap: () -> Void
     var onNextTap: () -> Void
     
-    @FocusState var isFirstPasswordHiddenState: Field?
-    @FocusState var isSecondPasswordHiddenState: Field?
-    
-    enum Field {
-        case secure, plain
-    }
-    
     var body: some View {
         VStack {
             HStack {
-                if isFirstPasswordHidden.wrappedValue {
+                if isFirstPasswordHidden {
                     SecureField(L.Onboarding.password, text: firstPassword)
-                        .focused($isFirstPasswordHiddenState, equals: .secure)
                 } else {
                     TextField(L.Onboarding.password, text: firstPassword)
-                        .focused($isFirstPasswordHiddenState, equals: .plain)
                 }
-                Button(action: { isFirstPasswordHidden.wrappedValue.toggle(); isFirstPasswordHiddenState = isFirstPasswordHidden.wrappedValue ? .plain : .secure }) {
-                    Image(systemName: isFirstPasswordHidden.wrappedValue ? "eye.slash" : "eye")
+                Button(action: onToggleFirstPasswordVisibility) {
+                    Image(systemName: isFirstPasswordHidden ? "eye.slash" : "eye")
                         .foregroundColor(.gray)
                 }
             }
@@ -57,13 +50,13 @@ struct RegisterPasswordView: View {
             }
             
             HStack {
-                if isSecondPasswordHidden.wrappedValue {
+                if isSecondPasswordHidden {
                     SecureField(L.Onboarding.confirmPassword, text: secondPassword)
                 } else {
                     TextField(L.Onboarding.confirmPassword, text: secondPassword)
                 }
-                Button(action: { isSecondPasswordHidden.wrappedValue.toggle() }) {
-                    Image(systemName: isSecondPasswordHidden.wrappedValue ? "eye.slash" : "eye")
+                Button(action: onToggleSecondPasswordVisibility) {
+                    Image(systemName: isSecondPasswordHidden ? "eye.slash" : "eye")
                         .foregroundColor(.gray)
                 }
             }

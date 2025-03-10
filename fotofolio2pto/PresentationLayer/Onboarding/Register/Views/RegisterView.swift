@@ -18,7 +18,7 @@ struct RegisterView: View {
         let showDismiss = viewModel.state.stage == .nameAndEmail
         RegisterWrapperView(
             dismissRegistrationIsShowing: showDismiss,
-            onDismissRegistrationTap: { viewModel.onIntent(.goBackToSignIn) }
+            onDismissRegistrationTap: { viewModel.onIntent(.dismissRegistration) }
         ) {
             switch viewModel.state.stage {
             case .nameAndEmail:
@@ -47,7 +47,7 @@ struct RegisterView: View {
                     usernameVerified: viewModel.state.usernameVerified,
                     showSkeleton: viewModel.state.showSkeleton,
                     onUsernameChanged: { viewModel.onIntent(.onUsernameChanged) },
-                    onBackTap: { viewModel.onIntent(.goBackToNameAndEmail) },
+                    onBackTap: { viewModel.onIntent(.goBack(to: .nameAndEmail)) },
                     onNextTap: { viewModel.onIntent(.onUsernameNextTap) }
                 )
             case .password:
@@ -57,36 +57,28 @@ struct RegisterView: View {
                        set: { viewModel.onIntent(.setPassword(isFirst: true, $0)) }
                    ),
                    firstPasswordError: viewModel.state.firstPasswordError,
-                   isFirstPasswordHidden: Binding(
-                       get: { viewModel.state.isFirstPasswordHidden },
-                       set: { _ in viewModel.onIntent(.onPasswordToggleVisibility(isFirst: true)) }
-                   ),
+                   isFirstPasswordHidden: viewModel.state.isFirstPasswordHidden,
+                   onToggleFirstPasswordVisibility: { viewModel.onIntent(.onPasswordToggleVisibility(isFirst: true)) },
                    secondPassword: Binding(
                        get: { viewModel.state.secondPassword },
                        set: { viewModel.onIntent(.setPassword(isFirst: false, $0)) }
                    ),
                    secondPasswordError: viewModel.state.secondPasswordError,
-                   isSecondPasswordHidden: Binding(
-                       get: { viewModel.state.isSecondPasswordHidden },
-                       set: { _ in viewModel.onIntent(.onPasswordToggleVisibility(isFirst: false)) }
-                   ),
+                   isSecondPasswordHidden: viewModel.state.isSecondPasswordHidden,
+                   onToggleSecondPasswordVisibility: { viewModel.onIntent(.onPasswordToggleVisibility(isFirst: false)) },
                    passwordsVerified: viewModel.state.passwordsVerified,
                    showSkeleton: viewModel.state.showSkeleton,
                    onFirstPasswordChanged: { viewModel.onIntent(.onPasswordChanged(isFirst: true)) },
                    onSecondPasswordChanged: { viewModel.onIntent(.onPasswordChanged(isFirst: false)) },
-                   onBackTap: { viewModel.onIntent(.goBackToNameAndEmail) },
-                   onNextTap: { viewModel.onIntent(.onUsernameNextTap) }
+                   onBackTap: { viewModel.onIntent(.goBack(to: .username)) },
+                   onNextTap: { viewModel.onIntent(.onPasswordNextTap) }
                )
-            case .location:
-                EmptyView()
-            case .profilePicture:
-                EmptyView()
             case .isCreator:
-                EmptyView()
+                Text("isCreator")
             case .creatorDetails:
-                EmptyView()
+                Text("Creator Details")
             case .done:
-                EmptyView()
+                Text("All done")
             }
         }
         .animation(.default, value: viewModel.state.stage)

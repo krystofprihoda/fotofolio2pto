@@ -10,11 +10,9 @@ import SwiftUI
 import OSLog
 
 internal enum RegisterStageEnum {
-    case nameAndEmail
+    case nameAndEmail //location
     case username
     case password
-    case location
-    case profilePicture
     case isCreator
     case creatorDetails
     case done
@@ -91,8 +89,9 @@ final class RegisterViewModel: BaseViewModel, ViewModel, ObservableObject {
         case setPassword(isFirst: Bool, String)
         case onPasswordChanged(isFirst: Bool)
         case onPasswordToggleVisibility(isFirst: Bool)
-        case goBackToNameAndEmail
-        case goBackToSignIn
+        case onPasswordNextTap
+        case goBack(to: RegisterStageEnum)
+        case dismissRegistration
     }
     
     @discardableResult
@@ -109,8 +108,9 @@ final class RegisterViewModel: BaseViewModel, ViewModel, ObservableObject {
             case .setPassword(let isFirst, let password): setPassword(isFirst: isFirst, password)
             case .onPasswordChanged(let isFirst): isFirst ? await verifyFirstPassword() : await verifySecondPassword()
             case .onPasswordToggleVisibility(let isFirst): togglePasswordVisibility(isFirst: isFirst)
-            case .goBackToNameAndEmail: setStageTo(.nameAndEmail)
-            case .goBackToSignIn: dismissRegistration()
+            case .onPasswordNextTap: await setPasswordAndContinue()
+            case .goBack(let stage): setStageTo(stage)
+            case .dismissRegistration: dismissRegistration()
             }
         })
     }
@@ -271,6 +271,18 @@ final class RegisterViewModel: BaseViewModel, ViewModel, ObservableObject {
         }
         
         state.secondPassword = password
+    }
+    
+    private func setPasswordAndContinue() async {
+        state.showSkeleton = true
+        defer { state.showSkeleton = false }
+        
+        // pwd usecase
+        // try await checkEmailAddressAvailableUseCase.execute(state.email)
+        
+        state.firstPasswordError = ""
+        state.secondPasswordError = ""
+        state.stage = .isCreator
     }
     
     private func setStageTo(_ stage: RegisterStageEnum) {
