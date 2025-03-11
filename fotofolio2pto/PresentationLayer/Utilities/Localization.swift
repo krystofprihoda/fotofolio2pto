@@ -28,6 +28,14 @@ public struct L {
         public static let finalizeRegistration = "Registrovat"
         public static let passwordRequirements = "Heslo musí obsahovat aspoň 1 velké písmeno, 3 číslice a 1 speciální znak: !@#$%^&*_+:.?"
         public static let tryAgain = "Zkusit znovu"
+        public static let somethingWentWrong = "Něco se pokazilo."
+        public static let profileType = "Typ profilu"
+        public static let typeCreator = "Tvůrce 📸"
+        public static let typeCustomer = "Zákazník"
+        public static let becomeACreator = "Staň se tvůrcem! 📸"
+        public static let skyIsTheLimit = "Sky is the limit! 🌟"
+        public static let creatorDescription = "Tvůrci mohou vytvářet portfolia a prezentovat svou práci."
+        public static let yearsOfExperience = "Roky zkušeností ve fotografii"
     }
     
     public enum Feed {

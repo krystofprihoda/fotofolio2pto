@@ -12,22 +12,25 @@ struct RegisterIsCreatorView: View {
     let onBackTap: () -> Void
     let onNextTap: () -> Void
     
+    @State private var animatedArrowPadding = Constants.Dimens.spaceMedium
+    private let animationDuration = 1.0
+    
     var body: some View {
         VStack(alignment: .leading) {
-            Text("Typ profilu")
+            Text(L.Onboarding.profileType)
                 .font(.footnote)
                 .multilineTextAlignment(.leading)
                 .foregroundColor(.black)
             
-            Text(isCreator ? "Tvůrce 📸" : "Zákazník")
+            Text(isCreator ? L.Onboarding.typeCreator : L.Onboarding.typeCustomer)
                 .font(.title2)
                 .foregroundColor(.black)
                 .bold()
             
             Divider()
             
-            HStack {
-                Text(isCreator ? "Sky is the limit! 🌟" : "Staň se tvůrcem! 📸")
+            HStack(spacing: Constants.Dimens.spaceNone) {
+                Text(isCreator ? L.Onboarding.skyIsTheLimit : L.Onboarding.becomeACreator)
                     .font(.title3)
                     .multilineTextAlignment(.leading)
                     .foregroundColor(.black)
@@ -37,12 +40,21 @@ struct RegisterIsCreatorView: View {
                 
                 Image(systemName: "arrow.right.circle.fill")
                     .foregroundStyle(.green)
+                    .padding(animatedArrowPadding)
+                    .animation(
+                        .easeInOut(duration: animationDuration)
+                        .repeatForever(autoreverses: true),
+                        value: animatedArrowPadding
+                    )
+                    .onAppear {
+                        animatedArrowPadding = Constants.Dimens.spaceXSmall
+                    }
                 
                 Toggle("", isOn: $isCreator)
                     .labelsHidden()
             }
             
-            Text("Tvůrci mohou vytvářet portfolia a prezentovat svou práci.")
+            Text(L.Onboarding.creatorDescription)
                 .font(.body)
             
             HStack {

@@ -106,7 +106,7 @@ struct RegisterPasswordView: View {
                         .background(.mainAccent)
                         .cornerRadius(Constants.Dimens.radiusXSmall)
                 })
-                .disabled(!passwordsVerified)
+                .disabledOverlay(!passwordsVerified)
                 .skeleton(showSkeleton)
             }
         }

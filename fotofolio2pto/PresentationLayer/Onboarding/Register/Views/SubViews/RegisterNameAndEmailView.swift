@@ -59,7 +59,7 @@ struct RegisterNameAndEmailView: View {
                     .background(.mainAccent)
                     .cornerRadius(Constants.Dimens.radiusXSmall)
             })
-            .disabled(!emailVerified)
+            .disabledOverlay(!emailVerified)
             .skeleton(showSkeleton)
         }
         .animation(.default, value: emailError)

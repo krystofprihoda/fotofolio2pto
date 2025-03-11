@@ -14,7 +14,7 @@ struct RegisterCreatorDetailsView: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: Constants.Dimens.spaceNone) {
-            Text("Roky zkušeností ve fotografii")
+            Text(L.Onboarding.yearsOfExperience)
                 .font(.title3)
                 .foregroundColor(.black)
                 .bold()

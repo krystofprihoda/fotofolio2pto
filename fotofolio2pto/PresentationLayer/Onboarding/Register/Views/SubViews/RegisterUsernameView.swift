@@ -62,7 +62,7 @@ struct RegisterUsernameView: View {
                         .background(.mainAccent)
                         .cornerRadius(Constants.Dimens.radiusXSmall)
                 })
-                .disabled(!usernameVerified)
+                .disabledOverlay(!usernameVerified)
                 .skeleton(showSkeleton)
             }
         }

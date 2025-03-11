@@ -25,7 +25,7 @@ struct RegisterFailedView: View {
                         .frame(width: Constants.Dimens.frameSizeSmall, height: Constants.Dimens.frameSizeSmall)
                         .foregroundStyle(.white)
                     
-                    Text("Něco se pokazilo.")
+                    Text(L.Onboarding.somethingWentWrong)
                         .font(.body)
                         .bold()
                         .foregroundStyle(.white)

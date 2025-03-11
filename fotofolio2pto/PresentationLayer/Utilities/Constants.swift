@@ -15,6 +15,10 @@ public struct Constants {
         */
         public static let spaceNone: CGFloat = 0
         /**
+        * Spacing of 2
+        */
+        public static let spaceXXSmall: CGFloat = 2
+        /**
         * Spacing of 4
         */
         public static let spaceXSmall: CGFloat = 4
