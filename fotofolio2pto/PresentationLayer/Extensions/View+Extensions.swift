@@ -62,3 +62,19 @@ extension View {
         }
     }
 }
+
+extension View {
+    @ViewBuilder
+    func disabledOverlay(
+        _ condition: Bool
+    ) -> some View {
+        self
+            .disabled(condition)
+            .overlay(
+                RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
+                    .fill(condition ? .black : .clear)
+                    .opacity(Constants.Dimens.opacityLow)
+            )
+            .animation(.default, value: condition)
+    }
+}

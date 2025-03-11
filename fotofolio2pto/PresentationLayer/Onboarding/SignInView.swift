@@ -37,32 +37,7 @@ struct SignInView: View {
                 .opacity(0.9)
             
             VStack(spacing: Constants.Dimens.spaceLarge) {
-                //Logo
-                ZStack {
-                    ZStack {
-                        RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
-                            .stroke(lineWidth: Constants.Dimens.lineWidthXSmall)
-                            .frame(width: 100, height: 100)
-                            .opacity(0.9)
-                        
-                        RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
-                            .stroke(lineWidth: Constants.Dimens.lineWidthXSmall)
-                            .frame(width: 150, height: 150)
-                            .opacity(0.6)
-                        
-                        RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
-                            .stroke(lineWidth: Constants.Dimens.lineWidthXSmall)
-                            .frame(width: 200, height: 200)
-                            .opacity(0.3)
-                    }
-                    .foregroundColor(.white)
-                    .offset(y: Constants.Dimens.spaceXSmall)
-                    
-                    Image("fotofolio_text_dark")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 300)
-                }
+                FotofolioAnimatedLogo()
                 
                 Text(L.Onboarding.signIn)
                     .font(.largeTitle)
@@ -71,33 +46,34 @@ struct SignInView: View {
                 
                 VStack {
                     VStack(spacing: Constants.Dimens.spaceLarge) {
-                        LoginCredentialsView(
-                            username: Binding(get: { viewModel.state.username }, set: { viewModel.onIntent(.setUsername($0)) }),
-                            password: Binding(get: { viewModel.state.password }, set: { viewModel.onIntent(.setPassword($0)) }),
-                            fillUsernameAlert: .constant(false),
-                            passwordAlert: .constant(false)
-                        )
-                        
-                        if !viewModel.state.error.isEmpty {
-                            Text(viewModel.state.error)
-                                .foregroundColor(.red)
-                                .font(.system(size: 13))
-                                .padding(.top)
+                        if viewModel.state.isSigningIn {
+                            PulsingCircleView()
+                                .frame(width: Constants.Dimens.frameSizeXLarge, height: Constants.Dimens.frameSizeXLarge)
+                        } else {
+                            if !viewModel.state.error.isEmpty {
+                                Text(viewModel.state.error)
+                                    .foregroundColor(.red)
+                                    .font(.footnote)
+                            }
+                            
+                            LoginCredentialsView(
+                                username: Binding(get: { viewModel.state.username }, set: { viewModel.onIntent(.setUsername($0)) }),
+                                password: Binding(get: { viewModel.state.password }, set: { viewModel.onIntent(.setPassword($0)) })
+                            )
+                            
+                            Button(action: { viewModel.onIntent(.signIn) }, label: {
+                                Text(L.Onboarding.signInAction)
+                                    .font(.body)
+                                    .frame(height: Constants.Dimens.textFieldHeight)
+                                    .frame(maxWidth: .infinity)
+                                    .padding()
+                                    .foregroundStyle(.white)
+                                    .background(.mainAccent)
+                                    .cornerRadius(Constants.Dimens.radiusXSmall)
+                            })
+                            .disabledOverlay(viewModel.state.username.isEmpty || viewModel.state.password.isEmpty)
+                            .skeleton(viewModel.state.isSigningIn)
                         }
-                        
-                        Button(action: {
-                            viewModel.onIntent(.signIn)
-                        }, label: {
-                            Text(L.Onboarding.signInAction)
-                                .font(.body)
-                                .frame(height: Constants.Dimens.textFieldHeight)
-                                .frame(maxWidth: .infinity)
-                                .padding()
-                                .foregroundStyle(.white)
-                                .background(.mainAccent)
-                                .cornerRadius(Constants.Dimens.radiusXSmall)
-                        })
-                        .skeleton(viewModel.state.isSigningIn)
                     }
                     .padding()
                 }
@@ -105,22 +81,85 @@ struct SignInView: View {
                 .cornerRadius(Constants.Dimens.radiusXSmall)
                 .padding(.horizontal)
                 
-                Button(action: {
-                    viewModel.onIntent(.registerUser)
-                }, label: {
-                    Text(L.Onboarding.finalizeRegistration)
-                        .font(.callout)
-                        .foregroundStyle(.white)
-                        .underline()
-                })
+                if !viewModel.state.isSigningIn {
+                    Button(action: {
+                        viewModel.onIntent(.registerUser)
+                    }, label: {
+                        Text(L.Onboarding.finalizeRegistration)
+                            .font(.callout)
+                            .foregroundStyle(.white)
+                            .underline()
+                    })
+                }
             }
-            .padding()
+            .padding(.horizontal)
         }
+        .animation(.default, value: viewModel.state)
         .ignoresSafeArea(.all)
-        .setupNavBarAndTitle("")
     }
 }
 
 #Preview {
     SignInView(viewModel: .init(flowController: nil))
+}
+
+struct FotofolioAnimatedLogo: View {
+    @State private var scaleFirst: CGFloat = 1.0
+    @State private var scaleSecond: CGFloat = 1.0
+    @State private var scaleThird: CGFloat = 1.0
+    
+    private let coef = 1.15
+    private let duration = 7.0
+    private let resize = 1.35
+    
+    var body: some View {
+        ZStack {
+            ZStack {
+                RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
+                    .stroke(lineWidth: Constants.Dimens.lineWidthXSmall)
+                    .frame(width: Constants.Dimens.frameSizeLarge, height: Constants.Dimens.frameSizeLarge)
+                    .opacity(Constants.Dimens.opacityHigh)
+                    .scaleEffect(scaleFirst)
+                
+                RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
+                    .stroke(lineWidth: Constants.Dimens.lineWidthXSmall)
+                    .frame(width: Constants.Dimens.frameSizeXLarge, height: Constants.Dimens.frameSizeXLarge)
+                    .opacity(Constants.Dimens.opacityMid)
+                    .scaleEffect(scaleSecond)
+                
+                RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
+                    .stroke(lineWidth: Constants.Dimens.lineWidthXSmall)
+                    .frame(width: Constants.Dimens.frameSizeXXLarge, height: Constants.Dimens.frameSizeXXLarge)
+                    .opacity(Constants.Dimens.opacityLow)
+                    .scaleEffect(scaleThird)
+            }
+            .animation(
+                .easeInOut(duration: duration)
+                .repeatForever(autoreverses: true),
+                value: scaleFirst
+            )
+            .animation(
+                .easeInOut(duration: duration)
+                .repeatForever(autoreverses: true),
+                value: scaleSecond
+            )
+            .animation(
+                .easeInOut(duration: duration)
+                .repeatForever(autoreverses: true),
+                value: scaleThird
+            )
+            .onAppear {
+                scaleFirst = resize
+                scaleSecond = resize * coef
+                scaleThird = resize * coef * coef
+            }
+            .foregroundColor(.white)
+            .offset(y: Constants.Dimens.spaceXSmall)
+            
+            Image("fotofolio_text_dark")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: 300)
+        }
+    }
 }

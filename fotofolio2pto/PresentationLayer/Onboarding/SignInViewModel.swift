@@ -34,7 +34,7 @@ final class SignInViewModel: BaseViewModel, ViewModel, ObservableObject {
 
     // MARK: State
 
-    struct State {
+    struct State: Equatable {
         var username = ""
         var password = ""
         var hiddenPassword = true
@@ -73,14 +73,13 @@ final class SignInViewModel: BaseViewModel, ViewModel, ObservableObject {
         guard !state.username.isEmpty, !state.password.isEmpty else { return }
         
         state.isSigningIn = true
-        defer { state.isSigningIn = true }
+        defer { state.isSigningIn = false }
         
         do {
             try await loginWithCredentialsUseCase.execute(username: state.username, password: state.password)
             flowController?.signIn(username: state.username)
         } catch {
             state.error = "Špatné přihlašovací údaje."
-            state.username = ""
             state.password = ""
         }
     }

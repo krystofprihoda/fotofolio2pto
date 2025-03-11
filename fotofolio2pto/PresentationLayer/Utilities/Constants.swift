@@ -134,6 +134,19 @@ public struct Constants {
         * Line width of 2
         */
         public static let lineWidthSmall: CGFloat = 2
+        /**
+        * Opacity of 0.3
+        */
+        public static let opacityLow: CGFloat = 0.3
+        /**
+        * Opacity of 0.6
+        */
+        public static let opacityMid: CGFloat = 0.6
+        /**
+        * Opacity of 0.9
+        */
+        public static let opacityHigh: CGFloat = 0.6
+        
     }
 
 }

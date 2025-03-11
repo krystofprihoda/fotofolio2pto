@@ -39,14 +39,14 @@ struct RegisterNameAndEmailView: View {
                 }
                 .overlay(
                     RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
-                        .stroke(.mainAccent, lineWidth: 1)
+                        .stroke(.red, lineWidth: 1)
                         .opacity(emailError.isEmpty ? 0 : 1)
                 )
             
             if !emailError.isEmpty {
                 Text(emailError)
                     .font(.footnote)
-                    .foregroundColor(.mainAccent)
+                    .foregroundColor(.red)
             }
             
             Button(action: onNextTap, label: {

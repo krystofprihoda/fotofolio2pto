@@ -43,14 +43,14 @@ struct RegisterPasswordView: View {
             }
             .overlay(
                 RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
-                    .stroke(.mainAccent, lineWidth: 1)
+                    .stroke(.red, lineWidth: 1)
                     .opacity(firstPasswordError.isEmpty ? 0 : 1)
             )
             
             if !firstPasswordError.isEmpty {
                 Text(firstPasswordError)
                     .font(.footnote)
-                    .foregroundColor(.mainAccent)
+                    .foregroundColor(.red)
             }
             
             HStack {
@@ -74,14 +74,14 @@ struct RegisterPasswordView: View {
             }
             .overlay(
                 RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
-                    .stroke(.mainAccent, lineWidth: 1)
+                    .stroke(.red, lineWidth: 1)
                     .opacity(secondPasswordError.isEmpty ? 0 : 1)
             )
             
             if !secondPasswordError.isEmpty {
                 Text(secondPasswordError)
                     .font(.footnote)
-                    .foregroundColor(.mainAccent)
+                    .foregroundColor(.red)
             }
             
             HStack {

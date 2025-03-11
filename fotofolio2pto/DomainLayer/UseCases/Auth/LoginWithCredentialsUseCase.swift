@@ -25,7 +25,8 @@ public struct LoginWithCredentialsUseCaseImpl: LoginWithCredentialsUseCase {
     }
     
     public func execute(username: String, password: String) async throws {
-        let user = try await userRepository.getUserByUsername(username)
+        try await Task.sleep(nanoseconds: 2_000_000_000)
+        let _ = try await userRepository.getUserByUsername(username)
         authRepository.loginWithCredentials(username: username, password: password)
     }
 }

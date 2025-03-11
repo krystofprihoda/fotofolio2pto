@@ -30,14 +30,14 @@ struct RegisterUsernameView: View {
                 }
                 .overlay(
                     RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
-                        .stroke(.mainAccent, lineWidth: 1)
+                        .stroke(.red, lineWidth: 1)
                         .opacity(usernameError.isEmpty ? 0 : 1)
                 )
             
             if !usernameError.isEmpty {
                 Text(usernameError)
                     .font(.footnote)
-                    .foregroundColor(.mainAccent)
+                    .foregroundColor(.red)
             }
             
             HStack {
