@@ -97,6 +97,7 @@ final class RegisterViewModel: BaseViewModel, ViewModel, ObservableObject {
         case setIsCreator(to: Bool)
         case onCreatorNextTap
         case onCreatorDetailsNextTap
+        case tryAgain
         case goBack(to: RegisterStageEnum)
         case dismissRegistration
     }
@@ -119,6 +120,7 @@ final class RegisterViewModel: BaseViewModel, ViewModel, ObservableObject {
             case .setIsCreator(let value): setIsCreator(to: value)
             case .onCreatorNextTap: state.isCreator ? continueToCreatorDetails() : await finalizeOnboarding()
             case .onCreatorDetailsNextTap: await finalizeOnboarding()
+            case .tryAgain: await finalizeOnboarding()
             case .goBack(let stage): setStageTo(stage)
             case .dismissRegistration: dismissRegistration()
             }

@@ -92,35 +92,9 @@ struct RegisterView: View {
                     onNextTap: { viewModel.onIntent(.onCreatorDetailsNextTap) }
                 )
             case .creatingUser:
-                ZStack {
-                    PulsingCircleView()
-                    
-                    if viewModel.state.userCreated {
-                        Image(systemName: "checkmark")
-                            .resizable()
-                            .frame(width: Constants.Dimens.frameSizeSmall, height: Constants.Dimens.frameSizeSmall)
-                            .foregroundStyle(.white)
-                            .animation(.spring, value: viewModel.state.userCreated)
-                    }
-                }
-                .frame(width: Constants.Dimens.frameSizeXXLarge, height: Constants.Dimens.frameSizeXXLarge)
+                RegisterCreatingUserView(userCreated: viewModel.state.userCreated)
             case .failed:
-                ZStack {
-                    PulsingCircleView()
-                    
-                    VStack {
-                        Image(systemName: "exclamationmark.icloud.fill")
-                            .resizable()
-                            .frame(width: Constants.Dimens.frameSizeSmall, height: Constants.Dimens.frameSizeSmall)
-                            .foregroundStyle(.white)
-                        
-                        Text("Něco se pokazilo.")
-                            .font(.body)
-                            .bold()
-                            .foregroundStyle(.white)
-                    }
-                }
-                .frame(width: Constants.Dimens.frameSizeXXLarge, height: Constants.Dimens.frameSizeXXLarge)
+                RegisterFailedView(onTryAgain: { viewModel.onIntent(.tryAgain)})
             }
         }
         .animation(.default, value: viewModel.state)

@@ -27,6 +27,7 @@ public struct L {
         public static let register = "Registrace."
         public static let finalizeRegistration = "Registrovat"
         public static let passwordRequirements = "Heslo musí obsahovat aspoň 1 velké písmeno, 3 číslice a 1 speciální znak: !@#$%^&*_+:.?"
+        public static let tryAgain = "Zkusit znovu"
     }
     
     public enum Feed {

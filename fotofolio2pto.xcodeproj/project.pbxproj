@@ -120,6 +120,9 @@
 		FEC94E152C28521D00FFEB11 /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC94E142C28521D00FFEB11 /* SignInView.swift */; };
 		FEC94E172C2857D100FFEB11 /* OnboardingFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC94E162C2857D100FFEB11 /* OnboardingFlowController.swift */; };
 		FEC94E192C28661100FFEB11 /* SignInViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC94E182C28661100FFEB11 /* SignInViewModel.swift */; };
+		FECADFDA2D804DE8004023F6 /* Cities.swift in Sources */ = {isa = PBXBuildFile; fileRef = FECADFD92D804DDE004023F6 /* Cities.swift */; };
+		FECADFDC2D80534B004023F6 /* RegisterCreatingUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FECADFDB2D80534B004023F6 /* RegisterCreatingUserView.swift */; };
+		FECADFDE2D805356004023F6 /* RegisterFailedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FECADFDD2D805356004023F6 /* RegisterFailedView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -237,6 +240,9 @@
 		FEC94E142C28521D00FFEB11 /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
 		FEC94E162C2857D100FFEB11 /* OnboardingFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingFlowController.swift; sourceTree = "<group>"; };
 		FEC94E182C28661100FFEB11 /* SignInViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewModel.swift; sourceTree = "<group>"; };
+		FECADFD92D804DDE004023F6 /* Cities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cities.swift; sourceTree = "<group>"; };
+		FECADFDB2D80534B004023F6 /* RegisterCreatingUserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterCreatingUserView.swift; sourceTree = "<group>"; };
+		FECADFDD2D805356004023F6 /* RegisterFailedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterFailedView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -338,6 +344,8 @@
 		FE7FB10E2D7B1D2700428A17 /* SubViews */ = {
 			isa = PBXGroup;
 			children = (
+				FECADFDD2D805356004023F6 /* RegisterFailedView.swift */,
+				FECADFDB2D80534B004023F6 /* RegisterCreatingUserView.swift */,
 				FE9777E42D7F6DAC0027DA60 /* RegisterIsCreatorView.swift */,
 				FE9777E22D7F6D940027DA60 /* RegisterCreatorDetailsView.swift */,
 				FE9777DA2D7EFB7E0027DA60 /* RegisterPasswordView.swift */,
@@ -562,6 +570,7 @@
 		FEC94DB42C2447AA00FFEB11 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				FECADFD92D804DDE004023F6 /* Cities.swift */,
 				FEC8A8BF2D75C5CE000181B8 /* Localization.swift */,
 				FEA53CB22C2AE812006F0116 /* Alerts */,
 				FEC94DB52C2447F000FFEB11 /* BaseFlowController.swift */,
@@ -863,6 +872,7 @@
 				FEC94DB82C244E9E00FFEB11 /* MainFlowController.swift in Sources */,
 				FEA53CB82C2AE9B1006F0116 /* UnflagAllPortfoliosUseCase.swift in Sources */,
 				FEA53CC42C2C12EE006F0116 /* MessageRepository.swift in Sources */,
+				FECADFDA2D804DE8004023F6 /* Cities.swift in Sources */,
 				FEC94E0B2C2840AA00FFEB11 /* ProfileUserInfoView.swift in Sources */,
 				FE5F8A842C297338001EE8AF /* UserDefaultsProvider.swift in Sources */,
 				FEA53CCA2C2C174B006F0116 /* UserRepositoryImpl.swift in Sources */,
@@ -875,9 +885,11 @@
 				FEC94E192C28661100FFEB11 /* SignInViewModel.swift in Sources */,
 				FEA53CE72C2D5A92006F0116 /* EditPersonalDetailsView.swift in Sources */,
 				FEA53CDA2C2C3526006F0116 /* SendMessageUseCase.swift in Sources */,
+				FECADFDC2D80534B004023F6 /* RegisterCreatingUserView.swift in Sources */,
 				FEA53CB62C2AE84F006F0116 /* AlertData+SwiftUI.swift in Sources */,
 				FEC94DB32C24475100FFEB11 /* AppFlowController.swift in Sources */,
 				FEC94DF92C26291E00FFEB11 /* PhotoCarouselView.swift in Sources */,
+				FECADFDE2D805356004023F6 /* RegisterFailedView.swift in Sources */,
 				FEC94DBF2C246C5C00FFEB11 /* FeedFlowController.swift in Sources */,
 				FEA53CE42C2D5A46006F0116 /* EditProfileView.swift in Sources */,
 				FE9777E32D7F6D940027DA60 /* RegisterCreatorDetailsView.swift in Sources */,
