@@ -17,14 +17,12 @@ struct NewPortfolioView: View {
     
     var body: some View {
         ScrollView(showsIndicators: false) {
-            VStack(alignment: .leading) {
-                Text(L.Profile.titleName)
-                    .font(.body)
-                
-                ZStack {
-                    RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
-                        .foregroundColor(.gray).brightness(0.35)
-                        .frame(height: 38)
+            VStack(alignment: .leading, spacing: Constants.Dimens.spaceSmall) {
+                // Name
+                VStack(alignment: .leading, spacing: Constants.Dimens.spaceSmall) {
+                    Text(L.Profile.titleName)
+                        .font(.body)
+                        .bold()
                     
                     TextField(
                         L.Profile.portraitsExample,
@@ -34,56 +32,60 @@ struct NewPortfolioView: View {
                         )
                     )
                     .font(.body)
-                        .frame(height: 38)
-                        .foregroundColor(.gray)
-                        .offset(x: 9)
+                    .frame(height: Constants.Dimens.textFieldHeight)
+                    .padding()
+                    .background(.textFieldBackground)
+                    .cornerRadius(Constants.Dimens.radiusXSmall)
                 }
-                .padding(.trailing, 15)
+                .padding(.horizontal)
                 
                 Text(L.Profile.photography)
                     .font(.body)
+                    .bold()
+                    .padding(.leading)
                 
+                // Photos
                 ScrollView(.horizontal, showsIndicators: false) {
                     LazyHStack {
                         Button(action: { viewModel.onIntent(.pickMedia) }) {
                             ZStack {
                                 RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
-                                    .fill(Color.gray).brightness(0.34)
+                                    .fill(.textFieldBackground)
                                     .aspectRatio(1.0, contentMode: .fit)
-                                    .frame(width: 150, height: 150)
+                                    .frame(width: Constants.Dimens.frameSizeXXLarge, height: Constants.Dimens.frameSizeXXLarge)
                                 
                                 Image(systemName: "plus")
                                     .resizable()
-                                    .frame(width: 17, height: 17)
-                                    .foregroundColor(.black).brightness(0.3)
+                                    .frame(width: Constants.Dimens.frameSizeXSmall, height: Constants.Dimens.frameSizeXSmall)
+                                    .foregroundColor(.black)
+                                    .opacity(Constants.Dimens.opacityMid)
                             }
                         }
+                        .padding(.leading)
                         
                         if viewModel.state.media.isEmpty {
-                            RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
-                                .fill(Color.gray).brightness(0.39)
-                                .aspectRatio(1.0, contentMode: .fit)
-                                .frame(width: 150, height: 150)
-                            
-                            RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
-                                .fill(Color.gray).brightness(0.41)
-                                .aspectRatio(1.0, contentMode: .fit)
-                                .frame(width: 150, height: 150)
+                            ForEach(0..<2) { i in
+                                RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
+                                    .fill(.textFieldBackground)
+                                    .aspectRatio(1.0, contentMode: .fit)
+                                    .frame(width: Constants.Dimens.frameSizeXXLarge, height: Constants.Dimens.frameSizeXXLarge)
+                                    .opacity(i == 0 ? Constants.Dimens.opacityMid : Constants.Dimens.opacityLow)
+                            }
                         } else {
-                            ForEach(viewModel.state.media) { media in
+                            ForEach(viewModel.state.media) { iimg in
                                 ZStack(alignment: .topTrailing) {
-                                    if case MyImageEnum.local(let image) = media.src {
+                                    if case MyImageEnum.local(let image) = iimg.src {
                                         image
                                             .resizable()
                                             .aspectRatio(1.0, contentMode: .fill)
-                                            .frame(width: 150, height: 150)
+                                            .frame(width: Constants.Dimens.frameSizeXXLarge, height: Constants.Dimens.frameSizeXXLarge)
                                             .cornerRadius(Constants.Dimens.radiusXSmall)
                                     } else {
                                         RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
                                             .fill(.red)
                                             .aspectRatio(1.0, contentMode: .fit)
-                                            .frame(width: 150, height: 150)
-                                            .opacity(0.65)
+                                            .frame(width: Constants.Dimens.frameSizeXXLarge, height: Constants.Dimens.frameSizeXXLarge)
+                                            .opacity(Constants.Dimens.opacityMid)
                                     }
                                     
                                     Button(action: {}) {
@@ -91,107 +93,70 @@ struct NewPortfolioView: View {
                                             RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
                                                 .fill(.gray)
                                                 .aspectRatio(1.0, contentMode: .fit)
-                                                .frame(width: 40, height: 40)
-                                                .opacity(0.55)
+                                                .frame(width: Constants.Dimens.frameSizeSmall, height: Constants.Dimens.frameSizeSmall)
+                                                .opacity(Constants.Dimens.opacityMid)
                                             
                                             Image(systemName: "xmark")
                                                 .resizable()
-                                                .frame(width: 17, height: 17)
+                                                .frame(width: Constants.Dimens.spaceSemiMedium, height: Constants.Dimens.spaceSemiMedium)
                                                 .foregroundColor(.red)
-                                                .opacity(0.9)
+                                                .opacity(Constants.Dimens.opacityHigh)
                                                 .padding()
                                         }
                                     }
                                 }
                             }
-                            .transition(.opacity)
                         }
                     }
                 }
                 
-                VStack(alignment: .leading) {
+                // Description
+                VStack(alignment: .leading, spacing: Constants.Dimens.spaceSmall) {
                     Text(L.Profile.shortDescription)
                         .font(.body)
-                        .padding(.bottom, -2)
-                        .padding(.top, 3)
+                        .bold()
                     
                     ZStack {
                         RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
-                            .foregroundColor(.gray).brightness(0.35)
-                            .frame(height: 85)
+                            .fill(.textFieldBackground)
+                            .frame(height: Constants.Dimens.frameSizeLarge)
                         
                         TextEditor(text: Binding(get: { viewModel.state.description }, set: { viewModel.onIntent(.setDescriptionInput($0)) }))
-                            .font(.system(size: 16))
-                            .frame(height: 85)
-                            .lineSpacing(2)
+                            .font(.body)
+                            .frame(height: Constants.Dimens.frameSizeLarge)
+                            .lineSpacing(Constants.Dimens.spaceXSmall)
                             .foregroundColor(.gray)
-                            .padding(.leading, 9)
-                            .padding(.top, 7)
-                            .transition(.opacity)
                             .scrollContentBackground(.hidden)
                             .background(.clear)
-                    }
-                }
-                .padding(.trailing, 15)
-                
-                Text(L.Profile.maxNumberOfTags)
-                
-                if viewModel.state.tags.count < 5 {
-                    HStack {
-                        ZStack {
-                            Rectangle()
-                               .foregroundColor(.gray).brightness(0.37)
-                            
-                            TextField(
-                                L.Profile.weddingExample,
-                                text: Binding(get: { viewModel.state.tagInput }, set: { viewModel.onIntent(.setTagInput($0)) })
+                            .offset(
+                                x: Constants.Dimens.spaceSmall,
+                                y: Constants.Dimens.spaceXSmall
                             )
-                                .autocapitalization(.none)
-                                .disableAutocorrection(true)
-                                .padding()
-                         }
-                        .frame(height: 40)
-                        .cornerRadius(Constants.Dimens.radiusXSmall)
-                        
-                        Button(action: {
-                            viewModel.onIntent(.addTag)
-                        }, label: {
-                            Text(L.Profile.add)
-                                .padding(10)
-                                .background(.red).brightness(0.5)
-                                .foregroundColor(.white)
-                                .cornerRadius(Constants.Dimens.radiusXSmall)
-                        })
                     }
-                    .padding(.trailing, 15)
-                    .transition(.opacity)
                 }
+                .padding(.horizontal)
                 
-                VStack(alignment: .leading) {
-                    ForEach(viewModel.state.tags, id: \.self) { tag in
-                        HStack {
-                            Text(tag)
-                                .padding([.leading, .trailing], 9)
-                                .padding([.bottom, .top], 7)
-                                .background(.gray).brightness(0.4)
-                                .cornerRadius(Constants.Dimens.radiusXSmall)
-                            
-                            Button(action: { viewModel.onIntent(.removeTag(tag)) }) {
-                                Image(systemName: "xmark")
-                                    .resizable()
-                                    .aspectRatio(1, contentMode: .fit)
-                                    .frame(width: 12, height: 12)
-                                    .foregroundColor(.gray).brightness(0.15)
-                            }
+                // Tags
+                VStack(alignment: .leading, spacing: Constants.Dimens.spaceSmall) {
+                    Text(L.Profile.maxNumberOfTags)
+                        .font(.body)
+                        .bold()
+                    
+                    VStack {
+                        ForEach(0..<6) { i in
+                            Text("Tag\(i)\(i)\(i)")
+                                .font(.footnote)
+                                .fixedSize(horizontal: true, vertical: false)
+                                .padding()
+                                .background(.mainAccent)
+                                
                         }
                     }
-                    .transition(.opacity)
                 }
-                
-                Spacer()
+                .padding(.leading)
             }
+            .padding(.top, Constants.Dimens.spaceSmall)
         }
-        .padding()
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarLeading) {
                 Button(action: {
