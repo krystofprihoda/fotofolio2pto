@@ -142,16 +142,7 @@ struct NewPortfolioView: View {
                         .font(.body)
                         .bold()
                     
-                    VStack {
-                        ForEach(0..<6) { i in
-                            Text("Tag\(i)\(i)\(i)")
-                                .font(.footnote)
-                                .fixedSize(horizontal: true, vertical: false)
-                                .padding()
-                                .background(.mainAccent)
-                                
-                        }
-                    }
+                    TagsSelectionView()
                 }
                 .padding(.leading)
             }
@@ -188,4 +179,35 @@ struct NewPortfolioView: View {
 
 #Preview {
     NewPortfolioView(viewModel: .init(flowController: nil, userData: .dummy1))
+}
+
+struct TagsSelectionView: View {
+    var body: some View {
+        VStack {
+            ForEach(photoCategories.chunked(into: 4), id: \.self) { row in
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack {
+                        ForEach(row, id: \.self) { category in
+                            Text(category)
+                                .font(.footnote)
+                                .fixedSize(horizontal: true, vertical: false)
+                                .padding()
+                                .background(.mainAccent)
+                                .clipShape(
+                                    RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
+                                )
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+extension Array {
+    func chunked(into size: Int) -> [[Element]] {
+        stride(from: 0, to: count, by: size).map {
+            Array(self[$0..<Swift.min($0 + size, count)])
+        }
+    }
 }

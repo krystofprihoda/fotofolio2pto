@@ -120,7 +120,7 @@
 		FEC94E152C28521D00FFEB11 /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC94E142C28521D00FFEB11 /* SignInView.swift */; };
 		FEC94E172C2857D100FFEB11 /* OnboardingFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC94E162C2857D100FFEB11 /* OnboardingFlowController.swift */; };
 		FEC94E192C28661100FFEB11 /* SignInViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC94E182C28661100FFEB11 /* SignInViewModel.swift */; };
-		FECADFDA2D804DE8004023F6 /* Cities.swift in Sources */ = {isa = PBXBuildFile; fileRef = FECADFD92D804DDE004023F6 /* Cities.swift */; };
+		FECADFDA2D804DE8004023F6 /* StringConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = FECADFD92D804DDE004023F6 /* StringConstants.swift */; };
 		FECADFDC2D80534B004023F6 /* RegisterCreatingUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FECADFDB2D80534B004023F6 /* RegisterCreatingUserView.swift */; };
 		FECADFDE2D805356004023F6 /* RegisterFailedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FECADFDD2D805356004023F6 /* RegisterFailedView.swift */; };
 /* End PBXBuildFile section */
@@ -240,7 +240,7 @@
 		FEC94E142C28521D00FFEB11 /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
 		FEC94E162C2857D100FFEB11 /* OnboardingFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingFlowController.swift; sourceTree = "<group>"; };
 		FEC94E182C28661100FFEB11 /* SignInViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewModel.swift; sourceTree = "<group>"; };
-		FECADFD92D804DDE004023F6 /* Cities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cities.swift; sourceTree = "<group>"; };
+		FECADFD92D804DDE004023F6 /* StringConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringConstants.swift; sourceTree = "<group>"; };
 		FECADFDB2D80534B004023F6 /* RegisterCreatingUserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterCreatingUserView.swift; sourceTree = "<group>"; };
 		FECADFDD2D805356004023F6 /* RegisterFailedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterFailedView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -570,7 +570,7 @@
 		FEC94DB42C2447AA00FFEB11 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
-				FECADFD92D804DDE004023F6 /* Cities.swift */,
+				FECADFD92D804DDE004023F6 /* StringConstants.swift */,
 				FEC8A8BF2D75C5CE000181B8 /* Localization.swift */,
 				FEA53CB22C2AE812006F0116 /* Alerts */,
 				FEC94DB52C2447F000FFEB11 /* BaseFlowController.swift */,
@@ -872,7 +872,7 @@
 				FEC94DB82C244E9E00FFEB11 /* MainFlowController.swift in Sources */,
 				FEA53CB82C2AE9B1006F0116 /* UnflagAllPortfoliosUseCase.swift in Sources */,
 				FEA53CC42C2C12EE006F0116 /* MessageRepository.swift in Sources */,
-				FECADFDA2D804DE8004023F6 /* Cities.swift in Sources */,
+				FECADFDA2D804DE8004023F6 /* StringConstants.swift in Sources */,
 				FEC94E0B2C2840AA00FFEB11 /* ProfileUserInfoView.swift in Sources */,
 				FE5F8A842C297338001EE8AF /* UserDefaultsProvider.swift in Sources */,
 				FEA53CCA2C2C174B006F0116 /* UserRepositoryImpl.swift in Sources */,
