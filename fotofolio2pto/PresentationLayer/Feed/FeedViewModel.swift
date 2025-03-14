@@ -171,7 +171,11 @@ extension FeedViewModel: FeedFlowControllerDelegate {
     }
 }
 
-public struct IImage: Identifiable {
+public struct IImage: Identifiable, Equatable {
+    public static func == (lhs: IImage, rhs: IImage) -> Bool {
+        lhs.id == rhs.id
+    }
+    
     public let id = UUID()
     public var src: MyImageEnum
 }

@@ -47,23 +47,23 @@ struct NewPortfolioView: View {
                 // Photos
                 ScrollView(.horizontal, showsIndicators: false) {
                     LazyHStack {
-                        Button(action: { viewModel.onIntent(.pickMedia) }) {
-                            ZStack {
-                                RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
-                                    .fill(.textFieldBackground)
-                                    .aspectRatio(1.0, contentMode: .fit)
-                                    .frame(width: Constants.Dimens.frameSizeXXLarge, height: Constants.Dimens.frameSizeXXLarge)
-                                
-                                Image(systemName: "plus")
-                                    .resizable()
-                                    .frame(width: Constants.Dimens.frameSizeXSmall, height: Constants.Dimens.frameSizeXSmall)
-                                    .foregroundColor(.black)
-                                    .opacity(Constants.Dimens.opacityMid)
-                            }
-                        }
-                        .padding(.leading)
-                        
                         if viewModel.state.media.isEmpty {
+                            Button(action: { viewModel.onIntent(.pickMedia) }) {
+                                ZStack {
+                                    RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
+                                        .fill(.textFieldBackground)
+                                        .aspectRatio(1.0, contentMode: .fit)
+                                        .frame(width: Constants.Dimens.frameSizeXXLarge, height: Constants.Dimens.frameSizeXXLarge)
+                                    
+                                    Image(systemName: "plus")
+                                        .resizable()
+                                        .frame(width: Constants.Dimens.frameSizeXSmall, height: Constants.Dimens.frameSizeXSmall)
+                                        .foregroundColor(.black)
+                                        .opacity(Constants.Dimens.opacityMid)
+                                }
+                            }
+                            .padding(.leading)
+                            
                             ForEach(0..<2) { i in
                                 RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
                                     .fill(.textFieldBackground)
@@ -72,7 +72,7 @@ struct NewPortfolioView: View {
                                     .opacity(i == 0 ? Constants.Dimens.opacityMid : Constants.Dimens.opacityLow)
                             }
                         } else {
-                            ForEach(viewModel.state.media) { iimg in
+                            ForEach(Array(zip(viewModel.state.media.indices, viewModel.state.media)), id: \.0) { idx, iimg in
                                 ZStack(alignment: .topTrailing) {
                                     if case MyImageEnum.local(let image) = iimg.src {
                                         image
@@ -80,6 +80,7 @@ struct NewPortfolioView: View {
                                             .aspectRatio(1.0, contentMode: .fill)
                                             .frame(width: Constants.Dimens.frameSizeXXLarge, height: Constants.Dimens.frameSizeXXLarge)
                                             .cornerRadius(Constants.Dimens.radiusXSmall)
+                                            .padding(.leading, idx == 0 ? Constants.Dimens.spaceLarge : Constants.Dimens.spaceNone)
                                     } else {
                                         RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
                                             .fill(.red)
@@ -91,24 +92,42 @@ struct NewPortfolioView: View {
                                     Button(action: {}) {
                                         ZStack {
                                             RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
-                                                .fill(.gray)
+                                                .fill(.white)
                                                 .aspectRatio(1.0, contentMode: .fit)
                                                 .frame(width: Constants.Dimens.frameSizeSmall, height: Constants.Dimens.frameSizeSmall)
                                                 .opacity(Constants.Dimens.opacityMid)
                                             
                                             Image(systemName: "xmark")
                                                 .resizable()
-                                                .frame(width: Constants.Dimens.spaceSemiMedium, height: Constants.Dimens.spaceSemiMedium)
+                                                .frame(width: Constants.Dimens.spaceLarge, height: Constants.Dimens.spaceLarge)
                                                 .foregroundColor(.red)
                                                 .opacity(Constants.Dimens.opacityHigh)
                                                 .padding()
                                         }
+                                        .padding(Constants.Dimens.spaceXSmall)
                                     }
                                 }
                             }
+                            
+                            Button(action: { viewModel.onIntent(.pickMedia) }) {
+                                ZStack {
+                                    RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
+                                        .fill(.textFieldBackground)
+                                        .aspectRatio(1.0, contentMode: .fit)
+                                        .frame(width: Constants.Dimens.frameSizeXXLarge, height: Constants.Dimens.frameSizeXXLarge)
+                                    
+                                    Image(systemName: "plus")
+                                        .resizable()
+                                        .frame(width: Constants.Dimens.frameSizeXSmall, height: Constants.Dimens.frameSizeXSmall)
+                                        .foregroundColor(.black)
+                                        .opacity(Constants.Dimens.opacityMid)
+                                }
+                            }
+                            .padding(.trailing)
                         }
                     }
                 }
+                .frame(height: Constants.Dimens.frameSizeXXLarge)
                 
                 // Description
                 VStack(alignment: .leading, spacing: Constants.Dimens.spaceSmall) {
@@ -142,12 +161,23 @@ struct NewPortfolioView: View {
                         .font(.body)
                         .bold()
                     
-                    TagsSelectionView()
+                    TagsSelectionView(
+                        searchText: Binding(
+                            get: { viewModel.state.searchInput },
+                            set: { viewModel.onIntent(.setTagInput($0)) }
+                        ),
+                        selectedTags: viewModel.state.selectedTags,
+                        filteredTags: viewModel.state.filteredTags,
+                        onAddToSelectedTags: { viewModel.onIntent(.addTag($0)) },
+                        onRemoveFromSelectedTags: { viewModel.onIntent(.removeTag($0)) }
+                    )
                 }
                 .padding(.leading)
             }
             .padding(.top, Constants.Dimens.spaceSmall)
         }
+        .lifecycle(viewModel)
+        .animation(.default, value: viewModel.state)
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarLeading) {
                 Button(action: {
@@ -155,7 +185,7 @@ struct NewPortfolioView: View {
                 }) {
                     Text(L.Profile.cancel)
                 }
-                .foregroundColor(.gray)
+                .foregroundColor(.black)
             }
             
             ToolbarItemGroup(placement: .navigationBarTrailing) {
@@ -163,15 +193,16 @@ struct NewPortfolioView: View {
                     viewModel.onIntent(.createNewPortfolio)
                 }) {
                     if viewModel.state.isLoading {
-                        ProgressView().progressViewStyle(.circular)
+                        ProgressView()
+                            .progressViewStyle(.circular)
                     } else {
                         Text(L.Profile.createNew)
                     }
                 }
-                .foregroundColor(.gray)
+                .foregroundColor(viewModel.state.isCreateButtonDisabled ? .gray : .black)
+                .disabled(viewModel.state.isCreateButtonDisabled)
             }
         }
-        .lifecycle(viewModel)
         .navigationBarBackButtonHidden(true)
         .setupNavBarAndTitle(L.Profile.newPortfolioTitle)
     }
@@ -182,20 +213,62 @@ struct NewPortfolioView: View {
 }
 
 struct TagsSelectionView: View {
+    @Binding private var searchText: String
+    private var selectedTags: [String]
+    private var filteredTags: [String]
+    private var onAddToSelectedTags: (String) -> Void
+    private var onRemoveFromSelectedTags: (String) -> Void
+    
+    init(
+        searchText: Binding<String>,
+        selectedTags: [String],
+        filteredTags: [String],
+        onAddToSelectedTags: @escaping (String) -> Void,
+        onRemoveFromSelectedTags: @escaping (String) -> Void
+    ) {
+        self._searchText = searchText
+        self.selectedTags = selectedTags
+        self.filteredTags = filteredTags
+        self.onAddToSelectedTags = onAddToSelectedTags
+        self.onRemoveFromSelectedTags = onRemoveFromSelectedTags
+    }
+    
     var body: some View {
+        // Search Bar
+        TextField(L.Profile.portraitsExample, text: $searchText)
+            .font(.body)
+            .padding()
+            .background(.textFieldBackground)
+            .frame(height: Constants.Dimens.textFieldHeight * Constants.Dimens.halfMultiplier)
+            .cornerRadius(Constants.Dimens.spaceSmall)
+            .padding(.trailing)
+
+        // Tags
         VStack {
-            ForEach(photoCategories.chunked(into: 4), id: \.self) { row in
+            ForEach(filteredTags.chunked(into: 5), id: \.self) { row in
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack {
                         ForEach(row, id: \.self) { category in
-                            Text(category)
-                                .font(.footnote)
-                                .fixedSize(horizontal: true, vertical: false)
+                            let isSelected = selectedTags.contains(where: { $0 == category })
+                            Button(action: { isSelected ? onRemoveFromSelectedTags(category) : onAddToSelectedTags(category) }, label: {
+                                HStack {
+                                    Text(category)
+                                        .font(.footnote)
+                                        .fixedSize(horizontal: true, vertical: false)
+                                        .foregroundColor(isSelected ? .white : .black)
+                                    
+                                    if isSelected {
+                                        Image(systemName: "xmark")
+                                            .resizable()
+                                            .frame(width: Constants.Dimens.spaceSmall, height: Constants.Dimens.spaceSmall)
+                                            .foregroundColor(.white)
+                                            .padding(.leading, Constants.Dimens.spaceXXSmall)
+                                    }
+                                }
                                 .padding()
-                                .background(.mainAccent)
-                                .clipShape(
-                                    RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
-                                )
+                                .background(isSelected ? Color.mainAccent : Color.textFieldBackground)
+                                .clipShape(RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall))
+                            })
                         }
                     }
                 }

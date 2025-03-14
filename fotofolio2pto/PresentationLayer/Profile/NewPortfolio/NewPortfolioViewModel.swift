@@ -37,14 +37,16 @@ final class NewPortfolioViewModel: BaseViewModel, ViewModel, ObservableObject {
 
     // MARK: State
 
-    struct State {
+    struct State: Equatable {
         var isLoading: Bool = false
         var userData: User! = nil
         var name = ""
         var description = ""
         var media: [IImage] = []
-        var tags: [String] = []
-        var tagInput = ""
+        var selectedTags: [String] = []
+        var filteredTags = photoCategories
+        var searchInput = ""
+        var isCreateButtonDisabled = true
     }
 
     @Published private(set) var state = State()
@@ -54,7 +56,7 @@ final class NewPortfolioViewModel: BaseViewModel, ViewModel, ObservableObject {
     enum Intent {
         case pickMedia
         case createNewPortfolio
-        case addTag
+        case addTag(String)
         case close
         case setName(String)
         case setTagInput(String)
@@ -68,7 +70,7 @@ final class NewPortfolioViewModel: BaseViewModel, ViewModel, ObservableObject {
             switch intent {
             case .pickMedia: pickMedia()
             case .createNewPortfolio: await createNewPortfolio()
-            case .addTag: addTag()
+            case .addTag(let tag): addTag(tag)
             case .close: dismissView()
             case .setName(let name): setName(name)
             case .setDescriptionInput(let input): setDescriptionInput(input)
@@ -87,29 +89,42 @@ final class NewPortfolioViewModel: BaseViewModel, ViewModel, ObservableObject {
     private func setMedia(_ media: [IImage]) {
         DispatchQueue.main.async { [weak self] in
             self?.state.media = media
+            self?.updateCreateButtonVisibility()
         }
     }
     
-    private func addTag() {
-        guard !state.tags.contains(state.tagInput), !state.tagInput.isEmpty else { return }
-        state.tags.append(state.tagInput)
-        state.tagInput = ""
+    private func addTag(_ tag: String) {
+        guard !state.selectedTags.contains(tag), state.selectedTags.count < 5 else { return }
+        state.selectedTags.append(tag)
+        state.searchInput = ""
+        updateCreateButtonVisibility()
     }
     
     private func removeTag(_ tag: String) {
-        state.tags.removeAll(where: { $0 == tag })
+        state.selectedTags.removeAll(where: { $0 == tag })
+        updateCreateButtonVisibility()
     }
     
     private func setTagInput(_ input: String) {
-        state.tagInput = input
+        state.searchInput = input
+        
+        if state.searchInput.isEmpty {
+            state.filteredTags = photoCategories
+            return
+        }
+        
+        state.filteredTags = photoCategories.filter { $0.localizedCaseInsensitiveContains(state.searchInput) }
+        updateCreateButtonVisibility()
     }
     
     private func setDescriptionInput(_ input: String) {
         state.description = input
+        updateCreateButtonVisibility()
     }
     
     private func setName(_ name: String) {
         state.name = name
+        updateCreateButtonVisibility()
     }
     
     private func dismissView() {
@@ -117,7 +132,7 @@ final class NewPortfolioViewModel: BaseViewModel, ViewModel, ObservableObject {
     }
     
     private func createNewPortfolio() async {
-        guard !state.description.isEmpty, !state.media.isEmpty, !state.tags.isEmpty else { return }
+        guard !state.description.isEmpty, !state.media.isEmpty, !state.selectedTags.isEmpty else { return }
         
         state.isLoading = true
         defer { state.isLoading = false }
@@ -128,12 +143,21 @@ final class NewPortfolioViewModel: BaseViewModel, ViewModel, ObservableObject {
                 name: state.name,
                 photos: state.media,
                 description: state.description,
-                tags: state.tags
+                tags: state.selectedTags
             )
             dismissView()
         } catch {
             
         }
+    }
+    
+    private func updateCreateButtonVisibility() {
+        if !state.name.isEmpty, !state.description.isEmpty, !state.selectedTags.isEmpty, !media.isEmpty {
+            state.isCreateButtonDisabled = false
+            return
+        }
+        
+        state.isCreateButtonDisabled = true
     }
 }
 

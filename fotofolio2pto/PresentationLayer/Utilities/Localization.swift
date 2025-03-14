@@ -89,7 +89,7 @@ public struct L {
         public static let save = "Uložit"
         public static let cancel = "Zrušit"
         public static let weddingExample = "např. svatba"
-        public static let portraitsExample = "např. Portréty"
+        public static let portraitsExample = "např. Portrét"
         public static let add = "Přidat"
         public static let yearsOfExperience = "Počet let zkušeností:"
         public static let yearsOfExperiencePrefill = "3"
@@ -100,7 +100,7 @@ public struct L {
         public static let titleName = "Název"
         public static let photography = "Fotografie"
         public static let shortDescription = "Popis"
-        public static let maxNumberOfTags = "Tagy (max. 5)"
+        public static let maxNumberOfTags = "Tagy (1 až 5)"
         public static let createNew = "Vytvořit"
         public static let newPortfolioTitle = "Nové portfolio"
     }

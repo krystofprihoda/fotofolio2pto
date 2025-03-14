@@ -150,7 +150,9 @@ public struct Constants {
         * Opacity of 0.9
         */
         public static let opacityHigh: CGFloat = 0.6
-        
+        /**
+        * Half multiplier
+        */
+        public static let halfMultiplier: CGFloat = 1.5
     }
-
 }
