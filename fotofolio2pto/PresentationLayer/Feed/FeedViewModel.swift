@@ -110,8 +110,8 @@ final class FeedViewModel: BaseViewModel, ViewModel, ObservableObject {
     }
     
     private func fetchPortfoliosSortedBy(_ sortBy: SortByEnum) async {
-        state.isLoading = true
-        defer { state.isLoading.toggle() }
+        state.isRefreshing = true
+        defer { state.isRefreshing.toggle() }
         
         do {
             state.portfolios = try await getAllPortfolios.execute(sortBy: sortBy)
@@ -151,10 +151,10 @@ final class FeedViewModel: BaseViewModel, ViewModel, ObservableObject {
     }
 }
 
-extension FeedViewModel: FeedFlowControllerDelegate {
+extension FeedViewModel: FilterFeedDelegate {
     func filterFeedPortfolios(_ filter: [String]) async {
-        state.isLoading = true
-        defer { state.isLoading.toggle() }
+        state.isRefreshing = true
+        defer { state.isRefreshing.toggle() }
         
         state.filter = filter
         

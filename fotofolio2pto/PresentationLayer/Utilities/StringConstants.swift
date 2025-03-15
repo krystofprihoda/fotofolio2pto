@@ -110,5 +110,5 @@ let photoCategories = [
     "HDR", "Long Exposure", "Double Exposure", "Digitální manipulace",
     "Kompozitní", "AI generovaná",
     "Historická", "Forenzní", "Letecká", "Válečná", "Novinářská",
-    "Mikrofotografie",
+    "Mikrofotografie", "Reality"
 ]

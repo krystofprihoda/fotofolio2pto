@@ -70,7 +70,7 @@ extension Portfolio {
                 IImage(src: .remote(URL(string: LOREMFLICKR + "/portrait")!))
             ],
             description: "Baví mě zachycovat autentické okamžiky a pracovat s lidmi. Nafotím vám portréty, které dokonale zachytí vaši osobu a povahu!",
-            tags: ["portrait", "people", "portrét", "lidé", "portret"],
+            tags: ["Portrét", "Rodina"],
             timestamp: Calendar.current.date(byAdding: .day, value: -5, to: Date())!
         )
     }
@@ -86,7 +86,7 @@ extension Portfolio {
                 IImage(src: .remote(URL(string: LOREMFLICKR + "/animal")!))
             ],
             description: "I takovéhle lifestylové fotografie mohou být Vaše!",
-            tags: ["person", "portrait", "lifestyle", "portret"],
+            tags: ["Portrét"],
             timestamp: Calendar.current.date(byAdding: .day, value: 3, to: Date())!
         )
     }
@@ -102,7 +102,7 @@ extension Portfolio {
                 IImage(src: .remote(URL(string: LOREMFLICKR + "/wedding")!))
             ],
             description: "Dojedu kamkoliv po republice a zachytím Váš speciální den.",
-            tags: ["svatba", "svatby", "wedding"],
+            tags: ["Svatba"],
             timestamp: Calendar.current.date(byAdding: .day, value: 1, to: Date())!
         )
     }
@@ -118,7 +118,7 @@ extension Portfolio {
                 IImage(src: .remote(URL(string: LOREMFLICKR + "/architecture")!))
             ],
             description: "fotim skvele a nafotim cokoliv.",
-            tags: ["interiér", "archi", "architektura", "reality", "exteriér"],
+            tags: ["Interiér", "Exteriér", "Architektura"],
             timestamp: Calendar.current.date(byAdding: .day, value: -6, to: Date())!
         )
     }
@@ -134,7 +134,7 @@ extension Portfolio {
                 IImage(src: .remote(URL(string: LOREMFLICKR + "/wedding")!))
             ],
             description: "Svatby jsou moje srdcovka, svěřte se do rukou profesionála.",
-            tags: ["svatba", "svatby", "svatebnifotograf", "wedding"],
+            tags: ["Svatba"],
             timestamp: Calendar.current.date(byAdding: .day, value: 10, to: Date())!
         )
     }
@@ -150,7 +150,7 @@ extension Portfolio {
                 IImage(src: .remote(URL(string: LOREMFLICKR + "/wedding")!))
             ],
             description: "Svatbám se věnuji dlouhodobě a postarám se o to, abych zachytil každý okamžik Vašeho speciálního dne.",
-            tags: ["svatba", "svatby", "svatebnifotograf", "wedding"],
+            tags: ["Svatba"],
             timestamp: Calendar.current.date(byAdding: .day, value: 11, to: Date())!
         )
     }
@@ -166,7 +166,7 @@ extension Portfolio {
                 IImage(src: .remote(URL(string: LOREMFLICKR + "/architecture")!))
             ],
             description: "Dokonale zachytím interiér i exteriér Vaší lokace.",
-            tags: ["interiér", "archi", "architektura", "reality", "exteriér"],
+            tags: ["Reality"],
             timestamp: Calendar.current.date(byAdding: .day, value: -1, to: Date())!
         )
     }
@@ -182,7 +182,7 @@ extension Portfolio {
                 IImage(src: .remote(URL(string: LOREMFLICKR + "/animal")!))
             ],
             description: "I takovéhle portréty můžou být Vaše!",
-            tags: ["portrait", "people", "portrét", "lidé", "portret"],
+            tags: ["Portrét"],
             timestamp: Calendar.current.date(byAdding: .day, value: -3, to: Date())!
         )
     }

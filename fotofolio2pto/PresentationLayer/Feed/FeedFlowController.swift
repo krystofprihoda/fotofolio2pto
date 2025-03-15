@@ -7,7 +7,7 @@
 
 import UIKit
 
-public protocol FeedFlowControllerDelegate: AnyObject {
+public protocol FilterFeedDelegate: AnyObject {
     func filterFeedPortfolios(_ filter: [String]) async
     func removeFilterTag(_ tag: String) async
 }
@@ -17,7 +17,7 @@ class FeedFlowController: BaseFlowController {
     private let signedInUser: String
     private var backgroundFilterTapView: UIView?
     
-    weak var feedFlowDelegate: FeedFlowControllerDelegate?
+    weak var feedFlowDelegate: FilterFeedDelegate?
     
     init(
         navigationController: UINavigationController,
@@ -35,8 +35,8 @@ class FeedFlowController: BaseFlowController {
         return vc
     }
 
-    public func presentFilter(with filter: [String]) {
-        let vm = FilterViewModel(flowController: self, with: filter)
+    public func presentFilter(with preselected: [String]) {
+        let vm = FilterViewModel(flowController: self, with: preselected)
         let vc = BaseHostingController(rootView: FilterView(viewModel: vm))
         if let sheet = vc.sheetPresentationController {
             sheet.detents = [.medium(), .large()]

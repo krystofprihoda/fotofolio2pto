@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FE0685662D84A2A90002B217 /* TagsSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE0685652D84A2A90002B217 /* TagsSelectionView.swift */; };
 		FE34A64F2D78BCF200CB4CAE /* CheckEmailAddressAvailableUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE34A64E2D78BCF200CB4CAE /* CheckEmailAddressAvailableUseCase.swift */; };
 		FE5F8A782C296D81001EE8AF /* AuthRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE5F8A772C296D81001EE8AF /* AuthRepository.swift */; };
 		FE5F8A7C2C296ECA001EE8AF /* LoginWithCredentialsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE5F8A7B2C296ECA001EE8AF /* LoginWithCredentialsUseCase.swift */; };
@@ -126,6 +127,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		FE0685652D84A2A90002B217 /* TagsSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsSelectionView.swift; sourceTree = "<group>"; };
 		FE34A64E2D78BCF200CB4CAE /* CheckEmailAddressAvailableUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckEmailAddressAvailableUseCase.swift; sourceTree = "<group>"; };
 		FE5F8A772C296D81001EE8AF /* AuthRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRepository.swift; sourceTree = "<group>"; };
 		FE5F8A7B2C296ECA001EE8AF /* LoginWithCredentialsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginWithCredentialsUseCase.swift; sourceTree = "<group>"; };
@@ -261,6 +263,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		FE0685642D84A2A50002B217 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				FE0685652D84A2A90002B217 /* TagsSelectionView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		FE5F8A762C296D6C001EE8AF /* Repositories */ = {
 			isa = PBXGroup;
 			children = (
@@ -475,6 +485,7 @@
 		FEA53CF52C2D794F006F0116 /* NewPortfolio */ = {
 			isa = PBXGroup;
 			children = (
+				FE0685642D84A2A50002B217 /* Views */,
 				FEA53CF32C2D791F006F0116 /* NewPortfolioView.swift */,
 				FEA53CF62C2D795F006F0116 /* NewPortfolioViewModel.swift */,
 			);
@@ -902,6 +913,7 @@
 				FEA53CF42C2D791F006F0116 /* NewPortfolioView.swift in Sources */,
 				FEA64F6D2D7711D900B11530 /* RegisterFlowController.swift in Sources */,
 				FEA53CED2C2D5BAC006F0116 /* EditPortfolioView.swift in Sources */,
+				FE0685662D84A2A90002B217 /* TagsSelectionView.swift in Sources */,
 				FEA53CCF2C2C2304006F0116 /* NewChatSearchView.swift in Sources */,
 				FEA53CC22C2C12C8006F0116 /* GetChatsForUserUseCase.swift in Sources */,
 				FEC94DF02C25ED5C00FFEB11 /* RoundedCorner.swift in Sources */,
