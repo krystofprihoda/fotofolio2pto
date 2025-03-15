@@ -8,13 +8,17 @@
 import SwiftUI
 
 struct HorizontalWheelPicker: View {
-    @State private var selectedValue: Int = 5
+    @Binding private var selectedValue: Int
     let lowestValue = 0
     let highestValue = 100
     let blurThreshold = 3
     let animationDuration = 2.0
     let animationDelay = 0.5
 
+    init(selectedValue: Binding<Int>) {
+        self._selectedValue = selectedValue
+    }
+    
     var body: some View {
         ScrollViewReader { proxy in
             ScrollView(.horizontal, showsIndicators: false) {

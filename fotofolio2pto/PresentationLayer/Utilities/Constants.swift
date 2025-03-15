@@ -99,6 +99,10 @@ public struct Constants {
         */
         public static let frameSizeSmall: CGFloat = 40
         /**
+        * Frame size of 60
+        */
+        public static let frameSizeSmallMedium: CGFloat = 60
+        /**
         * Frame size of 80
         */
         public static let frameSizeMedium: CGFloat = 80

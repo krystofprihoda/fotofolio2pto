@@ -17,70 +17,50 @@ struct EditProfileDetailsView: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            HStack {
+            VStack(alignment: .leading) {
                 Text(L.Profile.yearsOfExperience)
-                    .font(.system(size: 16))
-                    .foregroundColor(.black).brightness(0.25)
-                    .padding(.top, 5)
-                    .padding(.bottom, 8)
+                    .font(.footnote)
+                    .foregroundColor(.black)
                 
+                HorizontalWheelPicker(
+                    selectedValue: Binding(
+                        get: { viewModel.state.yearsOfExperience },
+                        set: { viewModel.onIntent(.setYearsOfExperience($0)) }
+                    )
+                )
+            }
+            
+            VStack(alignment: .leading) {
+                Text(L.Profile.description)
+                    .font(.footnote)
+                    .foregroundColor(.black)
+                
+                // description
                 ZStack(alignment: .leading) {
                     RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
-                        .foregroundColor(.gray).brightness(0.42)
-                        .frame(width: 50, height: 40)
+                        .fill(.textFieldBackground)
+                        .frame(height: Constants.Dimens.frameSizeXXLarge)
                         
-                    TextField(
-                        L.Profile.yearsOfExperiencePrefill,
+                    TextEditor(
                         text: Binding(
-                            get: { String(viewModel.state.userData!.creator!.yearsOfExperience) },
-                            set: { _ in }
+                            get: { viewModel.state.profileDescription },
+                            set: { viewModel.onIntent(.setProfileDescription($0)) }
                         )
                     )
-                        .offset(x: 17)
+                        .font(.body)
+                        .frame(height: Constants.Dimens.frameSizeXXLarge)
+                        .lineSpacing(Constants.Dimens.spaceXSmall)
                         .foregroundColor(.gray)
-                        .font(.system(size: 16))
-                        .keyboardType(.decimalPad)
+                        .scrollContentBackground(.hidden)
+                        .background(.clear)
+                        .offset(
+                            x: Constants.Dimens.spaceSmall,
+                            y: Constants.Dimens.spaceXSmall
+                        )
                 }
-                
-                Spacer()
             }
-            .padding(.leading, 20)
-            
-            VStack {
-                HStack {
-                    Text(L.Profile.description)
-                        .font(.system(size: 16))
-                        .foregroundColor(.black).brightness(0.25)
-                    
-                    Spacer()
-                }
-                .padding(.bottom, -7)
-                .padding(.leading, 20)
-                
-                ZStack(alignment: .leading) {
-                    RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
-                        .foregroundColor(.gray).brightness(0.42)
-                        .frame(height: 85)
-                        .padding(.trailing, 7)
-                        
-                    TextEditor(text: Binding(get: { String(viewModel.state.userData!.creator!.profileText) }, set: { _ in }))
-                        .lineSpacing(1)
-                        .frame(width: 340, height: 85)
-                        .font(.system(size: 16))
-                        .padding(.top, 6)
-                        .foregroundColor(.gray)
-                        .offset(x: 7)
-                }
-                .padding(.leading, 16)
-                
-                Spacer()
-            }
-            
-            Divider()
-                .padding(.bottom, 2)
-                .padding(.top, 5)
-                .padding([.leading, .trailing], 7)
         }
+        .padding(.horizontal)
     }
 }
 

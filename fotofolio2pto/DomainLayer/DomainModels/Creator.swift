@@ -8,8 +8,8 @@
 import Foundation
 
 public struct Creator {
-    public var profileText: String
-    public var yearsOfExperience: Int
+    public let profileText: String
+    public let yearsOfExperience: Int
 }
 
 extension Creator {

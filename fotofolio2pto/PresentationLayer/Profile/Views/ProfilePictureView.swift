@@ -8,9 +8,17 @@
 import SwiftUI
 
 struct ProfilePictureView: View {
-    @State var profilePicture: IImage?
+    @State private var profilePicture: IImage?
     
-    var width = 50.0
+    private var width: Double
+    
+    init(
+        profilePicture: IImage? = nil,
+        width: Double = 50.0
+    ) {
+        self.profilePicture = profilePicture
+        self.width = width
+    }
     
     var body: some View {
         if let pic = profilePicture {
@@ -24,7 +32,7 @@ struct ProfilePictureView: View {
                 } placeholder: {
                     ZStack {
                         Circle()
-                            .foregroundColor(.gray).brightness(0.33)
+                            .foregroundColor(.gray).brightness(Constants.Dimens.opacityLow)
                             .aspectRatio(1.0, contentMode: .fit)
 
                         ProgressView()
@@ -41,7 +49,7 @@ struct ProfilePictureView: View {
             }
         } else {
             Circle()
-                .foregroundColor(.gray).brightness(0.33)
+                .foregroundColor(.gray).brightness(Constants.Dimens.opacityLow)
                 .aspectRatio(1.0, contentMode: .fit)
                 .frame(width: width)
         }

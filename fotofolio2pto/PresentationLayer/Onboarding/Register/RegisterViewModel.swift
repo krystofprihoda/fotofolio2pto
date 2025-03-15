@@ -72,6 +72,7 @@ final class RegisterViewModel: BaseViewModel, ViewModel, ObservableObject {
         var isSecondPasswordHidden = true
         var passwordsVerified = false
         var isCreator = false
+        var yearsOfExperience = 5
         var isCreatingUser = false
         var userCreated = false
         var hideOnboardingTitle = false
@@ -95,6 +96,7 @@ final class RegisterViewModel: BaseViewModel, ViewModel, ObservableObject {
         case onPasswordToggleVisibility(isFirst: Bool)
         case onPasswordNextTap
         case setIsCreator(to: Bool)
+        case setYearsOfExperience(to: Int)
         case onCreatorNextTap
         case onCreatorDetailsNextTap
         case tryAgain
@@ -118,6 +120,7 @@ final class RegisterViewModel: BaseViewModel, ViewModel, ObservableObject {
             case .onPasswordToggleVisibility(let isFirst): togglePasswordVisibility(isFirst: isFirst)
             case .onPasswordNextTap: await setPasswordAndContinue()
             case .setIsCreator(let value): setIsCreator(to: value)
+            case .setYearsOfExperience(let value): setYearsOfExperience(to: value)
             case .onCreatorNextTap: state.isCreator ? continueToCreatorDetails() : await finalizeOnboarding()
             case .onCreatorDetailsNextTap: await finalizeOnboarding()
             case .tryAgain: await finalizeOnboarding()
@@ -326,6 +329,10 @@ final class RegisterViewModel: BaseViewModel, ViewModel, ObservableObject {
     
     private func setIsCreator(to value: Bool) {
         state.isCreator = value
+    }
+    
+    private func setYearsOfExperience(to value: Int) {
+        state.yearsOfExperience = value
     }
     
     private func setStageTo(_ stage: RegisterStageEnum) {

@@ -26,7 +26,12 @@ final class EditProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
     ) {
         self.flowController = flowController
         super.init()
-        state.userData = userData
+        state.username = userData.username
+        state.fullName = userData.fullName
+        state.profilePicture = userData.profilePicture
+        state.yearsOfExperience = userData.creator?.yearsOfExperience ?? 5
+        state.profileDescription = userData.creator?.profileText ?? ""
+        state.isCreator = userData.isCreator
         state.portfolios = portfolios
     }
 
@@ -39,8 +44,14 @@ final class EditProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
     // MARK: State
 
     struct State {
-        var isLoading: Bool = false
-        var userData: User? = nil
+        var isLoading = false
+        var username = ""
+        var fullName = ""
+        var isCreator = false
+        var profilePicture: IImage? = nil
+        var yearsOfExperience: Int = 2
+        var profileDescription = ""
+        var location = ""
         var portfolios: [Portfolio] = []
         var portfolioTagsInput = ""
         var newPortfolio: Portfolio? = nil
@@ -53,6 +64,9 @@ final class EditProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
 
     enum Intent {
         case pickProfilePicture
+        case setLocation(String)
+        case setYearsOfExperience(Int)
+        case setProfileDescription(String)
     }
 
     @discardableResult
@@ -60,6 +74,9 @@ final class EditProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
         executeTask(Task {
             switch intent {
             case .pickProfilePicture: pickProfilePicture()
+            case .setLocation(let location): setLocation(location)
+            case .setYearsOfExperience(let yoe): setYearsOfExperience(yoe)
+            case .setProfileDescription(let description): setProfileDescription(description)
             }
         })
     }
@@ -74,7 +91,17 @@ final class EditProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
         state.mediaFromPicker = media
     }
     
+    private func setLocation(_ location: String) {
+        state.location = location
+    }
     
+    private func setYearsOfExperience(_ yoe: Int) {
+        state.yearsOfExperience = yoe
+    }
+    
+    private func setProfileDescription(_ description: String) {
+        state.profileDescription = description
+    }
 }
 
 extension EditProfileViewModel: MediaPickerSource {

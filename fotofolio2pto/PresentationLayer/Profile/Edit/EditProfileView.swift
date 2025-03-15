@@ -17,14 +17,14 @@ struct EditProfileView: View {
                 //Profile info
                 EditPersonalDetailsView(viewModel: viewModel)
                 
-                if viewModel.state.userData?.creator != nil {
+                if viewModel.state.isCreator {
                     EditProfileDetailsView(viewModel: viewModel)
                     EditPortfolioView(viewModel: viewModel)
                 }
             }
         }
         .navigationBarBackButtonHidden(true) // Hide default back button
-        .navigationBarItems(leading: cancelButton, trailing: saveButton) // Force immediate toolbar setup
+        .navigationBarItems(leading: cancelButton, trailing: saveButton)
         .setupNavBarAndTitle(L.Profile.editTitle)
     }
     

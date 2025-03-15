@@ -8,9 +8,22 @@
 import SwiftUI
 
 struct RegisterCreatorDetailsView: View {
-    let isCreator: Bool
-    let onBackTap: () -> Void
-    let onNextTap: () -> Void
+    @Binding private var yearsOfExperience: Int
+    private let isCreator: Bool
+    private let onBackTap: () -> Void
+    private let onNextTap: () -> Void
+    
+    init(
+        yearsOfExperience: Binding<Int>,
+        isCreator: Bool,
+        onBackTap: @escaping () -> Void,
+        onNextTap: @escaping () -> Void
+    ) {
+        self._yearsOfExperience = yearsOfExperience
+        self.isCreator = isCreator
+        self.onBackTap = onBackTap
+        self.onNextTap = onNextTap
+    }
     
     var body: some View {
         VStack(alignment: .leading, spacing: Constants.Dimens.spaceNone) {
@@ -19,7 +32,7 @@ struct RegisterCreatorDetailsView: View {
                 .foregroundColor(.black)
                 .bold()
             
-            HorizontalWheelPicker()
+            HorizontalWheelPicker(selectedValue: $yearsOfExperience)
                 .padding(.vertical)
             
             HStack {

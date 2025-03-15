@@ -87,6 +87,10 @@ struct RegisterView: View {
                 )
             case .creatorDetails:
                 RegisterCreatorDetailsView(
+                    yearsOfExperience: Binding(
+                        get: { viewModel.state.yearsOfExperience },
+                        set: { viewModel.onIntent(.setYearsOfExperience(to: $0)) }
+                    ),
                     isCreator: viewModel.state.isCreator,
                     onBackTap: { viewModel.onIntent(.goBack(to: .isCreator)) },
                     onNextTap: { viewModel.onIntent(.onCreatorDetailsNextTap) }

@@ -16,68 +16,61 @@ struct EditPersonalDetailsView: View {
     }
     
     var body: some View {
-        VStack(alignment: .leading) {
-            HStack {
+        VStack(alignment: .leading, spacing: Constants.Dimens.spaceMedium) {
+            HStack(spacing: Constants.Dimens.spaceSmall) {
                 ZStack {
-                    ProfilePictureView(profilePicture: viewModel.state.userData?.profilePicture)
+                    ProfilePictureView(
+                        profilePicture: viewModel.state.profilePicture,
+                        width: Constants.Dimens.frameSizeSmallMedium
+                    )
                     
                     Button(action: { viewModel.onIntent(.pickProfilePicture) }) {
                         ZStack {
                             Circle()
                                 .fill(.gray)
-                                .frame(width: 40, height: 40)
-                                .opacity(0.75)
+                                .frame(
+                                    width: Constants.Dimens.frameSizeSmallMedium,
+                                    height: Constants.Dimens.frameSizeSmallMedium
+                                )
+                                .opacity(Constants.Dimens.opacityMid)
                             
                             Image(systemName: "pencil")
-                                .foregroundColor(.gray)
-                                .brightness(0.37)
+                                .foregroundColor(.white)
                         }
                     }
                 }
-                .padding(.leading, 20)
                 
-                VStack(alignment: .leading) {
-                    Text("@" + (viewModel.state.userData?.username ?? L.Profile.usernameError))
+                VStack(alignment: .leading, spacing: Constants.Dimens.spaceXXSmall) {
+                    Text("@\(viewModel.state.username)")
                         .font(.body)
-                        .foregroundColor(.red).brightness(0.2)
-                        .padding(.leading, 20)
+                        .foregroundColor(.mainAccent)
                     
-                    Text(viewModel.state.userData?.fullName ?? L.Profile.nameError)
+                    Text(viewModel.state.fullName)
                         .font(.body)
-                        .foregroundColor(.black).brightness(0.2)
-                        .padding(.bottom, 4)
-                        .padding(.leading, 20)
+                        .foregroundColor(.black)
                 }
-                
                 Spacer()
             }
-            .padding(.top, 10)
-            .padding(.bottom, 10)
             
-            VStack(alignment: .leading) {
+            VStack(alignment: .leading, spacing: Constants.Dimens.spaceXSmall) {
                 Text(L.Profile.activePlace)
-                    .font(.system(size: 16))
-                    .foregroundColor(.black).brightness(0.25)
-                    .padding(.leading, 20)
-                    .padding(.bottom, -1)
+                    .font(.footnote)
+                    .foregroundColor(.black)
                 
-                ZStack {
-                    RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
-                        .foregroundColor(.gray).brightness(0.42)
-                        .frame(height: 45)
-                        .offset(x: -5)
-                    
-                    TextEditor(text: Binding(get: { viewModel.state.userData!.location }, set: { _ in }))
-                        .lineSpacing(1)
-                        .frame(height: 38)
-                        .font(.system(size: 16))
-                        .foregroundColor(.gray)
-                }
-                .padding(.leading, 16)
-                
-                Spacer()
+                TextField(
+                    L.Onboarding.email,
+                    text: Binding(
+                        get: { viewModel.state.location },
+                        set: { viewModel.onIntent(.setLocation($0)) })
+                )
+                    .font(.body)
+                    .frame(height: Constants.Dimens.textFieldHeight)
+                    .padding()
+                    .background(.textFieldBackground)
+                    .cornerRadius(Constants.Dimens.radiusXSmall)
             }
         }
+        .padding([.horizontal, .top])
     }
 }
 

@@ -248,6 +248,7 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		FE068D4A2D85C6E60002B217 /* ViewObjects */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ViewObjects; sourceTree = "<group>"; };
 		FE73EED82D71C9C10045A252 /* Modifiers */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Modifiers; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
@@ -549,6 +550,7 @@
 		FEC94DAB2C243E9A00FFEB11 /* PresentationLayer */ = {
 			isa = PBXGroup;
 			children = (
+				FE068D4A2D85C6E60002B217 /* ViewObjects */,
 				FE73EED82D71C9C10045A252 /* Modifiers */,
 				FEC94E112C28502E00FFEB11 /* Onboarding */,
 				FEC94DE82C25BF3D00FFEB11 /* Extensions */,
@@ -748,6 +750,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
+				FE068D4A2D85C6E60002B217 /* ViewObjects */,
 				FE73EED82D71C9C10045A252 /* Modifiers */,
 			);
 			name = fotofolio2pto;
