@@ -12,6 +12,8 @@ import SwiftUI
 final class ChatViewModel: BaseViewModel, ViewModel, ObservableObject {
     // MARK: Stored properties
 
+    private var chatUpdateTimer: Timer?
+    
     // MARK: Dependencies
 
     @LazyInjected private var getChatUseCase: GetChatUseCase
@@ -19,7 +21,7 @@ final class ChatViewModel: BaseViewModel, ViewModel, ObservableObject {
     @LazyInjected private var getLatestChatMessagesUseCase: GetLatestChatMessagesUseCase
 
     private weak var flowController: MessagesFlowController?
-
+    
     // MARK: Init
 
     init(
@@ -42,7 +44,13 @@ final class ChatViewModel: BaseViewModel, ViewModel, ObservableObject {
             executeTask(Task { await fetchChat() })
         }
         
-        // while onScreen fetchNewMessages()
+        // Fetch messages every second
+        // startFetchingNewMessages()
+    }
+    
+    override func onDisappear() {
+        super.onDisappear()
+        chatUpdateTimer?.invalidate()
     }
 
     // MARK: State
@@ -75,7 +83,7 @@ final class ChatViewModel: BaseViewModel, ViewModel, ObservableObject {
     }
 
     // MARK: Additional methods
-
+    
     private func fetchChat() async {
         state.isLoading = true
         defer { state.isLoading = false }
@@ -83,7 +91,29 @@ final class ChatViewModel: BaseViewModel, ViewModel, ObservableObject {
         do {
             state.chat = try await getChatUseCase.execute(sender: state.sender, receiver: state.receiver)
         } catch {
-            
+            // Log
+        }
+    }
+    
+    private func startFetchingNewMessages() {
+        chatUpdateTimer?.invalidate() // Ensure no duplicate timers
+        chatUpdateTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
+            Task {
+                await self?.fetchNewMessages()
+            }
+        }
+    }
+    
+    private func fetchNewMessages() async {
+        guard let chat = state.chat else { return }
+        
+        do {
+            let newMessages = try await getLatestChatMessagesUseCase.execute(for: chat)
+            await MainActor.run {
+                state.chat?.messages = newMessages
+            }
+        } catch {
+            // Log
         }
     }
     
@@ -97,10 +127,10 @@ final class ChatViewModel: BaseViewModel, ViewModel, ObservableObject {
             try await sendMessageUseCase.execute(text: state.textInput, chat: chat, sender: state.sender)
             let newMessages = try await getLatestChatMessagesUseCase.execute(for: chat)
             
-            withAnimation { state.chat?.messages = newMessages }
+            state.chat?.messages = newMessages
             state.textInput = ""
         } catch {
-            
+            // Log
         }
     }
 }

@@ -50,26 +50,24 @@ struct ChatView: View {
                 }
             }
             
-            HStack {
-                ZStack {
-                    Rectangle()
-                        .foregroundColor(.textFieldBackground)
-                    
-                    TextField(L.Messages.prefill, text: Binding(get: { viewModel.state.textInput }, set: { viewModel.onIntent(.setTextInput($0)) }))
-                        .autocapitalization(.none)
-                        .padding()
-                 }
-                .frame(height: Constants.Dimens.frameSizeSmall)
-                .cornerRadius(Constants.Dimens.radiusXSmall)
+            ZStack(alignment: .trailing) {
+                TextField(L.Onboarding.username, text: Binding(get: { viewModel.state.textInput }, set: { viewModel.onIntent(.setTextInput($0)) }))
+                    .font(.body)
+                    .frame(height: Constants.Dimens.textFieldHeight)
+                    .padding()
+                    .background(.textFieldBackground)
+                    .cornerRadius(Constants.Dimens.radiusXSmall)
+                    .autocapitalization(.none)
+                    .disableAutocorrection(true)
                 
                 Button(action: { viewModel.onIntent(.sendMessage) }, label: {
                     Text(L.Messages.send)
-                        .padding([.top, .bottom], Constants.Dimens.spaceMedium)
-                        .padding([.leading, .trailing], Constants.Dimens.spaceSmall)
+                        .padding(Constants.Dimens.textFieldButtonSpace)
                         .background(.mainAccent)
-                        .foregroundColor(.white)
                         .cornerRadius(Constants.Dimens.radiusXSmall)
+                        .foregroundColor(.white)
                         .disabledOverlay(viewModel.state.textInput.isEmpty)
+                        .padding(.trailing, Constants.Dimens.spaceXSmall)
                 })
             }
         }

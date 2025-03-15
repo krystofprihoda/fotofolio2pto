@@ -39,7 +39,7 @@ struct MessagesView: View {
                                             )
                                             
                                             VStack(alignment: .leading, spacing: Constants.Dimens.spaceXXSmall) {
-                                                Text("@" + (chat.getReceiver(sender: viewModel.state.sender) ?? ""))
+                                                Text("@" + (chat.getReceiver(sender: viewModel.state.sender) ?? L.Messages.sender))
                                                     .font(.body)
                                                     .fontWeight(.medium)
                                                     .foregroundColor(.mainAccent)
@@ -62,6 +62,7 @@ struct MessagesView: View {
                 }
             }
             .refreshable { viewModel.onIntent(.refreshChats) }
+            .animation(.default, value: viewModel.state)
         }
         .lifecycle(viewModel)
         .toolbar {

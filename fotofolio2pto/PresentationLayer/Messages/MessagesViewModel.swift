@@ -12,6 +12,8 @@ import Resolver
 final class MessagesViewModel: BaseViewModel, ViewModel, ObservableObject {
     // MARK: Stored properties
     
+    private var chatUpdateTimer: Timer?
+    
     // MARK: Dependencies
     
     @LazyInjected private var getChatsForUserUseCase: GetChatsForUserUseCase
@@ -36,11 +38,19 @@ final class MessagesViewModel: BaseViewModel, ViewModel, ObservableObject {
         super.onAppear()
         
         executeTask(Task { await fetchChats() })
+        
+        // Update every 2 seconds
+        // startFetchingChats()
+    }
+    
+    override func onDisappear() {
+        super.onDisappear()
+        chatUpdateTimer?.invalidate()
     }
     
     // MARK: State
     
-    struct State {
+    struct State: Equatable {
         var isLoading: Bool = true
         var chats: [Chat] = []
         var sender = ""
@@ -69,6 +79,30 @@ final class MessagesViewModel: BaseViewModel, ViewModel, ObservableObject {
     
     // MARK: Additional methods
     
+    private func startFetchingChats() {
+        chatUpdateTimer?.invalidate() // Prevent multiple timers
+        chatUpdateTimer = Timer.scheduledTimer(withTimeInterval: 2.0, repeats: true) { [weak self] _ in
+            Task {
+                await self?.updateChats()
+            }
+        }
+    }
+    
+    private func updateChats() async {
+        guard !state.sender.isEmpty else { return }
+
+        print("Updating chats")
+
+        do {
+           let newChats = try await getChatsForUserUseCase.execute(user: state.sender)
+           await MainActor.run {
+               state.chats = newChats
+           }
+        } catch {
+            #warning("TODO: Log error")
+        }
+    }
+    
     private func fetchChats() async {
         state.isLoading = true
         defer { state.isLoading = false }
@@ -78,7 +112,7 @@ final class MessagesViewModel: BaseViewModel, ViewModel, ObservableObject {
         do {
             state.chats = try await getChatsForUserUseCase.execute(user: state.sender)
         } catch {
-            
+            #warning("TODO: Log error")
         }
     }
     

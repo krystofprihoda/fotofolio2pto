@@ -79,6 +79,7 @@ public struct L {
         public static let send = "Odeslat"
         public static let prefill = "..."
         public static let chatTitle = "Chat"
+        public static let sender = "Odesílatel"
     }
     
     public enum Profile {
