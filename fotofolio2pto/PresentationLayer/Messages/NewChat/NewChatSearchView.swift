@@ -20,7 +20,7 @@ struct NewChatSearchView: View {
             // Search
             ZStack {
                 Rectangle()
-                   .foregroundColor(.gray).brightness(0.37)
+                    .foregroundColor(.textFieldBackground)
                 
                 HStack {
                     Image(systemName: "magnifyingglass")
@@ -33,7 +33,7 @@ struct NewChatSearchView: View {
                 }
                 .padding()
              }
-            .frame(height: 45)
+            .frame(height: Constants.Dimens.frameSizeSmall)
             .cornerRadius(Constants.Dimens.radiusXSmall)
             .padding([.leading, .trailing])
             
@@ -43,24 +43,24 @@ struct NewChatSearchView: View {
                     Button(action: { viewModel.onIntent(.showNewChatWithUser(user)) }) {
                         HStack {
                             ProfilePictureView(profilePicture: user.profilePicture)
-                                .padding(.leading, 20)
+                                .padding(.leading, Constants.Dimens.spaceSemiLarge)
                             
                             VStack(alignment: .leading, spacing: 0) {
                                 Text(user.username)
-                                    .font(.system(size: 16))
-                                    .foregroundColor(.black).brightness(0.2)
-                                    .padding(.bottom, 4)
+                                    .font(.body)
+                                    .foregroundColor(.black)
+                                    .padding(.bottom, Constants.Dimens.spaceXSmall)
                                 
                                 Text(user.location)
-                                    .font(.system(size: 13))
-                                    .foregroundColor(.black).brightness(0.3)
-                                    .padding(.bottom, 2)
+                                    .font(.footnote)
+                                    .foregroundColor(.black)
+                                    .padding(.bottom, Constants.Dimens.spaceXXSmall)
                             }
-                            .padding(.leading, 7)
+                            .padding(.leading, Constants.Dimens.spaceSmall)
                             
                             Spacer()
                         }
-                        .padding(.top, 12)
+                        .padding(.top, Constants.Dimens.spaceMedium)
                         .transition(.move(edge: .trailing))
                     }
                 }

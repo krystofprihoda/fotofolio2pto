@@ -25,7 +25,7 @@ struct MessagesView: View {
                     if viewModel.state.chats.isEmpty {
                         Text(L.Messages.noMessages)
                             .frame(width: geo.size.width, height: geo.size.height)
-                            .font(.system(size: 15))
+                            .font(.body)
                             .foregroundColor(.gray)
                     } else {
                         VStack(spacing: Constants.Dimens.spaceNone) {
@@ -33,19 +33,22 @@ struct MessagesView: View {
                                 if let message = chat.messages.last {
                                     Button(action: { viewModel.onIntent(.showChat(chat)) }) {
                                         HStack {
-                                            ProfilePictureView(profilePicture: viewModel.getReceiverProfilePicture(chat: chat), width: 40)
+                                            ProfilePictureView(
+                                                profilePicture: viewModel.getReceiverProfilePicture(chat: chat),
+                                                width: Constants.Dimens.frameSizeSmall * Constants.Dimens.halfMultiplier
+                                            )
                                             
-                                            VStack(alignment: .leading, spacing: 3) {
+                                            VStack(alignment: .leading, spacing: Constants.Dimens.spaceXXSmall) {
                                                 Text("@" + (chat.getReceiver(sender: viewModel.state.sender) ?? ""))
-                                                    .font(.system(size: 17))
+                                                    .font(.body)
                                                     .fontWeight(.medium)
-                                                    .foregroundColor(.red).brightness(0.1)
+                                                    .foregroundColor(.mainAccent)
                                                 
                                                 Text(formatMessage(from: message.from, message.body))
                                                     .foregroundColor(.gray)
-                                                    .font(.system(size: 14))
+                                                    .font(.body)
                                             }
-                                            .padding(.leading, 10)
+                                            .padding(.leading, Constants.Dimens.spaceSmall)
                                             
                                             Spacer()
                                         }
@@ -70,7 +73,7 @@ struct MessagesView: View {
                         .frame(height: Constants.Dimens.frameSizeXSmall)
                         .foregroundColor(.gray)
                 }
-                .padding(.trailing, 5)
+                .padding(.trailing, Constants.Dimens.spaceXSmall)
             }
         }
         .setupNavBarAndTitle(L.Messages.title)

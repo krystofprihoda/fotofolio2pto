@@ -32,11 +32,12 @@ struct ChatView: View {
                                     if isSender { Spacer() }
                                     
                                     Text(message.body)
-                                        .font(.system(size: 15))
+                                        .font(.callout)
                                         .multilineTextAlignment(.leading)
-                                        .padding(15)
-                                        .background(isSender ? .red.opacity(0.13) : .gray.opacity(0.2))
+                                        .padding(Constants.Dimens.spaceSemiMedium)
+                                        .background(isSender ? .mainAccent : .gray)
                                         .cornerRadius(Constants.Dimens.radiusXSmall)
+                                        .foregroundStyle(.white)
 
                                     if !isSender { Spacer() }
                                 }
@@ -52,27 +53,28 @@ struct ChatView: View {
             HStack {
                 ZStack {
                     Rectangle()
-                       .foregroundColor(.gray).brightness(0.37)
+                        .foregroundColor(.textFieldBackground)
                     
                     TextField(L.Messages.prefill, text: Binding(get: { viewModel.state.textInput }, set: { viewModel.onIntent(.setTextInput($0)) }))
                         .autocapitalization(.none)
                         .padding()
                  }
-                .frame(height: 45)
+                .frame(height: Constants.Dimens.frameSizeSmall)
                 .cornerRadius(Constants.Dimens.radiusXSmall)
                 
                 Button(action: { viewModel.onIntent(.sendMessage) }, label: {
                     Text(L.Messages.send)
-                        .padding([.top, .bottom], 11)
-                        .padding([.leading, .trailing], 7)
-                        .background(.red).brightness(0.35)
+                        .padding([.top, .bottom], Constants.Dimens.spaceMedium)
+                        .padding([.leading, .trailing], Constants.Dimens.spaceSmall)
+                        .background(.mainAccent)
                         .foregroundColor(.white)
                         .cornerRadius(Constants.Dimens.radiusXSmall)
+                        .disabledOverlay(viewModel.state.textInput.isEmpty)
                 })
             }
         }
         .padding()
-        .setupNavBarAndTitle(L.Messages.chatTitle)
+        .setupNavBarAndTitle(viewModel.state.receiver)
         .lifecycle(viewModel)
     }
 }
