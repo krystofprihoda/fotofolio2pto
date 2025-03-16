@@ -55,8 +55,8 @@ class ProfileFlowController: BaseFlowController {
     }
     
     public func showCreateNewPortfolio(user: User) {
-        let vm = NewPortfolioViewModel(flowController: self, userData: user)
-        let view = NewPortfolioView(viewModel: vm)
+        let vm = EditPortfolioViewModel(flowController: self, userData: user)
+        let view = EditPortfolioView(viewModel: vm)
         let vc = BaseHostingController(rootView: view)
         navigationController.navigationBar.tintColor = .gray
         navigationController.pushViewController(vc, animated: true)
@@ -70,5 +70,9 @@ class ProfileFlowController: BaseFlowController {
             )
         )
         navigationController.present(vc, animated: true)
+    }
+    
+    public func showEditPortfolio(_ portfolio: Portfolio) {
+        
     }
 }

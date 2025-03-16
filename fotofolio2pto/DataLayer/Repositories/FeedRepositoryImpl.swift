@@ -12,9 +12,11 @@ public class FeedRepositoryImpl: FeedRepository {
     private static var portfolios: [Portfolio] = Portfolio.sampleData
     
     private let defaults: UserDefaultsProvider
+    private let userRepository: UserRepository
     
-    init(defaults: UserDefaultsProvider) {
+    init(defaults: UserDefaultsProvider, userRepository: UserRepository) {
         self.defaults = defaults
+        self.userRepository = userRepository
     }
     
     public func getAll() async throws -> [Portfolio] {
@@ -86,10 +88,11 @@ public class FeedRepositoryImpl: FeedRepository {
         })
     }
     
-    public func createPortfolio(for user: User, name: String, photos: [IImage], description: String, tags: [String]) async throws {
+    public func createPortfolio(username: String, name: String, photos: [IImage], description: String, tags: [String]) async throws {
         try await Task.sleep(for: .seconds(0.5))
         let latestId = FeedRepositoryImpl.portfolios.last?.id ?? 0
-        let new = Portfolio(id: latestId + 1, author: user, name: name, photos: photos, description: description, tags: tags, timestamp: .now)
+        guard let author = try await userRepository.getUserByUsername(username) else { throw ObjectError.nonExistent }
+        let new = Portfolio(id: latestId + 1, author: author, name: name, photos: photos, description: description, tags: tags, timestamp: .now)
         FeedRepositoryImpl.portfolios.append(new)
     }
 }

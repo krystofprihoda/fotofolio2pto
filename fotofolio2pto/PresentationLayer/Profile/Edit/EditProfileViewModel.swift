@@ -33,6 +33,7 @@ final class EditProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
         state.profileDescription = userData.creator?.profileText ?? ""
         state.isCreator = userData.isCreator
         state.portfolios = portfolios
+        state.rawUserData = userData
     }
 
     // MARK: Lifecycle
@@ -43,7 +44,7 @@ final class EditProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
 
     // MARK: State
 
-    struct State {
+    struct State: Equatable {
         var isLoading = false
         var username = ""
         var fullName = ""
@@ -53,9 +54,11 @@ final class EditProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
         var profileDescription = ""
         var location = ""
         var portfolios: [Portfolio] = []
+        var rawUserData: User? = nil
         var portfolioTagsInput = ""
         var newPortfolio: Portfolio? = nil
         var mediaFromPicker: [IImage] = []
+        var removedPortfolios: [Int] = []
     }
 
     @Published private(set) var state = State()
@@ -67,6 +70,8 @@ final class EditProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
         case setLocation(String)
         case setYearsOfExperience(Int)
         case setProfileDescription(String)
+        case editPorfolio(Portfolio)
+        case removePortfolio(Int)
     }
 
     @discardableResult
@@ -77,6 +82,8 @@ final class EditProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
             case .setLocation(let location): setLocation(location)
             case .setYearsOfExperience(let yoe): setYearsOfExperience(yoe)
             case .setProfileDescription(let description): setProfileDescription(description)
+            case .editPorfolio(let portfolio): presentEditPortfolio(portfolio)
+            case .removePortfolio(let id): addToRemoved(id)
             }
         })
     }
@@ -101,6 +108,14 @@ final class EditProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
     
     private func setProfileDescription(_ description: String) {
         state.profileDescription = description
+    }
+    
+    private func presentEditPortfolio(_ portfolio: Portfolio) {
+        flowController?.showEditPortfolio(portfolio)
+    }
+    
+    private func addToRemoved(_ portfolio: Int) {
+        state.removedPortfolios.append(portfolio)
     }
 }
 

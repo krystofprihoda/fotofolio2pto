@@ -1,5 +1,5 @@
 //
-//  NewPortfolioView.swift
+//  EditPortfolioView.swift
 //  fotofolio2pto
 //
 //  Created by Kryštof Příhoda on 27.06.2024.
@@ -7,11 +7,11 @@
 
 import SwiftUI
 
-struct NewPortfolioView: View {
+struct EditPortfolioView: View {
     
-    @ObservedObject var viewModel: NewPortfolioViewModel
+    @ObservedObject var viewModel: EditPortfolioViewModel
     
-    init(viewModel: NewPortfolioViewModel) {
+    init(viewModel: EditPortfolioViewModel) {
         self.viewModel = viewModel
     }
     
@@ -209,5 +209,5 @@ struct NewPortfolioView: View {
 }
 
 #Preview {
-    NewPortfolioView(viewModel: .init(flowController: nil, userData: .dummy1))
+    EditPortfolioView(viewModel: .init(flowController: nil, portfolioAuthorUsername: "author"))
 }

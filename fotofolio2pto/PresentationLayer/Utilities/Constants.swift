@@ -107,6 +107,10 @@ public struct Constants {
         */
         public static let frameSizeMedium: CGFloat = 80
         /**
+        * Frame size of 90
+        */
+        public static let frameSizeMediumLarge: CGFloat = 90
+        /**
         * Frame size of 120
         */
         public static let frameSizeLarge: CGFloat = 120

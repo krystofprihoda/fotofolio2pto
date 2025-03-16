@@ -104,5 +104,6 @@ public struct L {
         public static let maxNumberOfTags = "Tagy (1 až 5)"
         public static let createNew = "Vytvořit"
         public static let newPortfolioTitle = "Nové portfolio"
+        public static let portfolios = "Portfolia"
     }
 }

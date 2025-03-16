@@ -18,5 +18,5 @@ public protocol FeedRepository {
     func removeAllFlagged() throws
     func getFilteredPortfolios(filter: [String]) async throws -> [Portfolio]
     func getUserPortfolios(for: String) async throws -> [Portfolio]
-    func createPortfolio(for user: User, name: String, photos: [IImage], description: String, tags: [String]) async throws
+    func createPortfolio(username: String, name: String, photos: [IImage], description: String, tags: [String]) async throws
 }

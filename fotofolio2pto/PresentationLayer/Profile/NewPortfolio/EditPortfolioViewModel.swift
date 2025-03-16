@@ -1,5 +1,5 @@
 //
-//  NewPortfolioViewModel.swift
+//  EditPortfolioViewModel.swift
 //  fotofolio2pto
 //
 //  Created by Kryštof Příhoda on 27.06.2024.
@@ -9,7 +9,12 @@ import Foundation
 import SwiftUI
 import Resolver
 
-final class NewPortfolioViewModel: BaseViewModel, ViewModel, ObservableObject {
+internal enum PortfolioIntent: Equatable {
+    case createNew
+    case updateExisting(Int)
+}
+
+final class EditPortfolioViewModel: BaseViewModel, ViewModel, ObservableObject {
     // MARK: Stored properties
 
     // MARK: Dependencies
@@ -22,11 +27,13 @@ final class NewPortfolioViewModel: BaseViewModel, ViewModel, ObservableObject {
 
     init(
         flowController: ProfileFlowController?,
-        userData: User
+        portfolioAuthorUsername: String,
+        intent: PortfolioIntent = .createNew
     ) {
         self.flowController = flowController
         super.init()
-        state.userData = userData
+        state.portfolioAuthor = portfolioAuthorUsername
+        state.portfolioIntent = intent
     }
 
     // MARK: Lifecycle
@@ -39,7 +46,8 @@ final class NewPortfolioViewModel: BaseViewModel, ViewModel, ObservableObject {
 
     struct State: Equatable {
         var isLoading: Bool = false
-        var userData: User! = nil
+        var portfolioIntent: PortfolioIntent = .createNew
+        var portfolioAuthor = ""
         var name = ""
         var description = ""
         var media: [IImage] = []
@@ -139,7 +147,7 @@ final class NewPortfolioViewModel: BaseViewModel, ViewModel, ObservableObject {
         
         do {
             try await createPortfolioUseCase.execute(
-                for: state.userData,
+                username: state.portfolioAuthor,
                 name: state.name,
                 photos: state.media,
                 description: state.description,
@@ -161,7 +169,7 @@ final class NewPortfolioViewModel: BaseViewModel, ViewModel, ObservableObject {
     }
 }
 
-extension NewPortfolioViewModel: MediaPickerSource {
+extension EditPortfolioViewModel: MediaPickerSource {
     var media: Binding<[IImage]> {
         Binding<[IImage]>(
             get: { [weak self] in self?.state.media ?? [] },

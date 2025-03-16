@@ -19,7 +19,7 @@ struct EditProfileView: View {
                 
                 if viewModel.state.isCreator {
                     EditProfileDetailsView(viewModel: viewModel)
-                    EditPortfolioView(viewModel: viewModel)
+                    EditPortfoliosView(viewModel: viewModel)
                 }
             }
         }
