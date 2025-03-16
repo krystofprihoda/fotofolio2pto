@@ -31,13 +31,19 @@ struct TagsSelectionView: View {
     var body: some View {
         VStack(spacing: Constants.Dimens.spaceMedium) {
             // Search Bar
-            TextField(L.Profile.portraitsExample, text: $searchText)
-                .font(.body)
-                .padding()
-                .background(.textFieldBackground)
-                .frame(height: Constants.Dimens.textFieldHeight * Constants.Dimens.halfMultiplier)
-                .cornerRadius(Constants.Dimens.spaceSmall)
-                .padding(.trailing)
+            ZStack(alignment: .trailing) {
+                TextField(L.Profile.portraitsExample, text: $searchText)
+                    .font(.body)
+                    .padding()
+                    .background(.textFieldBackground)
+                    .frame(height: Constants.Dimens.textFieldHeight * Constants.Dimens.halfMultiplier)
+                    .cornerRadius(Constants.Dimens.spaceSmall)
+                
+                Image(systemName: "magnifyingglass")
+                    .foregroundStyle(.gray)
+                    .padding(.trailing)
+            }
+            .padding(.trailing)
 
             // Tags
             VStack {

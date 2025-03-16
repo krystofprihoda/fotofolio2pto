@@ -30,14 +30,12 @@ class SelectionFlowController: BaseFlowController {
     func showProfile(user: User) {
         let fc = ProfileFlowController(navigationController: navigationController, signedInUser: signedInUser, displayedUser: user.username)
         let vc = startChildFlow(fc)
-        navigationController.navigationBar.tintColor = .gray
         navigationController.pushViewController(vc, animated: true)
     }
     
     func sendMessage(to receiver: User) {
         let fc = MessagesFlowController(navigationController: navigationController, sender: signedInUser, receiver: receiver.username)
         let vc = startChildFlow(fc)
-        navigationController.navigationBar.tintColor = .gray
         navigationController.pushViewController(vc, animated: true)
     }
 }

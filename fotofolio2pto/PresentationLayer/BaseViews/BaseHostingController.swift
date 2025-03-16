@@ -52,7 +52,6 @@ class BaseHostingController<Content>: UIHostingController<AnyView>, UIGestureRec
         super.init(coder: aDecoder)
     }
     
-    /// Setup custom back button arrow
     private func setupSwipeBackGesture() {
         navigationController?.interactivePopGestureRecognizer?.delegate = self
     }

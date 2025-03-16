@@ -58,7 +58,7 @@ struct EditPersonalDetailsView: View {
                     .foregroundColor(.black)
                 
                 TextField(
-                    L.Onboarding.email,
+                    L.Profile.activePlace,
                     text: Binding(
                         get: { viewModel.state.location },
                         set: { viewModel.onIntent(.setLocation($0)) })

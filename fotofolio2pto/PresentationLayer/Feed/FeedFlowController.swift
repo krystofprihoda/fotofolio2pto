@@ -37,7 +37,9 @@ class FeedFlowController: BaseFlowController {
 
     public func presentFilter(with preselected: [String]) {
         let vm = FilterViewModel(flowController: self, with: preselected)
-        let vc = BaseHostingController(rootView: FilterView(viewModel: vm))
+        let view = FilterView(viewModel: vm)
+        let vc = BaseHostingController(rootView: view)
+        
         if let sheet = vc.sheetPresentationController {
             sheet.detents = [.medium(), .large()]
             sheet.largestUndimmedDetentIdentifier = .medium
@@ -59,7 +61,6 @@ class FeedFlowController: BaseFlowController {
     func showProfile(user: User) {
         let fc = ProfileFlowController(navigationController: navigationController, signedInUser: signedInUser, displayedUser: user.username)
         let vc = startChildFlow(fc)
-        navigationController.navigationBar.tintColor = .gray
         navigationController.pushViewController(vc, animated: true)
     }
 }

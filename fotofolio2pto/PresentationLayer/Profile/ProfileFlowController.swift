@@ -42,7 +42,6 @@ class ProfileFlowController: BaseFlowController {
     public func sendMessage(from sender: String, to receiver: String) {
         let fc = MessagesFlowController(navigationController: navigationController, sender: sender, receiver: receiver)
         let vc = startChildFlow(fc)
-        navigationController.navigationBar.tintColor = .gray
         navigationController.pushViewController(vc, animated: true)
     }
     
@@ -50,15 +49,13 @@ class ProfileFlowController: BaseFlowController {
         let vm = EditProfileViewModel(flowController: self, userData: userData, portfolios: portfolios)
         let view = EditProfileView(viewModel: vm)
         let vc = BaseHostingController(rootView: view, hideBackButton: true)
-        navigationController.navigationBar.tintColor = .gray
         navigationController.pushViewController(vc, animated: true)
     }
     
-    public func showCreateNewPortfolio(user: User) {
-        let vm = EditPortfolioViewModel(flowController: self, userData: user)
+    public func showCreateNewPortfolio(authorUsername: String) {
+        let vm = EditPortfolioViewModel(flowController: self, portfolioAuthorUsername: authorUsername)
         let view = EditPortfolioView(viewModel: vm)
-        let vc = BaseHostingController(rootView: view)
-        navigationController.navigationBar.tintColor = .gray
+        let vc = BaseHostingController(rootView: view, hideBackButton: true)
         navigationController.pushViewController(vc, animated: true)
     }
     
@@ -72,7 +69,10 @@ class ProfileFlowController: BaseFlowController {
         navigationController.present(vc, animated: true)
     }
     
-    public func showEditPortfolio(_ portfolio: Portfolio) {
-        
+    public func showEditPortfolio(_ portfolio: Portfolio, author: String) {
+        let vm = EditPortfolioViewModel(flowController: self, portfolioAuthorUsername: author, intent: .updateExisting(portfolio))
+        let view = EditPortfolioView(viewModel: vm)
+        let vc = BaseHostingController(rootView: view, hideBackButton: true)
+        navigationController.pushViewController(vc, animated: true)
     }
 }

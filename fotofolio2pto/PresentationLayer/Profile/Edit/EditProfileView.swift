@@ -18,27 +18,34 @@ struct EditProfileView: View {
                 EditPersonalDetailsView(viewModel: viewModel)
                 
                 if viewModel.state.isCreator {
-                    EditProfileDetailsView(viewModel: viewModel)
+                    EditCreatorDetailsView(viewModel: viewModel)
                     EditPortfoliosView(viewModel: viewModel)
                 }
             }
         }
+        .alert(item: Binding<AlertData?>(
+            get: { viewModel.state.alertData },
+            set: { alertData in
+                viewModel.onIntent(.onAlertDataChanged(alertData))
+            }
+        )) { alert in .init(alert) }
         .navigationBarBackButtonHidden(true) // Hide default back button
         .navigationBarItems(leading: cancelButton, trailing: saveButton)
         .setupNavBarAndTitle(L.Profile.editTitle)
     }
     
     private var saveButton: some View {
-        Button(action: {}) {
-               Text(L.Profile.save)
-                   .foregroundColor(.gray)
-           }
-       }
+        Button(action: { viewModel.onIntent(.saveChanges) }) {
+            Text(L.Profile.save)
+                .foregroundColor(.black)
+        }
+        .disabled(viewModel.state.isSaveButtonDisabled)
+    }
 
    private var cancelButton: some View {
-       Button(action: {}) {
+       Button(action: { viewModel.onIntent(.cancel) }) {
            Text(L.Profile.cancel)
-               .foregroundColor(.gray)
+               .foregroundColor(.black)
        }
    }
 }

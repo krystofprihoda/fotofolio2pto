@@ -89,6 +89,7 @@ public struct L {
         public static let editTitle = "Úprava profilu"
         public static let save = "Uložit"
         public static let cancel = "Zrušit"
+        public static let yesCancel = "Ano, zahodit změny"
         public static let weddingExample = "např. svatba"
         public static let portraitsExample = "např. Portrét"
         public static let add = "Přidat"
@@ -105,5 +106,6 @@ public struct L {
         public static let createNew = "Vytvořit"
         public static let newPortfolioTitle = "Nové portfolio"
         public static let portfolios = "Portfolia"
+        public static let goBack = "Opravdu chcete zahodit provedené změny?"
     }
 }

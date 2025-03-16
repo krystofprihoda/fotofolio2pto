@@ -30,7 +30,6 @@ class SearchFlowController: BaseFlowController {
     public func showProfile(of user: User) {
         let fc = ProfileFlowController(navigationController: navigationController, signedInUser: signedInUser, displayedUser: user.username)
         let vc = startChildFlow(fc)
-        navigationController.navigationBar.tintColor = .gray
         navigationController.pushViewController(vc, animated: true)
     }
 }

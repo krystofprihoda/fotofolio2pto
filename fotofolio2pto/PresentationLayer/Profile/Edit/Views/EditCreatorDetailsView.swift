@@ -1,5 +1,5 @@
 //
-//  EditProfileDetailsView.swift
+//  EditCreatorDetailsView.swift
 //  fotofolio2pto
 //
 //  Created by Kryštof Příhoda on 27.06.2024.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct EditProfileDetailsView: View {
+struct EditCreatorDetailsView: View {
     
     @ObservedObject var viewModel: EditProfileViewModel
     
@@ -65,5 +65,5 @@ struct EditProfileDetailsView: View {
 }
 
 #Preview {
-    EditProfileDetailsView(viewModel: .init(flowController: nil, userData: .dummy1, portfolios: [.dummyPortfolio1]))
+    EditCreatorDetailsView(viewModel: .init(flowController: nil, userData: .dummy1, portfolios: [.dummyPortfolio1]))
 }

@@ -62,12 +62,10 @@ struct FeedView: View {
                     Button(L.Feed.sortByDate, action: { viewModel.onIntent(.sortByDate) })
                     Button(L.Feed.soryByRating, action: { viewModel.onIntent(.sortByRating) })
                 }
-                .padding(.leading, 5)
             }
             
             ToolbarItemGroup(placement: .navigationBarTrailing) {
                 Button(L.Feed.filter, action: { viewModel.onIntent(.filter) })
-                .padding(.trailing, 5)
             }
         }
         .setupNavBarAndTitle(L.Feed.title)

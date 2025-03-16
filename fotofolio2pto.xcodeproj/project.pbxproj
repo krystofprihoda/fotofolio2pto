@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 70;
+	objectVersion = 56;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -23,6 +23,9 @@
 		FE9777E12D7F695C0027DA60 /* PulsingCircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE9777E02D7F695C0027DA60 /* PulsingCircleView.swift */; };
 		FE9777E32D7F6D940027DA60 /* RegisterCreatorDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE9777E22D7F6D940027DA60 /* RegisterCreatorDetailsView.swift */; };
 		FE9777E52D7F6DAC0027DA60 /* RegisterIsCreatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE9777E42D7F6DAC0027DA60 /* RegisterIsCreatorView.swift */; };
+		FE9A30B02D86E6A10056CC0A /* UserViewObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE9A30AF2D86E6A10056CC0A /* UserViewObject.swift */; };
+		FE9A30B22D86E6A10056CC0A /* Shimmer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE9A30B12D86E6A10056CC0A /* Shimmer.swift */; };
+		FE9A30B52D8737650056CC0A /* UpdatePortfolioUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE9A30B42D8737650056CC0A /* UpdatePortfolioUseCase.swift */; };
 		FEA53C962C29BF2F006F0116 /* Providers+Injection.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53C952C29BF2F006F0116 /* Providers+Injection.swift */; };
 		FEA53C982C29BF97006F0116 /* Repositories+Injection.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53C972C29BF97006F0116 /* Repositories+Injection.swift */; };
 		FEA53C9A2C29BFDF006F0116 /* UseCase+Injection.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53C992C29BFDF006F0116 /* UseCase+Injection.swift */; };
@@ -58,7 +61,7 @@
 		FEA53CE22C2C88EE006F0116 /* GetUsersFromQueryUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CE12C2C88EE006F0116 /* GetUsersFromQueryUseCase.swift */; };
 		FEA53CE42C2D5A46006F0116 /* EditProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CE32C2D5A46006F0116 /* EditProfileView.swift */; };
 		FEA53CE72C2D5A92006F0116 /* EditPersonalDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CE62C2D5A92006F0116 /* EditPersonalDetailsView.swift */; };
-		FEA53CEB2C2D5B65006F0116 /* EditProfileDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CEA2C2D5B65006F0116 /* EditProfileDetailsView.swift */; };
+		FEA53CEB2C2D5B65006F0116 /* EditCreatorDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CEA2C2D5B65006F0116 /* EditCreatorDetailsView.swift */; };
 		FEA53CED2C2D5BAC006F0116 /* EditPortfoliosView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CEC2C2D5BAC006F0116 /* EditPortfoliosView.swift */; };
 		FEA53CEF2C2D6123006F0116 /* MediaPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CEE2C2D6123006F0116 /* MediaPickerView.swift */; };
 		FEA53CF12C2D6280006F0116 /* EditProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CF02C2D6280006F0116 /* EditProfileViewModel.swift */; };
@@ -101,7 +104,6 @@
 		FEC94DE52C2594E200FFEB11 /* PortfolioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC94DE42C2594E200FFEB11 /* PortfolioView.swift */; };
 		FEC94DEA2C25BF4B00FFEB11 /* View+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC94DE92C25BF4B00FFEB11 /* View+Extensions.swift */; };
 		FEC94DEC2C25DC1600FFEB11 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC94DEB2C25DC1600FFEB11 /* Constants.swift */; };
-		FEC94DEE2C25ECDC00FFEB11 /* BottomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC94DED2C25ECDC00FFEB11 /* BottomSheetView.swift */; };
 		FEC94DF02C25ED5C00FFEB11 /* RoundedCorner.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC94DEF2C25ED5C00FFEB11 /* RoundedCorner.swift */; };
 		FEC94DF22C25EF7900FFEB11 /* FilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC94DF12C25EF7900FFEB11 /* FilterView.swift */; };
 		FEC94DF42C25F57700FFEB11 /* FilterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC94DF32C25F57700FFEB11 /* FilterViewModel.swift */; };
@@ -143,6 +145,9 @@
 		FE9777E02D7F695C0027DA60 /* PulsingCircleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PulsingCircleView.swift; sourceTree = "<group>"; };
 		FE9777E22D7F6D940027DA60 /* RegisterCreatorDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterCreatorDetailsView.swift; sourceTree = "<group>"; };
 		FE9777E42D7F6DAC0027DA60 /* RegisterIsCreatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterIsCreatorView.swift; sourceTree = "<group>"; };
+		FE9A30AF2D86E6A10056CC0A /* UserViewObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewObject.swift; sourceTree = "<group>"; };
+		FE9A30B12D86E6A10056CC0A /* Shimmer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shimmer.swift; sourceTree = "<group>"; };
+		FE9A30B42D8737650056CC0A /* UpdatePortfolioUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatePortfolioUseCase.swift; sourceTree = "<group>"; };
 		FEA53C952C29BF2F006F0116 /* Providers+Injection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Providers+Injection.swift"; sourceTree = "<group>"; };
 		FEA53C972C29BF97006F0116 /* Repositories+Injection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Repositories+Injection.swift"; sourceTree = "<group>"; };
 		FEA53C992C29BFDF006F0116 /* UseCase+Injection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UseCase+Injection.swift"; sourceTree = "<group>"; };
@@ -177,7 +182,7 @@
 		FEA53CE12C2C88EE006F0116 /* GetUsersFromQueryUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUsersFromQueryUseCase.swift; sourceTree = "<group>"; };
 		FEA53CE32C2D5A46006F0116 /* EditProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileView.swift; sourceTree = "<group>"; };
 		FEA53CE62C2D5A92006F0116 /* EditPersonalDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPersonalDetailsView.swift; sourceTree = "<group>"; };
-		FEA53CEA2C2D5B65006F0116 /* EditProfileDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileDetailsView.swift; sourceTree = "<group>"; };
+		FEA53CEA2C2D5B65006F0116 /* EditCreatorDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCreatorDetailsView.swift; sourceTree = "<group>"; };
 		FEA53CEC2C2D5BAC006F0116 /* EditPortfoliosView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPortfoliosView.swift; sourceTree = "<group>"; };
 		FEA53CEE2C2D6123006F0116 /* MediaPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaPickerView.swift; sourceTree = "<group>"; };
 		FEA53CF02C2D6280006F0116 /* EditProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewModel.swift; sourceTree = "<group>"; };
@@ -222,7 +227,6 @@
 		FEC94DE42C2594E200FFEB11 /* PortfolioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioView.swift; sourceTree = "<group>"; };
 		FEC94DE92C25BF4B00FFEB11 /* View+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extensions.swift"; sourceTree = "<group>"; };
 		FEC94DEB2C25DC1600FFEB11 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		FEC94DED2C25ECDC00FFEB11 /* BottomSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetView.swift; sourceTree = "<group>"; };
 		FEC94DEF2C25ED5C00FFEB11 /* RoundedCorner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedCorner.swift; sourceTree = "<group>"; };
 		FEC94DF12C25EF7900FFEB11 /* FilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterView.swift; sourceTree = "<group>"; };
 		FEC94DF32C25F57700FFEB11 /* FilterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewModel.swift; sourceTree = "<group>"; };
@@ -246,11 +250,6 @@
 		FECADFDB2D80534B004023F6 /* RegisterCreatingUserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterCreatingUserView.swift; sourceTree = "<group>"; };
 		FECADFDD2D805356004023F6 /* RegisterFailedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterFailedView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
-
-/* Begin PBXFileSystemSynchronizedRootGroup section */
-		FE068D4A2D85C6E60002B217 /* ViewObjects */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ViewObjects; sourceTree = "<group>"; };
-		FE73EED82D71C9C10045A252 /* Modifiers */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Modifiers; sourceTree = "<group>"; };
-/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		FEC94D8E2C24398200FFEB11 /* Frameworks */ = {
@@ -286,6 +285,7 @@
 		FE5F8A792C296EAC001EE8AF /* UseCases */ = {
 			isa = PBXGroup;
 			children = (
+				FE9A30B72D8737930056CC0A /* Profile */,
 				FEA53CC02C2B6033006F0116 /* Messages */,
 				FEA53C9F2C29C6FE006F0116 /* Feed */,
 				FE5F8A872C2975E9001EE8AF /* User */,
@@ -364,6 +364,30 @@
 				FE7FB10F2D7B1D3900428A17 /* RegisterNameAndEmailView.swift */,
 			);
 			path = SubViews;
+			sourceTree = "<group>";
+		};
+		FE9A30B72D8737930056CC0A /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				FE9A30B42D8737650056CC0A /* UpdatePortfolioUseCase.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		FE9A30B82D8737A60056CC0A /* ViewObjects */ = {
+			isa = PBXGroup;
+			children = (
+				FE9A30AF2D86E6A10056CC0A /* UserViewObject.swift */,
+			);
+			path = ViewObjects;
+			sourceTree = "<group>";
+		};
+		FE9A30B92D8737B80056CC0A /* Modifiers */ = {
+			isa = PBXGroup;
+			children = (
+				FE9A30B12D86E6A10056CC0A /* Shimmer.swift */,
+			);
+			path = Modifiers;
 			sourceTree = "<group>";
 		};
 		FEA53C932C29BF13006F0116 /* Application */ = {
@@ -477,7 +501,7 @@
 			isa = PBXGroup;
 			children = (
 				FEA53CE62C2D5A92006F0116 /* EditPersonalDetailsView.swift */,
-				FEA53CEA2C2D5B65006F0116 /* EditProfileDetailsView.swift */,
+				FEA53CEA2C2D5B65006F0116 /* EditCreatorDetailsView.swift */,
 				FEA53CEC2C2D5BAC006F0116 /* EditPortfoliosView.swift */,
 			);
 			path = Views;
@@ -550,8 +574,8 @@
 		FEC94DAB2C243E9A00FFEB11 /* PresentationLayer */ = {
 			isa = PBXGroup;
 			children = (
-				FE068D4A2D85C6E60002B217 /* ViewObjects */,
-				FE73EED82D71C9C10045A252 /* Modifiers */,
+				FE9A30B92D8737B80056CC0A /* Modifiers */,
+				FE9A30B82D8737A60056CC0A /* ViewObjects */,
 				FEC94E112C28502E00FFEB11 /* Onboarding */,
 				FEC94DE82C25BF3D00FFEB11 /* Extensions */,
 				FEC94DBD2C246C4B00FFEB11 /* Profile */,
@@ -573,7 +597,6 @@
 				FE9777E02D7F695C0027DA60 /* PulsingCircleView.swift */,
 				FE9777DE2D7F69240027DA60 /* HorizontalWheelPicker.swift */,
 				FEC94DAE2C243EC100FFEB11 /* BaseHostingController.swift */,
-				FEC94DED2C25ECDC00FFEB11 /* BottomSheetView.swift */,
 				FEC94DEF2C25ED5C00FFEB11 /* RoundedCorner.swift */,
 				FEA53CEE2C2D6123006F0116 /* MediaPickerView.swift */,
 			);
@@ -749,10 +772,6 @@
 			);
 			dependencies = (
 			);
-			fileSystemSynchronizedGroups = (
-				FE068D4A2D85C6E60002B217 /* ViewObjects */,
-				FE73EED82D71C9C10045A252 /* Modifiers */,
-			);
 			name = fotofolio2pto;
 			packageProductDependencies = (
 				FEA53C9C2C29C1BA006F0116 /* Resolver */,
@@ -818,6 +837,7 @@
 				FE9777E52D7F6DAC0027DA60 /* RegisterIsCreatorView.swift in Sources */,
 				FEA64F6F2D7712C700B11530 /* RegisterView.swift in Sources */,
 				FE7FB10D2D7B163B00428A17 /* CheckUsernameAvailableUseCase.swift in Sources */,
+				FE9A30B22D86E6A10056CC0A /* Shimmer.swift in Sources */,
 				FEA53CE22C2C88EE006F0116 /* GetUsersFromQueryUseCase.swift in Sources */,
 				FEC94DE32C25917200FFEB11 /* Portfolio.swift in Sources */,
 				FEC94E152C28521D00FFEB11 /* SignInView.swift in Sources */,
@@ -836,6 +856,7 @@
 				FEA53CD62C2C2CEC006F0116 /* CreateNewChatUseCase.swift in Sources */,
 				FE5F8A862C29737F001EE8AF /* SystemUserDefaultsProvider.swift in Sources */,
 				FEC94DEC2C25DC1600FFEB11 /* Constants.swift in Sources */,
+				FE9A30B52D8737650056CC0A /* UpdatePortfolioUseCase.swift in Sources */,
 				FEC94E132C28504900FFEB11 /* LoginCredentialsView.swift in Sources */,
 				FE7FB1102D7B1D3900428A17 /* RegisterNameAndEmailView.swift in Sources */,
 				FEC94DAF2C243EC100FFEB11 /* BaseHostingController.swift in Sources */,
@@ -845,7 +866,6 @@
 				FEC94DE52C2594E200FFEB11 /* PortfolioView.swift in Sources */,
 				FEC94DDD2C247D7600FFEB11 /* ProfileViewModel.swift in Sources */,
 				FEC94DB62C2447F000FFEB11 /* BaseFlowController.swift in Sources */,
-				FEC94DEE2C25ECDC00FFEB11 /* BottomSheetView.swift in Sources */,
 				FE9777D92D7EF25D0027DA60 /* RegisterUsernameView.swift in Sources */,
 				FEA53CDC2C2C39F0006F0116 /* GetLatestChatMessagesUseCase.swift in Sources */,
 				FEA53CAE2C29E08D006F0116 /* Sequence+Extensions.swift in Sources */,
@@ -853,6 +873,7 @@
 				FEC94DF22C25EF7900FFEB11 /* FilterView.swift in Sources */,
 				FEA53CD12C2C2387006F0116 /* NewChatSearchViewModel.swift in Sources */,
 				FEA53CDE2C2C49DF006F0116 /* GetChatUseCase.swift in Sources */,
+				FE9A30B02D86E6A10056CC0A /* UserViewObject.swift in Sources */,
 				FEC94DEA2C25BF4B00FFEB11 /* View+Extensions.swift in Sources */,
 				FEC94DCD2C2479CD00FFEB11 /* SelectionViewModel.swift in Sources */,
 				FEA53CA72C29D667006F0116 /* FlagPortfolioUseCase.swift in Sources */,
@@ -880,7 +901,7 @@
 				FEC94DFF2C262E8F00FFEB11 /* Creator.swift in Sources */,
 				FEC94DF72C26283400FFEB11 /* PortfolioDetailView.swift in Sources */,
 				FE5F8A7C2C296ECA001EE8AF /* LoginWithCredentialsUseCase.swift in Sources */,
-				FEA53CEB2C2D5B65006F0116 /* EditProfileDetailsView.swift in Sources */,
+				FEA53CEB2C2D5B65006F0116 /* EditCreatorDetailsView.swift in Sources */,
 				FEC94DD72C247CB200FFEB11 /* MessagesView.swift in Sources */,
 				FEC94DF42C25F57700FFEB11 /* FilterViewModel.swift in Sources */,
 				FEC94DB82C244E9E00FFEB11 /* MainFlowController.swift in Sources */,

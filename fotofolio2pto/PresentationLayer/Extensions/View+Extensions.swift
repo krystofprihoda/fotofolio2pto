@@ -27,7 +27,10 @@ extension View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbarBackground(.visible, for: .navigationBar)
             .toolbarBackground(.white, for: .navigationBar)
-            .accentColor(.gray)
+            .accentColor(
+                .black
+                    .opacity(Constants.Dimens.opacityHigh)
+            )
     }
 }
 

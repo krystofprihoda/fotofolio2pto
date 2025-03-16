@@ -104,7 +104,7 @@ final class ProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
     
     private func createNewPortfolio() {
         guard let userData = state.userData else { return }
-        flowController?.showCreateNewPortfolio(user: userData)
+        flowController?.showCreateNewPortfolio(authorUsername: userData.username)
     }
     
     private func signOut() {

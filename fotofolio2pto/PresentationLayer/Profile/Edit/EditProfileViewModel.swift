@@ -28,6 +28,7 @@ final class EditProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
         super.init()
         state.username = userData.username
         state.fullName = userData.fullName
+        state.location = userData.location
         state.profilePicture = userData.profilePicture
         state.yearsOfExperience = userData.creator?.yearsOfExperience ?? 5
         state.profileDescription = userData.creator?.profileText ?? ""
@@ -56,9 +57,10 @@ final class EditProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
         var portfolios: [Portfolio] = []
         var rawUserData: User? = nil
         var portfolioTagsInput = ""
-        var newPortfolio: Portfolio? = nil
         var mediaFromPicker: [IImage] = []
         var removedPortfolios: [Int] = []
+        var isSaveButtonDisabled = true
+        var alertData: AlertData? = nil
     }
 
     @Published private(set) var state = State()
@@ -72,6 +74,9 @@ final class EditProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
         case setProfileDescription(String)
         case editPorfolio(Portfolio)
         case removePortfolio(Int)
+        case onAlertDataChanged(AlertData?)
+        case saveChanges
+        case cancel
     }
 
     @discardableResult
@@ -84,6 +89,9 @@ final class EditProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
             case .setProfileDescription(let description): setProfileDescription(description)
             case .editPorfolio(let portfolio): presentEditPortfolio(portfolio)
             case .removePortfolio(let id): addToRemoved(id)
+            case .onAlertDataChanged(let alertData): setAlertData(alertData)
+            case .saveChanges: saveChanges()
+            case .cancel: cancelEdit()
             }
         })
     }
@@ -96,26 +104,78 @@ final class EditProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
     
     private func setMedia(_ media: [IImage]) {
         state.mediaFromPicker = media
+        updateSaveButtonVisibility()
     }
     
     private func setLocation(_ location: String) {
         state.location = location
+        updateSaveButtonVisibility()
     }
     
     private func setYearsOfExperience(_ yoe: Int) {
         state.yearsOfExperience = yoe
+        updateSaveButtonVisibility()
     }
     
     private func setProfileDescription(_ description: String) {
         state.profileDescription = description
+        updateSaveButtonVisibility()
     }
     
     private func presentEditPortfolio(_ portfolio: Portfolio) {
-        flowController?.showEditPortfolio(portfolio)
+        flowController?.showEditPortfolio(portfolio, author: state.username)
+        updateSaveButtonVisibility()
     }
     
     private func addToRemoved(_ portfolio: Int) {
         state.removedPortfolios.append(portfolio)
+        updateSaveButtonVisibility()
+    }
+    
+    private func setAlertData(_ alertData: AlertData?) {
+        state.alertData = alertData
+        updateSaveButtonVisibility()
+    }
+    
+    private func updateSaveButtonVisibility() {
+        if state.profilePicture != nil, !state.profileDescription.isEmpty, !state.location.isEmpty, !media.isEmpty {
+            state.isSaveButtonDisabled = false
+            return
+        }
+        
+        state.isSaveButtonDisabled = true
+    }
+    
+    private func cancelEdit() {
+        state.alertData = .init(
+            title: L.Profile.goBack,
+            message: nil,
+            primaryAction: .init(
+                title: L.Profile.cancel,
+                style: .cancel,
+                handler: { [weak self] in
+                    self?.state.alertData = nil
+                }
+            ),
+            secondaryAction: .init(
+                title: L.Profile.yesCancel,
+                style: .destruction,
+                handler: { [weak self] in
+                    self?.dismissView()
+                }
+            )
+        )
+    }
+    
+    private func saveChanges() {
+        #warning("TODO: Update profile info")
+        #warning("TODO: Remove portfolios to be removed")
+        
+        dismissView()
+    }
+    
+    private func dismissView() {
+        flowController?.navigationController.popViewController(animated: true)
     }
 }
 

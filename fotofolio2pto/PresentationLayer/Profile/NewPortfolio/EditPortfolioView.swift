@@ -45,89 +45,7 @@ struct EditPortfolioView: View {
                     .padding(.leading)
                 
                 // Photos
-                ScrollView(.horizontal, showsIndicators: false) {
-                    LazyHStack {
-                        if viewModel.state.media.isEmpty {
-                            Button(action: { viewModel.onIntent(.pickMedia) }) {
-                                ZStack {
-                                    RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
-                                        .fill(.textFieldBackground)
-                                        .aspectRatio(1.0, contentMode: .fit)
-                                        .frame(width: Constants.Dimens.frameSizeXXLarge, height: Constants.Dimens.frameSizeXXLarge)
-                                    
-                                    Image(systemName: "plus")
-                                        .resizable()
-                                        .frame(width: Constants.Dimens.frameSizeXSmall, height: Constants.Dimens.frameSizeXSmall)
-                                        .foregroundColor(.black)
-                                        .opacity(Constants.Dimens.opacityMid)
-                                }
-                            }
-                            .padding(.leading)
-                            
-                            ForEach(0..<2) { i in
-                                RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
-                                    .fill(.textFieldBackground)
-                                    .aspectRatio(1.0, contentMode: .fit)
-                                    .frame(width: Constants.Dimens.frameSizeXXLarge, height: Constants.Dimens.frameSizeXXLarge)
-                                    .opacity(i == 0 ? Constants.Dimens.opacityMid : Constants.Dimens.opacityLow)
-                            }
-                        } else {
-                            ForEach(Array(zip(viewModel.state.media.indices, viewModel.state.media)), id: \.0) { idx, iimg in
-                                ZStack(alignment: .topTrailing) {
-                                    if case MyImageEnum.local(let image) = iimg.src {
-                                        image
-                                            .resizable()
-                                            .aspectRatio(1.0, contentMode: .fill)
-                                            .frame(width: Constants.Dimens.frameSizeXXLarge, height: Constants.Dimens.frameSizeXXLarge)
-                                            .cornerRadius(Constants.Dimens.radiusXSmall)
-                                            .padding(.leading, idx == 0 ? Constants.Dimens.spaceLarge : Constants.Dimens.spaceNone)
-                                    } else {
-                                        RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
-                                            .fill(.red)
-                                            .aspectRatio(1.0, contentMode: .fit)
-                                            .frame(width: Constants.Dimens.frameSizeXXLarge, height: Constants.Dimens.frameSizeXXLarge)
-                                            .opacity(Constants.Dimens.opacityMid)
-                                    }
-                                    
-                                    Button(action: {}) {
-                                        ZStack {
-                                            RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
-                                                .fill(.white)
-                                                .aspectRatio(1.0, contentMode: .fit)
-                                                .frame(width: Constants.Dimens.frameSizeSmall, height: Constants.Dimens.frameSizeSmall)
-                                                .opacity(Constants.Dimens.opacityMid)
-                                            
-                                            Image(systemName: "xmark")
-                                                .resizable()
-                                                .frame(width: Constants.Dimens.spaceLarge, height: Constants.Dimens.spaceLarge)
-                                                .foregroundColor(.red)
-                                                .opacity(Constants.Dimens.opacityHigh)
-                                                .padding()
-                                        }
-                                        .padding(Constants.Dimens.spaceXSmall)
-                                    }
-                                }
-                            }
-                            
-                            Button(action: { viewModel.onIntent(.pickMedia) }) {
-                                ZStack {
-                                    RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
-                                        .fill(.textFieldBackground)
-                                        .aspectRatio(1.0, contentMode: .fit)
-                                        .frame(width: Constants.Dimens.frameSizeXXLarge, height: Constants.Dimens.frameSizeXXLarge)
-                                    
-                                    Image(systemName: "plus")
-                                        .resizable()
-                                        .frame(width: Constants.Dimens.frameSizeXSmall, height: Constants.Dimens.frameSizeXSmall)
-                                        .foregroundColor(.black)
-                                        .opacity(Constants.Dimens.opacityMid)
-                                }
-                            }
-                            .padding(.trailing)
-                        }
-                    }
-                }
-                .frame(height: Constants.Dimens.frameSizeXXLarge)
+                photosScrollView
                 
                 // Description
                 VStack(alignment: .leading, spacing: Constants.Dimens.spaceSmall) {
@@ -176,35 +94,141 @@ struct EditPortfolioView: View {
             }
             .padding(.top, Constants.Dimens.spaceSmall)
         }
+        .alert(item: Binding<AlertData?>(
+            get: { viewModel.state.alertData },
+            set: { alertData in
+                viewModel.onIntent(.onAlertDataChanged(alertData))
+            }
+        )) { alert in .init(alert) }
         .lifecycle(viewModel)
         .animation(.default, value: viewModel.state)
-        .toolbar {
-            ToolbarItemGroup(placement: .navigationBarLeading) {
-                Button(action: {
-                    viewModel.onIntent(.close)
-                }) {
-                    Text(L.Profile.cancel)
-                }
-                .foregroundColor(.black)
-            }
-            
-            ToolbarItemGroup(placement: .navigationBarTrailing) {
-                Button(action: {
-                    viewModel.onIntent(.createNewPortfolio)
-                }) {
-                    if viewModel.state.isLoading {
-                        ProgressView()
-                            .progressViewStyle(.circular)
-                    } else {
-                        Text(L.Profile.createNew)
+        .navigationBarItems(leading: cancelButton, trailing: saveButton)
+        .navigationBarBackButtonHidden(true)
+        .setupNavBarAndTitle(
+            viewModel.state.portfolioIntent == .createNew ? L.Profile.newPortfolioTitle : viewModel.state.name
+        )
+    }
+    
+    var photosScrollView: some View {
+        ScrollView(.horizontal, showsIndicators: false) {
+            LazyHStack {
+                if viewModel.state.media.isEmpty {
+                    Button(action: { viewModel.onIntent(.pickMedia) }) {
+                        ZStack {
+                            RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
+                                .fill(.textFieldBackground)
+                                .aspectRatio(1.0, contentMode: .fit)
+                                .frame(width: Constants.Dimens.frameSizeXXLarge, height: Constants.Dimens.frameSizeXXLarge)
+                            
+                            Image(systemName: "plus")
+                                .resizable()
+                                .frame(width: Constants.Dimens.frameSizeXSmall, height: Constants.Dimens.frameSizeXSmall)
+                                .foregroundColor(.black)
+                                .opacity(Constants.Dimens.opacityMid)
+                        }
                     }
+                    .padding(.leading)
+                    
+                    ForEach(0..<2) { i in
+                        RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
+                            .fill(.textFieldBackground)
+                            .aspectRatio(1.0, contentMode: .fit)
+                            .frame(width: Constants.Dimens.frameSizeXXLarge, height: Constants.Dimens.frameSizeXXLarge)
+                            .opacity(i == 0 ? Constants.Dimens.opacityMid : Constants.Dimens.opacityLow)
+                    }
+                } else {
+                    ForEach(Array(zip(viewModel.state.media.indices, viewModel.state.media)), id: \.0) { idx, iimg in
+                        ZStack(alignment: .topTrailing) {
+                            if case MyImageEnum.local(let image) = iimg.src {
+                                image
+                                    .resizable()
+                                    .aspectRatio(1.0, contentMode: .fill)
+                                    .frame(width: Constants.Dimens.frameSizeXXLarge, height: Constants.Dimens.frameSizeXXLarge)
+                                    .cornerRadius(Constants.Dimens.radiusXSmall)
+                                    .padding(.leading, idx == 0 ? Constants.Dimens.spaceLarge : Constants.Dimens.spaceNone)
+                            } else if case MyImageEnum.remote(let url) = iimg.src {
+                                AsyncImage(url: url) { image in
+                                    image
+                                        .resizable()
+                                        .aspectRatio(1.0, contentMode: .fill)
+                                        .frame(width: Constants.Dimens.frameSizeXXLarge, height: Constants.Dimens.frameSizeXXLarge)
+                                        .cornerRadius(Constants.Dimens.radiusXSmall)
+                                        .padding(.leading, idx == 0 ? Constants.Dimens.spaceLarge : Constants.Dimens.spaceNone)
+                                } placeholder: {
+                                    RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
+                                        .frame(width: Constants.Dimens.frameSizeXXLarge, height: Constants.Dimens.frameSizeXXLarge)
+                                        .cornerRadius(Constants.Dimens.radiusXSmall)
+                                        .foregroundStyle(.red)
+                                        .opacity(Constants.Dimens.opacityLow)
+                                        .padding(.leading, idx == 0 ? Constants.Dimens.spaceLarge : Constants.Dimens.spaceNone)
+                                }
+                            }
+                            
+                            Button(action: {}) {
+                                ZStack {
+                                    RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
+                                        .fill(.white)
+                                        .aspectRatio(1.0, contentMode: .fit)
+                                        .frame(width: Constants.Dimens.frameSizeSmall, height: Constants.Dimens.frameSizeSmall)
+                                        .opacity(Constants.Dimens.opacityMid)
+                                    
+                                    Image(systemName: "xmark")
+                                        .resizable()
+                                        .frame(width: Constants.Dimens.spaceLarge, height: Constants.Dimens.spaceLarge)
+                                        .foregroundColor(.red)
+                                        .opacity(Constants.Dimens.opacityHigh)
+                                        .padding()
+                                }
+                                .padding(Constants.Dimens.spaceXSmall)
+                            }
+                        }
+                    }
+                    
+                    Button(action: { viewModel.onIntent(.pickMedia) }) {
+                        ZStack {
+                            RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
+                                .fill(.textFieldBackground)
+                                .aspectRatio(1.0, contentMode: .fit)
+                                .frame(width: Constants.Dimens.frameSizeXXLarge, height: Constants.Dimens.frameSizeXXLarge)
+                            
+                            Image(systemName: "plus")
+                                .resizable()
+                                .frame(width: Constants.Dimens.frameSizeXSmall, height: Constants.Dimens.frameSizeXSmall)
+                                .foregroundColor(.black)
+                                .opacity(Constants.Dimens.opacityMid)
+                        }
+                    }
+                    .padding(.trailing)
                 }
-                .foregroundColor(viewModel.state.isCreateButtonDisabled ? .gray : .black)
-                .disabled(viewModel.state.isCreateButtonDisabled)
             }
         }
-        .navigationBarBackButtonHidden(true)
-        .setupNavBarAndTitle(L.Profile.newPortfolioTitle)
+        .frame(height: Constants.Dimens.frameSizeXXLarge)
+    }
+    
+    var cancelButton: some View {
+        Button(action: {
+            viewModel.onIntent(.close)
+        }) {
+            Text(L.Profile.cancel)
+        }
+        .foregroundColor(.black)
+    }
+    
+    var saveButton: some View {
+        Button(action: {
+            viewModel.onIntent(.saveChanges)
+        }) {
+            if viewModel.state.isLoading {
+                ProgressView()
+                    .progressViewStyle(.circular)
+            } else {
+                Text(
+                    viewModel.state.portfolioIntent == .createNew ? L.Profile.createNew : L.Profile.save
+                )
+            }
+        }
+        .foregroundColor(viewModel.state.isSaveButtonDisabled ? .gray : .black)
+        .disabled(viewModel.state.isSaveButtonDisabled)
     }
 }
 

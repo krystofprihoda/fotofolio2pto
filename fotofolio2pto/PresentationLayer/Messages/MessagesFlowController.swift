@@ -41,7 +41,6 @@ class MessagesFlowController: BaseFlowController {
         let vm = ChatViewModel(flowController: self, sender: sender, receiver: receiver)
         let view = ChatView(viewModel: vm)
         let vc = BaseHostingController(rootView: view)
-        navigationController.navigationBar.tintColor = .gray
         navigationController.pushViewController(vc, animated: true)
     }
     
@@ -49,7 +48,6 @@ class MessagesFlowController: BaseFlowController {
         let vm = NewChatSearchViewModel(flowController: self, sender: sender)
         let view = NewChatSearchView(viewModel: vm)
         let vc = BaseHostingController(rootView: view)
-        navigationController.navigationBar.tintColor = .gray
         navigationController.pushViewController(vc, animated: true)
     }
 }

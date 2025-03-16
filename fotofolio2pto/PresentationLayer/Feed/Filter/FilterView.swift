@@ -55,10 +55,6 @@ struct FilterView: View {
             }
             .padding([.leading, .top])
         }
-        .background(
-            .gray
-            .opacity(0.15)
-        )
     }
 }
 #Preview {

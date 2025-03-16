@@ -11,7 +11,7 @@ import Resolver
 
 internal enum PortfolioIntent: Equatable {
     case createNew
-    case updateExisting(Int)
+    case updateExisting(Portfolio)
 }
 
 final class EditPortfolioViewModel: BaseViewModel, ViewModel, ObservableObject {
@@ -20,6 +20,7 @@ final class EditPortfolioViewModel: BaseViewModel, ViewModel, ObservableObject {
     // MARK: Dependencies
 
     @LazyInjected private var createPortfolioUseCase: CreatePortfolioUseCase
+    @LazyInjected private var updatePortfolioUseCase: UpdatePortfolioUseCase
 
     private weak var flowController: ProfileFlowController?
 
@@ -34,6 +35,17 @@ final class EditPortfolioViewModel: BaseViewModel, ViewModel, ObservableObject {
         super.init()
         state.portfolioAuthor = portfolioAuthorUsername
         state.portfolioIntent = intent
+        
+        switch state.portfolioIntent {
+        case .createNew:
+            return
+        case .updateExisting(let portfolio):
+            state.portfolioId = portfolio.id
+            state.name = portfolio.name
+            state.description = portfolio.description
+            state.media = portfolio.photos
+            state.selectedTags = portfolio.tags
+        }
     }
 
     // MARK: Lifecycle
@@ -48,13 +60,15 @@ final class EditPortfolioViewModel: BaseViewModel, ViewModel, ObservableObject {
         var isLoading: Bool = false
         var portfolioIntent: PortfolioIntent = .createNew
         var portfolioAuthor = ""
+        var portfolioId: Int? = nil
         var name = ""
         var description = ""
         var media: [IImage] = []
         var selectedTags: [String] = []
         var filteredTags = photoCategories
         var searchInput = ""
-        var isCreateButtonDisabled = true
+        var isSaveButtonDisabled = true
+        var alertData: AlertData? = nil
     }
 
     @Published private(set) var state = State()
@@ -70,6 +84,8 @@ final class EditPortfolioViewModel: BaseViewModel, ViewModel, ObservableObject {
         case setTagInput(String)
         case removeTag(String)
         case setDescriptionInput(String)
+        case saveChanges
+        case onAlertDataChanged(AlertData?)
     }
 
     @discardableResult
@@ -79,11 +95,13 @@ final class EditPortfolioViewModel: BaseViewModel, ViewModel, ObservableObject {
             case .pickMedia: pickMedia()
             case .createNewPortfolio: await createNewPortfolio()
             case .addTag(let tag): addTag(tag)
-            case .close: dismissView()
+            case .close: cancelEdit()
             case .setName(let name): setName(name)
             case .setDescriptionInput(let input): setDescriptionInput(input)
             case .setTagInput(let input): setTagInput(input)
             case .removeTag(let tag): removeTag(tag)
+            case .saveChanges: await saveChanges()
+            case .onAlertDataChanged(let alertData): onAlertDataChanged(alertData: alertData)
             }
         })
     }
@@ -97,7 +115,7 @@ final class EditPortfolioViewModel: BaseViewModel, ViewModel, ObservableObject {
     private func setMedia(_ media: [IImage]) {
         DispatchQueue.main.async { [weak self] in
             self?.state.media = media
-            self?.updateCreateButtonVisibility()
+            self?.updateSaveButtonVisibility()
         }
     }
     
@@ -105,12 +123,12 @@ final class EditPortfolioViewModel: BaseViewModel, ViewModel, ObservableObject {
         guard !state.selectedTags.contains(tag), state.selectedTags.count < 5 else { return }
         state.selectedTags.append(tag)
         state.searchInput = ""
-        updateCreateButtonVisibility()
+        updateSaveButtonVisibility()
     }
     
     private func removeTag(_ tag: String) {
         state.selectedTags.removeAll(where: { $0 == tag })
-        updateCreateButtonVisibility()
+        updateSaveButtonVisibility()
     }
     
     private func setTagInput(_ input: String) {
@@ -122,17 +140,17 @@ final class EditPortfolioViewModel: BaseViewModel, ViewModel, ObservableObject {
         }
         
         state.filteredTags = photoCategories.filter { $0.localizedCaseInsensitiveContains(state.searchInput) }
-        updateCreateButtonVisibility()
+        updateSaveButtonVisibility()
     }
     
     private func setDescriptionInput(_ input: String) {
         state.description = input
-        updateCreateButtonVisibility()
+        updateSaveButtonVisibility()
     }
     
     private func setName(_ name: String) {
         state.name = name
-        updateCreateButtonVisibility()
+        updateSaveButtonVisibility()
     }
     
     private func dismissView() {
@@ -159,13 +177,68 @@ final class EditPortfolioViewModel: BaseViewModel, ViewModel, ObservableObject {
         }
     }
     
-    private func updateCreateButtonVisibility() {
+    private func updateSaveButtonVisibility() {
         if !state.name.isEmpty, !state.description.isEmpty, !state.selectedTags.isEmpty, !media.isEmpty {
-            state.isCreateButtonDisabled = false
+            state.isSaveButtonDisabled = false
             return
         }
         
-        state.isCreateButtonDisabled = true
+        state.isSaveButtonDisabled = true
+    }
+    
+    private func saveChanges() async {
+        state.portfolioIntent == .createNew ? await createNewPortfolio() : await updatePortfolio()
+    }
+    
+    private func updatePortfolio() async {
+        guard let portfolioId = state.portfolioId,
+              !state.description.isEmpty,
+              !state.media.isEmpty,
+              !state.selectedTags.isEmpty
+        else {
+            return
+        }
+        
+        state.isLoading = true
+        defer { state.isLoading = false }
+        
+        do {
+            try await updatePortfolioUseCase.execute(
+                id: portfolioId,
+                name: state.name,
+                photos: state.media,
+                description: state.description,
+                tags: state.selectedTags
+            )
+            dismissView()
+        } catch {
+            
+        }
+    }
+    
+    private func onAlertDataChanged(alertData: AlertData?) {
+        state.alertData = alertData
+    }
+    
+    private func cancelEdit() {
+        state.alertData = .init(
+            title: L.Profile.goBack,
+            message: nil,
+            primaryAction: .init(
+                title: L.Profile.cancel,
+                style: .cancel,
+                handler: { [weak self] in
+                    self?.state.alertData = nil
+                }
+            ),
+            secondaryAction: .init(
+                title: L.Profile.yesCancel,
+                style: .destruction,
+                handler: { [weak self] in
+                    self?.dismissView()
+                }
+            )
+        )
     }
 }
 
