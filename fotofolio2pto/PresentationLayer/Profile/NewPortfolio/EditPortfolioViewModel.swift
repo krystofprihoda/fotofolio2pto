@@ -221,6 +221,11 @@ final class EditPortfolioViewModel: BaseViewModel, ViewModel, ObservableObject {
     }
     
     private func cancelEdit() {
+        if state.isSaveButtonDisabled {
+            dismissView()
+            return
+        }
+        
         state.alertData = .init(
             title: L.Profile.goBack,
             message: nil,

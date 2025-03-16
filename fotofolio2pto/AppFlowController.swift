@@ -49,7 +49,13 @@ public class AppFlowController: BaseFlowController, OnboardingFlowControllerDele
     }
     
     private func setupAppearance() {
-        // Replace with AppTheme
+        if #available(iOS 13.0, *) {
+            if UIApplication.shared.keyWindow!.overrideUserInterfaceStyle == .dark {
+                UIApplication.shared.keyWindow!.overrideUserInterfaceStyle = .light
+            } else {
+                UIApplication.shared.keyWindow!.overrideUserInterfaceStyle = .light
+            }
+        }
         
         // Navigation bar
         UINavigationBar.appearance().barTintColor = .black

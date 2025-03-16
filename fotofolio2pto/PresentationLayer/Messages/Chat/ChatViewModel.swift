@@ -70,6 +70,7 @@ final class ChatViewModel: BaseViewModel, ViewModel, ObservableObject {
     enum Intent {
         case setTextInput(String)
         case sendMessage
+        case goBack
     }
 
     @discardableResult
@@ -78,6 +79,7 @@ final class ChatViewModel: BaseViewModel, ViewModel, ObservableObject {
             switch intent {
             case .setTextInput(let input): setTextInput(input)
             case .sendMessage: await sendMessage()
+            case .goBack: dismissView()
             }
         })
     }
@@ -132,5 +134,9 @@ final class ChatViewModel: BaseViewModel, ViewModel, ObservableObject {
         } catch {
             // Log
         }
+    }
+    
+    private func dismissView() {
+        flowController?.navigationController.popViewController(animated: true)
     }
 }

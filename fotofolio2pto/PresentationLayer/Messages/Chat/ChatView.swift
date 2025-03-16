@@ -72,8 +72,16 @@ struct ChatView: View {
             }
         }
         .padding()
-        .setupNavBarAndTitle(viewModel.state.receiver)
+        .navigationBarItems(leading: backButton)
+        .setupNavBarAndTitle(viewModel.state.receiver, hideBack: true)
         .lifecycle(viewModel)
+    }
+    
+    private var backButton: some View {
+        Button(action: { viewModel.onIntent(.goBack) }) {
+            Text(L.Profile.back)
+                .foregroundColor(.black)
+        }
     }
 }
 

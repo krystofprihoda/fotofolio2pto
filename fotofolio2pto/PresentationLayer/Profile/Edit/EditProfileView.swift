@@ -29,16 +29,15 @@ struct EditProfileView: View {
                 viewModel.onIntent(.onAlertDataChanged(alertData))
             }
         )) { alert in .init(alert) }
-        .navigationBarBackButtonHidden(true) // Hide default back button
         .navigationBarItems(leading: cancelButton, trailing: saveButton)
-        .setupNavBarAndTitle(L.Profile.editTitle)
+        .setupNavBarAndTitle(L.Profile.editTitle, hideBack: true)
     }
     
     private var saveButton: some View {
         Button(action: { viewModel.onIntent(.saveChanges) }) {
             Text(L.Profile.save)
-                .foregroundColor(.black)
         }
+        .foregroundColor(viewModel.state.isSaveButtonDisabled ? .gray : .black)
         .disabled(viewModel.state.isSaveButtonDisabled)
     }
 

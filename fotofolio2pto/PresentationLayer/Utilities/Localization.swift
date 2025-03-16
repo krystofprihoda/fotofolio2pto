@@ -89,6 +89,7 @@ public struct L {
         public static let editTitle = "Úprava profilu"
         public static let save = "Uložit"
         public static let cancel = "Zrušit"
+        public static let back = "Zpět"
         public static let yesCancel = "Ano, zahodit změny"
         public static let weddingExample = "např. svatba"
         public static let portraitsExample = "např. Portrét"

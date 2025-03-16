@@ -21,7 +21,7 @@ extension View {
             }
     }
     
-    func setupNavBarAndTitle(_ title: String) -> some View {
+    func setupNavBarAndTitle(_ title: String, hideBack: Bool = false) -> some View {
         self
             .navigationTitle(title)
             .navigationBarTitleDisplayMode(.inline)
@@ -31,6 +31,7 @@ extension View {
                 .black
                     .opacity(Constants.Dimens.opacityHigh)
             )
+            .navigationBarBackButtonHidden(hideBack)
     }
 }
 

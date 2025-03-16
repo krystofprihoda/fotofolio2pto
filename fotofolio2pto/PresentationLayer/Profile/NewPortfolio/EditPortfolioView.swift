@@ -103,9 +103,9 @@ struct EditPortfolioView: View {
         .lifecycle(viewModel)
         .animation(.default, value: viewModel.state)
         .navigationBarItems(leading: cancelButton, trailing: saveButton)
-        .navigationBarBackButtonHidden(true)
         .setupNavBarAndTitle(
-            viewModel.state.portfolioIntent == .createNew ? L.Profile.newPortfolioTitle : viewModel.state.name
+            viewModel.state.portfolioIntent == .createNew ? L.Profile.newPortfolioTitle : viewModel.state.name,
+            hideBack: true
         )
     }
     
