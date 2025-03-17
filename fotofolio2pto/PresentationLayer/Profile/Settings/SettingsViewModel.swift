@@ -30,16 +30,9 @@ final class SettingsViewModel: BaseViewModel, ViewModel, ObservableObject {
         state.portfolios = portfolios
     }
     
-    // MARK: Lifecycle
-    
-    override func onAppear() {
-        super.onAppear()
-    }
-    
     // MARK: State
     
     struct State {
-        var isLoading: Bool = false
         var userData: User? = nil
         var portfolios: [Portfolio] = []
     }

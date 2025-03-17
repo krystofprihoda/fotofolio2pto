@@ -30,6 +30,8 @@ final class MessagesViewModel: BaseViewModel, ViewModel, ObservableObject {
         self.flowController = flowController
         super.init()
         state.sender = sender
+        
+        executeTask(Task { await fetchChats() })
     }
     
     // MARK: Lifecycle
@@ -37,7 +39,7 @@ final class MessagesViewModel: BaseViewModel, ViewModel, ObservableObject {
     override func onAppear() {
         super.onAppear()
         
-        executeTask(Task { await fetchChats() })
+        executeTask(Task { await updateChats() })
         
         // Update every 2 seconds
         // startFetchingChats()
@@ -90,8 +92,6 @@ final class MessagesViewModel: BaseViewModel, ViewModel, ObservableObject {
     
     private func updateChats() async {
         guard !state.sender.isEmpty else { return }
-
-        print("Updating chats")
 
         do {
            let newChats = try await getChatsForUserUseCase.execute(user: state.sender)

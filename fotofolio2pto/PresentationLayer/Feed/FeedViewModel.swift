@@ -35,6 +35,8 @@ final class FeedViewModel: BaseViewModel, ViewModel, ObservableObject {
         self.flowController = flowController
         super.init()
         state.signedInUser = signedInUser
+        
+        executeTask(Task { await fetchPortfolios(isRefreshing: false) })
     }
     
     // MARK: Lifecycle
@@ -102,9 +104,9 @@ final class FeedViewModel: BaseViewModel, ViewModel, ObservableObject {
         
         defer {
             if isRefreshing {
-                state.isRefreshing.toggle()
+                state.isRefreshing = false
             } else {
-                state.isLoading.toggle()
+                state.isLoading = false
             }
         }
         
