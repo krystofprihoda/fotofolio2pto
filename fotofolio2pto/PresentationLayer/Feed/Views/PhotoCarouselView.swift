@@ -27,8 +27,9 @@ struct PhotoCarouselView: View {
                         AsyncImage(url: url) { image in
                             image
                                 .resizable()
-                                .aspectRatio(1.0, contentMode: .fill)
-                                .frame(width: mediaWidth)
+                                .aspectRatio(contentMode: .fill)
+                                .frame(width: mediaWidth, height: mediaWidth)
+                                .clipped()
                                 .cornerRadius(Constants.Dimens.radiusXSmall)
                         } placeholder: {
                             ZStack {
@@ -44,8 +45,9 @@ struct PhotoCarouselView: View {
                     } else if case MyImageEnum.local(let image) = photo.src {
                         image
                             .resizable()
-                            .aspectRatio(1.0, contentMode: .fill)
-                            .frame(width: mediaWidth)
+                            .aspectRatio(contentMode: .fill)
+                            .frame(width: mediaWidth, height: mediaWidth)
+                            .clipped()
                             .cornerRadius(Constants.Dimens.radiusXSmall)
                     }
                 }

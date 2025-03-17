@@ -20,9 +20,13 @@ struct NotCreatorView: View {
                     ForEach(firstRowText, id: \.self) { text in
                         ZStack {
                             RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
-                                .fill(Color.gray).brightness(Double.random(in: 0.15...0.4))
+                                .fill(Color.gray).brightness(
+                                    Double.random(in:
+                                        Constants.Dimens.opacityLow...Constants.Dimens.opacityMid
+                                    )
+                                )
                                 .aspectRatio(1.0, contentMode: .fit)
-                                .frame(width: 150, height: 150)
+                                .frame(width: Constants.Dimens.frameSizeXLarge, height: Constants.Dimens.frameSizeXLarge)
                                 .padding(.leading, 5)
                             
                             Text(text)
@@ -36,9 +40,13 @@ struct NotCreatorView: View {
                     ForEach(secondRowText, id: \.self) { text in
                         ZStack {
                             RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
-                                .fill(Color.gray).brightness(Double.random(in: 0.15...0.25))
+                                .fill(Color.gray).brightness(
+                                    Double.random(in:
+                                        Constants.Dimens.opacityLow...Constants.Dimens.opacityMid
+                                    )
+                                )
                                 .aspectRatio(1.0, contentMode: .fit)
-                                .frame(width: 150, height: 150)
+                                .frame(width: Constants.Dimens.frameSizeXLarge, height: Constants.Dimens.frameSizeXLarge)
                                 .padding(.leading, 5)
                             
                             Text(text)

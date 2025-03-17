@@ -20,7 +20,7 @@ struct ProfilePortfoliosView: View {
         if portfolios.isEmpty {
             Text("Uživatel zatím nenahrál žádná portfolia.")
                 .foregroundColor(.gray)
-                .font(.system(size: 16))
+                .font(.body)
         } else {
             VStack(spacing: Constants.Dimens.spaceNone) {
                 ForEach(portfolios, id: \.id) { portfolio in
@@ -45,8 +45,9 @@ struct ProfilePortfoliosView: View {
                                         AsyncImage(url: url) { image in
                                             image
                                                 .resizable()
-                                                .aspectRatio(1.0, contentMode: .fill)
-                                                .frame(width: 150)
+                                                .aspectRatio(contentMode: .fill)
+                                                .frame(width: Constants.Dimens.frameSizeXLarge, height: Constants.Dimens.frameSizeXLarge)
+                                                .clipped()
                                                 .cornerRadius(Constants.Dimens.radiusXSmall)
                                         } placeholder: {
                                             ZStack {
@@ -54,7 +55,7 @@ struct ProfilePortfoliosView: View {
                                                     .fill(.gray)
                                                     .brightness(Double.random(in: 0.15...0.4))
                                                     .aspectRatio(1.0, contentMode: .fit)
-                                                    .frame(width: 150)
+                                                    .frame(width: Constants.Dimens.frameSizeXLarge)
 
                                                 ProgressView()
                                                     .progressViewStyle(CircularProgressViewStyle())
@@ -63,8 +64,9 @@ struct ProfilePortfoliosView: View {
                                     } else if case MyImageEnum.local(let image) = photo.src {
                                         image
                                             .resizable()
-                                            .aspectRatio(1.0, contentMode: .fill)
-                                            .frame(width: 150)
+                                            .aspectRatio(contentMode: .fill)
+                                            .frame(width: Constants.Dimens.frameSizeXLarge, height: Constants.Dimens.frameSizeXLarge)
+                                            .clipped()
                                             .cornerRadius(Constants.Dimens.radiusXSmall)
                                     }
                                 }

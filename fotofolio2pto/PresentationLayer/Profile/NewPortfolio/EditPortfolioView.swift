@@ -62,7 +62,7 @@ struct EditPortfolioView: View {
                             .font(.body)
                             .frame(height: Constants.Dimens.frameSizeLarge)
                             .lineSpacing(Constants.Dimens.spaceXSmall)
-                            .foregroundColor(.gray)
+                            .foregroundColor(.black)
                             .scrollContentBackground(.hidden)
                             .background(.clear)
                             .offset(
@@ -117,7 +117,7 @@ struct EditPortfolioView: View {
                         ZStack {
                             RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
                                 .fill(.textFieldBackground)
-                                .aspectRatio(1.0, contentMode: .fit)
+                                .aspectRatio(1.0, contentMode: .fill)
                                 .frame(width: Constants.Dimens.frameSizeXXLarge, height: Constants.Dimens.frameSizeXXLarge)
                             
                             Image(systemName: "plus")
@@ -132,7 +132,7 @@ struct EditPortfolioView: View {
                     ForEach(0..<2) { i in
                         RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
                             .fill(.textFieldBackground)
-                            .aspectRatio(1.0, contentMode: .fit)
+                            .aspectRatio(contentMode: .fill)
                             .frame(width: Constants.Dimens.frameSizeXXLarge, height: Constants.Dimens.frameSizeXXLarge)
                             .opacity(i == 0 ? Constants.Dimens.opacityMid : Constants.Dimens.opacityLow)
                     }
@@ -142,16 +142,18 @@ struct EditPortfolioView: View {
                             if case MyImageEnum.local(let image) = iimg.src {
                                 image
                                     .resizable()
-                                    .aspectRatio(1.0, contentMode: .fill)
+                                    .aspectRatio(contentMode: .fill)
                                     .frame(width: Constants.Dimens.frameSizeXXLarge, height: Constants.Dimens.frameSizeXXLarge)
+                                    .clipped()
                                     .cornerRadius(Constants.Dimens.radiusXSmall)
                                     .padding(.leading, idx == 0 ? Constants.Dimens.spaceLarge : Constants.Dimens.spaceNone)
                             } else if case MyImageEnum.remote(let url) = iimg.src {
                                 AsyncImage(url: url) { image in
                                     image
                                         .resizable()
-                                        .aspectRatio(1.0, contentMode: .fill)
+                                        .aspectRatio(contentMode: .fill)
                                         .frame(width: Constants.Dimens.frameSizeXXLarge, height: Constants.Dimens.frameSizeXXLarge)
+                                        .clipped()
                                         .cornerRadius(Constants.Dimens.radiusXSmall)
                                         .padding(.leading, idx == 0 ? Constants.Dimens.spaceLarge : Constants.Dimens.spaceNone)
                                 } placeholder: {
@@ -164,6 +166,7 @@ struct EditPortfolioView: View {
                                 }
                             }
                             
+                            #warning("TODO: remove pic")
                             Button(action: {}) {
                                 ZStack {
                                     RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)

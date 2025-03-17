@@ -26,8 +26,9 @@ struct ProfilePictureView: View {
                 AsyncImage(url: url) { image in
                     image
                         .resizable()
-                        .aspectRatio(1.0, contentMode: .fit)
-                        .frame(width: width)
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: width, height: width)
+                        .clipped()
                         .cornerRadius(Constants.Dimens.radiusMax)
                 } placeholder: {
                     ZStack {
@@ -43,8 +44,9 @@ struct ProfilePictureView: View {
             } else if case MyImageEnum.local(let img) = pic.src {
                 img
                     .resizable()
-                    .aspectRatio(1.0, contentMode: .fit)
-                    .frame(width: width)
+                    .aspectRatio(contentMode: .fill)
+                    .frame(width: width, height: width)
+                    .clipped()
                     .cornerRadius(Constants.Dimens.radiusMax)
             }
         } else {

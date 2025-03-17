@@ -125,7 +125,7 @@ extension Portfolio {
 
     static var dummyPortfolio5: Portfolio {
         Portfolio(
-            id: 4,
+            id: 5,
             author: .dummy5,
             name: "Svatby",
             photos: [
@@ -141,7 +141,7 @@ extension Portfolio {
 
     static var dummyPortfolio6: Portfolio {
         Portfolio(
-            id: 5,
+            id: 6,
             author: .dummy2,
             name: "Svatby",
             photos: [
@@ -157,7 +157,7 @@ extension Portfolio {
 
     static var dummyPortfolio7: Portfolio {
         Portfolio(
-            id: 6,
+            id: 7,
             author: .dummy1,
             name: "Architektura",
             photos: [
@@ -173,7 +173,7 @@ extension Portfolio {
     
     static var dummyPortfolio8: Portfolio {
         Portfolio(
-            id: 7,
+            id: 8,
             author: .dummy6,
             name: "Portréty",
             photos: [

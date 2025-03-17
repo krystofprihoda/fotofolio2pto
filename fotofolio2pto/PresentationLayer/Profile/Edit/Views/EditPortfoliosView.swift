@@ -84,11 +84,12 @@ struct EditPortfoliosView: View {
                                         AsyncImage(url: url) { image in
                                             image
                                                 .resizable()
-                                                .aspectRatio(1.0, contentMode: .fill)
+                                                .aspectRatio(contentMode: .fill)
                                                 .frame(
                                                     width: Constants.Dimens.frameSizeMediumLarge,
                                                     height: Constants.Dimens.frameSizeMediumLarge
                                                 )
+                                                .clipped()
                                                 .cornerRadius(Constants.Dimens.radiusXSmall)
                                                 .clipShape(
                                                     RoundedRectangle(
@@ -97,7 +98,7 @@ struct EditPortfoliosView: View {
                                                 )
                                         } placeholder: {
                                             RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
-                                                .fill(Color.gray).brightness(0.25)
+                                                .fill(Color.gray).brightness(Constants.Dimens.opacityLow)
                                                 .aspectRatio(1.0, contentMode: .fit)
                                                 .frame(
                                                     width: Constants.Dimens.frameSizeMediumLarge,
@@ -107,11 +108,12 @@ struct EditPortfoliosView: View {
                                     } else if case MyImageEnum.local(let image) = img.src {
                                         image
                                             .resizable()
-                                            .aspectRatio(1.0, contentMode: .fill)
+                                            .aspectRatio(contentMode: .fill)
                                             .frame(
                                                 width: Constants.Dimens.frameSizeMediumLarge,
                                                 height: Constants.Dimens.frameSizeMediumLarge
                                             )
+                                            .clipped()
                                             .cornerRadius(Constants.Dimens.radiusXSmall)
                                             .clipShape(
                                                 RoundedRectangle(
