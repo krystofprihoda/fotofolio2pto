@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 import SwiftUI
 
-public protocol ProfileFlowControllerDelegate: AnyObject {
+public protocol ProfileSignOutDelegate: AnyObject {
     func signOut()
 }
 
@@ -19,16 +19,16 @@ class ProfileFlowController: BaseFlowController {
     private let displayedUser: String
     private let showDismiss: Bool
     
-    weak var flowDelegate: ProfileFlowControllerDelegate?
+    weak var profileSignOutDelegate: ProfileSignOutDelegate?
 
     init(
         navigationController: UINavigationController,
-        flowDelegate: ProfileFlowControllerDelegate? = nil,
+        profileSignOutDelegate: ProfileSignOutDelegate? = nil,
         signedInUser: String,
         displayedUser: String,
         showDismiss: Bool = false
     ) {
-        self.flowDelegate = flowDelegate
+        self.profileSignOutDelegate = profileSignOutDelegate
         self.signedInUser = signedInUser
         self.displayedUser = displayedUser
         self.showDismiss = showDismiss
@@ -50,6 +50,13 @@ class ProfileFlowController: BaseFlowController {
     public func sendMessage(from sender: String, to receiver: String) {
         let fc = MessagesFlowController(navigationController: navigationController, sender: sender, receiver: receiver)
         let vc = startChildFlow(fc)
+        navigationController.pushViewController(vc, animated: true)
+    }
+    
+    public func showProfileSettings(userData: User, portfolios: [Portfolio]) {
+        let vm = SettingsViewModel(flowController: self, userData: userData, portfolios: portfolios)
+        let view = SettingsView(viewModel: vm)
+        let vc = BaseHostingController(rootView: view, hideBackButton: true)
         navigationController.pushViewController(vc, animated: true)
     }
     

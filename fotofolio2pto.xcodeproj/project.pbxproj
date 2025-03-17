@@ -27,6 +27,8 @@
 		FE9A30B22D86E6A10056CC0A /* Shimmer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE9A30B12D86E6A10056CC0A /* Shimmer.swift */; };
 		FE9A30B52D8737650056CC0A /* UpdatePortfolioUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE9A30B42D8737650056CC0A /* UpdatePortfolioUseCase.swift */; };
 		FE9A30BB2D88473E0056CC0A /* Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE9A30BA2D88473E0056CC0A /* Toast.swift */; };
+		FE9A30BD2D88B2000056CC0A /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE9A30BC2D88B1FC0056CC0A /* SettingsView.swift */; };
+		FE9A30C02D88B7A40056CC0A /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE9A30BF2D88B7A40056CC0A /* SettingsViewModel.swift */; };
 		FEA53C962C29BF2F006F0116 /* Providers+Injection.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53C952C29BF2F006F0116 /* Providers+Injection.swift */; };
 		FEA53C982C29BF97006F0116 /* Repositories+Injection.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53C972C29BF97006F0116 /* Repositories+Injection.swift */; };
 		FEA53C9A2C29BFDF006F0116 /* UseCase+Injection.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53C992C29BFDF006F0116 /* UseCase+Injection.swift */; };
@@ -150,6 +152,8 @@
 		FE9A30B12D86E6A10056CC0A /* Shimmer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shimmer.swift; sourceTree = "<group>"; };
 		FE9A30B42D8737650056CC0A /* UpdatePortfolioUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatePortfolioUseCase.swift; sourceTree = "<group>"; };
 		FE9A30BA2D88473E0056CC0A /* Toast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
+		FE9A30BC2D88B1FC0056CC0A /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		FE9A30BF2D88B7A40056CC0A /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		FEA53C952C29BF2F006F0116 /* Providers+Injection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Providers+Injection.swift"; sourceTree = "<group>"; };
 		FEA53C972C29BF97006F0116 /* Repositories+Injection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Repositories+Injection.swift"; sourceTree = "<group>"; };
 		FEA53C992C29BFDF006F0116 /* UseCase+Injection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UseCase+Injection.swift"; sourceTree = "<group>"; };
@@ -390,6 +394,15 @@
 				FE9A30B12D86E6A10056CC0A /* Shimmer.swift */,
 			);
 			path = Modifiers;
+			sourceTree = "<group>";
+		};
+		FE9A30BE2D88B7820056CC0A /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				FE9A30BF2D88B7A40056CC0A /* SettingsViewModel.swift */,
+				FE9A30BC2D88B1FC0056CC0A /* SettingsView.swift */,
+			);
+			path = Settings;
 			sourceTree = "<group>";
 		};
 		FEA53C932C29BF13006F0116 /* Application */ = {
@@ -669,6 +682,7 @@
 		FEC94DBD2C246C4B00FFEB11 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				FE9A30BE2D88B7820056CC0A /* Settings */,
 				FEA53CF52C2D794F006F0116 /* NewPortfolio */,
 				FEA53CE52C2D5A7C006F0116 /* Edit */,
 				FEC94DDA2C247D4B00FFEB11 /* ProfileView.swift */,
@@ -849,6 +863,7 @@
 				FEA53CA32C29C76E006F0116 /* FeedRepository.swift in Sources */,
 				FE5F8A782C296D81001EE8AF /* AuthRepository.swift in Sources */,
 				FEA53C982C29BF97006F0116 /* Repositories+Injection.swift in Sources */,
+				FE9A30BD2D88B2000056CC0A /* SettingsView.swift in Sources */,
 				FEC94DD32C247C6100FFEB11 /* SearchView.swift in Sources */,
 				FEA53CA92C29D7E8006F0116 /* UnflagPortfolioUseCase.swift in Sources */,
 				FEC94DD52C247C9500FFEB11 /* MessagesViewModel.swift in Sources */,
@@ -876,6 +891,7 @@
 				FE9777E12D7F695C0027DA60 /* PulsingCircleView.swift in Sources */,
 				FEC94DF22C25EF7900FFEB11 /* FilterView.swift in Sources */,
 				FEA53CD12C2C2387006F0116 /* NewChatSearchViewModel.swift in Sources */,
+				FE9A30C02D88B7A40056CC0A /* SettingsViewModel.swift in Sources */,
 				FEA53CDE2C2C49DF006F0116 /* GetChatUseCase.swift in Sources */,
 				FE9A30B02D86E6A10056CC0A /* UserViewObject.swift in Sources */,
 				FEC94DEA2C25BF4B00FFEB11 /* View+Extensions.swift in Sources */,

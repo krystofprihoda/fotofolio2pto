@@ -83,6 +83,9 @@ public struct L {
     
     public enum Profile {
         public static let title = "Profil"
+        public static let settings = "Nastavení"
+        public static let general = "Obecné"
+        public static let about = "O aplikaci"
         public static let editProfile = "Upravit profil"
         public static let signOut = "Odhlásit se"
         public static let editTitle = "Úprava profilu"

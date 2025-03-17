@@ -38,33 +38,22 @@ struct ProfileView: View {
         }
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarTrailing) {
-                if viewModel.state.isProfileOwner && viewModel.state.userData?.creator != nil {
-                    Button(action: {
-                        viewModel.onIntent(.createNewPortfolio)
-                    }) {
-                        Image(systemName: "plus")
-                            .resizable()
-                            .aspectRatio(1, contentMode: .fit)
-                            .frame(height: Constants.Dimens.frameSizeXSmall)
-                            .foregroundColor(.gray)
+                HStack(spacing: Constants.Dimens.spaceXSmall) {
+                    if viewModel.state.isProfileOwner && viewModel.state.userData?.creator != nil {
+                        Button(action: {
+                            viewModel.onIntent(.createNewPortfolio)
+                        }) {
+                            Image(systemName: "plus")
+                                .resizable()
+                                .aspectRatio(1, contentMode: .fit)
+                                .frame(height: Constants.Dimens.frameSizeXSmall)
+                                .foregroundColor(.gray)
+                        }
                     }
-                }
-                
-                HStack {
+                    
                     if viewModel.state.isProfileOwner {
-                        Menu(content: {
-                            Button(action: {
-                                viewModel.onIntent(.editProfile)
-                            }) {
-                                Text(L.Profile.editProfile)
-                                    .foregroundColor(.gray)
-                            }
-                            
-                            Button(action: {
-                                viewModel.onIntent(.signOut)
-                            }, label: {
-                                Text(L.Profile.signOut)
-                            })
+                        Button(action: {
+                            viewModel.onIntent(.showProfileSettings)
                         }, label: {
                             Image(systemName: "slider.horizontal.3")
                                 .resizable()
@@ -84,8 +73,6 @@ struct ProfileView: View {
                         })
                     }
                 }
-                .padding(.leading, -15)
-                .padding(.trailing, 5)
             }
         }
         .navigationBarItems(leading: backButton)

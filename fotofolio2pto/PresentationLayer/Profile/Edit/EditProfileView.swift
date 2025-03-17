@@ -43,7 +43,7 @@ struct EditProfileView: View {
 
    private var cancelButton: some View {
        Button(action: { viewModel.onIntent(.cancel) }) {
-           Text(L.Profile.cancel)
+           Text(L.Profile.back)
                .foregroundColor(.black)
        }
    }

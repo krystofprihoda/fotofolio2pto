@@ -79,7 +79,7 @@ public class MainFlowController: BaseFlowController {
             image: UIImage(systemName: "square.text.square"),
             tag: MainTab.feed.rawValue
         )
-        let feedFlowController = FeedFlowController(navigationController: feedNavController, signedInUser: user, feedTabBadgeFlowDelegate: self)
+        let feedFlowController = FeedFlowController(navigationController: feedNavController, signedInUser: user, feedTabBadgeDelegate: self)
         let feedRootVC = startChildFlow(feedFlowController)
         feedNavController.viewControllers = [feedRootVC]
         
@@ -137,7 +137,7 @@ public class MainFlowController: BaseFlowController {
         )
         let profileFlowController = ProfileFlowController(
             navigationController: profileNavController,
-            flowDelegate: self,
+            profileSignOutDelegate: self,
             signedInUser: user,
             displayedUser: user
         )
@@ -242,14 +242,14 @@ public class MainFlowController: BaseFlowController {
     }
 }
 
-extension MainFlowController: ProfileFlowControllerDelegate {
+extension MainFlowController: ProfileSignOutDelegate {
     public func signOut() {
         flowDelegate?.signOut()
         stopFlow()
     }
 }
 
-extension MainFlowController: FeedTabBadgeFlowDelegate {
+extension MainFlowController: FeedTabBadgeDelegate {
     public func updateCount(to count: Int, animated: Bool) {
         guard let tabBarController = rootViewController as? UITabBarController else { return }
         guard let index = getViewControllerTabIndex(for: .selection) else { return }

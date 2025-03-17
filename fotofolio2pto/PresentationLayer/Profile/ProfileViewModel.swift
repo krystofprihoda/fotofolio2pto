@@ -14,7 +14,6 @@ final class ProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
     
     // MARK: Dependencies
     
-    @LazyInjected private var logOutUseCase: LogoutUseCase
     @LazyInjected private var getUserDataFromUsernameUseCase: GetUserDataFromUsernameUseCase
     @LazyInjected private var getUserPortfoliosUseCase: GetUserPortfoliosUseCase
     
@@ -64,8 +63,7 @@ final class ProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
     enum Intent {
         case fetchProfileData
         case sendMessage
-        case signOut
-        case editProfile
+        case showProfileSettings
         case createNewPortfolio
         case goBack
     }
@@ -76,8 +74,7 @@ final class ProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
             switch intent {
             case .fetchProfileData: await fetchProfileData()
             case .sendMessage: sendMessage()
-            case .signOut: signOut()
-            case .editProfile: editProfile()
+            case .showProfileSettings: showProfileSettings()
             case .createNewPortfolio: createNewPortfolio()
             case .goBack: goBack()
             }
@@ -102,19 +99,14 @@ final class ProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
         flowController?.sendMessage(from: state.signedInUser, to: state.displayedUser)
     }
     
-    private func editProfile() {
+    private func showProfileSettings() {
         guard let userData = state.userData else { return }
-        flowController?.showProfileEdit(userData: userData, portfolios: state.portfolios)
+        flowController?.showProfileSettings(userData: userData, portfolios: state.portfolios)
     }
     
     private func createNewPortfolio() {
         guard let userData = state.userData else { return }
         flowController?.showCreateNewPortfolio(authorUsername: userData.username)
-    }
-    
-    private func signOut() {
-        logOutUseCase.execute()
-        flowController?.flowDelegate?.signOut()
     }
     
     private func goBack() {
