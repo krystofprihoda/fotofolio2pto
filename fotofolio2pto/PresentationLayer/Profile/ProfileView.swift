@@ -88,8 +88,17 @@ struct ProfileView: View {
                 .padding(.trailing, 5)
             }
         }
-        .setupNavBarAndTitle("@\(viewModel.state.displayedUser)")
+        .navigationBarItems(leading: backButton)
+        .setupNavBarAndTitle("@\(viewModel.state.displayedUser)", hideBack: true)
         .lifecycle(viewModel)
+    }
+    
+    var backButton: some View {
+        Button(L.Profile.back) {
+            viewModel.onIntent(.goBack)
+        }
+        .disabled(!viewModel.state.showDismiss)
+        .opacity(viewModel.state.showDismiss ? 1 : 0)
     }
 }
 

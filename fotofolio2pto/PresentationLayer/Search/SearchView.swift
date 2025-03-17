@@ -10,6 +10,7 @@ import SwiftUI
 struct SearchView: View {
     
     @ObservedObject private var viewModel: SearchViewModel
+    @State private var tmpToast: ToastData = .init()
     
     init(viewModel: SearchViewModel) {
         self.viewModel = viewModel
@@ -17,47 +18,46 @@ struct SearchView: View {
     
     var body: some View {
         VStack {
-            Picker(
-                L.Search.searchBy,
-                selection: Binding(
-                    get: { viewModel.state.searchOption },
-                    set: { viewModel.onIntent(.setSearchOption($0)) }
-                )
-            ) {
-                ForEach(SearchOption.allCases, id: \.self) { option in
-                    Text(option.rawValue)
-                }
-            }
-            .pickerStyle(.segmented)
-            .padding(.top)
-            
-            ZStack {
-                Rectangle()
-                   .foregroundColor(.gray).brightness(0.37)
-                
-                HStack {
-                    Image(systemName: "magnifyingglass")
-                    TextField(
-                        L.Search.search,
-                        text: Binding(
-                            get: { viewModel.state.textInput },
-                            set: { viewModel.onIntent(.setTextInput($0)) }
-                        )
+            // Search Bar
+            ZStack(alignment: .trailing) {
+                TextField(
+                    L.Search.search,
+                    text: Binding(
+                        get: { viewModel.state.textInput },
+                        set: { viewModel.onIntent(.setTextInput($0)) }
                     )
+                )
+                    .font(.body)
+                    .padding()
+                    .background(.textFieldBackground)
+                    .frame(height: Constants.Dimens.textFieldHeight * Constants.Dimens.halfMultiplier)
+                    .cornerRadius(Constants.Dimens.spaceSmall)
                     .autocapitalization(.none)
                     .disableAutocorrection(true)
                     .onChange(of: viewModel.state.textInput) { _ in
                         viewModel.onIntent(.search)
                     }
-                }
-                .padding()
-             }
-            .frame(height: 45)
-            .cornerRadius(Constants.Dimens.radiusXSmall)
+                
+                Image(systemName: "magnifyingglass")
+                    .foregroundStyle(.gray)
+                    .padding(.trailing)
+            }
             
-            SearchResultsView(results: viewModel.state.searchResults, showProfile: { user in viewModel.onIntent(.showProfile(of: user))})
+            VStack {
+                Button("Show Toast") {
+                    tmpToast = .init(message: "Toastik hej co je co je ses posral asi zes tohle udelal nee", type: .error)
+                }
+            }
+            
+            SearchResultsView(
+                results: viewModel.state.searchResults,
+                showProfile: { user in viewModel.onIntent(
+                    .showProfile(of: user)
+                )}
+            )
         }
-        .padding([.leading, .trailing])
+        .toast(toastData: $tmpToast)
+        .padding([.horizontal, .top])
         .setupNavBarAndTitle(L.Search.title)
     }
 }

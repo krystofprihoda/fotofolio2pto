@@ -9,11 +9,6 @@ import Foundation
 import SwiftUI
 import Resolver
 
-public enum SearchOption: String, CaseIterable {
-    case username = "Uživatelské jméno"
-    case location = "Poloha"
-}
-
 final class SearchViewModel: BaseViewModel, ViewModel, ObservableObject {
     // MARK: Stored properties
     
@@ -46,7 +41,6 @@ final class SearchViewModel: BaseViewModel, ViewModel, ObservableObject {
     
     struct State {
         var signedInUser = ""
-        var searchOption: SearchOption = .username
         var textInput: String = ""
         var searchResults: [User] = []
     }
@@ -56,7 +50,6 @@ final class SearchViewModel: BaseViewModel, ViewModel, ObservableObject {
     // MARK: Intent
     
     enum Intent {
-        case setSearchOption(SearchOption)
         case setTextInput(String)
         case search
         case showProfile(of: User)
@@ -66,7 +59,6 @@ final class SearchViewModel: BaseViewModel, ViewModel, ObservableObject {
     func onIntent(_ intent: Intent) -> Task<Void, Never> {
         executeTask(Task {
             switch intent {
-            case .setSearchOption(let option): setSearchOption(option)
             case .setTextInput(let input): setTextInput(input)
             case .search: search()
             case .showProfile(let user): showProfile(of: user)
@@ -75,10 +67,6 @@ final class SearchViewModel: BaseViewModel, ViewModel, ObservableObject {
     }
     
     // MARK: Additional methods
-    
-    private func setSearchOption(_ option: SearchOption) {
-        state.searchOption = option
-    }
     
     private func setTextInput(_ input: String) {
         state.textInput = input
@@ -90,7 +78,7 @@ final class SearchViewModel: BaseViewModel, ViewModel, ObservableObject {
         searchTask = Task {
             do {
                 try await Task.sleep(for: .seconds(0.3))
-                let results = try await getUsersFromQueryUseCase.execute(query: state.textInput, type: state.searchOption)
+                let results = try await getUsersFromQueryUseCase.execute(query: state.textInput.lowercased())
                 state.searchResults = results.filter({ $0.username != state.signedInUser })
             } catch {
                 

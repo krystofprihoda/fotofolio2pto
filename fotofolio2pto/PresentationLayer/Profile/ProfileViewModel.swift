@@ -25,12 +25,14 @@ final class ProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
     init(
         flowController: ProfileFlowController?,
         signedInUser: String,
-        displayedUser: String
+        displayedUser: String,
+        showDismiss: Bool = false
     ) {
         self.flowController = flowController
         super.init()
         state.displayedUser = displayedUser
         state.signedInUser = signedInUser
+        state.showDismiss = showDismiss
     }
     
     // MARK: Lifecycle
@@ -52,6 +54,7 @@ final class ProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
         var isProfileOwner: Bool { signedInUser == displayedUser }
         var userData: User? = nil
         var portfolios: [Portfolio] = []
+        var showDismiss = false
     }
     
     @Published private(set) var state = State()
@@ -64,6 +67,7 @@ final class ProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
         case signOut
         case editProfile
         case createNewPortfolio
+        case goBack
     }
     
     @discardableResult
@@ -75,6 +79,7 @@ final class ProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
             case .signOut: signOut()
             case .editProfile: editProfile()
             case .createNewPortfolio: createNewPortfolio()
+            case .goBack: goBack()
             }
         })
     }
@@ -110,5 +115,9 @@ final class ProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
     private func signOut() {
         logOutUseCase.execute()
         flowController?.flowDelegate?.signOut()
+    }
+    
+    private func goBack() {
+        flowController?.navigationController.popViewController(animated: true)
     }
 }

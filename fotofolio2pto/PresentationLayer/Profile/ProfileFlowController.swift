@@ -17,6 +17,7 @@ class ProfileFlowController: BaseFlowController {
     
     private let signedInUser: String
     private let displayedUser: String
+    private let showDismiss: Bool
     
     weak var flowDelegate: ProfileFlowControllerDelegate?
 
@@ -24,16 +25,23 @@ class ProfileFlowController: BaseFlowController {
         navigationController: UINavigationController,
         flowDelegate: ProfileFlowControllerDelegate? = nil,
         signedInUser: String,
-        displayedUser: String
+        displayedUser: String,
+        showDismiss: Bool = false
     ) {
         self.flowDelegate = flowDelegate
         self.signedInUser = signedInUser
         self.displayedUser = displayedUser
+        self.showDismiss = showDismiss
         super.init(navigationController: navigationController)
     }
     
     override func setup() -> UIViewController {
-        let vm = ProfileViewModel(flowController: self, signedInUser: signedInUser, displayedUser: displayedUser)
+        let vm = ProfileViewModel(
+            flowController: self,
+            signedInUser: signedInUser,
+            displayedUser: displayedUser,
+            showDismiss: showDismiss
+        )
         let view = ProfileView(viewModel: vm)
         let vc = BaseHostingController(rootView: view)
         return vc

@@ -8,7 +8,7 @@
 import Foundation
 
 public protocol GetUsersFromQueryUseCase {
-    func execute(query: String, type: SearchOption) async throws -> [User]
+    func execute(query: String) async throws -> [User]
 }
 
 public struct GetUsersFromQueryUseCaseImpl: GetUsersFromQueryUseCase {
@@ -19,11 +19,11 @@ public struct GetUsersFromQueryUseCaseImpl: GetUsersFromQueryUseCase {
         self.userRepository = userRepository
     }
     
-    public func execute(query: String, type: SearchOption) async throws -> [User] {
-        switch type {
-        case .username: return try await userRepository.getUsersFromUsernameQuery(query: query, type: type)
-        case .location: return try await userRepository.getUsersFromLocationQuery(query: query, type: type)
-        }
+    public func execute(query: String) async throws -> [User] {
+        let usersByName = try await userRepository.getUsersFromUsernameQuery(query: query)
+        let usersByLocation = try await userRepository.getUsersFromLocationQuery(query: query)
+        let result = usersByName + usersByLocation
+        return result
     }
     
     

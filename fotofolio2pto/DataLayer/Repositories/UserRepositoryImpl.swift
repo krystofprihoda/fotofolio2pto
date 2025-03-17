@@ -19,18 +19,20 @@ public class UserRepositoryImpl: UserRepository {
         return user
     }
     
-    public func getUsersFromUsernameQuery(query: String, type: SearchOption) async throws -> [User] {
+    public func getUsersFromUsernameQuery(query: String) async throws -> [User] {
         try await Task.sleep(for: .seconds(0.3))
-        return UserRepositoryImpl.users.filter({ user in
+        let users = UserRepositoryImpl.users.filter({ user in
             user.username.lowercased().hasPrefix(query.lowercased())
         })
+        return users
     }
     
-    public func getUsersFromLocationQuery(query: String, type: SearchOption) async throws -> [User] {
+    public func getUsersFromLocationQuery(query: String) async throws -> [User] {
         try await Task.sleep(for: .seconds(0.3))
-        return UserRepositoryImpl.users.filter({ user in
+        let users = UserRepositoryImpl.users.filter({ user in
             user.location.lowercased().hasPrefix(query.lowercased())
         })
+        return users
     }
     
     public func isEmailAddressTaken(_ email: String) async throws {

@@ -67,7 +67,6 @@ public struct L {
     public enum Search {
         public static let title = "Vyhledávání"
         public static let search = "Hledat"
-        public static let searchBy = "Vyhledávat podle"
     }
     
     public enum Messages {
