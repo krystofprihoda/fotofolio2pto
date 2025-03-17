@@ -12,11 +12,15 @@ class SelectionFlowController: BaseFlowController {
     
     private let signedInUser: String
     
+    weak var feedTabBadgeFlowDelegate: FeedTabBadgeFlowDelegate?
+    
     init(
         navigationController: UINavigationController,
-        signedInUser: String
+        signedInUser: String,
+        feedTabBadgeFlowDelegate: FeedTabBadgeFlowDelegate? = nil
     ) {
         self.signedInUser = signedInUser
+        self.feedTabBadgeFlowDelegate = feedTabBadgeFlowDelegate
         super.init(navigationController: navigationController)
     }
     
@@ -42,5 +46,11 @@ class SelectionFlowController: BaseFlowController {
         let fc = MessagesFlowController(navigationController: navigationController, sender: signedInUser, receiver: receiver.username)
         let vc = startChildFlow(fc)
         navigationController.pushViewController(vc, animated: true)
+    }
+}
+
+extension SelectionFlowController: FeedTabBadgeFlowDelegate {
+    func updateCount(to count: Int, animated: Bool) {
+        feedTabBadgeFlowDelegate?.updateCount(to: count, animated: animated)
     }
 }

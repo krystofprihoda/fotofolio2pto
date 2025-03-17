@@ -109,6 +109,7 @@ final class SelectionViewModel: BaseViewModel, ViewModel, ObservableObject {
         do {
             try unflagAllPortfoliosUseCase.execute()
             state.portfolios = []
+            flowController?.feedTabBadgeFlowDelegate?.updateCount(to: 0, animated: false)
         } catch {
             
         }
@@ -147,6 +148,7 @@ final class SelectionViewModel: BaseViewModel, ViewModel, ObservableObject {
         do {
             try unflagPortfolioUseCase.execute(id: id)
             state.portfolios.removeAll(where: { $0.id == id })
+            flowController?.feedTabBadgeFlowDelegate?.updateCount(to: state.portfolios.count, animated: false)
         } catch {
             
         }

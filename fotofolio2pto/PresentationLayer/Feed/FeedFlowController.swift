@@ -17,19 +17,22 @@ class FeedFlowController: BaseFlowController {
     private let signedInUser: String
     private var backgroundFilterTapView: UIView?
     
-    weak var feedFlowDelegate: FilterFeedDelegate?
+    weak var filterFeedFlowDelegate: FilterFeedDelegate?
+    weak var feedTabBadgeFlowDelegate: FeedTabBadgeFlowDelegate?
     
     init(
         navigationController: UINavigationController,
-        signedInUser: String
+        signedInUser: String,
+        feedTabBadgeFlowDelegate: FeedTabBadgeFlowDelegate? = nil
     ) {
         self.signedInUser = signedInUser
+        self.feedTabBadgeFlowDelegate = feedTabBadgeFlowDelegate
         super.init(navigationController: navigationController)
     }
     
     override func setup() -> UIViewController {
         let vm = FeedViewModel(flowController: self, signedInUser: signedInUser)
-        feedFlowDelegate = vm
+        filterFeedFlowDelegate = vm
         let view = FeedView(viewModel: vm)
         let vc = BaseHostingController(rootView: view)
         return vc
@@ -65,7 +68,7 @@ class FeedFlowController: BaseFlowController {
     }
 }
 
-/// Hack for recognizing taps outside the bottom sheet
+//// Hack for recognizing taps outside the bottom sheet
 extension FeedFlowController: UISheetPresentationControllerDelegate {
     // Implement the delegate methods to handle dismissal
     func presentationControllerShouldDismiss(_ presentationController: UIPresentationController) -> Bool {
@@ -96,5 +99,11 @@ extension FeedFlowController: UISheetPresentationControllerDelegate {
 
     @objc private func handleBackgroundTap() {
         dismissFilter()
+    }
+}
+
+extension FeedFlowController: FeedTabBadgeFlowDelegate {
+    func updateCount(to count: Int, animated: Bool) {
+        feedTabBadgeFlowDelegate?.updateCount(to: count, animated: animated)
     }
 }

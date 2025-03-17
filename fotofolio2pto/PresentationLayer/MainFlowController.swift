@@ -69,7 +69,6 @@ public class MainFlowController: BaseFlowController {
         navViewControllers.append(profileNavController)
         
         tabBarVC.setViewControllers(navViewControllers, animated: true)
-        
         return tabBarVC
     }
     
@@ -80,7 +79,7 @@ public class MainFlowController: BaseFlowController {
             image: UIImage(systemName: "square.text.square"),
             tag: MainTab.feed.rawValue
         )
-        let feedFlowController = FeedFlowController(navigationController: feedNavController, signedInUser: user)
+        let feedFlowController = FeedFlowController(navigationController: feedNavController, signedInUser: user, feedTabBadgeFlowDelegate: self)
         let feedRootVC = startChildFlow(feedFlowController)
         feedNavController.viewControllers = [feedRootVC]
         
@@ -94,7 +93,7 @@ public class MainFlowController: BaseFlowController {
             image: UIImage(systemName: "star.square"),
             tag: MainTab.selection.rawValue
         )
-        let selectionFlowController = SelectionFlowController(navigationController: selectionNavController, signedInUser: user)
+        let selectionFlowController = SelectionFlowController(navigationController: selectionNavController, signedInUser: user, feedTabBadgeFlowDelegate: self)
         let selectionRootVC = startChildFlow(selectionFlowController)
         selectionNavController.viewControllers = [selectionRootVC]
         
@@ -228,11 +227,36 @@ public class MainFlowController: BaseFlowController {
     func dismiss(animated: Bool = true) {
         navigationController.dismiss(animated: animated)
     }
+    
+    func animateTabBarBadge(tabBarItem: UITabBarItem?) {
+        guard let tabBarButton = tabBarItem?.value(forKey: "view") as? UIView else { return }
+        
+        let animation = CABasicAnimation(keyPath: "transform.scale")
+        animation.fromValue = 1.0
+        animation.toValue = 1.2
+        animation.duration = 0.15
+        animation.autoreverses = true
+        animation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+
+        tabBarButton.layer.add(animation, forKey: "bounceOnce")
+    }
 }
 
 extension MainFlowController: ProfileFlowControllerDelegate {
     public func signOut() {
         flowDelegate?.signOut()
         stopFlow()
+    }
+}
+
+extension MainFlowController: FeedTabBadgeFlowDelegate {
+    public func updateCount(to count: Int, animated: Bool) {
+        guard let tabBarController = rootViewController as? UITabBarController else { return }
+        guard let index = getViewControllerTabIndex(for: .selection) else { return }
+        let tabBarItem = tabBarController.tabBar.items?[index]
+        
+        tabBarItem?.badgeColor = .mainAccent
+        tabBarItem?.badgeValue = count > 0 ? "\(count)" : nil
+        if animated { animateTabBarBadge(tabBarItem: tabBarItem) }
     }
 }

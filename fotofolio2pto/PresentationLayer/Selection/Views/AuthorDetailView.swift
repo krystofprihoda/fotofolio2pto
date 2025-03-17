@@ -33,14 +33,14 @@ struct AuthorDetailView: View {
                     Text("@\(author.username)")
                         .font(.title3)
                         .padding(.leading, 20)
-                        .foregroundColor(.pink)
+                        .foregroundColor(.mainAccent)
                 }
                 
                 Spacer()
                 
                 Button(action: sendMessage) {
                     Text(L.Selection.typeMessage)
-                        .foregroundColor(.cyan)
+                        .foregroundColor(.gray)
                 }
                 
                 Button(action: unflagPortfolio) {

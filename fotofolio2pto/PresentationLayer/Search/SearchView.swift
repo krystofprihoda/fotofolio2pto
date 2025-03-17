@@ -10,7 +10,6 @@ import SwiftUI
 struct SearchView: View {
     
     @ObservedObject private var viewModel: SearchViewModel
-    @State private var tmpToast: ToastData = .init()
     
     init(viewModel: SearchViewModel) {
         self.viewModel = viewModel
@@ -43,12 +42,6 @@ struct SearchView: View {
                     .padding(.trailing)
             }
             
-            VStack {
-                Button("Show Toast") {
-                    tmpToast = .init(message: "Toastik hej co je co je ses posral asi zes tohle udelal nee", type: .error)
-                }
-            }
-            
             SearchResultsView(
                 results: viewModel.state.searchResults,
                 showProfile: { user in viewModel.onIntent(
@@ -56,7 +49,6 @@ struct SearchView: View {
                 )}
             )
         }
-        .toast(toastData: $tmpToast)
         .padding([.horizontal, .top])
         .setupNavBarAndTitle(L.Search.title)
     }

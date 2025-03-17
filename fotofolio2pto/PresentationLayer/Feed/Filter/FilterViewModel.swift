@@ -78,7 +78,7 @@ final class FilterViewModel: BaseViewModel, ViewModel, ObservableObject {
         currentTask = executeTask(Task {
             do {
                 try await Task.sleep(nanoseconds: 500_000_000)
-                await flowController?.feedFlowDelegate?.filterFeedPortfolios(state.selectedTags)
+                await flowController?.filterFeedFlowDelegate?.filterFeedPortfolios(state.selectedTags)
             } catch {
                 Logger.app.error("[FAIL] \(#file) • \(#line) • \(#function) | Task failed: \(error)")
             }
@@ -92,7 +92,7 @@ final class FilterViewModel: BaseViewModel, ViewModel, ObservableObject {
         currentTask = executeTask(Task {
             do {
                 try await Task.sleep(nanoseconds: 500_000_000)
-                await flowController?.feedFlowDelegate?.removeFilterTag(tag)
+                await flowController?.filterFeedFlowDelegate?.removeFilterTag(tag)
             } catch {
                 Logger.app.error("[FAIL] \(#file) • \(#line) • \(#function) | Task failed: \(error)")
             }

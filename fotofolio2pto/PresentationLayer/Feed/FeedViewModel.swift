@@ -9,6 +9,10 @@ import Foundation
 import SwiftUI
 import Resolver
 
+public protocol FeedTabBadgeFlowDelegate: AnyObject {
+    func updateCount(to: Int, animated: Bool)
+}
+
 final class FeedViewModel: BaseViewModel, ViewModel, ObservableObject {
     // MARK: Stored properties
     
@@ -43,6 +47,8 @@ final class FeedViewModel: BaseViewModel, ViewModel, ObservableObject {
         if state.portfolios.isEmpty {
             executeTask(Task { await fetchPortfolios(isRefreshing: false) })
         }
+        
+        flowController?.feedTabBadgeFlowDelegate?.updateCount(to: state.flaggedPortfolioIds.count, animated: false)
     }
     
     // MARK: State
@@ -128,6 +134,8 @@ final class FeedViewModel: BaseViewModel, ViewModel, ObservableObject {
         do {
             try flagPortfolioUseCase.execute(id: id)
             fetchFlaggedPortfolios()
+            
+            flowController?.feedTabBadgeFlowDelegate?.updateCount(to: state.flaggedPortfolioIds.count, animated: true)
         } catch {
         
         }
@@ -137,6 +145,8 @@ final class FeedViewModel: BaseViewModel, ViewModel, ObservableObject {
         do {
             try unflagPortfolioUseCase.execute(id: id)
             fetchFlaggedPortfolios()
+            
+            flowController?.feedTabBadgeFlowDelegate?.updateCount(to: state.flaggedPortfolioIds.count, animated: false)
         } catch {
             
         }

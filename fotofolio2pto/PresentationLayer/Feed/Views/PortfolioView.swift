@@ -42,7 +42,7 @@ struct PortfolioView: View {
                 Button(action: openProfileAction, label: {
                     Text("@" + portfolio.author.username)
                         .font(.title2)
-                        .foregroundColor(.pink)
+                        .foregroundColor(.mainAccent)
                 })
                 
                 Spacer()
@@ -51,7 +51,7 @@ struct PortfolioView: View {
                     Button(action: isFlagged ? unflagAction : flagAction) {
                         Image(systemName: isFlagged ? "bookmark.fill" : "bookmark")
                             .font(.title3)
-                            .foregroundColor(isFlagged ? .red : .gray)
+                            .foregroundColor(isFlagged ? .mainAccent : .gray)
                             .transition(.opacity)
                     }
                 }
