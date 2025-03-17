@@ -26,6 +26,7 @@
 		FE9A30B02D86E6A10056CC0A /* UserViewObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE9A30AF2D86E6A10056CC0A /* UserViewObject.swift */; };
 		FE9A30B22D86E6A10056CC0A /* Shimmer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE9A30B12D86E6A10056CC0A /* Shimmer.swift */; };
 		FE9A30B52D8737650056CC0A /* UpdatePortfolioUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE9A30B42D8737650056CC0A /* UpdatePortfolioUseCase.swift */; };
+		FE9A30BB2D88473E0056CC0A /* Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE9A30BA2D88473E0056CC0A /* Toast.swift */; };
 		FEA53C962C29BF2F006F0116 /* Providers+Injection.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53C952C29BF2F006F0116 /* Providers+Injection.swift */; };
 		FEA53C982C29BF97006F0116 /* Repositories+Injection.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53C972C29BF97006F0116 /* Repositories+Injection.swift */; };
 		FEA53C9A2C29BFDF006F0116 /* UseCase+Injection.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53C992C29BFDF006F0116 /* UseCase+Injection.swift */; };
@@ -148,6 +149,7 @@
 		FE9A30AF2D86E6A10056CC0A /* UserViewObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewObject.swift; sourceTree = "<group>"; };
 		FE9A30B12D86E6A10056CC0A /* Shimmer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shimmer.swift; sourceTree = "<group>"; };
 		FE9A30B42D8737650056CC0A /* UpdatePortfolioUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatePortfolioUseCase.swift; sourceTree = "<group>"; };
+		FE9A30BA2D88473E0056CC0A /* Toast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
 		FEA53C952C29BF2F006F0116 /* Providers+Injection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Providers+Injection.swift"; sourceTree = "<group>"; };
 		FEA53C972C29BF97006F0116 /* Repositories+Injection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Repositories+Injection.swift"; sourceTree = "<group>"; };
 		FEA53C992C29BFDF006F0116 /* UseCase+Injection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UseCase+Injection.swift"; sourceTree = "<group>"; };
@@ -594,6 +596,7 @@
 		FEC94DAC2C243EA400FFEB11 /* BaseViews */ = {
 			isa = PBXGroup;
 			children = (
+				FE9A30BA2D88473E0056CC0A /* Toast.swift */,
 				FE9777E02D7F695C0027DA60 /* PulsingCircleView.swift */,
 				FE9777DE2D7F69240027DA60 /* HorizontalWheelPicker.swift */,
 				FEC94DAE2C243EC100FFEB11 /* BaseHostingController.swift */,
@@ -854,6 +857,7 @@
 				FEC8A8C02D75C5D5000181B8 /* Localization.swift in Sources */,
 				FEC94D9F2C24398200FFEB11 /* fotofolio2pto.xcdatamodeld in Sources */,
 				FEA53CD62C2C2CEC006F0116 /* CreateNewChatUseCase.swift in Sources */,
+				FE9A30BB2D88473E0056CC0A /* Toast.swift in Sources */,
 				FE5F8A862C29737F001EE8AF /* SystemUserDefaultsProvider.swift in Sources */,
 				FEC94DEC2C25DC1600FFEB11 /* Constants.swift in Sources */,
 				FE9A30B52D8737650056CC0A /* UpdatePortfolioUseCase.swift in Sources */,

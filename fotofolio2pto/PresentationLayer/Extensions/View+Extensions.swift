@@ -82,3 +82,9 @@ extension View {
             .animation(.default, value: condition)
     }
 }
+
+extension View {
+    func toast(toastData: Binding<ToastData>) -> some View {
+        self.modifier(ToastModifier(toastData: toastData))
+    }
+}
