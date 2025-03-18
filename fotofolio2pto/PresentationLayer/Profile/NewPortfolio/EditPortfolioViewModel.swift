@@ -83,6 +83,7 @@ final class EditPortfolioViewModel: BaseViewModel, ViewModel, ObservableObject {
         case setName(String)
         case setTagInput(String)
         case removeTag(String)
+        case removePic(UUID)
         case setDescriptionInput(String)
         case saveChanges
         case onAlertDataChanged(AlertData?)
@@ -100,6 +101,7 @@ final class EditPortfolioViewModel: BaseViewModel, ViewModel, ObservableObject {
             case .setDescriptionInput(let input): setDescriptionInput(input)
             case .setTagInput(let input): setTagInput(input)
             case .removeTag(let tag): removeTag(tag)
+            case .removePic(let id): removePic(id)
             case .saveChanges: await saveChanges()
             case .onAlertDataChanged(let alertData): onAlertDataChanged(alertData: alertData)
             }
@@ -128,6 +130,11 @@ final class EditPortfolioViewModel: BaseViewModel, ViewModel, ObservableObject {
     
     private func removeTag(_ tag: String) {
         state.selectedTags.removeAll(where: { $0 == tag })
+        updateSaveButtonVisibility()
+    }
+    
+    private func removePic(_ id: UUID) {
+        state.media.removeAll(where: { $0.id == id })
         updateSaveButtonVisibility()
     }
     

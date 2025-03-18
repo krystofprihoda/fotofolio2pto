@@ -42,6 +42,7 @@ final class SelectionViewModel: BaseViewModel, ViewModel, ObservableObject {
         var isLoading = false
         var portfolios: [Portfolio] = []
         var alertData: AlertData? = nil
+        var toastData: ToastData? = nil
     }
     
     @Published private(set) var state = State()
@@ -55,6 +56,7 @@ final class SelectionViewModel: BaseViewModel, ViewModel, ObservableObject {
         case showProfile(User)
         case sendMessage(to: User)
         case onAlertDataChanged(AlertData?)
+        case setToastData(ToastData?)
     }
     
     @discardableResult
@@ -67,6 +69,7 @@ final class SelectionViewModel: BaseViewModel, ViewModel, ObservableObject {
             case .showProfile(let user): showProfile(user: user)
             case .sendMessage(let user): sendMessage(to: user)
             case .onAlertDataChanged(let alertData): onAlertDataChanged(alertData: alertData)
+            case .setToastData(let toast): setToastData(toast)
             }
         })
     }
@@ -109,6 +112,9 @@ final class SelectionViewModel: BaseViewModel, ViewModel, ObservableObject {
         do {
             try unflagAllPortfoliosUseCase.execute()
             state.portfolios = []
+            
+            state.toastData = .init(message: L.Selection.removedAll, type: .neutral)
+            
             flowController?.feedTabBadgeFlowDelegate?.updateCount(to: 0, animated: false)
         } catch {
             
@@ -148,6 +154,9 @@ final class SelectionViewModel: BaseViewModel, ViewModel, ObservableObject {
         do {
             try unflagPortfolioUseCase.execute(id: id)
             state.portfolios.removeAll(where: { $0.id == id })
+            
+            state.toastData = .init(message: L.Selection.portfolioRemoved, type: .neutral)
+            
             flowController?.feedTabBadgeFlowDelegate?.updateCount(to: state.portfolios.count, animated: false)
         } catch {
             
@@ -160,5 +169,9 @@ final class SelectionViewModel: BaseViewModel, ViewModel, ObservableObject {
     
     private func sendMessage(to user: User) {
         flowController?.sendMessage(to: user)
+    }
+    
+    private func setToastData(_ toast: ToastData?) {
+        state.toastData = toast
     }
 }

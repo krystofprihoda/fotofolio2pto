@@ -44,6 +44,7 @@ final class SettingsViewModel: BaseViewModel, ViewModel, ObservableObject {
     enum Intent {
         case editProfile
         case signOut
+        case goBack
     }
     
     @discardableResult
@@ -52,6 +53,7 @@ final class SettingsViewModel: BaseViewModel, ViewModel, ObservableObject {
             switch intent {
             case .editProfile: editProfile()
             case .signOut: signOut()
+            case .goBack: dismissView()
             }
         })
     }
@@ -66,5 +68,9 @@ final class SettingsViewModel: BaseViewModel, ViewModel, ObservableObject {
     private func signOut() {
         logOutUseCase.execute()
         flowController?.profileSignOutDelegate?.signOut()
+    }
+    
+    private func dismissView() {
+        flowController?.navigationController.popViewController(animated: true)
     }
 }

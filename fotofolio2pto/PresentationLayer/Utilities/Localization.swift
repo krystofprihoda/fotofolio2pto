@@ -48,6 +48,8 @@ public struct L {
         public static let filterPortfolios = "Filtrovat portfolia"
         public static let weddingExample = "např. svatba"
         public static let add = "Přidat"
+        public static let portfolioAdded = "Portfolio přidáno do výběru."
+        public static let portfolioRemoved = "Portfolio odstraněno z výběru."
     }
     
     public enum Selection {
@@ -62,6 +64,8 @@ public struct L {
         public static let removeAllFromSelection = "Odstranit všechna portfolia z výběru?"
         public static let removePortfolioFromSelection = "Odstranit portfolio z výběru?"
         public static let cancel = "Zrušit"
+        public static let portfolioRemoved = "Portfolio odstraněno z výběru."
+        public static let removedAll = "Všechna portfolia byla odstraněna z vašeho výběru."
     }
     
     public enum Search {

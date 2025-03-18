@@ -86,12 +86,11 @@ final class FilterViewModel: BaseViewModel, ViewModel, ObservableObject {
     }
     
     private func removeTag(_ tag: String) async {
-        state.selectedTags.removeAll(where: { $0 == tag })
-        
         cancelTask()
         currentTask = executeTask(Task {
             do {
                 try await Task.sleep(nanoseconds: 500_000_000)
+                state.selectedTags.removeAll(where: { $0 == tag })
                 await flowController?.filterFeedDelegate?.removeFilterTag(tag)
             } catch {
                 Logger.app.error("[FAIL] \(#file) • \(#line) • \(#function) | Task failed: \(error)")

@@ -45,6 +45,7 @@ struct SelectionView: View {
                 .padding(.top)
             }
         }
+        .toast(toastData: Binding(get: { viewModel.state.toastData }, set: { viewModel.onIntent(.setToastData($0)) }))
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarTrailing) {
                 if !viewModel.state.portfolios.isEmpty {

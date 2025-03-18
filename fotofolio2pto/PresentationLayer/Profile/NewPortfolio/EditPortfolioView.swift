@@ -166,8 +166,7 @@ struct EditPortfolioView: View {
                                 }
                             }
                             
-                            #warning("TODO: remove pic")
-                            Button(action: {}) {
+                            Button(action: { viewModel.onIntent(.removePic(iimg.id)) }) {
                                 ZStack {
                                     RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
                                         .fill(.white)

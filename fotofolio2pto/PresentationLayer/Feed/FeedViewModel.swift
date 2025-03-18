@@ -55,13 +55,14 @@ final class FeedViewModel: BaseViewModel, ViewModel, ObservableObject {
     
     // MARK: State
     
-    struct State {
+    struct State: Equatable {
         var signedInUser = ""
         var isLoading: Bool = false
         var isRefreshing: Bool = false
         var portfolios: [Portfolio] = []
         var flaggedPortfolioIds: [Int] = []
         var filter: [String] = []
+        var toastData: ToastData? = nil
     }
     
     @Published private(set) var state = State()
@@ -76,6 +77,8 @@ final class FeedViewModel: BaseViewModel, ViewModel, ObservableObject {
         case flagPortfolio(Int)
         case unflagPortfolio(Int)
         case showProfile(User)
+        case setToastData(ToastData?)
+        case removeCategory(String)
     }
     
     @discardableResult
@@ -89,6 +92,8 @@ final class FeedViewModel: BaseViewModel, ViewModel, ObservableObject {
             case .flagPortfolio(let id): flagPortfolio(withId: id)
             case .unflagPortfolio(let id): unflagPortfolio(withId: id)
             case .showProfile(let user): showProfile(user: user)
+            case .setToastData(let toast): setToastData(toast)
+            case .removeCategory(let category): await removeFilterTag(category)
             }
         })
     }
@@ -137,6 +142,10 @@ final class FeedViewModel: BaseViewModel, ViewModel, ObservableObject {
             try flagPortfolioUseCase.execute(id: id)
             fetchFlaggedPortfolios()
             
+            // Show a toast
+            state.toastData = .init(message: L.Feed.portfolioAdded, type: .success)
+            
+            // Update tab bar
             flowController?.feedTabBadgeDelegate?.updateCount(to: state.flaggedPortfolioIds.count, animated: true)
         } catch {
         
@@ -147,6 +156,9 @@ final class FeedViewModel: BaseViewModel, ViewModel, ObservableObject {
         do {
             try unflagPortfolioUseCase.execute(id: id)
             fetchFlaggedPortfolios()
+            
+            // Show a toast
+            state.toastData = .init(message: L.Feed.portfolioRemoved, type: .neutral)
             
             flowController?.feedTabBadgeDelegate?.updateCount(to: state.flaggedPortfolioIds.count, animated: false)
         } catch {
@@ -160,6 +172,10 @@ final class FeedViewModel: BaseViewModel, ViewModel, ObservableObject {
     
     private func showProfile(user: User) {
         flowController?.showProfile(user: user)
+    }
+    
+    private func setToastData(_ toast: ToastData?) {
+        state.toastData = toast
     }
 }
 

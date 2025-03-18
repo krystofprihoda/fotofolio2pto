@@ -7,22 +7,28 @@
 
 import SwiftUI
 
-enum ToastType {
+enum ToastType: Equatable {
     case neutral, success, error
 
     var color: Color {
         switch self {
-        case .neutral: return .gray
+        case .neutral: return .black
         case .success: return .green
         case .error: return .red
         }
     }
 }
 
-struct ToastData {
-    var message: String = ""
+struct ToastData: Equatable {
+    var message: String
     var type: ToastType = .success
     var duration: DispatchTimeInterval = .seconds(3)
+    
+    init(message: String, type: ToastType = .success, duration: DispatchTimeInterval = .seconds(3)) {
+        self.message = message
+        self.type = type
+        self.duration = duration
+    }
 }
 
 struct ToastView: View {
@@ -41,24 +47,24 @@ struct ToastView: View {
 }
 
 struct ToastModifier: ViewModifier {
-    @Binding var toastData: ToastData
+    @Binding var toastData: ToastData?
 
     func body(content: Content) -> some View {
         ZStack {
             content
             
-            if !toastData.message.isEmpty {
+            if let toast = toastData {
                 VStack {
                     Spacer()
                     
-                    ToastView(data: toastData)
+                    ToastView(data: toast)
                         .padding(.bottom, Constants.Dimens.spaceXXLarge)
                 }
                 .transition(.opacity)
                 .onAppear {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + toastData.duration) {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + toast.duration) {
                         withAnimation {
-                            toastData.message = ""
+                            toastData = nil
                         }
                     }
                 }

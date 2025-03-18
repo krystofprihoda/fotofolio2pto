@@ -31,6 +31,14 @@ struct SettingsView: View {
                 })
             }
         }
-        .navigationTitle(L.Profile.settings)
+        .navigationBarItems(leading: backButton)
+        .setupNavBarAndTitle(L.Profile.settings, hideBack: true)
+    }
+    
+    var backButton: some View {
+        Button(L.Profile.back) {
+            viewModel.onIntent(.goBack)
+        }
+        .foregroundStyle(.black)
     }
 }
