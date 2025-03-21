@@ -12,7 +12,7 @@ internal class UserRepositoryImpl : UserRepository {
         return User.mocks().find { user -> user.id == id }
     }
 
-    override suspend fun createUser(id: User): User {
+    override suspend fun createUser(username: String): User {
         return User.mocks().first()
     }
 
