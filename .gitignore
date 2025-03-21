@@ -90,3 +90,5 @@ fastlane/test_output
 iOSInjectionProject/
 fotofolio2pto/Assets.xcassets/.DS_Store
 fotofolio2pto/.DS_Store
+
+**/.DS_Store
