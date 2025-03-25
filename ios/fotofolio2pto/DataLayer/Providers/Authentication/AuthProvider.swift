@@ -9,7 +9,7 @@ import FirebaseAuth
 
 protocol AuthProvider {
     func checkEmailAvailable(_ email: String) async throws
-    func registerUserAndRetrieveToken(email: String, password: String) async throws -> RegisterData
+    func registerUser(email: String, password: String) async throws -> RegisterData
     func createUser(username: String) async throws
     func login(email: String, password: String) async throws -> AuthDataResult
     func logout() throws

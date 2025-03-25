@@ -25,7 +25,9 @@ fun Application.configureFrameworks() {
             adminFile = File("fotofolio-3-firebase-key.json")
             realm = "fotofolio"
 
-            validate {}
+            validate { credential ->
+                UserIdPrincipal(credential.uid)
+            }
         }
     }
 }

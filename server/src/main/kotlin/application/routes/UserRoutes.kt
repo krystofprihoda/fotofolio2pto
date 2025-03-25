@@ -11,17 +11,20 @@ import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import kotlinx.serialization.Serializable
-import com.google.cloud.firestore.Firestore
 import com.google.firebase.cloud.FirestoreClient
 import com.kborowy.authprovider.firebase.await
 
 // temporary location
 @Serializable
 data class User(
-    val userId: String,
-    val username: String,
-    val email: String,
-    val fullName: String
+    val userId: String = "",
+    val username: String = "",
+    val email: String = "",
+    val fullName: String = "",
+    val location: String = "",
+    val profilePicture: String = "",
+    val rating: Map<String, Int> = emptyMap(),
+    val creatorId: String = ""
 )
 
 @Serializable
@@ -59,27 +62,19 @@ fun Application.userRoutes() {
                     val userData = call.receive<User>()
 
                     // Print the received user data
-                    println("Received user data:")
-                    println("User ID: ${userData.userId}")
-                    println("Username: ${userData.username}")
-                    println("Email: ${userData.email}")
-                    println("Full Name: ${userData.fullName}")
+                    println("Received: $userData")
 
                     val db = FirestoreClient.getFirestore()
                     db.collection("user")
                         .document(userData.userId)
-                        .set(mapOf(
-                            "username" to userData.username,
-                            "email" to userData.email,
-                            "fullName" to userData.fullName
-                        ))
+                        .set(userData)
 
                     val res = db
                         .collection("user")
                         .document(userData.userId)
                         .get()
                         .await()
-                        .toObject(FirebaseUser::class.java)
+                        .toObject(User::class.java)
 
                     call.respond(HttpStatusCode.OK, res ?: "User not found")
                 } catch (e: Exception) {

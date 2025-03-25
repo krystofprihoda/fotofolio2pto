@@ -26,7 +26,8 @@ final class RegisterViewModel: BaseViewModel, ViewModel, ObservableObject {
     
     @LazyInjected private var checkEmailAddressAvailableUseCase: CheckEmailAddressAvailableUseCase
     @LazyInjected private var checkUsernameAvailableUseCase: CheckUsernameAvailableUseCase
-    @LazyInjected private var registerUserAndGetTokenUseCase: RegisterUserAndGetTokenUseCase
+    @LazyInjected private var registerUserUseCase: RegisterUserUseCase
+    @LazyInjected private var saveUserDataUseCase: SaveUserDataUseCase
     
     private var currentTask: Task<(), Never>?
     
@@ -297,9 +298,6 @@ final class RegisterViewModel: BaseViewModel, ViewModel, ObservableObject {
         state.showSkeleton = true
         defer { state.showSkeleton = false }
         
-        // pwd usecase
-        // try await checkEmailAddressAvailableUseCase.execute(state.email)
-        
         state.firstPasswordError = ""
         state.secondPasswordError = ""
         state.stage = .isCreator
@@ -321,9 +319,8 @@ final class RegisterViewModel: BaseViewModel, ViewModel, ObservableObject {
         }
         
         do {
-            let data = try await registerUserAndGetTokenUseCase.execute(email: state.email, password: state.firstPassword)
-            print(data.token)
-            try await sendUserDataToServer(token: data.token, userId: data.uid)
+            try await registerUserUseCase.execute(email: state.email, password: state.firstPassword)
+            try await saveUserDataUseCase.execute(username: state.username, email: state.email, fullName: state.name, location: "", profilePicture: "")
             
             state.userCreated = true
             
@@ -331,38 +328,6 @@ final class RegisterViewModel: BaseViewModel, ViewModel, ObservableObject {
         } catch {
             print(error.localizedDescription)
         }
-    }
-    
-    #warning("TODO: Adapt to Clean Architecture, create a UC")
-    func sendUserDataToServer(token: String, userId: String) async throws {
-        guard let url = URL(string: "http://0.0.0.0:8080/user") else {
-            throw URLError(.badURL)
-        }
-        
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        
-        let body = try JSONSerialization.data(
-            withJSONObject: [
-                "userId": userId,
-                "username": state.username,
-                "email": state.email,
-                "fullName": state.name
-            ],
-            options: []
-        )
-        request.httpBody = body
-        
-        let (data, response) = try await URLSession.shared.data(for: request)
-        
-        // Check for HTTP response errors
-        guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
-            throw NSError(domain: "ServerError", code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to save user data"])
-        }
-        
-        print("User data successfully saved!")
     }
     
     private func setIsCreator(to value: Bool) {

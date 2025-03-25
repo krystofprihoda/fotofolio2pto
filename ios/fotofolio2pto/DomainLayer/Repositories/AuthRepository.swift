@@ -9,7 +9,7 @@ import Foundation
 
 public protocol AuthRepository {
     func checkEmailAvailable(email: String) async throws
-    func registerUserAndGetToken(email: String, password: String) async throws -> RegisterData
+    func registerUser(email: String, password: String) async throws
     func logout() throws
     func loginWithCredentials(email: String, password: String) async throws -> UserAuthDetails
     func getLoggedInUser() -> String?

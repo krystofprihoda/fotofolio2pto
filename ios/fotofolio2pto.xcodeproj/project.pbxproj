@@ -9,7 +9,11 @@
 /* Begin PBXBuildFile section */
 		FE0685662D84A2A90002B217 /* TagsSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE0685652D84A2A90002B217 /* TagsSelectionView.swift */; };
 		FE34A64F2D78BCF200CB4CAE /* CheckEmailAddressAvailableUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE34A64E2D78BCF200CB4CAE /* CheckEmailAddressAvailableUseCase.swift */; };
-		FE3D23252D91A41400DA22DB /* RegisterUserAndGetTokenUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE3D23242D91A41000DA22DB /* RegisterUserAndGetTokenUseCase.swift */; };
+		FE3D23252D91A41400DA22DB /* RegisterUserUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE3D23242D91A41000DA22DB /* RegisterUserUseCase.swift */; };
+		FE3D23272D92FD0D00DA22DB /* SaveUserDataUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE3D23262D92FD0600DA22DB /* SaveUserDataUseCase.swift */; };
+		FE3D2B0D2D930EB800DA22DB /* NetworkProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE3D2B0C2D930EB200DA22DB /* NetworkProvider.swift */; };
+		FE3D2B0F2D930EFF00DA22DB /* DefaultNetworkProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE3D2B0E2D930EFF00DA22DB /* DefaultNetworkProvider.swift */; };
+		FE3D2B122D9312B300DA22DB /* Logger+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE3D2B112D9312B300DA22DB /* Logger+Extensions.swift */; };
 		FE5F8A782C296D81001EE8AF /* AuthRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE5F8A772C296D81001EE8AF /* AuthRepository.swift */; };
 		FE5F8A7C2C296ECA001EE8AF /* LoginWithCredentialsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE5F8A7B2C296ECA001EE8AF /* LoginWithCredentialsUseCase.swift */; };
 		FE5F8A802C2971C7001EE8AF /* AuthRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE5F8A7F2C2971C7001EE8AF /* AuthRepositoryImpl.swift */; };
@@ -140,7 +144,11 @@
 /* Begin PBXFileReference section */
 		FE0685652D84A2A90002B217 /* TagsSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsSelectionView.swift; sourceTree = "<group>"; };
 		FE34A64E2D78BCF200CB4CAE /* CheckEmailAddressAvailableUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckEmailAddressAvailableUseCase.swift; sourceTree = "<group>"; };
-		FE3D23242D91A41000DA22DB /* RegisterUserAndGetTokenUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterUserAndGetTokenUseCase.swift; sourceTree = "<group>"; };
+		FE3D23242D91A41000DA22DB /* RegisterUserUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterUserUseCase.swift; sourceTree = "<group>"; };
+		FE3D23262D92FD0600DA22DB /* SaveUserDataUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveUserDataUseCase.swift; sourceTree = "<group>"; };
+		FE3D2B0C2D930EB200DA22DB /* NetworkProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProvider.swift; sourceTree = "<group>"; };
+		FE3D2B0E2D930EFF00DA22DB /* DefaultNetworkProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultNetworkProvider.swift; sourceTree = "<group>"; };
+		FE3D2B112D9312B300DA22DB /* Logger+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Logger+Extensions.swift"; sourceTree = "<group>"; };
 		FE5F8A772C296D81001EE8AF /* AuthRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRepository.swift; sourceTree = "<group>"; };
 		FE5F8A7B2C296ECA001EE8AF /* LoginWithCredentialsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginWithCredentialsUseCase.swift; sourceTree = "<group>"; };
 		FE5F8A7F2C2971C7001EE8AF /* AuthRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRepositoryImpl.swift; sourceTree = "<group>"; };
@@ -289,6 +297,23 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		FE3D2B0B2D930EAD00DA22DB /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				FE3D2B0E2D930EFF00DA22DB /* DefaultNetworkProvider.swift */,
+				FE3D2B0C2D930EB200DA22DB /* NetworkProvider.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		FE3D2B102D93129E00DA22DB /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				FE3D2B112D9312B300DA22DB /* Logger+Extensions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		FE5F8A762C296D6C001EE8AF /* Repositories */ = {
 			isa = PBXGroup;
 			children = (
@@ -315,7 +340,7 @@
 		FE5F8A7A2C296EB7001EE8AF /* Auth */ = {
 			isa = PBXGroup;
 			children = (
-				FE3D23242D91A41000DA22DB /* RegisterUserAndGetTokenUseCase.swift */,
+				FE3D23242D91A41000DA22DB /* RegisterUserUseCase.swift */,
 				FE5F8A882C2975FC001EE8AF /* LogoutUseCase.swift */,
 				FE34A64E2D78BCF200CB4CAE /* CheckEmailAddressAvailableUseCase.swift */,
 				FE5F8A7B2C296ECA001EE8AF /* LoginWithCredentialsUseCase.swift */,
@@ -327,6 +352,7 @@
 		FE5F8A7D2C297186001EE8AF /* DataLayer */ = {
 			isa = PBXGroup;
 			children = (
+				FE3D2B102D93129E00DA22DB /* Extensions */,
 				FE5F8A812C29731A001EE8AF /* Providers */,
 				FE5F8A7E2C2971B7001EE8AF /* Repositories */,
 			);
@@ -347,6 +373,7 @@
 		FE5F8A812C29731A001EE8AF /* Providers */ = {
 			isa = PBXGroup;
 			children = (
+				FE3D2B0B2D930EAD00DA22DB /* Network */,
 				FE8D56132D918A5800A8BF4E /* Authentication */,
 				FE5F8A822C297325001EE8AF /* UserDefaults */,
 			);
@@ -365,6 +392,7 @@
 		FE5F8A872C2975E9001EE8AF /* User */ = {
 			isa = PBXGroup;
 			children = (
+				FE3D23262D92FD0600DA22DB /* SaveUserDataUseCase.swift */,
 				FE7FB10C2D7B163B00428A17 /* CheckUsernameAvailableUseCase.swift */,
 				FEA53CC72C2C16E2006F0116 /* GetUserDataFromUsernameUseCase.swift */,
 				FEA53CE12C2C88EE006F0116 /* GetUsersFromQueryUseCase.swift */,
@@ -890,6 +918,7 @@
 				FE9777DB2D7EFB7E0027DA60 /* RegisterPasswordView.swift in Sources */,
 				FEA53CA32C29C76E006F0116 /* FeedRepository.swift in Sources */,
 				FE5F8A782C296D81001EE8AF /* AuthRepository.swift in Sources */,
+				FE3D2B0D2D930EB800DA22DB /* NetworkProvider.swift in Sources */,
 				FEA53C982C29BF97006F0116 /* Repositories+Injection.swift in Sources */,
 				FE9A30BD2D88B2000056CC0A /* SettingsView.swift in Sources */,
 				FEC94DD32C247C6100FFEB11 /* SearchView.swift in Sources */,
@@ -902,9 +931,11 @@
 				FEA53CD62C2C2CEC006F0116 /* CreateNewChatUseCase.swift in Sources */,
 				FE9A30BB2D88473E0056CC0A /* Toast.swift in Sources */,
 				FE5F8A862C29737F001EE8AF /* SystemUserDefaultsProvider.swift in Sources */,
+				FE3D23272D92FD0D00DA22DB /* SaveUserDataUseCase.swift in Sources */,
+				FE3D2B122D9312B300DA22DB /* Logger+Extensions.swift in Sources */,
 				FEC94DEC2C25DC1600FFEB11 /* Constants.swift in Sources */,
 				FE9A30B52D8737650056CC0A /* UpdatePortfolioUseCase.swift in Sources */,
-				FE3D23252D91A41400DA22DB /* RegisterUserAndGetTokenUseCase.swift in Sources */,
+				FE3D23252D91A41400DA22DB /* RegisterUserUseCase.swift in Sources */,
 				FEC94E132C28504900FFEB11 /* LoginCredentialsView.swift in Sources */,
 				FE7FB1102D7B1D3900428A17 /* RegisterNameAndEmailView.swift in Sources */,
 				FEC94DAF2C243EC100FFEB11 /* BaseHostingController.swift in Sources */,
@@ -926,6 +957,7 @@
 				FEC94DEA2C25BF4B00FFEB11 /* View+Extensions.swift in Sources */,
 				FEC94DCD2C2479CD00FFEB11 /* SelectionViewModel.swift in Sources */,
 				FEA53CA72C29D667006F0116 /* FlagPortfolioUseCase.swift in Sources */,
+				FE3D2B0F2D930EFF00DA22DB /* DefaultNetworkProvider.swift in Sources */,
 				FEC94DC52C246DF400FFEB11 /* BaseViewModel.swift in Sources */,
 				FEC94E092C283D4C00FFEB11 /* NotCreatorView.swift in Sources */,
 				FE9777DF2D7F69240027DA60 /* HorizontalWheelPicker.swift in Sources */,

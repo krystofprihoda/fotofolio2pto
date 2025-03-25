@@ -51,7 +51,10 @@ public class AuthRepositoryImpl: AuthRepository {
         try await authProvider.checkEmailAvailable(email)
     }
     
-    public func registerUserAndGetToken(email: String, password: String) async throws -> RegisterData {
-        return try await authProvider.registerUserAndRetrieveToken(email: email, password: password)
+    public func registerUser(email: String, password: String) async throws {
+        let data = try await authProvider.registerUser(email: email, password: password)
+        
+        defaults.update(.userId, value: data.uid)
+        defaults.update(.token, value: data.token)
     }
 }

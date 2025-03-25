@@ -12,5 +12,6 @@ public extension Resolver {
     static func registerProviders() {
         register { SystemUserDefaultsProvider() as UserDefaultsProvider }
         register { FirebaseProvider() as AuthProvider }
+        register { DefaultNetworkProvider() as NetworkProvider }
     }
 }

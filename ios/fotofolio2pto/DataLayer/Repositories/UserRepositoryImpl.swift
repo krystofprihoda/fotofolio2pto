@@ -9,6 +9,14 @@ import Foundation
 
 public class UserRepositoryImpl: UserRepository {
     
+    private let defaults: UserDefaultsProvider
+    private let network: NetworkProvider
+    
+    init(defaults: UserDefaultsProvider, network: NetworkProvider) {
+        self.defaults = defaults
+        self.network = network
+    }
+    
     private static var users = User.sampleData
     
     public func getUserByUsername(_ username: String) async throws -> User? {
@@ -51,5 +59,26 @@ public class UserRepositoryImpl: UserRepository {
         }) else { return }
         
         throw ObjectError.usernameAlreadyTaken
+    }
+    
+    public func createUser(username: String, email: String, fullName: String, location: String, profilePicture: String) async throws {
+        guard let token: String = defaults.read(.token) else { throw AuthError.tokenRetrievalFailed }
+        guard let userId: String = defaults.read(.userId) else { throw AuthError.missingUserId }
+        
+        let headers = [
+            "Authorization": "Bearer \(token)",
+            "Content-Type": "application/json"
+        ]
+        
+        let body: [String: String] = [
+            "userId": userId,
+            "username": username,
+            "email": email,
+            "fullName": fullName,
+            "location": location,
+            "profilePicture": profilePicture
+        ]
+        
+        _ = try await network.request(endpoint: .user, method: .POST, body: body, headers: headers) 
     }
 }

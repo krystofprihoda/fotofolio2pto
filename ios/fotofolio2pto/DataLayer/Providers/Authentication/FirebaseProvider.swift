@@ -12,13 +12,14 @@ enum AuthError: Error {
     case registrationFailed
     case tokenRetrievalFailed
     case wrongCredentials
+    case missingUserId
 }
 
 class FirebaseProvider: AuthProvider {
     
     private let auth: Auth = .auth()
     
-    func registerUserAndRetrieveToken(email: String, password: String) async throws -> RegisterData {
+    func registerUser(email: String, password: String) async throws -> RegisterData {
         return try await withCheckedThrowingContinuation { continuation in
             auth.createUser(withEmail: email, password: password) { result, error in
                 if let error = error {
