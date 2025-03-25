@@ -23,14 +23,14 @@ final class ProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
     
     init(
         flowController: ProfileFlowController?,
-        signedInUser: String,
+        signedInUserId: String,
         displayedUser: String,
         showDismiss: Bool = false
     ) {
         self.flowController = flowController
         super.init()
         state.displayedUser = displayedUser
-        state.signedInUser = signedInUser
+        state.signedInUserId = signedInUserId
         state.showDismiss = showDismiss
     }
     
@@ -48,9 +48,9 @@ final class ProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
     
     struct State {
         var isLoading = false
-        var signedInUser = ""
+        var signedInUserId = ""
         var displayedUser = ""
-        var isProfileOwner: Bool { signedInUser == displayedUser }
+        var isProfileOwner: Bool { signedInUserId == displayedUser }
         var userData: User? = nil
         var portfolios: [Portfolio] = []
         var showDismiss = false
@@ -96,7 +96,7 @@ final class ProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
     }
     
     private func sendMessage() {
-        flowController?.sendMessage(from: state.signedInUser, to: state.displayedUser)
+        flowController?.sendMessage(from: state.signedInUserId, to: state.displayedUser)
     }
     
     private func showProfileSettings() {

@@ -10,16 +10,16 @@ import UIKit
 
 class SelectionFlowController: BaseFlowController {
     
-    private let signedInUser: String
+    private let signedInUserId: String
     
     weak var feedTabBadgeFlowDelegate: FeedTabBadgeDelegate?
     
     init(
         navigationController: UINavigationController,
-        signedInUser: String,
+        signedInUserId: String,
         feedTabBadgeFlowDelegate: FeedTabBadgeDelegate? = nil
     ) {
-        self.signedInUser = signedInUser
+        self.signedInUserId = signedInUserId
         self.feedTabBadgeFlowDelegate = feedTabBadgeFlowDelegate
         super.init(navigationController: navigationController)
     }
@@ -34,7 +34,7 @@ class SelectionFlowController: BaseFlowController {
     func showProfile(user: User) {
         let fc = ProfileFlowController(
             navigationController: navigationController,
-            signedInUser: signedInUser,
+            signedInUserId: signedInUserId,
             displayedUser: user.username,
             showDismiss: true
         )
@@ -43,7 +43,7 @@ class SelectionFlowController: BaseFlowController {
     }
     
     func sendMessage(to receiver: User) {
-        let fc = MessagesFlowController(navigationController: navigationController, sender: signedInUser, receiver: receiver.username)
+        let fc = MessagesFlowController(navigationController: navigationController, sender: signedInUserId, receiver: receiver.username)
         let vc = startChildFlow(fc)
         navigationController.pushViewController(vc, animated: true)
     }

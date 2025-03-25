@@ -5,6 +5,7 @@
 //  Created by Kryštof Příhoda on 04.03.2025.
 //
 
+import FirebaseAuth
 import Resolver
 import SwiftUI
 import OSLog
@@ -25,6 +26,7 @@ final class RegisterViewModel: BaseViewModel, ViewModel, ObservableObject {
     
     @LazyInjected private var checkEmailAddressAvailableUseCase: CheckEmailAddressAvailableUseCase
     @LazyInjected private var checkUsernameAvailableUseCase: CheckUsernameAvailableUseCase
+    @LazyInjected private var registerUserAndGetTokenUseCase: RegisterUserAndGetTokenUseCase
     
     private var currentTask: Task<(), Never>?
     
@@ -121,9 +123,9 @@ final class RegisterViewModel: BaseViewModel, ViewModel, ObservableObject {
             case .onPasswordNextTap: await setPasswordAndContinue()
             case .setIsCreator(let value): setIsCreator(to: value)
             case .setYearsOfExperience(let value): setYearsOfExperience(to: value)
-            case .onCreatorNextTap: state.isCreator ? continueToCreatorDetails() : await finalizeOnboarding()
-            case .onCreatorDetailsNextTap: await finalizeOnboarding()
-            case .tryAgain: await finalizeOnboarding()
+            case .onCreatorNextTap: state.isCreator ? continueToCreatorDetails() : await registerUser()
+            case .onCreatorDetailsNextTap: await registerUser()
+            case .tryAgain: await registerUser()
             case .goBack(let stage): setStageTo(stage)
             case .dismissRegistration: dismissRegistration()
             }
@@ -174,7 +176,7 @@ final class RegisterViewModel: BaseViewModel, ViewModel, ObservableObject {
         
         do {
             try await checkEmailAddressAvailableUseCase.execute(state.email)
-        } catch ObjectError.emailAlreadyTaken {
+        } catch AuthError.emailAlreadyTaken {
             state.emailError = L.Onboarding.emailAddressTaken
             return
         } catch { }
@@ -206,6 +208,7 @@ final class RegisterViewModel: BaseViewModel, ViewModel, ObservableObject {
         }
         
         do {
+            #warning("TODO: Add BE username availability check")
             try await checkUsernameAvailableUseCase.execute(state.username)
         } catch ObjectError.usernameAlreadyTaken {
             state.usernameError = L.Onboarding.usernameTaken
@@ -307,9 +310,7 @@ final class RegisterViewModel: BaseViewModel, ViewModel, ObservableObject {
         setIsCreator(to: true)
     }
     
-    private func finalizeOnboarding() async {
-        // register user usecase
-        
+    private func registerUser() async {
         state.stage = .creatingUser
         state.isCreatingUser = true
         state.hideOnboardingTitle = true
@@ -320,11 +321,48 @@ final class RegisterViewModel: BaseViewModel, ViewModel, ObservableObject {
         }
         
         do {
-            try await Task.sleep(nanoseconds: 1_000_000_000)
+            let data = try await registerUserAndGetTokenUseCase.execute(email: state.email, password: state.firstPassword)
+            print(data.token)
+            try await sendUserDataToServer(token: data.token, userId: data.uid)
+            
             state.userCreated = true
-            try await Task.sleep(nanoseconds: 1_000_000_000)
+            
             dismissRegistration()
-        } catch { }
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+    
+    #warning("TODO: Adapt to Clean Architecture, create a UC")
+    func sendUserDataToServer(token: String, userId: String) async throws {
+        guard let url = URL(string: "http://0.0.0.0:8080/user") else {
+            throw URLError(.badURL)
+        }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        let body = try JSONSerialization.data(
+            withJSONObject: [
+                "userId": userId,
+                "username": state.username,
+                "email": state.email,
+                "fullName": state.name
+            ],
+            options: []
+        )
+        request.httpBody = body
+        
+        let (data, response) = try await URLSession.shared.data(for: request)
+        
+        // Check for HTTP response errors
+        guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+            throw NSError(domain: "ServerError", code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to save user data"])
+        }
+        
+        print("User data successfully saved!")
     }
     
     private func setIsCreator(to value: Bool) {

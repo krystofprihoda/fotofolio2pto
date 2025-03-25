@@ -8,7 +8,7 @@
 import Foundation
 
 public protocol LoginWithCredentialsUseCase {
-    func execute(username: String, password: String) async throws
+    func execute(email: String, password: String) async throws -> UserAuthDetails
 }
 
 public struct LoginWithCredentialsUseCaseImpl: LoginWithCredentialsUseCase {
@@ -24,9 +24,7 @@ public struct LoginWithCredentialsUseCaseImpl: LoginWithCredentialsUseCase {
         self.userRepository = userRepository
     }
     
-    public func execute(username: String, password: String) async throws {
-        try await Task.sleep(nanoseconds: 2_000_000_000)
-        let _ = try await userRepository.getUserByUsername(username)
-        authRepository.loginWithCredentials(username: username, password: password)
+    public func execute(email: String, password: String) async throws -> UserAuthDetails {
+        return try await authRepository.loginWithCredentials(email: email, password: password)
     }
 }

@@ -8,7 +8,7 @@
 import Foundation
 
 public protocol LogoutUseCase {
-    func execute()
+    func execute() throws
 }
 
 public struct LogoutUseCaseImpl: LogoutUseCase {
@@ -19,7 +19,7 @@ public struct LogoutUseCaseImpl: LogoutUseCase {
         self.authRepository = authRepository
     }
     
-    public func execute() {
-        authRepository.logout()
+    public func execute() throws {
+        try authRepository.logout()
     }
 }

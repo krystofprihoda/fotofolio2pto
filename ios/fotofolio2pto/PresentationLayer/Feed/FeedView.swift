@@ -35,7 +35,7 @@ struct FeedView: View {
                     } else {
                         LazyVStack {
                             ForEach(viewModel.state.portfolios, id: \.id) { portfolio in
-                                let isFlagHidden = viewModel.state.signedInUser == portfolio.author.username
+                                let isFlagHidden = viewModel.state.signedInUserId == String(portfolio.author.id)
                                 let isFlagged = viewModel.state.flaggedPortfolioIds.contains(where: { $0 == portfolio.id })
                                 
                                 PortfolioView(
@@ -117,5 +117,5 @@ struct FeedView: View {
 }
 
 #Preview {
-    FeedView(viewModel: .init(flowController: nil, signedInUser: ""))
+    FeedView(viewModel: .init(flowController: nil, signedInUserId: ""))
 }

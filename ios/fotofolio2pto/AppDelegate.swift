@@ -9,6 +9,7 @@ import UIKit
 import CoreData
 import SwiftUI
 import Resolver
+import FirebaseCore
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -22,6 +23,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Resolver.registerProviders()
         Resolver.registerRepositories()
         Resolver.registerUseCases()
+        
+        #warning("TODO: Clean Architecture")
+        FirebaseApp.configure()
         
         // Fix for flickering black navBar: https://stackoverflow.com/questions/30763979/why-is-the-uinavigationbar-turning-black
         let navBarAppearance = UINavigationBarAppearance()

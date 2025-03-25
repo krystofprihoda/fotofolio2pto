@@ -25,11 +25,11 @@ public class AppFlowController: BaseFlowController, OnboardingFlowControllerDele
         }
     }
     
-    public func setupMain(for user: String) {
+    public func setupMain(for userId: String) {
         let flowController = MainFlowController(
             navigationController: navigationController,
             flowDelegate: self,
-            user: user
+            userId: userId
         )
         let rootVc = startChildFlow(flowController)
         navigationController.navigationBar.isHidden = true

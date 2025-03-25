@@ -90,5 +90,5 @@ struct ProfileView: View {
 }
 
 #Preview {
-    ProfileView(viewModel: .init(flowController: nil, signedInUser: "", displayedUser: ""))
+    ProfileView(viewModel: .init(flowController: nil, signedInUserId: "", displayedUser: ""))
 }

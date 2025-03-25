@@ -8,14 +8,14 @@
 import SwiftUI
 
 struct LoginCredentialsView: View {
-    @Binding var username: String
+    @Binding var email: String
     @Binding var password: String
     
     @State var hiddenPassword = true
     
     var body: some View {
         VStack(spacing: Constants.Dimens.spaceLarge) {
-            TextField(L.Onboarding.username, text: $username)
+            TextField(L.Onboarding.email, text: $email)
                 .font(.body)
                 .frame(height: Constants.Dimens.textFieldHeight)
                 .padding()
@@ -55,5 +55,5 @@ struct LoginCredentialsView: View {
 }
 
 #Preview {
-    LoginCredentialsView(username: .constant(""), password: .constant(""))
+    LoginCredentialsView(email: .constant(""), password: .constant(""))
 }

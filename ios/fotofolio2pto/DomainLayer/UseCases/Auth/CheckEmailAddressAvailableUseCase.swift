@@ -14,13 +14,13 @@ public protocol CheckEmailAddressAvailableUseCase {
 
 public struct CheckEmailAddressAvailableUseCaseImpl: CheckEmailAddressAvailableUseCase {
     
-    private let userRepository: UserRepository
+    private let authRepository: AuthRepository
     
-    init(userRepository: UserRepository) {
-        self.userRepository = userRepository
+    init(authRepository: AuthRepository) {
+        self.authRepository = authRepository
     }
     
     public func execute(_ email: String) async throws {
-        try await userRepository.isEmailAddressTaken(email)
+        try await authRepository.checkEmailAvailable(email: email)
     }
 }

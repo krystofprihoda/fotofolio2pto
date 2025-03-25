@@ -14,12 +14,13 @@ public extension Resolver {
         register { LogoutUseCaseImpl(authRepository: resolve()) as LogoutUseCase }
         register { LoginWithCredentialsUseCaseImpl(authRepository: resolve(), userRepository: resolve()) as LoginWithCredentialsUseCase }
         register { GetLoggedInUserUseCaseImpl(authRepository: resolve()) as GetLoggedInUserUseCase }
+        register { RegisterUserAndGetTokenUseCaseImpl(authRepository: resolve()) as RegisterUserAndGetTokenUseCase }
         
         /// User
         register { GetUserDataFromUsernameUseCaseImpl(userRepository: resolve()) as GetUserDataFromUsernameUseCase }
         register { GetUserPortfoliosUseCaseImpl(feedRepository: resolve()) as GetUserPortfoliosUseCase }
         register { GetUsersFromQueryUseCaseImpl(userRepository: resolve()) as GetUsersFromQueryUseCase }
-        register { CheckEmailAddressAvailableUseCaseImpl(userRepository: resolve()) as CheckEmailAddressAvailableUseCase }
+        register { CheckEmailAddressAvailableUseCaseImpl(authRepository: resolve()) as CheckEmailAddressAvailableUseCase }
         register { CheckUsernameAvailableUseCaseImpl(userRepository: resolve()) as CheckUsernameAvailableUseCase }
         
         /// Portfolios

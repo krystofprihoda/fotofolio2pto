@@ -10,18 +10,18 @@ import UIKit
 
 class SearchFlowController: BaseFlowController {
     
-    private let signedInUser: String
+    private let signedInUserId: String
     
     init(
         navigationController: UINavigationController,
-        signedInUser: String
+        signedInUserId: String
     ) {
-        self.signedInUser = signedInUser
+        self.signedInUserId = signedInUserId
         super.init(navigationController: navigationController)
     }
     
     override func setup() -> UIViewController {
-        let vm = SearchViewModel(flowController: self, signedInUser: signedInUser)
+        let vm = SearchViewModel(flowController: self, signedInUserId: signedInUserId)
         let view = SearchView(viewModel: vm)
         let vc = BaseHostingController(rootView: view)
         return vc
@@ -30,7 +30,7 @@ class SearchFlowController: BaseFlowController {
     public func showProfile(of user: User) {
         let fc = ProfileFlowController(
             navigationController: navigationController,
-            signedInUser: signedInUser,
+            signedInUserId: signedInUserId,
             displayedUser: user.username,
             showDismiss: true
         )

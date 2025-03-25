@@ -19,7 +19,6 @@ public struct Portfolio: Identifiable, Equatable {
     public var description: String
     public var tags: [String]
     public let timestamp: Date
-    public var isFlagged: Bool
     
     init(
         id: Int,
@@ -28,8 +27,7 @@ public struct Portfolio: Identifiable, Equatable {
         photos: [IImage],
         description: String,
         tags: [String],
-        timestamp: Date,
-        isFlagged: Bool = false
+        timestamp: Date
     ) {
         self.id = id
         self.author = author
@@ -38,7 +36,6 @@ public struct Portfolio: Identifiable, Equatable {
         self.description = description
         self.tags = tags
         self.timestamp = timestamp
-        self.isFlagged = isFlagged
     }
     
     public static func == (lhs: Portfolio, rhs: Portfolio) -> Bool {

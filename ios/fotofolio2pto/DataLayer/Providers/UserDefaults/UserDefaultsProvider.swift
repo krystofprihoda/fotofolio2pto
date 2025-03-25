@@ -8,8 +8,11 @@
 import Foundation
 
 public enum UserDefaultsCoding: String, CaseIterable {
-    case signedInUser
+    case userId
+    case email
     case flagged
+    #warning("TODO: Use keychain instead for token")
+    case token
 }
 
 public protocol UserDefaultsProvider {

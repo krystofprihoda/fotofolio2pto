@@ -7,24 +7,51 @@
 
 import Foundation
 
+public struct UserAuthDetails {
+    let uid: String
+    let token: String
+}
+
 public class AuthRepositoryImpl: AuthRepository {
     
     private let defaults: UserDefaultsProvider
+    private let authProvider: AuthProvider
     
-    init(defaults: UserDefaultsProvider) {
+    init(defaults: UserDefaultsProvider, authProvider: AuthProvider) {
         self.defaults = defaults
+        self.authProvider = authProvider
     }
     
-    public func logout() {
-        defaults.delete(.signedInUser)
+    public func logout() throws {
+        try authProvider.logout()
+        
+        defaults.delete(.token)
+        defaults.delete(.userId)
         defaults.delete(.flagged)
     }
     
-    public func loginWithCredentials(username: String, password: String) {
-        defaults.update(.signedInUser, value: username)
+    public func loginWithCredentials(email: String, password: String) async throws -> UserAuthDetails {
+        let result = try await authProvider.login(email: email, password: password)
+        let token = try await result.user.getIDToken()
+        
+        print("FIREBASE TOKEN:\n\(token)")
+        
+        defaults.update(.token, value: token)
+        defaults.update(.userId, value: result.user.uid)
+        defaults.update(.email, value: result.user.email)
+        
+        return UserAuthDetails(uid: result.user.uid, token: token)
     }
     
     public func getLoggedInUser() -> String? {
-        return defaults.read(.signedInUser)
+        return defaults.read(.userId)
+    }
+    
+    public func checkEmailAvailable(email: String) async throws {
+        try await authProvider.checkEmailAvailable(email)
+    }
+    
+    public func registerUserAndGetToken(email: String, password: String) async throws -> RegisterData {
+        return try await authProvider.registerUserAndRetrieveToken(email: email, password: password)
     }
 }

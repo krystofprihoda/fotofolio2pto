@@ -35,9 +35,9 @@ class OnboardingFlowController: BaseFlowController {
         stopFlow()
     }
     
-    public func signIn(username: String) {
+    public func signIn(uid: String) {
         finishOnboarding()
-        flowDelegate?.setupMain(for: username)
+        flowDelegate?.setupMain(for: uid)
     }
     
     public func registerUser() {

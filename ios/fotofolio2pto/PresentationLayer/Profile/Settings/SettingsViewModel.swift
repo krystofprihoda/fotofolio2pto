@@ -66,8 +66,10 @@ final class SettingsViewModel: BaseViewModel, ViewModel, ObservableObject {
     }
     
     private func signOut() {
-        logOutUseCase.execute()
-        flowController?.profileSignOutDelegate?.signOut()
+        do {
+            try logOutUseCase.execute()
+            flowController?.profileSignOutDelegate?.signOut()
+        } catch {}
     }
     
     private func dismissView() {

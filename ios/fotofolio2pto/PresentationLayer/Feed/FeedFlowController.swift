@@ -14,7 +14,7 @@ public protocol FilterFeedDelegate: AnyObject {
 
 class FeedFlowController: BaseFlowController {
 
-    private let signedInUser: String
+    private let signedInUserId: String
     private var backgroundFilterTapView: UIView?
     
     weak var filterFeedDelegate: FilterFeedDelegate?
@@ -22,16 +22,16 @@ class FeedFlowController: BaseFlowController {
     
     init(
         navigationController: UINavigationController,
-        signedInUser: String,
+        signedInUserId: String,
         feedTabBadgeDelegate: FeedTabBadgeDelegate? = nil
     ) {
-        self.signedInUser = signedInUser
+        self.signedInUserId = signedInUserId
         self.feedTabBadgeDelegate = feedTabBadgeDelegate
         super.init(navigationController: navigationController)
     }
     
     override func setup() -> UIViewController {
-        let vm = FeedViewModel(flowController: self, signedInUser: signedInUser)
+        let vm = FeedViewModel(flowController: self, signedInUserId: signedInUserId)
         filterFeedDelegate = vm
         let view = FeedView(viewModel: vm)
         let vc = BaseHostingController(rootView: view)
@@ -62,7 +62,7 @@ class FeedFlowController: BaseFlowController {
     }
     
     func showProfile(user: User) {
-        let fc = ProfileFlowController(navigationController: navigationController, signedInUser: signedInUser, displayedUser: user.username, showDismiss: true)
+        let fc = ProfileFlowController(navigationController: navigationController, signedInUserId: signedInUserId, displayedUser: user.username, showDismiss: true)
         let vc = startChildFlow(fc)
         navigationController.pushViewController(vc, animated: true)
     }

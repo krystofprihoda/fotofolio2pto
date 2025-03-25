@@ -57,7 +57,7 @@ struct SignInView: View {
                             }
                             
                             LoginCredentialsView(
-                                username: Binding(get: { viewModel.state.username }, set: { viewModel.onIntent(.setUsername($0)) }),
+                                email: Binding(get: { viewModel.state.email }, set: { viewModel.onIntent(.setEmail($0)) }),
                                 password: Binding(get: { viewModel.state.password }, set: { viewModel.onIntent(.setPassword($0)) })
                             )
                             
@@ -71,7 +71,7 @@ struct SignInView: View {
                                     .background(.mainAccent)
                                     .cornerRadius(Constants.Dimens.radiusXSmall)
                             })
-                            .disabledOverlay(viewModel.state.username.isEmpty || viewModel.state.password.isEmpty)
+                            .disabledOverlay(viewModel.state.email.isEmpty || viewModel.state.password.isEmpty)
                             .skeleton(viewModel.state.isSigningIn)
                         }
                     }

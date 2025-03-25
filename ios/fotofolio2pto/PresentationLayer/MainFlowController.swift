@@ -22,15 +22,15 @@ public protocol MainFlowControllerDelegate: AnyObject {
 
 public class MainFlowController: BaseFlowController {
     
-    private let user: String
+    private let userId: String
     weak var flowDelegate: MainFlowControllerDelegate?
     
     init(
         navigationController: UINavigationController,
         flowDelegate: MainFlowControllerDelegate? = nil,
-        user: String
+        userId: String
     ) {
-        self.user = user
+        self.userId = userId
         self.flowDelegate = flowDelegate
         super.init(navigationController: navigationController)
     }
@@ -79,7 +79,7 @@ public class MainFlowController: BaseFlowController {
             image: UIImage(systemName: "square.text.square"),
             tag: MainTab.feed.rawValue
         )
-        let feedFlowController = FeedFlowController(navigationController: feedNavController, signedInUser: user, feedTabBadgeDelegate: self)
+        let feedFlowController = FeedFlowController(navigationController: feedNavController, signedInUserId: userId, feedTabBadgeDelegate: self)
         let feedRootVC = startChildFlow(feedFlowController)
         feedNavController.viewControllers = [feedRootVC]
         
@@ -93,7 +93,7 @@ public class MainFlowController: BaseFlowController {
             image: UIImage(systemName: "star.square"),
             tag: MainTab.selection.rawValue
         )
-        let selectionFlowController = SelectionFlowController(navigationController: selectionNavController, signedInUser: user, feedTabBadgeFlowDelegate: self)
+        let selectionFlowController = SelectionFlowController(navigationController: selectionNavController, signedInUserId: userId, feedTabBadgeFlowDelegate: self)
         let selectionRootVC = startChildFlow(selectionFlowController)
         selectionNavController.viewControllers = [selectionRootVC]
         
@@ -107,7 +107,7 @@ public class MainFlowController: BaseFlowController {
             image: UIImage(systemName: "magnifyingglass"),
             tag: MainTab.search.rawValue
         )
-        let searchFlowController = SearchFlowController(navigationController: searchNavController, signedInUser: user)
+        let searchFlowController = SearchFlowController(navigationController: searchNavController, signedInUserId: userId)
         let searchRootVC = startChildFlow(searchFlowController)
         searchNavController.viewControllers = [searchRootVC]
         
@@ -121,7 +121,7 @@ public class MainFlowController: BaseFlowController {
             image: UIImage(systemName: "message"),
             tag: MainTab.messages.rawValue
         )
-        let messagesFlowController = MessagesFlowController(navigationController: messagesNavController, sender: user)
+        let messagesFlowController = MessagesFlowController(navigationController: messagesNavController, sender: userId)
         let messagesRootVC = startChildFlow(messagesFlowController)
         messagesNavController.viewControllers = [messagesRootVC]
         
@@ -138,8 +138,8 @@ public class MainFlowController: BaseFlowController {
         let profileFlowController = ProfileFlowController(
             navigationController: profileNavController,
             profileSignOutDelegate: self,
-            signedInUser: user,
-            displayedUser: user
+            signedInUserId: "ad.fotograf",
+            displayedUser: "ad.fotograf"
         )
         let profileRootVC = startChildFlow(profileFlowController)
         profileNavController.viewControllers = [profileRootVC]
