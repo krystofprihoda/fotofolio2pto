@@ -80,7 +80,7 @@ struct ProfileView: View {
             }
         }
         .navigationBarItems(leading: backButton)
-        .setupNavBarAndTitle("@\(viewModel.state.displayedUser)", hideBack: true)
+        .setupNavBarAndTitle("@\(viewModel.state.userData?.username ?? L.Profile.title)", hideBack: true)
         .lifecycle(viewModel)
     }
     
@@ -94,5 +94,5 @@ struct ProfileView: View {
 }
 
 #Preview {
-    ProfileView(viewModel: .init(flowController: nil, signedInUserId: "", displayedUser: ""))
+    ProfileView(viewModel: .init(flowController: nil, signedInUserId: "", displayedUserId: ""))
 }

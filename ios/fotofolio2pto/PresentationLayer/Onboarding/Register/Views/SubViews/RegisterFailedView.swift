@@ -15,13 +15,14 @@ struct RegisterFailedView: View {
     }
     
     var body: some View {
-        VStack(alignment: .leading, spacing: Constants.Dimens.spaceNone) {
+        VStack(alignment: .center, spacing: Constants.Dimens.spaceNone) {
             ZStack {
                 PulsingCircleView()
                 
-                VStack {
+                VStack(alignment: .center) {
                     Image(systemName: "exclamationmark.icloud.fill")
                         .resizable()
+                        .scaledToFit()
                         .frame(width: Constants.Dimens.frameSizeSmall, height: Constants.Dimens.frameSizeSmall)
                         .foregroundStyle(.white)
                     

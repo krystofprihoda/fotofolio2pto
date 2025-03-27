@@ -14,7 +14,7 @@ final class EditProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
 
     // MARK: Dependencies
 
-    @LazyInjected private var getCreatorDataUseCase: GetCreatorDataUseCase
+    @LazyInjected private var readCreatorDataUseCase: ReadCreatorDataUseCase
 
     private weak var flowController: ProfileFlowController?
 
@@ -108,7 +108,7 @@ final class EditProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
         
         executeTask(Task {
             do {
-                let creatorData: Creator = try await getCreatorDataUseCase.execute(id: creatorId)
+                let creatorData: Creator = try await readCreatorDataUseCase.execute(id: creatorId)
                 
                 state.yearsOfExperience = creatorData.yearsOfExperience
                 state.profileDescription = creatorData.profileText

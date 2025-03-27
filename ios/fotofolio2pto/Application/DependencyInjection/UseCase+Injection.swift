@@ -24,9 +24,12 @@ public extension Resolver {
         register { CheckUsernameAvailableUseCaseImpl(userRepository: resolve()) as CheckUsernameAvailableUseCase }
         register { SaveUserDataUseCaseImpl(userRepository: resolve()) as SaveUserDataUseCase }
         register { GetUserDataUseCaseImpl(userRepository: resolve()) as GetUserDataUseCase }
-        register { GetCreatorDataUseCaseImpl(userRepository: resolve()) as GetCreatorDataUseCase }
         register { SaveSignedInUsernameUseCaseImpl(userRepository: resolve()) as SaveSignedInUsernameUseCase }
         register { GetSignedInUsernameUseCaseImpl(userRepository: resolve()) as GetSignedInUsernameUseCase }
+        
+        /// Creator
+        register { CreateCreatorDataUseCaseImpl(creatorRepository: resolve()) as CreateCreatorDataUseCase }
+        register { ReadCreatorDataUseCaseImpl(creatorRepository: resolve()) as ReadCreatorDataUseCase }
         
         /// Portfolios
         register { GetAllPortfoliosUseCaseImpl(feedRepository: resolve()) as GetAllPortfoliosUseCase }

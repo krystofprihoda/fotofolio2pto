@@ -26,7 +26,7 @@ public struct L {
         public static let next = "Další"
         public static let register = "Registrace."
         public static let finalizeRegistration = "Registrovat"
-        public static let passwordRequirements = "Heslo musí obsahovat aspoň 1 velké písmeno, 3 číslice a 1 speciální znak: !@#$%^&*_+:.?"
+        public static let passwordRequirements = "Heslo musí mít více než 8 znaků, obsahovat aspoň 1 velké písmeno, 3 číslice a 1 speciální znak: !@#$%^&*_+:.?"
         public static let tryAgain = "Zkusit znovu"
         public static let somethingWentWrong = "Něco se pokazilo."
         public static let profileType = "Typ profilu"

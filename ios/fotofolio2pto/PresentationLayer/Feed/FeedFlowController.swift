@@ -62,7 +62,12 @@ class FeedFlowController: BaseFlowController {
     }
     
     func showProfile(user: User) {
-        let fc = ProfileFlowController(navigationController: navigationController, signedInUserId: signedInUserId, displayedUser: user.username, showDismiss: true)
+        let fc = ProfileFlowController(
+            navigationController: navigationController,
+            signedInUserId: signedInUserId,
+            displayedUserId: user.id,
+            showDismiss: true
+        )
         let vc = startChildFlow(fc)
         navigationController.pushViewController(vc, animated: true)
     }

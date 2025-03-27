@@ -14,8 +14,8 @@ final class ProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
     
     // MARK: Dependencies
     
-    @LazyInjected private var getUserDataFromUsernameUseCase: GetUserDataFromUsernameUseCase
-    @LazyInjected private var getCreatorDataUseCase: GetCreatorDataUseCase
+    @LazyInjected private var getUserDataUseCase: GetUserDataUseCase
+    @LazyInjected private var readCreatorDataUseCase: ReadCreatorDataUseCase
     @LazyInjected private var getUserPortfoliosUseCase: GetUserPortfoliosUseCase
     
     private weak var flowController: ProfileFlowController?
@@ -25,12 +25,12 @@ final class ProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
     init(
         flowController: ProfileFlowController?,
         signedInUserId: String,
-        displayedUser: String,
+        displayedUserId: String,
         showDismiss: Bool = false
     ) {
         self.flowController = flowController
         super.init()
-        state.displayedUser = displayedUser
+        state.displayedUserId = displayedUserId
         state.signedInUserId = signedInUserId
         state.showDismiss = showDismiss
     }
@@ -50,8 +50,8 @@ final class ProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
     struct State {
         var isLoading = false
         var signedInUserId = ""
-        var displayedUser = ""
-        var isProfileOwner: Bool { signedInUserId == displayedUser }
+        var displayedUserId = ""
+        var isProfileOwner: Bool { signedInUserId == displayedUserId }
         var userData: User? = nil
         var creatorData: Creator? = nil
         var portfolios: [Portfolio] = []
@@ -90,22 +90,23 @@ final class ProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
         defer { state.isLoading = false }
         
         do {
-            state.userData = try await getUserDataFromUsernameUseCase.execute(state.displayedUser)
-            state.portfolios = try await getUserPortfoliosUseCase.execute(username: state.displayedUser)
+            state.userData = try await getUserDataUseCase.execute(id: state.displayedUserId)
             
-            try await fetchCreatorData()
+            try await fetchCreatorDataAndPortfolios()
         } catch {
             
         }
     }
     
-    private func fetchCreatorData() async throws {
+    private func fetchCreatorDataAndPortfolios() async throws {
         guard let creatorId = state.userData?.creatorId else { return }
-        state.creatorData = try await getCreatorDataUseCase.execute(id: creatorId)
+        
+        state.portfolios = try await getUserPortfoliosUseCase.execute(username: state.displayedUserId)
+        state.creatorData = try await readCreatorDataUseCase.execute(id: creatorId)
     }
     
     private func sendMessage() {
-        flowController?.sendMessage(from: state.signedInUserId, to: state.displayedUser)
+        flowController?.sendMessage(from: state.signedInUserId, to: state.displayedUserId)
     }
     
     private func showProfileSettings() {

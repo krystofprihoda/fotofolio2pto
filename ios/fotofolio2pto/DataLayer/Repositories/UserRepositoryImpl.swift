@@ -95,19 +95,6 @@ public class UserRepositoryImpl: UserRepository {
         return user
     }
     
-    public func getCreator(id: String) async throws -> Creator {
-        guard let token: String = defaults.read(.token) else { throw AuthError.tokenRetrievalFailed }
-        
-        let headers = [
-            "Authorization": "Bearer \(token)",
-            "Content-Type": "application/json"
-        ]
-        
-        let creator: Creator = try await network.fetch(endpoint: .creatorById(id), method: .GET, body: [:], headers: headers)
-        print(creator)
-        return creator
-    }
-    
     public func saveSignedInUsername(_ username: String) {
         defaults.update(.username, value: username)
     }

@@ -10,14 +10,20 @@ import Resolver
 import SwiftUI
 import OSLog
 
-internal enum RegisterStageEnum {
+internal enum RegisterStageEnum: Equatable {
     case nameAndEmail //location
     case username
     case password
     case isCreator
     case creatorDetails
     case creatingUser
-    case failed
+    case failed(RegisterFailEnum)
+}
+
+internal enum RegisterFailEnum: Equatable {
+    case firebase
+    case userData
+    case creatorData
 }
 
 final class RegisterViewModel: BaseViewModel, ViewModel, ObservableObject {
@@ -28,6 +34,7 @@ final class RegisterViewModel: BaseViewModel, ViewModel, ObservableObject {
     @LazyInjected private var checkUsernameAvailableUseCase: CheckUsernameAvailableUseCase
     @LazyInjected private var registerUserUseCase: RegisterUserUseCase
     @LazyInjected private var saveUserDataUseCase: SaveUserDataUseCase
+    @LazyInjected private var saveCreatorDataUseCase: CreateCreatorDataUseCase
     
     private var currentTask: Task<(), Never>?
     
@@ -124,9 +131,9 @@ final class RegisterViewModel: BaseViewModel, ViewModel, ObservableObject {
             case .onPasswordNextTap: await setPasswordAndContinue()
             case .setIsCreator(let value): setIsCreator(to: value)
             case .setYearsOfExperience(let value): setYearsOfExperience(to: value)
-            case .onCreatorNextTap: state.isCreator ? continueToCreatorDetails() : await registerUser()
-            case .onCreatorDetailsNextTap: await registerUser()
-            case .tryAgain: await registerUser()
+            case .onCreatorNextTap: state.isCreator ? continueToCreatorDetails() : await registerUser(dismissScreen: true)
+            case .onCreatorDetailsNextTap: await registerCreator()
+            case .tryAgain: await tryAgain()
             case .goBack(let stage): setStageTo(stage)
             case .dismissRegistration: dismissRegistration()
             }
@@ -308,7 +315,7 @@ final class RegisterViewModel: BaseViewModel, ViewModel, ObservableObject {
         setIsCreator(to: true)
     }
     
-    private func registerUser() async {
+    private func registerUser(dismissScreen: Bool) async {
         state.stage = .creatingUser
         state.isCreatingUser = true
         state.hideOnboardingTitle = true
@@ -320,13 +327,68 @@ final class RegisterViewModel: BaseViewModel, ViewModel, ObservableObject {
         
         do {
             try await registerUserUseCase.execute(email: state.email, password: state.firstPassword)
+        } catch {
+            state.stage = .failed(.firebase)
+        }
+        
+        do {
             try await saveUserDataUseCase.execute(username: state.username, email: state.email, fullName: state.name, location: "", profilePicture: "")
             
-            state.userCreated = true
+            if (dismissScreen) {
+                state.userCreated = true
+                dismissRegistration()
+            }
+        } catch {
+            state.stage = .failed(.userData)
+        }
+    }
+    
+    private func registerCreator() async {
+        defer {
+            state.isCreatingUser = false
+            state.hideOnboardingTitle = false
+        }
+        
+        await registerUser(dismissScreen: false)
+        
+        do {
+            try await saveCreatorDataUseCase.execute(yearsOfExperience: state.yearsOfExperience)
             
+            state.userCreated = true
             dismissRegistration()
         } catch {
-            print(error.localizedDescription)
+            state.stage = .failed(.creatorData)
+        }
+    }
+    
+    private func tryAgain() async {
+        guard case .failed(let reason) = state.stage else { return }
+            
+        do {
+            switch reason {
+            case .firebase:
+                try await registerUserUseCase.execute(email: state.email, password: state.firstPassword)
+                
+            case .userData:
+                try await saveUserDataUseCase.execute(
+                    username: state.username,
+                    email: state.email,
+                    fullName: state.name,
+                    location: "",
+                    profilePicture: ""
+                )
+                
+                if state.isCreator { fallthrough }
+                
+            case .creatorData:
+                try await saveCreatorDataUseCase.execute(yearsOfExperience: state.yearsOfExperience)
+            }
+            
+            state.stage = .creatingUser
+            state.userCreated = true
+            dismissRegistration()
+        } catch {
+            state.stage = .failed(reason)
         }
     }
     

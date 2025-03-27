@@ -9,9 +9,12 @@
 /* Begin PBXBuildFile section */
 		FE0685662D84A2A90002B217 /* TagsSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE0685652D84A2A90002B217 /* TagsSelectionView.swift */; };
 		FE1815612D94A2490090E440 /* GetUserDataUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1815602D94A2490090E440 /* GetUserDataUseCase.swift */; };
-		FE1815632D954E920090E440 /* GetCreatorDataUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1815622D954E8C0090E440 /* GetCreatorDataUseCase.swift */; };
+		FE1815632D954E920090E440 /* ReadCreatorDataUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1815622D954E8C0090E440 /* ReadCreatorDataUseCase.swift */; };
 		FE1815652D9592160090E440 /* SaveSignedInUsernameUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1815642D9592140090E440 /* SaveSignedInUsernameUseCase.swift */; };
 		FE1815672D95941C0090E440 /* GetSignedInUsernameUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1815662D95941B0090E440 /* GetSignedInUsernameUseCase.swift */; };
+		FE1815692D95D92A0090E440 /* CreatorRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1815682D95D9250090E440 /* CreatorRepository.swift */; };
+		FE18156B2D95DAFB0090E440 /* CreatorRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE18156A2D95DAF50090E440 /* CreatorRepositoryImpl.swift */; };
+		FE18156E2D95DD7E0090E440 /* CreateCreatorDataUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE18156D2D95DD7E0090E440 /* CreateCreatorDataUseCase.swift */; };
 		FE34A64F2D78BCF200CB4CAE /* CheckEmailAddressAvailableUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE34A64E2D78BCF200CB4CAE /* CheckEmailAddressAvailableUseCase.swift */; };
 		FE3D23252D91A41400DA22DB /* RegisterUserUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE3D23242D91A41000DA22DB /* RegisterUserUseCase.swift */; };
 		FE3D23272D92FD0D00DA22DB /* SaveUserDataUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE3D23262D92FD0600DA22DB /* SaveUserDataUseCase.swift */; };
@@ -147,9 +150,12 @@
 /* Begin PBXFileReference section */
 		FE0685652D84A2A90002B217 /* TagsSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsSelectionView.swift; sourceTree = "<group>"; };
 		FE1815602D94A2490090E440 /* GetUserDataUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUserDataUseCase.swift; sourceTree = "<group>"; };
-		FE1815622D954E8C0090E440 /* GetCreatorDataUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetCreatorDataUseCase.swift; sourceTree = "<group>"; };
+		FE1815622D954E8C0090E440 /* ReadCreatorDataUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadCreatorDataUseCase.swift; sourceTree = "<group>"; };
 		FE1815642D9592140090E440 /* SaveSignedInUsernameUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveSignedInUsernameUseCase.swift; sourceTree = "<group>"; };
 		FE1815662D95941B0090E440 /* GetSignedInUsernameUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetSignedInUsernameUseCase.swift; sourceTree = "<group>"; };
+		FE1815682D95D9250090E440 /* CreatorRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatorRepository.swift; sourceTree = "<group>"; };
+		FE18156A2D95DAF50090E440 /* CreatorRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatorRepositoryImpl.swift; sourceTree = "<group>"; };
+		FE18156D2D95DD7E0090E440 /* CreateCreatorDataUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCreatorDataUseCase.swift; sourceTree = "<group>"; };
 		FE34A64E2D78BCF200CB4CAE /* CheckEmailAddressAvailableUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckEmailAddressAvailableUseCase.swift; sourceTree = "<group>"; };
 		FE3D23242D91A41000DA22DB /* RegisterUserUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterUserUseCase.swift; sourceTree = "<group>"; };
 		FE3D23262D92FD0600DA22DB /* SaveUserDataUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveUserDataUseCase.swift; sourceTree = "<group>"; };
@@ -303,6 +309,15 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		FE18156C2D95DCEA0090E440 /* Creator */ = {
+			isa = PBXGroup;
+			children = (
+				FE18156D2D95DD7E0090E440 /* CreateCreatorDataUseCase.swift */,
+				FE1815622D954E8C0090E440 /* ReadCreatorDataUseCase.swift */,
+			);
+			path = Creator;
+			sourceTree = "<group>";
+		};
 		FE3D2B0B2D930EAD00DA22DB /* Network */ = {
 			isa = PBXGroup;
 			children = (
@@ -323,6 +338,7 @@
 		FE5F8A762C296D6C001EE8AF /* Repositories */ = {
 			isa = PBXGroup;
 			children = (
+				FE1815682D95D9250090E440 /* CreatorRepository.swift */,
 				FE5F8A772C296D81001EE8AF /* AuthRepository.swift */,
 				FEA53CA22C29C76E006F0116 /* FeedRepository.swift */,
 				FEA53CC32C2C12EE006F0116 /* MessageRepository.swift */,
@@ -334,6 +350,7 @@
 		FE5F8A792C296EAC001EE8AF /* UseCases */ = {
 			isa = PBXGroup;
 			children = (
+				FE18156C2D95DCEA0090E440 /* Creator */,
 				FE9A30B72D8737930056CC0A /* Profile */,
 				FEA53CC02C2B6033006F0116 /* Messages */,
 				FEA53C9F2C29C6FE006F0116 /* Feed */,
@@ -368,6 +385,7 @@
 		FE5F8A7E2C2971B7001EE8AF /* Repositories */ = {
 			isa = PBXGroup;
 			children = (
+				FE18156A2D95DAF50090E440 /* CreatorRepositoryImpl.swift */,
 				FE5F8A7F2C2971C7001EE8AF /* AuthRepositoryImpl.swift */,
 				FEA53CA42C29C792006F0116 /* FeedRepositoryImpl.swift */,
 				FEA53CC52C2C136E006F0116 /* MessageRepositoryImpl.swift */,
@@ -400,7 +418,6 @@
 			children = (
 				FE1815662D95941B0090E440 /* GetSignedInUsernameUseCase.swift */,
 				FE1815642D9592140090E440 /* SaveSignedInUsernameUseCase.swift */,
-				FE1815622D954E8C0090E440 /* GetCreatorDataUseCase.swift */,
 				FE1815602D94A2490090E440 /* GetUserDataUseCase.swift */,
 				FE3D23262D92FD0600DA22DB /* SaveUserDataUseCase.swift */,
 				FE7FB10C2D7B163B00428A17 /* CheckUsernameAvailableUseCase.swift */,
@@ -940,6 +957,7 @@
 				FE3D23252D91A41400DA22DB /* RegisterUserUseCase.swift in Sources */,
 				FEC94E132C28504900FFEB11 /* LoginCredentialsView.swift in Sources */,
 				FE7FB1102D7B1D3900428A17 /* RegisterNameAndEmailView.swift in Sources */,
+				FE18156B2D95DAFB0090E440 /* CreatorRepositoryImpl.swift in Sources */,
 				FEC94DAF2C243EC100FFEB11 /* BaseHostingController.swift in Sources */,
 				FE5F8A892C2975FC001EE8AF /* LogoutUseCase.swift in Sources */,
 				FEC94E052C2701DF00FFEB11 /* Chat.swift in Sources */,
@@ -953,6 +971,7 @@
 				FE1815672D95941C0090E440 /* GetSignedInUsernameUseCase.swift in Sources */,
 				FE9777E12D7F695C0027DA60 /* PulsingCircleView.swift in Sources */,
 				FEC94DF22C25EF7900FFEB11 /* FilterView.swift in Sources */,
+				FE1815692D95D92A0090E440 /* CreatorRepository.swift in Sources */,
 				FEA53CD12C2C2387006F0116 /* NewChatSearchViewModel.swift in Sources */,
 				FE9A30C02D88B7A40056CC0A /* SettingsViewModel.swift in Sources */,
 				FEA53CDE2C2C49DF006F0116 /* GetChatUseCase.swift in Sources */,
@@ -984,10 +1003,11 @@
 				FEA53CEF2C2D6123006F0116 /* MediaPickerView.swift in Sources */,
 				FEC94DFF2C262E8F00FFEB11 /* Creator.swift in Sources */,
 				FEC94DF72C26283400FFEB11 /* PortfolioDetailView.swift in Sources */,
-				FE1815632D954E920090E440 /* GetCreatorDataUseCase.swift in Sources */,
+				FE1815632D954E920090E440 /* ReadCreatorDataUseCase.swift in Sources */,
 				FE5F8A7C2C296ECA001EE8AF /* LoginWithCredentialsUseCase.swift in Sources */,
 				FE8D56152D918A6500A8BF4E /* AuthProvider.swift in Sources */,
 				FEA53CEB2C2D5B65006F0116 /* EditCreatorDetailsView.swift in Sources */,
+				FE18156E2D95DD7E0090E440 /* CreateCreatorDataUseCase.swift in Sources */,
 				FEC94DD72C247CB200FFEB11 /* MessagesView.swift in Sources */,
 				FEC94DF42C25F57700FFEB11 /* FilterViewModel.swift in Sources */,
 				FEC94DB82C244E9E00FFEB11 /* MainFlowController.swift in Sources */,

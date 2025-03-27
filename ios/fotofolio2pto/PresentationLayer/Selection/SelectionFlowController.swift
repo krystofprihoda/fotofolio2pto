@@ -35,7 +35,7 @@ class SelectionFlowController: BaseFlowController {
         let fc = ProfileFlowController(
             navigationController: navigationController,
             signedInUserId: signedInUserId,
-            displayedUser: user.username,
+            displayedUserId: user.id,
             showDismiss: true
         )
         let vc = startChildFlow(fc)

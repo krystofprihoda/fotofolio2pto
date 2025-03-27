@@ -16,7 +16,7 @@ public protocol ProfileSignOutDelegate: AnyObject {
 class ProfileFlowController: BaseFlowController {
     
     private let signedInUserId: String
-    private let displayedUser: String
+    private let displayedUserId: String
     private let showDismiss: Bool
     
     weak var profileSignOutDelegate: ProfileSignOutDelegate?
@@ -25,12 +25,12 @@ class ProfileFlowController: BaseFlowController {
         navigationController: UINavigationController,
         profileSignOutDelegate: ProfileSignOutDelegate? = nil,
         signedInUserId: String,
-        displayedUser: String,
+        displayedUserId: String,
         showDismiss: Bool = false
     ) {
         self.profileSignOutDelegate = profileSignOutDelegate
         self.signedInUserId = signedInUserId
-        self.displayedUser = displayedUser
+        self.displayedUserId = displayedUserId
         self.showDismiss = showDismiss
         super.init(navigationController: navigationController)
     }
@@ -39,7 +39,7 @@ class ProfileFlowController: BaseFlowController {
         let vm = ProfileViewModel(
             flowController: self,
             signedInUserId: signedInUserId,
-            displayedUser: displayedUser,
+            displayedUserId: displayedUserId,
             showDismiss: showDismiss
         )
         let view = ProfileView(viewModel: vm)

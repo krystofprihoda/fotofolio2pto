@@ -138,8 +138,8 @@ public class MainFlowController: BaseFlowController {
         let profileFlowController = ProfileFlowController(
             navigationController: profileNavController,
             profileSignOutDelegate: self,
-            signedInUserId: "ad.fotograf",
-            displayedUser: "ad.fotograf"
+            signedInUserId: userId,
+            displayedUserId: userId
         )
         let profileRootVC = startChildFlow(profileFlowController)
         profileNavController.viewControllers = [profileRootVC]
