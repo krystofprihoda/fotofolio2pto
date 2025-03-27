@@ -16,22 +16,22 @@ public enum MainTab: Int {
     case profile = 4
 }
 
-public protocol MainFlowControllerDelegate: AnyObject {
+public protocol MainAppFlowDelegate: AnyObject {
     func signOut()
 }
 
 public class MainFlowController: BaseFlowController {
     
     private let userId: String
-    weak var flowDelegate: MainFlowControllerDelegate?
+    weak var mainAppFlowDelegate: MainAppFlowDelegate?
     
     init(
         navigationController: UINavigationController,
-        flowDelegate: MainFlowControllerDelegate? = nil,
+        mainAppFlowDelegate: MainAppFlowDelegate? = nil,
         userId: String
     ) {
         self.userId = userId
-        self.flowDelegate = flowDelegate
+        self.mainAppFlowDelegate = mainAppFlowDelegate
         super.init(navigationController: navigationController)
     }
     
@@ -79,7 +79,7 @@ public class MainFlowController: BaseFlowController {
             image: UIImage(systemName: "square.text.square"),
             tag: MainTab.feed.rawValue
         )
-        let feedFlowController = FeedFlowController(navigationController: feedNavController, signedInUserId: userId, feedTabBadgeDelegate: self)
+        let feedFlowController = FeedFlowController(navigationController: feedNavController, signedInUserId: userId, feedTabBadgeFlowDelegate: self)
         let feedRootVC = startChildFlow(feedFlowController)
         feedNavController.viewControllers = [feedRootVC]
         
@@ -244,12 +244,12 @@ public class MainFlowController: BaseFlowController {
 
 extension MainFlowController: ProfileSignOutDelegate {
     public func signOut() {
-        flowDelegate?.signOut()
+        mainAppFlowDelegate?.signOut()
         stopFlow()
     }
 }
 
-extension MainFlowController: FeedTabBadgeDelegate {
+extension MainFlowController: FeedTabBadgeFlowDelegate {
     public func updateCount(to count: Int, animated: Bool) {
         guard let tabBarController = rootViewController as? UITabBarController else { return }
         guard let index = getViewControllerTabIndex(for: .selection) else { return }

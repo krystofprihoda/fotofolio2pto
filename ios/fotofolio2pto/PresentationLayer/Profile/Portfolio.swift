@@ -14,6 +14,7 @@ let LOREMFLICKR = "https://loremflickr.com/1000/1000/"
 public struct Portfolio: Identifiable, Equatable {
     public let id: Int
     public var author: User
+    public var creator: Creator
     public var name: String
     public var photos: [IImage]
     public var description: String
@@ -23,6 +24,7 @@ public struct Portfolio: Identifiable, Equatable {
     init(
         id: Int,
         author: User,
+        creator: Creator,
         name: String,
         photos: [IImage],
         description: String,
@@ -31,6 +33,7 @@ public struct Portfolio: Identifiable, Equatable {
     ) {
         self.id = id
         self.author = author
+        self.creator = creator
         self.name = name
         self.photos = photos
         self.description = description
@@ -59,6 +62,7 @@ extension Portfolio {
         Portfolio(
             id: 1,
             author: .dummy1,
+            creator: .dummy1,
             name: "Portréty",
             photos: [
                 IImage(src: .remote(URL(string: LOREMFLICKR + "/portrait")!)),
@@ -76,6 +80,7 @@ extension Portfolio {
         Portfolio(
             id: 2,
             author: .dummy2,
+            creator: .dummy2,
             name: "Lifestyle",
             photos: [
                 IImage(src: .remote(URL(string: LOREMFLICKR + "/animal")!)),
@@ -92,6 +97,7 @@ extension Portfolio {
         Portfolio(
             id: 3,
             author: .dummy1,
+            creator: .dummy3,
             name: "Svatby",
             photos: [
                 IImage(src: .remote(URL(string: LOREMFLICKR + "/wedding")!)),
@@ -108,6 +114,7 @@ extension Portfolio {
         Portfolio(
             id: 4,
             author: .dummy3,
+            creator: .dummy4,
             name: "karlova architektura",
             photos: [
                 IImage(src: .remote(URL(string: LOREMFLICKR + "/architecture")!)),
@@ -124,6 +131,7 @@ extension Portfolio {
         Portfolio(
             id: 5,
             author: .dummy5,
+            creator: .dummy5,
             name: "Svatby",
             photos: [
                 IImage(src: .remote(URL(string: LOREMFLICKR + "/wedding")!)),
@@ -140,6 +148,7 @@ extension Portfolio {
         Portfolio(
             id: 6,
             author: .dummy2,
+            creator: .dummy3,
             name: "Svatby",
             photos: [
                 IImage(src: .remote(URL(string: LOREMFLICKR + "/wedding")!)),
@@ -156,6 +165,7 @@ extension Portfolio {
         Portfolio(
             id: 7,
             author: .dummy1,
+            creator: .dummy4,
             name: "Architektura",
             photos: [
                 IImage(src: .remote(URL(string: LOREMFLICKR + "/architecture")!)),
@@ -172,6 +182,7 @@ extension Portfolio {
         Portfolio(
             id: 8,
             author: .dummy6,
+            creator: .dummy2,
             name: "Portréty",
             photos: [
                 IImage(src: .remote(URL(string: LOREMFLICKR + "/portrait")!)),

@@ -18,15 +18,15 @@ class FeedFlowController: BaseFlowController {
     private var backgroundFilterTapView: UIView?
     
     weak var filterFeedDelegate: FilterFeedDelegate?
-    weak var feedTabBadgeDelegate: FeedTabBadgeDelegate?
+    weak var feedTabBadgeFlowDelegate: FeedTabBadgeFlowDelegate?
     
     init(
         navigationController: UINavigationController,
         signedInUserId: String,
-        feedTabBadgeDelegate: FeedTabBadgeDelegate? = nil
+        feedTabBadgeFlowDelegate: FeedTabBadgeFlowDelegate? = nil
     ) {
         self.signedInUserId = signedInUserId
-        self.feedTabBadgeDelegate = feedTabBadgeDelegate
+        self.feedTabBadgeFlowDelegate = feedTabBadgeFlowDelegate
         super.init(navigationController: navigationController)
     }
     
@@ -102,8 +102,8 @@ extension FeedFlowController: UISheetPresentationControllerDelegate {
     }
 }
 
-extension FeedFlowController: FeedTabBadgeDelegate {
+extension FeedFlowController: FeedTabBadgeFlowDelegate {
     func updateCount(to count: Int, animated: Bool) {
-        feedTabBadgeDelegate?.updateCount(to: count, animated: animated)
+        feedTabBadgeFlowDelegate?.updateCount(to: count, animated: animated)
     }
 }

@@ -23,6 +23,10 @@ public extension Resolver {
         register { CheckEmailAddressAvailableUseCaseImpl(authRepository: resolve()) as CheckEmailAddressAvailableUseCase }
         register { CheckUsernameAvailableUseCaseImpl(userRepository: resolve()) as CheckUsernameAvailableUseCase }
         register { SaveUserDataUseCaseImpl(userRepository: resolve()) as SaveUserDataUseCase }
+        register { GetUserDataUseCaseImpl(userRepository: resolve()) as GetUserDataUseCase }
+        register { GetCreatorDataUseCaseImpl(userRepository: resolve()) as GetCreatorDataUseCase }
+        register { SaveSignedInUsernameUseCaseImpl(userRepository: resolve()) as SaveSignedInUsernameUseCase }
+        register { GetSignedInUsernameUseCaseImpl(userRepository: resolve()) as GetSignedInUsernameUseCase }
         
         /// Portfolios
         register { GetAllPortfoliosUseCaseImpl(feedRepository: resolve()) as GetAllPortfoliosUseCase }

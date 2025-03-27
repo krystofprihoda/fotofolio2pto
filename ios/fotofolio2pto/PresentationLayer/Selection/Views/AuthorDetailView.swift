@@ -10,17 +10,20 @@ import SwiftUI
 struct AuthorDetailView: View {
     
     private let author: User
+    private let creator: Creator
     private let unflagPortfolio: () -> Void
     private let showProfile: () -> Void
     private let sendMessage: () -> Void
     
     init(
         author: User,
+        creator: Creator,
         unflagPortfolio: @escaping () -> Void,
         showProfile: @escaping () -> Void,
         sendMessage: @escaping () -> Void
     ) {
         self.author = author
+        self.creator = creator
         self.unflagPortfolio = unflagPortfolio
         self.showProfile = showProfile
         self.sendMessage = sendMessage
@@ -57,7 +60,7 @@ struct AuthorDetailView: View {
                         .foregroundColor(.black).brightness(0.3)
                         .font(.system(size: 16))
                     
-                    if !author.ratings.isEmpty {
+                    if !author.rating.isEmpty {
                         HStack {
                             Text("\(author.location), " + String(format: "%.1f", author.averageRating) + L.Selection.outOf5)
                                 .font(.system(size: 12))
@@ -80,7 +83,7 @@ struct AuthorDetailView: View {
             }
             
             HStack {
-                Text(author.creator?.profileText ?? L.Selection.profileDescriptionError)
+                Text(creator.profileText)
                     .font(.system(size: 16))
                     .foregroundColor(Color(uiColor: UIColor.systemGray))
                 
@@ -94,5 +97,5 @@ struct AuthorDetailView: View {
 }
 
 #Preview {
-    AuthorDetailView(author: .dummy1, unflagPortfolio: {}, showProfile: {}, sendMessage: {})
+    AuthorDetailView(author: .dummy1, creator: .dummy1, unflagPortfolio: {}, showProfile: {}, sendMessage: {})
 }

@@ -9,10 +9,12 @@ import SwiftUI
 
 struct ProfileUserInfoView: View {
     private let user: User?
+    private let creator: Creator?
     private let profileOwner: Bool
     
-    init(user: User?, profileOwner: Bool) {
+    init(user: User?, creator: Creator?, profileOwner: Bool) {
         self.user = user
+        self.creator = creator
         self.profileOwner = profileOwner
     }
     
@@ -34,7 +36,7 @@ struct ProfileUserInfoView: View {
                             .foregroundColor(.black).brightness(0.3)
                             .padding(.bottom, 2)
                         
-                        if !user.ratings.isEmpty {
+                        if !user.rating.isEmpty {
                             HStack {
                                 Text(String(format: "%.1f", user.averageRating) + " z 5")
                                     .font(.system(size: 12))
@@ -70,7 +72,7 @@ struct ProfileUserInfoView: View {
                     .padding([.leading, .trailing], Constants.Dimens.spaceLarge)
                     .padding([.top, .bottom], Constants.Dimens.spaceXSmall)
                 
-                if let creator = user.creator {
+                if let creator = creator {
                     VStack(alignment: .leading, spacing: 0) {
                         HStack {
                             Text("\(creator.yearsOfExperience)" + yearFormatString(creator.yearsOfExperience))
@@ -112,5 +114,5 @@ struct ProfileUserInfoView: View {
 }
 
 #Preview {
-    ProfileUserInfoView(user: .dummy1, profileOwner: true)
+    ProfileUserInfoView(user: .dummy1, creator: .dummy1, profileOwner: true)
 }

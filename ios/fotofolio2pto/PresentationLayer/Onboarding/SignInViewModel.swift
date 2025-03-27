@@ -14,6 +14,8 @@ final class SignInViewModel: BaseViewModel, ViewModel, ObservableObject {
     // MARK: Dependencies
 
     @LazyInjected private var loginWithCredentialsUseCase: LoginWithCredentialsUseCase
+    @LazyInjected private var getUserDataUseCase: GetUserDataUseCase
+    @LazyInjected private var saveSignedInUsernameUseCase: SaveSignedInUsernameUseCase
 
     private weak var flowController: OnboardingFlowController?
 
@@ -77,28 +79,12 @@ final class SignInViewModel: BaseViewModel, ViewModel, ObservableObject {
         
         do {
             let authDetails = try await loginWithCredentialsUseCase.execute(email: state.email, password: state.password)
-            try await getUserData(userId: authDetails.uid, token: authDetails.token)
+            let user = try await getUserDataUseCase.execute(id: authDetails.uid)
+            saveSignedInUsernameUseCase.execute(username: user.username)
             flowController?.signIn(uid: authDetails.uid)
         } catch {
             state.error = "Špatné přihlašovací údaje."
             state.password = ""
-        }
-    }
-    
-    func getUserData(userId: String, token: String) async throws {
-        guard let url = URL(string: "http://0.0.0.0:8080/user/\(userId)") else {
-            throw URLError(.badURL)
-        }
-        
-        var request = URLRequest(url: url)
-        request.httpMethod = "GET"
-        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
-        
-        let (data, response) = try await URLSession.shared.data(for: request)
-        
-        // Check for HTTP response errors
-        guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
-            throw NSError(domain: "ServerError", code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to obtain user data"])
         }
     }
     

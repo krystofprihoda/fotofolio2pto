@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Creator {
+public struct Creator: Codable {
     public let profileText: String
     public let yearsOfExperience: Int
 }

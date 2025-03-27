@@ -8,19 +8,19 @@
 import Foundation
 import UIKit
 
-public protocol OnboardingFlowControllerDelegate: AnyObject {
+public protocol OnboardingMainFlowDelegate: AnyObject {
     func setupMain(for: String)
 }
 
 class OnboardingFlowController: BaseFlowController {
     
-    weak var flowDelegate: OnboardingFlowControllerDelegate?
+    weak var onboardingMainflowDelegate: OnboardingMainFlowDelegate?
     
     init(
         navigationController: UINavigationController,
-        flowDelegate: OnboardingFlowControllerDelegate? = nil
+        onboardingMainflowDelegate: OnboardingMainFlowDelegate? = nil
     ) {
-        self.flowDelegate = flowDelegate
+        self.onboardingMainflowDelegate = onboardingMainflowDelegate
         super.init(navigationController: navigationController)
     }
     
@@ -37,7 +37,7 @@ class OnboardingFlowController: BaseFlowController {
     
     public func signIn(uid: String) {
         finishOnboarding()
-        flowDelegate?.setupMain(for: uid)
+        onboardingMainflowDelegate?.setupMain(for: uid)
     }
     
     public func registerUser() {

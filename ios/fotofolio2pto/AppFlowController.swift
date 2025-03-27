@@ -9,26 +9,19 @@ import Foundation
 import UIKit
 import Resolver
 
-public class AppFlowController: BaseFlowController, OnboardingFlowControllerDelegate {
+public class AppFlowController: BaseFlowController, OnboardingMainFlowDelegate {
     
     @LazyInjected private var getLoggedInUserUseCase: GetLoggedInUserUseCase
     
     public func start() {
         setupAppearance()
-        
-        let user = getLoggedInUserUseCase.execute()
-        
-        if let user {
-            setupMain(for: user)
-        } else {
-            presentOnboarding()
-        }
+        presentOnboarding()
     }
     
     public func setupMain(for userId: String) {
         let flowController = MainFlowController(
             navigationController: navigationController,
-            flowDelegate: self,
+            mainAppFlowDelegate: self,
             userId: userId
         )
         let rootVc = startChildFlow(flowController)
@@ -40,7 +33,7 @@ public class AppFlowController: BaseFlowController, OnboardingFlowControllerDele
     private func presentOnboarding() {
         let flowController = OnboardingFlowController(
             navigationController: navigationController,
-            flowDelegate: self
+            onboardingMainflowDelegate: self
         )
         let rootVc = startChildFlow(flowController)
         navigationController.navigationBar.isHidden = true
@@ -73,7 +66,7 @@ public class AppFlowController: BaseFlowController, OnboardingFlowControllerDele
     }
 }
 
-extension AppFlowController: MainFlowControllerDelegate {
+extension AppFlowController: MainAppFlowDelegate {
     public func signOut() {
         presentOnboarding()
     }

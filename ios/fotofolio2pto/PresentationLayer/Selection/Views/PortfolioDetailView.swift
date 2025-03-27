@@ -34,6 +34,7 @@ struct PortfolioDetailView: View {
             /// Folio Author
             AuthorDetailView(
                 author: portfolio.author,
+                creator: portfolio.creator,
                 unflagPortfolio: unflagPortfolio,
                 showProfile: showProfile,
                 sendMessage: sendMessage

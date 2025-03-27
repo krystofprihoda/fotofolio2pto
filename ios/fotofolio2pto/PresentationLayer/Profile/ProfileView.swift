@@ -24,9 +24,13 @@ struct ProfileView: View {
                             .padding()
                             .frame(width: geo.size.width, height: geo.size.height)
                     } else {
-                        ProfileUserInfoView(user: viewModel.state.userData, profileOwner: viewModel.state.isProfileOwner)
+                        ProfileUserInfoView(
+                            user: viewModel.state.userData,
+                            creator: viewModel.state.creatorData,
+                            profileOwner: viewModel.state.isProfileOwner
+                        )
                             .padding(.top, Constants.Dimens.spaceSmall)
-                        if viewModel.state.userData?.creator != nil {
+                        if viewModel.state.creatorData != nil {
                             ProfilePortfoliosView(portfolios: viewModel.state.portfolios)
                         } else {
                             NotCreatorView()
@@ -39,7 +43,7 @@ struct ProfileView: View {
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarTrailing) {
                 HStack(spacing: Constants.Dimens.spaceXSmall) {
-                    if viewModel.state.isProfileOwner && viewModel.state.userData?.creator != nil {
+                    if viewModel.state.isProfileOwner && viewModel.state.creatorData != nil {
                         Button(action: {
                             viewModel.onIntent(.createNewPortfolio)
                         }) {

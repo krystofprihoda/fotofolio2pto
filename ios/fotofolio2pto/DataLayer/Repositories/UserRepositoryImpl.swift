@@ -79,6 +79,41 @@ public class UserRepositoryImpl: UserRepository {
             "profilePicture": profilePicture
         ]
         
-        _ = try await network.request(endpoint: .user, method: .POST, body: body, headers: headers) 
+        _ = try await network.request(endpoint: .user, method: .POST, body: body, headers: headers)
+    }
+    
+    public func getUser(id: String) async throws -> User {
+        guard let token: String = defaults.read(.token) else { throw AuthError.tokenRetrievalFailed }
+        
+        let headers = [
+            "Authorization": "Bearer \(token)",
+            "Content-Type": "application/json"
+        ]
+        
+        let user: User = try await network.fetch(endpoint: .userById(id), method: .GET, body: [:], headers: headers)
+        print(user)
+        return user
+    }
+    
+    public func getCreator(id: String) async throws -> Creator {
+        guard let token: String = defaults.read(.token) else { throw AuthError.tokenRetrievalFailed }
+        
+        let headers = [
+            "Authorization": "Bearer \(token)",
+            "Content-Type": "application/json"
+        ]
+        
+        let creator: Creator = try await network.fetch(endpoint: .creatorById(id), method: .GET, body: [:], headers: headers)
+        print(creator)
+        return creator
+    }
+    
+    public func saveSignedInUsername(_ username: String) {
+        defaults.update(.username, value: username)
+    }
+    
+    public func getSignedInUsername() throws -> String {
+        guard let username: String = defaults.read(.username) else { throw ObjectError.nonExistent }
+        return username
     }
 }

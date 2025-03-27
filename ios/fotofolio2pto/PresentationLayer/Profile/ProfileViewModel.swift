@@ -15,6 +15,7 @@ final class ProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
     // MARK: Dependencies
     
     @LazyInjected private var getUserDataFromUsernameUseCase: GetUserDataFromUsernameUseCase
+    @LazyInjected private var getCreatorDataUseCase: GetCreatorDataUseCase
     @LazyInjected private var getUserPortfoliosUseCase: GetUserPortfoliosUseCase
     
     private weak var flowController: ProfileFlowController?
@@ -52,6 +53,7 @@ final class ProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
         var displayedUser = ""
         var isProfileOwner: Bool { signedInUserId == displayedUser }
         var userData: User? = nil
+        var creatorData: Creator? = nil
         var portfolios: [Portfolio] = []
         var showDismiss = false
     }
@@ -90,9 +92,16 @@ final class ProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
         do {
             state.userData = try await getUserDataFromUsernameUseCase.execute(state.displayedUser)
             state.portfolios = try await getUserPortfoliosUseCase.execute(username: state.displayedUser)
+            
+            try await fetchCreatorData()
         } catch {
             
         }
+    }
+    
+    private func fetchCreatorData() async throws {
+        guard let creatorId = state.userData?.creatorId else { return }
+        state.creatorData = try await getCreatorDataUseCase.execute(id: creatorId)
     }
     
     private func sendMessage() {

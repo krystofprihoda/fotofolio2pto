@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Resolver
 import SwiftUI
 
 final class EditProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
@@ -13,7 +14,7 @@ final class EditProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
 
     // MARK: Dependencies
 
-    // UCs
+    @LazyInjected private var getCreatorDataUseCase: GetCreatorDataUseCase
 
     private weak var flowController: ProfileFlowController?
 
@@ -30,11 +31,12 @@ final class EditProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
         state.fullName = userData.fullName
         state.location = userData.location
         state.profilePicture = userData.profilePicture
-        state.yearsOfExperience = userData.creator?.yearsOfExperience ?? 5
-        state.profileDescription = userData.creator?.profileText ?? ""
         state.isCreator = userData.isCreator
+        state.creatorId = userData.creatorId
         state.portfolios = portfolios
         state.rawUserData = userData
+        
+        fetchCreatorData()
     }
 
     // MARK: Lifecycle
@@ -50,6 +52,7 @@ final class EditProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
         var username = ""
         var fullName = ""
         var isCreator = false
+        var creatorId: String? = nil
         var profilePicture: IImage? = nil
         var yearsOfExperience: Int = 2
         var profileDescription = ""
@@ -97,6 +100,21 @@ final class EditProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
     }
 
     // MARK: Additional methods
+    
+    private func fetchCreatorData() {
+        guard let creatorId = state.creatorId else {
+            return
+        }
+        
+        executeTask(Task {
+            do {
+                let creatorData: Creator = try await getCreatorDataUseCase.execute(id: creatorId)
+                
+                state.yearsOfExperience = creatorData.yearsOfExperience
+                state.profileDescription = creatorData.profileText
+            } catch { }
+        })
+    }
 
     private func pickProfilePicture() {
         flowController?.presentPickerModal(source: self)

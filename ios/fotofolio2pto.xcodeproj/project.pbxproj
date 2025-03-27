@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		FE0685662D84A2A90002B217 /* TagsSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE0685652D84A2A90002B217 /* TagsSelectionView.swift */; };
+		FE1815612D94A2490090E440 /* GetUserDataUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1815602D94A2490090E440 /* GetUserDataUseCase.swift */; };
+		FE1815632D954E920090E440 /* GetCreatorDataUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1815622D954E8C0090E440 /* GetCreatorDataUseCase.swift */; };
+		FE1815652D9592160090E440 /* SaveSignedInUsernameUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1815642D9592140090E440 /* SaveSignedInUsernameUseCase.swift */; };
+		FE1815672D95941C0090E440 /* GetSignedInUsernameUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1815662D95941B0090E440 /* GetSignedInUsernameUseCase.swift */; };
 		FE34A64F2D78BCF200CB4CAE /* CheckEmailAddressAvailableUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE34A64E2D78BCF200CB4CAE /* CheckEmailAddressAvailableUseCase.swift */; };
 		FE3D23252D91A41400DA22DB /* RegisterUserUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE3D23242D91A41000DA22DB /* RegisterUserUseCase.swift */; };
 		FE3D23272D92FD0D00DA22DB /* SaveUserDataUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE3D23262D92FD0600DA22DB /* SaveUserDataUseCase.swift */; };
@@ -33,7 +37,6 @@
 		FE9777E12D7F695C0027DA60 /* PulsingCircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE9777E02D7F695C0027DA60 /* PulsingCircleView.swift */; };
 		FE9777E32D7F6D940027DA60 /* RegisterCreatorDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE9777E22D7F6D940027DA60 /* RegisterCreatorDetailsView.swift */; };
 		FE9777E52D7F6DAC0027DA60 /* RegisterIsCreatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE9777E42D7F6DAC0027DA60 /* RegisterIsCreatorView.swift */; };
-		FE9A30B02D86E6A10056CC0A /* UserViewObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE9A30AF2D86E6A10056CC0A /* UserViewObject.swift */; };
 		FE9A30B22D86E6A10056CC0A /* Shimmer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE9A30B12D86E6A10056CC0A /* Shimmer.swift */; };
 		FE9A30B52D8737650056CC0A /* UpdatePortfolioUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE9A30B42D8737650056CC0A /* UpdatePortfolioUseCase.swift */; };
 		FE9A30BB2D88473E0056CC0A /* Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE9A30BA2D88473E0056CC0A /* Toast.swift */; };
@@ -143,6 +146,10 @@
 
 /* Begin PBXFileReference section */
 		FE0685652D84A2A90002B217 /* TagsSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsSelectionView.swift; sourceTree = "<group>"; };
+		FE1815602D94A2490090E440 /* GetUserDataUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUserDataUseCase.swift; sourceTree = "<group>"; };
+		FE1815622D954E8C0090E440 /* GetCreatorDataUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetCreatorDataUseCase.swift; sourceTree = "<group>"; };
+		FE1815642D9592140090E440 /* SaveSignedInUsernameUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveSignedInUsernameUseCase.swift; sourceTree = "<group>"; };
+		FE1815662D95941B0090E440 /* GetSignedInUsernameUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetSignedInUsernameUseCase.swift; sourceTree = "<group>"; };
 		FE34A64E2D78BCF200CB4CAE /* CheckEmailAddressAvailableUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckEmailAddressAvailableUseCase.swift; sourceTree = "<group>"; };
 		FE3D23242D91A41000DA22DB /* RegisterUserUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterUserUseCase.swift; sourceTree = "<group>"; };
 		FE3D23262D92FD0600DA22DB /* SaveUserDataUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveUserDataUseCase.swift; sourceTree = "<group>"; };
@@ -166,7 +173,6 @@
 		FE9777E02D7F695C0027DA60 /* PulsingCircleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PulsingCircleView.swift; sourceTree = "<group>"; };
 		FE9777E22D7F6D940027DA60 /* RegisterCreatorDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterCreatorDetailsView.swift; sourceTree = "<group>"; };
 		FE9777E42D7F6DAC0027DA60 /* RegisterIsCreatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterIsCreatorView.swift; sourceTree = "<group>"; };
-		FE9A30AF2D86E6A10056CC0A /* UserViewObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewObject.swift; sourceTree = "<group>"; };
 		FE9A30B12D86E6A10056CC0A /* Shimmer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shimmer.swift; sourceTree = "<group>"; };
 		FE9A30B42D8737650056CC0A /* UpdatePortfolioUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatePortfolioUseCase.swift; sourceTree = "<group>"; };
 		FE9A30BA2D88473E0056CC0A /* Toast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
@@ -392,6 +398,10 @@
 		FE5F8A872C2975E9001EE8AF /* User */ = {
 			isa = PBXGroup;
 			children = (
+				FE1815662D95941B0090E440 /* GetSignedInUsernameUseCase.swift */,
+				FE1815642D9592140090E440 /* SaveSignedInUsernameUseCase.swift */,
+				FE1815622D954E8C0090E440 /* GetCreatorDataUseCase.swift */,
+				FE1815602D94A2490090E440 /* GetUserDataUseCase.swift */,
 				FE3D23262D92FD0600DA22DB /* SaveUserDataUseCase.swift */,
 				FE7FB10C2D7B163B00428A17 /* CheckUsernameAvailableUseCase.swift */,
 				FEA53CC72C2C16E2006F0116 /* GetUserDataFromUsernameUseCase.swift */,
@@ -429,14 +439,6 @@
 				FE9A30B42D8737650056CC0A /* UpdatePortfolioUseCase.swift */,
 			);
 			path = Profile;
-			sourceTree = "<group>";
-		};
-		FE9A30B82D8737A60056CC0A /* ViewObjects */ = {
-			isa = PBXGroup;
-			children = (
-				FE9A30AF2D86E6A10056CC0A /* UserViewObject.swift */,
-			);
-			path = ViewObjects;
 			sourceTree = "<group>";
 		};
 		FE9A30B92D8737B80056CC0A /* Modifiers */ = {
@@ -642,7 +644,6 @@
 			isa = PBXGroup;
 			children = (
 				FE9A30B92D8737B80056CC0A /* Modifiers */,
-				FE9A30B82D8737A60056CC0A /* ViewObjects */,
 				FEC94E112C28502E00FFEB11 /* Onboarding */,
 				FEC94DE82C25BF3D00FFEB11 /* Extensions */,
 				FEC94DBD2C246C4B00FFEB11 /* Profile */,
@@ -910,6 +911,7 @@
 				FE9777E52D7F6DAC0027DA60 /* RegisterIsCreatorView.swift in Sources */,
 				FEA64F6F2D7712C700B11530 /* RegisterView.swift in Sources */,
 				FE7FB10D2D7B163B00428A17 /* CheckUsernameAvailableUseCase.swift in Sources */,
+				FE1815612D94A2490090E440 /* GetUserDataUseCase.swift in Sources */,
 				FE9A30B22D86E6A10056CC0A /* Shimmer.swift in Sources */,
 				FEA53CE22C2C88EE006F0116 /* GetUsersFromQueryUseCase.swift in Sources */,
 				FEC94DE32C25917200FFEB11 /* Portfolio.swift in Sources */,
@@ -948,12 +950,12 @@
 				FE9777D92D7EF25D0027DA60 /* RegisterUsernameView.swift in Sources */,
 				FEA53CDC2C2C39F0006F0116 /* GetLatestChatMessagesUseCase.swift in Sources */,
 				FEA53CAE2C29E08D006F0116 /* Sequence+Extensions.swift in Sources */,
+				FE1815672D95941C0090E440 /* GetSignedInUsernameUseCase.swift in Sources */,
 				FE9777E12D7F695C0027DA60 /* PulsingCircleView.swift in Sources */,
 				FEC94DF22C25EF7900FFEB11 /* FilterView.swift in Sources */,
 				FEA53CD12C2C2387006F0116 /* NewChatSearchViewModel.swift in Sources */,
 				FE9A30C02D88B7A40056CC0A /* SettingsViewModel.swift in Sources */,
 				FEA53CDE2C2C49DF006F0116 /* GetChatUseCase.swift in Sources */,
-				FE9A30B02D86E6A10056CC0A /* UserViewObject.swift in Sources */,
 				FEC94DEA2C25BF4B00FFEB11 /* View+Extensions.swift in Sources */,
 				FEC94DCD2C2479CD00FFEB11 /* SelectionViewModel.swift in Sources */,
 				FEA53CA72C29D667006F0116 /* FlagPortfolioUseCase.swift in Sources */,
@@ -982,6 +984,7 @@
 				FEA53CEF2C2D6123006F0116 /* MediaPickerView.swift in Sources */,
 				FEC94DFF2C262E8F00FFEB11 /* Creator.swift in Sources */,
 				FEC94DF72C26283400FFEB11 /* PortfolioDetailView.swift in Sources */,
+				FE1815632D954E920090E440 /* GetCreatorDataUseCase.swift in Sources */,
 				FE5F8A7C2C296ECA001EE8AF /* LoginWithCredentialsUseCase.swift in Sources */,
 				FE8D56152D918A6500A8BF4E /* AuthProvider.swift in Sources */,
 				FEA53CEB2C2D5B65006F0116 /* EditCreatorDetailsView.swift in Sources */,
@@ -1021,6 +1024,7 @@
 				FEA64F6D2D7711D900B11530 /* RegisterFlowController.swift in Sources */,
 				FEA53CED2C2D5BAC006F0116 /* EditPortfoliosView.swift in Sources */,
 				FE0685662D84A2A90002B217 /* TagsSelectionView.swift in Sources */,
+				FE1815652D9592160090E440 /* SaveSignedInUsernameUseCase.swift in Sources */,
 				FEA53CCF2C2C2304006F0116 /* NewChatSearchView.swift in Sources */,
 				FEA53CC22C2C12C8006F0116 /* GetChatsForUserUseCase.swift in Sources */,
 				FEC94DF02C25ED5C00FFEB11 /* RoundedCorner.swift in Sources */,

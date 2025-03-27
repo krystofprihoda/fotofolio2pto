@@ -43,5 +43,10 @@ final class DefaultNetworkProvider: NetworkProvider {
         
         return data
     }
+    
+    func fetch<T: Decodable>(endpoint: Endpoint, method: HTTPMethod = .GET, body: [String: Any]? = nil, headers: [String: String]? = nil) async throws -> T {
+        let data = try await request(endpoint: endpoint, method: method, body: body, headers: headers)
+        let decoder = JSONDecoder()
+        return try decoder.decode(T.self, from: data)
+    }
 }
-

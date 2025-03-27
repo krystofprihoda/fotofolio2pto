@@ -92,7 +92,7 @@ public class FeedRepositoryImpl: FeedRepository {
         try await Task.sleep(for: .seconds(0.5))
         let latestId = FeedRepositoryImpl.portfolios.last?.id ?? 0
         guard let author = try await userRepository.getUserByUsername(username) else { throw ObjectError.nonExistent }
-        let new = Portfolio(id: latestId + 1, author: author, name: name, photos: photos, description: description, tags: tags, timestamp: .now)
+        let new = Portfolio(id: latestId + 1, author: author, creator: .dummy2, name: name, photos: photos, description: description, tags: tags, timestamp: .now)
         FeedRepositoryImpl.portfolios.append(new)
     }
     
@@ -102,7 +102,7 @@ public class FeedRepositoryImpl: FeedRepository {
         guard let old = FeedRepositoryImpl.portfolios.first(where: { $0.id == id }) else { throw ObjectError.nonExistent }
         FeedRepositoryImpl.portfolios.removeAll(where: { $0.id == id })
         
-        let new = Portfolio(id: old.id, author: old.author, name: name, photos: photos, description: description, tags: tags, timestamp: .now)
+        let new = Portfolio(id: old.id, author: old.author, creator: old.creator, name: name, photos: photos, description: description, tags: tags, timestamp: .now)
         FeedRepositoryImpl.portfolios.append(new)
     }
 }

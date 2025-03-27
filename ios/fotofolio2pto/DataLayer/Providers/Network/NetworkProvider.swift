@@ -20,6 +20,7 @@ enum Endpoint {
     case user
     case portfolio
     case userById(String)
+    case creatorById(String)
     
     var path: String {
         switch self {
@@ -29,10 +30,13 @@ enum Endpoint {
             return "/portfolio"
         case .userById(let id):
             return "/user/\(id)"
+        case .creatorById(let id):
+            return "/creator/\(id)"
         }
     }
 }
 
 protocol NetworkProvider {
     func request(endpoint: Endpoint, method: HTTPMethod, body: [String: Any]?, headers: [String: String]?) async throws -> Data
+    func fetch<T: Decodable>(endpoint: Endpoint, method: HTTPMethod, body: [String: Any]?, headers: [String: String]?) async throws -> T
 }
