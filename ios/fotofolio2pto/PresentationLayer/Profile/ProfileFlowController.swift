@@ -43,7 +43,7 @@ class ProfileFlowController: BaseFlowController {
             showDismiss: showDismiss
         )
         let view = ProfileView(viewModel: vm)
-        let vc = BaseHostingController(rootView: view)
+        let vc = BaseHostingController(rootView: view, hideBackButton: true)
         return vc
     }
     

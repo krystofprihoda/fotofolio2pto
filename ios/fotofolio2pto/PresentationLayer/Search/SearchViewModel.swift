@@ -16,7 +16,7 @@ final class SearchViewModel: BaseViewModel, ViewModel, ObservableObject {
     
     // MARK: Dependencies
     
-    @LazyInjected private var getUsersFromQueryUseCase: GetUsersFromQueryUseCase
+    @LazyInjected private var readUsersFromQueryUseCase: ReadUsersFromQueryUseCase
     
     private weak var flowController: SearchFlowController?
     
@@ -78,8 +78,7 @@ final class SearchViewModel: BaseViewModel, ViewModel, ObservableObject {
         searchTask = Task {
             do {
                 try await Task.sleep(for: .seconds(0.3))
-                let results = try await getUsersFromQueryUseCase.execute(query: state.textInput.lowercased())
-                state.searchResults = results.filter({ String($0.id) != state.signedInUserId })
+                state.searchResults = try await readUsersFromQueryUseCase.execute(query: state.textInput.lowercased())
             } catch {
                 
             }

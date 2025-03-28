@@ -16,37 +16,51 @@ final class DefaultNetworkProvider: NetworkProvider {
         self.baseURL = baseURL
     }
     
-    func request(endpoint: Endpoint, method: HTTPMethod, body: [String: Any]?, headers: [String: String]?) async throws -> Data {
-        guard let url = URL(string: "\(baseURL.rawValue)\(endpoint.path)") else {
-            throw URLError(.badURL)
+    func request(endpoint: Endpoint, method: HTTPMethod, body: [String: Any]? = nil, headers: [String: String]?, queryParams: [String: String]? = nil) async throws -> Data {
+            guard var urlComponents = URLComponents(string: "\(baseURL.rawValue)\(endpoint.path)") else {
+                throw URLError(.badURL)
+            }
+            
+            if let queryParams = queryParams {
+                urlComponents.queryItems = queryParams.map { URLQueryItem(name: $0.key, value: $0.value) }
+            }
+            
+            guard let url = urlComponents.url else {
+                throw URLError(.badURL)
+            }
+            
+            var request = URLRequest(url: url)
+            request.httpMethod = method.rawValue
+            
+            headers?.forEach { request.setValue($0.value, forHTTPHeaderField: $0.key) }
+            
+            if let body = body, method != .GET {
+                request.httpBody = try JSONSerialization.data(withJSONObject: body, options: [])
+                request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            }
+            
+            if baseURL == .test { Logger.log(request: request) }
+            
+            let (data, response) = try await URLSession.shared.data(for: request)
+            
+            if baseURL == .test { Logger.log(response: response, data: data) }
+            
+            guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+                throw NSError(domain: "ServerError", code: -1, userInfo: [NSLocalizedDescriptionKey: "Request failed"])
+            }
+            
+            return data
         }
         
-        var request = URLRequest(url: url)
-        request.httpMethod = method.rawValue
-        
-        headers?.forEach { request.setValue($0.value, forHTTPHeaderField: $0.key) }
-        
-        if let body = body, method != .GET {
-            request.httpBody = try JSONSerialization.data(withJSONObject: body, options: [])
-            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        func fetch<T: Decodable>(endpoint: Endpoint, method: HTTPMethod = .GET, body: [String: Any]? = nil, headers: [String: String]? = nil, queryParams: [String: String]? = nil) async throws -> T {
+            let data = try await request(
+                endpoint: endpoint,
+                method: method,
+                body: body,
+                headers: headers,
+                queryParams: queryParams
+            )
+            let decoder = JSONDecoder()
+            return try decoder.decode(T.self, from: data)
         }
-        
-        if baseURL == .test { Logger.log(request: request) }
-        
-        let (data, response) = try await URLSession.shared.data(for: request)
-        
-        if baseURL == .test { Logger.log(response: response, data: data) }
-        
-        guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
-            throw NSError(domain: "ServerError", code: -1, userInfo: [NSLocalizedDescriptionKey: "Request failed"])
-        }
-        
-        return data
-    }
-    
-    func fetch<T: Decodable>(endpoint: Endpoint, method: HTTPMethod = .GET, body: [String: Any]? = nil, headers: [String: String]? = nil) async throws -> T {
-        let data = try await request(endpoint: endpoint, method: method, body: body, headers: headers)
-        let decoder = JSONDecoder()
-        return try decoder.decode(T.self, from: data)
-    }
 }

@@ -18,28 +18,28 @@ enum HTTPMethod: String {
 
 enum Endpoint {
     case user
-    case portfolio
     case userById(String)
     case creator
     case creatorById(String)
+    case portfolio
     
     var path: String {
         switch self {
         case .user:
             return "/user"
-        case .portfolio:
-            return "/portfolio"
         case .userById(let id):
             return "/user/\(id)"
         case .creator:
             return "/creator"
         case .creatorById(let id):
             return "/creator/\(id)"
+        case .portfolio:
+            return "/portfolio"
         }
     }
 }
 
 protocol NetworkProvider {
-    func request(endpoint: Endpoint, method: HTTPMethod, body: [String: Any]?, headers: [String: String]?) async throws -> Data
-    func fetch<T: Decodable>(endpoint: Endpoint, method: HTTPMethod, body: [String: Any]?, headers: [String: String]?) async throws -> T
+    func request(endpoint: Endpoint, method: HTTPMethod, body: [String: Any]?, headers: [String: String]?, queryParams: [String: String]?) async throws -> Data
+    func fetch<T: Decodable>(endpoint: Endpoint, method: HTTPMethod, body: [String: Any]?, headers: [String: String]?, queryParams: [String: String]?) async throws -> T
 }

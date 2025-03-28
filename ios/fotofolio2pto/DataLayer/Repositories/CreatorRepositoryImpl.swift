@@ -32,7 +32,7 @@ public class CreatorRepositoryImpl: CreatorRepository {
             "description": ""
         ]
         
-        _ = try await network.request(endpoint: .creator, method: .POST, body: body, headers: headers)
+        _ = try await network.request(endpoint: .creator, method: .POST, body: body, headers: headers, queryParams: nil)
     }
     
     public func getCreator(id: String) async throws -> Creator {
@@ -43,7 +43,7 @@ public class CreatorRepositoryImpl: CreatorRepository {
             "Content-Type": "application/json"
         ]
         
-        let creator: Creator = try await network.fetch(endpoint: .creatorById(id), method: .GET, body: [:], headers: headers)
+        let creator: Creator = try await network.fetch(endpoint: .creatorById(id), method: .GET, body: nil, headers: headers, queryParams: nil)
         print(creator)
         return creator
     }

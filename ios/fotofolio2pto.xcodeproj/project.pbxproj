@@ -77,7 +77,7 @@
 		FEA53CDC2C2C39F0006F0116 /* GetLatestChatMessagesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CDB2C2C39F0006F0116 /* GetLatestChatMessagesUseCase.swift */; };
 		FEA53CDE2C2C49DF006F0116 /* GetChatUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CDD2C2C49DF006F0116 /* GetChatUseCase.swift */; };
 		FEA53CE02C2C6A20006F0116 /* GetUserPortfoliosUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CDF2C2C6A20006F0116 /* GetUserPortfoliosUseCase.swift */; };
-		FEA53CE22C2C88EE006F0116 /* GetUsersFromQueryUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CE12C2C88EE006F0116 /* GetUsersFromQueryUseCase.swift */; };
+		FEA53CE22C2C88EE006F0116 /* ReadUsersFromQueryUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CE12C2C88EE006F0116 /* ReadUsersFromQueryUseCase.swift */; };
 		FEA53CE42C2D5A46006F0116 /* EditProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CE32C2D5A46006F0116 /* EditProfileView.swift */; };
 		FEA53CE72C2D5A92006F0116 /* EditPersonalDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CE62C2D5A92006F0116 /* EditPersonalDetailsView.swift */; };
 		FEA53CEB2C2D5B65006F0116 /* EditCreatorDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CEA2C2D5B65006F0116 /* EditCreatorDetailsView.swift */; };
@@ -215,7 +215,7 @@
 		FEA53CDB2C2C39F0006F0116 /* GetLatestChatMessagesUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLatestChatMessagesUseCase.swift; sourceTree = "<group>"; };
 		FEA53CDD2C2C49DF006F0116 /* GetChatUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetChatUseCase.swift; sourceTree = "<group>"; };
 		FEA53CDF2C2C6A20006F0116 /* GetUserPortfoliosUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUserPortfoliosUseCase.swift; sourceTree = "<group>"; };
-		FEA53CE12C2C88EE006F0116 /* GetUsersFromQueryUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUsersFromQueryUseCase.swift; sourceTree = "<group>"; };
+		FEA53CE12C2C88EE006F0116 /* ReadUsersFromQueryUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadUsersFromQueryUseCase.swift; sourceTree = "<group>"; };
 		FEA53CE32C2D5A46006F0116 /* EditProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileView.swift; sourceTree = "<group>"; };
 		FEA53CE62C2D5A92006F0116 /* EditPersonalDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPersonalDetailsView.swift; sourceTree = "<group>"; };
 		FEA53CEA2C2D5B65006F0116 /* EditCreatorDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCreatorDetailsView.swift; sourceTree = "<group>"; };
@@ -422,7 +422,7 @@
 				FE3D23262D92FD0600DA22DB /* SaveUserDataUseCase.swift */,
 				FE7FB10C2D7B163B00428A17 /* CheckUsernameAvailableUseCase.swift */,
 				FEA53CC72C2C16E2006F0116 /* GetUserDataFromUsernameUseCase.swift */,
-				FEA53CE12C2C88EE006F0116 /* GetUsersFromQueryUseCase.swift */,
+				FEA53CE12C2C88EE006F0116 /* ReadUsersFromQueryUseCase.swift */,
 			);
 			path = User;
 			sourceTree = "<group>";
@@ -930,7 +930,7 @@
 				FE7FB10D2D7B163B00428A17 /* CheckUsernameAvailableUseCase.swift in Sources */,
 				FE1815612D94A2490090E440 /* GetUserDataUseCase.swift in Sources */,
 				FE9A30B22D86E6A10056CC0A /* Shimmer.swift in Sources */,
-				FEA53CE22C2C88EE006F0116 /* GetUsersFromQueryUseCase.swift in Sources */,
+				FEA53CE22C2C88EE006F0116 /* ReadUsersFromQueryUseCase.swift in Sources */,
 				FEC94DE32C25917200FFEB11 /* Portfolio.swift in Sources */,
 				FEC94E152C28521D00FFEB11 /* SignInView.swift in Sources */,
 				FEC94DC12C246D8600FFEB11 /* FeedView.swift in Sources */,

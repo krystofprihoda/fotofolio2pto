@@ -28,10 +28,16 @@ public class UserRepositoryImpl: UserRepository {
     }
     
     public func getUsersFromUsernameQuery(query: String) async throws -> [User] {
-        try await Task.sleep(for: .seconds(0.3))
-        let users = UserRepositoryImpl.users.filter({ user in
-            user.username.lowercased().hasPrefix(query.lowercased())
-        })
+        guard let token: String = defaults.read(.token) else { throw AuthError.tokenRetrievalFailed }
+        
+        let headers = [
+            "Authorization": "Bearer \(token)",
+            "Content-Type": "application/json"
+        ]
+        
+        let queryParams = query.isEmpty ? nil : ["query": query]
+        
+        let users: [User] = try await network.fetch(endpoint: .user, method: .GET, body: nil, headers: headers, queryParams: queryParams)
         return users
     }
     
@@ -79,7 +85,7 @@ public class UserRepositoryImpl: UserRepository {
             "profilePicture": profilePicture
         ]
         
-        _ = try await network.request(endpoint: .user, method: .POST, body: body, headers: headers)
+        _ = try await network.request(endpoint: .user, method: .POST, body: body, headers: headers, queryParams: nil)
     }
     
     public func getUser(id: String) async throws -> User {
@@ -90,7 +96,7 @@ public class UserRepositoryImpl: UserRepository {
             "Content-Type": "application/json"
         ]
         
-        let user: User = try await network.fetch(endpoint: .userById(id), method: .GET, body: [:], headers: headers)
+        let user: User = try await network.fetch(endpoint: .userById(id), method: .GET, body: [:], headers: headers, queryParams: nil)
         print(user)
         return user
     }

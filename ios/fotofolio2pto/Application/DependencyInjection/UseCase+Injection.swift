@@ -19,7 +19,7 @@ public extension Resolver {
         /// User
         register { GetUserDataFromUsernameUseCaseImpl(userRepository: resolve()) as GetUserDataFromUsernameUseCase }
         register { GetUserPortfoliosUseCaseImpl(feedRepository: resolve()) as GetUserPortfoliosUseCase }
-        register { GetUsersFromQueryUseCaseImpl(userRepository: resolve()) as GetUsersFromQueryUseCase }
+        register { ReadUsersFromQueryUseCaseImpl(userRepository: resolve()) as ReadUsersFromQueryUseCase }
         register { CheckEmailAddressAvailableUseCaseImpl(authRepository: resolve()) as CheckEmailAddressAvailableUseCase }
         register { CheckUsernameAvailableUseCaseImpl(userRepository: resolve()) as CheckUsernameAvailableUseCase }
         register { SaveUserDataUseCaseImpl(userRepository: resolve()) as SaveUserDataUseCase }

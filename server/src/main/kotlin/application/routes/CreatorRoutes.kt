@@ -14,7 +14,8 @@ import kotlinx.serialization.Serializable
 data class Creator(
     val userId: String = "",
     val yearsOfExperience: String = "",
-    val description: String = ""
+    val description: String = "",
+    val portfolioIds: List<String> = emptyList()
 )
 
 fun Application.creatorRoutes() {
@@ -43,6 +44,91 @@ fun Application.creatorRoutes() {
                     call.respond(HttpStatusCode.OK, mapOf("creatorId" to creatorId))
                 } catch (e: Exception) {
                     call.respond(HttpStatusCode.BadRequest, "Error processing request: ${e.localizedMessage}")
+                }
+            }
+
+            get("/creator/{creatorId}") {
+                try {
+                    val id = (call.parameters["creatorId"] as String)
+
+                    val db = FirestoreClient.getFirestore()
+
+                    val res = db
+                        .collection("creator")
+                        .document(id)
+                        .get()
+                        .await()
+                        .toObject(Creator::class.java) ?: throw Exception("Creator not found")
+
+                    call.respond(HttpStatusCode.OK, res)
+                } catch (e: Exception) {
+                    call.respond(HttpStatusCode.BadRequest, "Error processing request: ${e.localizedMessage}")
+                }
+            }
+
+            get("/creator/{creatorId}/portfolio") {
+                try {
+                    val creatorId = call.parameters["creatorId"] as String
+
+                    val db = FirestoreClient.getFirestore()
+
+                    // Retrieve the creator document
+                    val creatorSnapshot = db
+                        .collection("creator")
+                        .document(creatorId)
+                        .get()
+                        .await()
+
+                    val creator = creatorSnapshot.toObject(Creator::class.java)
+                        ?: throw Exception("Creator not found")
+
+                    // If no portfolio IDs, return an empty list
+                    if (creator.portfolioIds.isEmpty()) {
+                        call.respond(HttpStatusCode.OK, emptyList<Portfolio>())
+                    }
+
+                    // Retrieve portfolios using the stored portfolio IDs
+                    val portfolios = db
+                        .collection("portfolio")
+                        .whereIn("id", creator.portfolioIds)
+                        .get()
+                        .await()
+                        .toObjects(Portfolio::class.java)
+
+                    call.respond(HttpStatusCode.OK, portfolios)
+                } catch (e: Exception) {
+                    call.respond(HttpStatusCode.BadRequest, "Error retrieving portfolios: ${e.localizedMessage}")
+                }
+            }
+
+            put("/creator/{creatorId}") {
+                try {
+                    val creatorId = call.parameters["creatorId"] as String
+
+                    // Receive the updated creator data
+                    val updatedCreatorData = call.receive<Creator>()
+
+                    val db = FirestoreClient.getFirestore()
+
+                    // Check if the creator exists first
+                    val creatorRef = db.collection("creator").document(creatorId)
+                    val existingCreatorSnapshot = creatorRef.get().await()
+
+                    if (!existingCreatorSnapshot.exists()) {
+                        throw Exception("Creator not found")
+                    }
+
+                    // Update the creator document
+                    // Use set() to replace the entire document with the new data
+                    creatorRef.set(updatedCreatorData).await()
+
+                    // Respond with success message
+                    call.respond(HttpStatusCode.OK, mapOf(
+                        "message" to "Creator updated successfully",
+                        "creatorId" to creatorId
+                    ))
+                } catch (e: Exception) {
+                    call.respond(HttpStatusCode.BadRequest, "Error updating creator: ${e.localizedMessage}")
                 }
             }
         }
