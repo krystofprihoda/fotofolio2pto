@@ -100,5 +100,5 @@ struct ProfilePortfoliosView: View {
 }
 
 #Preview {
-    ProfilePortfoliosView(portfolios: [.dummyPortfolio1])
+    ProfilePortfoliosView(portfolios: [])
 }

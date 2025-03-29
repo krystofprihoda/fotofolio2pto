@@ -8,6 +8,7 @@
 import Foundation
 
 public protocol CreatorRepository {
-    func getCreator(id: String) async throws -> Creator
+    func readCreator(id: String) async throws -> Creator
     func createCreator(yearsOfExperience: Int) async throws
+    func readUserByCreatorId(creatorId: String) async throws -> User
 }

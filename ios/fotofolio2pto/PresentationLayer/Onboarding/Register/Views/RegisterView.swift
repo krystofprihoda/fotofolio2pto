@@ -10,8 +10,6 @@ import SwiftUI
 struct RegisterView: View {
     @ObservedObject private var viewModel: RegisterViewModel
     
-    @State private var tmpValue: Int = 1
-    
     init(viewModel: RegisterViewModel) {
         self.viewModel = viewModel
     }

@@ -16,7 +16,7 @@ final class ChatViewModel: BaseViewModel, ViewModel, ObservableObject {
     
     // MARK: Dependencies
 
-    @LazyInjected private var getChatUseCase: GetChatUseCase
+//    @LazyInjected private var getChatUseCase: GetChatUseCase
     @LazyInjected private var sendMessageUseCase: SendMessageUseCase
     @LazyInjected private var getLatestChatMessagesUseCase: GetLatestChatMessagesUseCase
 
@@ -91,7 +91,7 @@ final class ChatViewModel: BaseViewModel, ViewModel, ObservableObject {
         defer { state.isLoading = false }
         
         do {
-            state.chat = try await getChatUseCase.execute(sender: state.sender, receiver: state.receiver)
+//            state.chat = try await getChatUseCase.execute(sender: state.sender, receiver: state.receiver)
         } catch {
             // Log
         }

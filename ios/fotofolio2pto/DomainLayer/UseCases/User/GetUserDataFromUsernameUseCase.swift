@@ -7,21 +7,21 @@
 
 import Foundation
 
-public protocol GetUserDataFromUsernameUseCase {
-    func execute(_ user: String) async throws -> User?
-}
-
-public struct GetUserDataFromUsernameUseCaseImpl: GetUserDataFromUsernameUseCase {
-    
-    private let userRepository: UserRepository
-    
-    init(userRepository: UserRepository) {
-        self.userRepository = userRepository
-    }
-    
-    public func execute(_ user: String) async throws -> User? {
-        try await userRepository.getUserByUsername(user)
-    }
-    
-    
-}
+//public protocol GetUserDataFromUsernameUseCase {
+//    func execute(_ user: String) async throws -> User?
+//}
+//
+//public struct GetUserDataFromUsernameUseCaseImpl: GetUserDataFromUsernameUseCase {
+//    
+//    private let userRepository: UserRepository
+//    
+//    init(userRepository: UserRepository) {
+//        self.userRepository = userRepository
+//    }
+//    
+//    public func execute(_ user: String) async throws -> User? {
+//        try await userRepository.getUserByUsername(user)
+//    }
+//    
+//    
+//}

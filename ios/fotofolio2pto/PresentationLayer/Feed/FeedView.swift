@@ -35,17 +35,15 @@ struct FeedView: View {
                     } else {
                         LazyVStack {
                             ForEach(viewModel.state.portfolios, id: \.id) { portfolio in
-                                let isFlagHidden = viewModel.state.signedInUserId == String(portfolio.author.id)
                                 let isFlagged = viewModel.state.flaggedPortfolioIds.contains(where: { $0 == portfolio.id })
                                 
                                 PortfolioView(
                                     portfolio: portfolio,
                                     mediaWidth: geo.size.width,
-                                    hideFlag: isFlagHidden,
                                     isFlagged: isFlagged,
                                     flagAction: { viewModel.onIntent(.flagPortfolio(portfolio.id)) },
                                     unflagAction: { viewModel.onIntent(.unflagPortfolio(portfolio.id)) },
-                                    openProfileAction: { viewModel.onIntent(.showProfile(portfolio.author)) }
+                                    openProfileAction: { viewModel.onIntent(.showProfile(creatorId: portfolio.creatorId)) }
                                 )
                                 .skeleton(viewModel.state.isRefreshing)
                             }

@@ -8,7 +8,7 @@
 import Foundation
 
 public protocol FlagPortfolioUseCase {
-    func execute(id: Int) throws
+    func execute(id: String) throws
 }
 
 public struct FlagPortfolioUseCaseImpl: FlagPortfolioUseCase {
@@ -19,7 +19,7 @@ public struct FlagPortfolioUseCaseImpl: FlagPortfolioUseCase {
         self.feedRepository = feedRepository
     }
     
-    public func execute(id: Int) throws {
+    public func execute(id: String) throws {
         try feedRepository.addToFlagged(portfolioId: id)
     }
 }

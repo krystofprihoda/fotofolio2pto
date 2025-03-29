@@ -35,7 +35,7 @@ public class CreatorRepositoryImpl: CreatorRepository {
         _ = try await network.request(endpoint: .creator, method: .POST, body: body, headers: headers, queryParams: nil)
     }
     
-    public func getCreator(id: String) async throws -> Creator {
+    public func readCreator(id: String) async throws -> Creator {
         guard let token: String = defaults.read(.token) else { throw AuthError.tokenRetrievalFailed }
         
         let headers = [
@@ -46,5 +46,18 @@ public class CreatorRepositoryImpl: CreatorRepository {
         let creator: Creator = try await network.fetch(endpoint: .creatorById(id), method: .GET, body: nil, headers: headers, queryParams: nil)
         print(creator)
         return creator
+    }
+    
+    public func readUserByCreatorId(creatorId: String) async throws -> User {
+        guard let token: String = defaults.read(.token) else { throw AuthError.tokenRetrievalFailed }
+        
+        let headers = [
+            "Authorization": "Bearer \(token)",
+            "Content-Type": "application/json"
+        ]
+        
+        let user: User = try await network.fetch(endpoint: .userByCreatorId(creatorId), method: .GET, body: [:], headers: headers, queryParams: nil)
+        print(user)
+        return user
     }
 }

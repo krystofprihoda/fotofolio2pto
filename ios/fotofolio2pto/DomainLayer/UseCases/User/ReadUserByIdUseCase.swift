@@ -1,16 +1,16 @@
 //
-//  ReadUserDataUseCase.swift
+//  ReadUserByIdUseCase.swift
 //  fotofolio2pto
 //
 //  Created by Kryštof Příhoda on 26.03.2025.
 //
 
 
-public protocol GetUserDataUseCase {
+public protocol ReadUserByIdUseCase {
     func execute(id: String) async throws -> User
 }
 
-public struct GetUserDataUseCaseImpl: GetUserDataUseCase {
+public struct ReadUserByIdUseCaseImpl: ReadUserByIdUseCase {
     
     private let userRepository: UserRepository
     

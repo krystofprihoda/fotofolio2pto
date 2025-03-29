@@ -44,7 +44,7 @@ final class EditPortfolioViewModel: BaseViewModel, ViewModel, ObservableObject {
             state.name = portfolio.name
             state.description = portfolio.description
             state.media = portfolio.photos
-            state.selectedTags = portfolio.tags
+            state.selectedCategories = portfolio.category
         }
     }
 
@@ -60,12 +60,12 @@ final class EditPortfolioViewModel: BaseViewModel, ViewModel, ObservableObject {
         var isLoading: Bool = false
         var portfolioIntent: PortfolioIntent = .createNew
         var portfolioAuthor = ""
-        var portfolioId: Int? = nil
+        var portfolioId: String? = nil
         var name = ""
         var description = ""
         var media: [IImage] = []
-        var selectedTags: [String] = []
-        var filteredTags = photoCategories
+        var selectedCategories: [String] = []
+        var filteredCategories = photoCategories
         var searchInput = ""
         var isSaveButtonDisabled = true
         var alertData: AlertData? = nil
@@ -78,11 +78,11 @@ final class EditPortfolioViewModel: BaseViewModel, ViewModel, ObservableObject {
     enum Intent {
         case pickMedia
         case createNewPortfolio
-        case addTag(String)
+        case addCategory(String)
         case close
         case setName(String)
-        case setTagInput(String)
-        case removeTag(String)
+        case setCategoryInput(String)
+        case removeCategory(String)
         case removePic(UUID)
         case setDescriptionInput(String)
         case saveChanges
@@ -95,12 +95,12 @@ final class EditPortfolioViewModel: BaseViewModel, ViewModel, ObservableObject {
             switch intent {
             case .pickMedia: pickMedia()
             case .createNewPortfolio: await createNewPortfolio()
-            case .addTag(let tag): addTag(tag)
+            case .addCategory(let category): addCategory(category)
             case .close: cancelEdit()
             case .setName(let name): setName(name)
             case .setDescriptionInput(let input): setDescriptionInput(input)
-            case .setTagInput(let input): setTagInput(input)
-            case .removeTag(let tag): removeTag(tag)
+            case .setCategoryInput(let input): setCategoryInput(input)
+            case .removeCategory(let category): removeCategory(category)
             case .removePic(let id): removePic(id)
             case .saveChanges: await saveChanges()
             case .onAlertDataChanged(let alertData): onAlertDataChanged(alertData: alertData)
@@ -121,15 +121,15 @@ final class EditPortfolioViewModel: BaseViewModel, ViewModel, ObservableObject {
         }
     }
     
-    private func addTag(_ tag: String) {
-        guard !state.selectedTags.contains(tag), state.selectedTags.count < 5 else { return }
-        state.selectedTags.append(tag)
+    private func addCategory(_ category: String) {
+        guard !state.selectedCategories.contains(category), state.selectedCategories.count < 5 else { return }
+        state.selectedCategories.append(category)
         state.searchInput = ""
         updateSaveButtonVisibility()
     }
     
-    private func removeTag(_ tag: String) {
-        state.selectedTags.removeAll(where: { $0 == tag })
+    private func removeCategory(_ category: String) {
+        state.selectedCategories.removeAll(where: { $0 == category })
         updateSaveButtonVisibility()
     }
     
@@ -138,15 +138,15 @@ final class EditPortfolioViewModel: BaseViewModel, ViewModel, ObservableObject {
         updateSaveButtonVisibility()
     }
     
-    private func setTagInput(_ input: String) {
+    private func setCategoryInput(_ input: String) {
         state.searchInput = input
         
         if state.searchInput.isEmpty {
-            state.filteredTags = photoCategories
+            state.filteredCategories = photoCategories
             return
         }
         
-        state.filteredTags = photoCategories.filter { $0.localizedCaseInsensitiveContains(state.searchInput) }
+        state.filteredCategories = photoCategories.filter { $0.localizedCaseInsensitiveContains(state.searchInput) }
         updateSaveButtonVisibility()
     }
     
@@ -165,7 +165,7 @@ final class EditPortfolioViewModel: BaseViewModel, ViewModel, ObservableObject {
     }
     
     private func createNewPortfolio() async {
-        guard !state.description.isEmpty, !state.media.isEmpty, !state.selectedTags.isEmpty else { return }
+        guard !state.description.isEmpty, !state.media.isEmpty, !state.selectedCategories.isEmpty else { return }
         
         state.isLoading = true
         defer { state.isLoading = false }
@@ -176,7 +176,7 @@ final class EditPortfolioViewModel: BaseViewModel, ViewModel, ObservableObject {
                 name: state.name,
                 photos: state.media,
                 description: state.description,
-                tags: state.selectedTags
+                category: state.selectedCategories
             )
             dismissView()
         } catch {
@@ -185,7 +185,7 @@ final class EditPortfolioViewModel: BaseViewModel, ViewModel, ObservableObject {
     }
     
     private func updateSaveButtonVisibility() {
-        if !state.name.isEmpty, !state.description.isEmpty, !state.selectedTags.isEmpty, !media.isEmpty {
+        if !state.name.isEmpty, !state.description.isEmpty, !state.selectedCategories.isEmpty, !media.isEmpty {
             state.isSaveButtonDisabled = false
             return
         }
@@ -201,7 +201,7 @@ final class EditPortfolioViewModel: BaseViewModel, ViewModel, ObservableObject {
         guard let portfolioId = state.portfolioId,
               !state.description.isEmpty,
               !state.media.isEmpty,
-              !state.selectedTags.isEmpty
+              !state.selectedCategories.isEmpty
         else {
             return
         }
@@ -215,7 +215,7 @@ final class EditPortfolioViewModel: BaseViewModel, ViewModel, ObservableObject {
                 name: state.name,
                 photos: state.media,
                 description: state.description,
-                tags: state.selectedTags
+                category: state.selectedCategories
             )
             dismissView()
         } catch {

@@ -9,6 +9,7 @@ import io.ktor.server.plugins.contentnegotiation.*
 import org.koin.ktor.plugin.Koin
 import org.koin.logger.slf4jLogger
 import java.io.File
+import kotlinx.serialization.json.Json
 
 fun Application.configureFrameworks() {
     install(Koin) {

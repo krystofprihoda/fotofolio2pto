@@ -17,7 +17,6 @@ final class MessagesViewModel: BaseViewModel, ViewModel, ObservableObject {
     // MARK: Dependencies
     
     @LazyInjected private var getChatsForUserUseCase: GetChatsForUserUseCase
-    @LazyInjected private var getUserDataFromUsernameUseCase: GetUserDataFromUsernameUseCase
     
     private weak var flowController: MessagesFlowController?
     

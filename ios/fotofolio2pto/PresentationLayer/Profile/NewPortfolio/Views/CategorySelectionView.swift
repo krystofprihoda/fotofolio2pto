@@ -1,5 +1,5 @@
 //
-//  TagsSelectionView.swift
+//  CategorySelectionView.swift
 //  fotofolio2pto
 //
 //  Created by Kryštof Příhoda on 14.03.2025.
@@ -7,27 +7,26 @@
 
 import SwiftUI
 
-struct TagsSelectionView: View {
+struct CategorySelectionView: View {
     @Binding private var searchText: String
-    private var selectedTags: [String]
-    private var filteredTags: [String]
-    private var onAddToSelectedTags: (String) -> Void
-    private var onRemoveFromSelectedTags: (String) -> Void
+    private var selectedCategories: [String]
+    private var filteredCategories: [String]
+    private var onAddToSelectedCategories: (String) -> Void
+    private var onRemoveFromSelectedCategories: (String) -> Void
     
     init(
         searchText: Binding<String>,
-        selectedTags: [String],
-        filteredTags: [String],
-        onAddToSelectedTags: @escaping (String) -> Void,
-        onRemoveFromSelectedTags: @escaping (String) -> Void
+        selectedCategories: [String],
+        filteredCategories: [String],
+        onAddToSelectedCategories: @escaping (String) -> Void,
+        onRemoveFromSelectedCategories: @escaping (String) -> Void
     ) {
         self._searchText = searchText
-        self.selectedTags = selectedTags
-        self.filteredTags = filteredTags
-        self.onAddToSelectedTags = onAddToSelectedTags
-        self.onRemoveFromSelectedTags = onRemoveFromSelectedTags
+        self.selectedCategories = selectedCategories
+        self.filteredCategories = filteredCategories
+        self.onAddToSelectedCategories = onAddToSelectedCategories
+        self.onRemoveFromSelectedCategories = onRemoveFromSelectedCategories
     }
-    
     var body: some View {
         VStack(spacing: Constants.Dimens.spaceMedium) {
             // Search Bar
@@ -47,12 +46,12 @@ struct TagsSelectionView: View {
 
             // Tags
             VStack {
-                ForEach(filteredTags.chunked(into: 5), id: \.self) { row in
+                ForEach(filteredCategories.chunked(into: 5), id: \.self) { row in
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack {
                             ForEach(row, id: \.self) { category in
-                                let isSelected = selectedTags.contains(where: { $0 == category })
-                                Button(action: { isSelected ? onRemoveFromSelectedTags(category) : onAddToSelectedTags(category) }, label: {
+                                let isSelected = selectedCategories.contains(where: { $0 == category })
+                                Button(action: { isSelected ? onRemoveFromSelectedCategories(category) : onAddToSelectedCategories(category) }, label: {
                                     HStack {
                                         Text(category)
                                             .font(.footnote)

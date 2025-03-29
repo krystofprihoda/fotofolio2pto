@@ -61,7 +61,7 @@ final class EditProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
         var rawUserData: User? = nil
         var portfolioTagsInput = ""
         var mediaFromPicker: [IImage] = []
-        var removedPortfolios: [Int] = []
+        var removedPortfolios: [String] = []
         var isSaveButtonDisabled = true
         var alertData: AlertData? = nil
     }
@@ -76,7 +76,7 @@ final class EditProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
         case setYearsOfExperience(Int)
         case setProfileDescription(String)
         case editPorfolio(Portfolio)
-        case removePortfolio(Int)
+        case removePortfolio(String)
         case onAlertDataChanged(AlertData?)
         case saveChanges
         case cancel
@@ -145,7 +145,7 @@ final class EditProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
         updateSaveButtonVisibility()
     }
     
-    private func addToRemoved(_ portfolio: Int) {
+    private func addToRemoved(_ portfolio: String) {
         state.removedPortfolios.append(portfolio)
         updateSaveButtonVisibility()
     }

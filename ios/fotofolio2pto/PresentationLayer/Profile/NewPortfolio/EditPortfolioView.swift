@@ -73,21 +73,21 @@ struct EditPortfolioView: View {
                 }
                 .padding(.horizontal)
                 
-                // Tags
+                // Category
                 VStack(alignment: .leading, spacing: Constants.Dimens.spaceSmall) {
                     Text(L.Profile.maxNumberOfTags)
                         .font(.body)
                         .bold()
                     
-                    TagsSelectionView(
+                    CategorySelectionView(
                         searchText: Binding(
                             get: { viewModel.state.searchInput },
-                            set: { viewModel.onIntent(.setTagInput($0)) }
+                            set: { viewModel.onIntent(.setCategoryInput($0)) }
                         ),
-                        selectedTags: viewModel.state.selectedTags,
-                        filteredTags: viewModel.state.filteredTags,
-                        onAddToSelectedTags: { viewModel.onIntent(.addTag($0)) },
-                        onRemoveFromSelectedTags: { viewModel.onIntent(.removeTag($0)) }
+                        selectedCategories: viewModel.state.selectedCategories,
+                        filteredCategories: viewModel.state.filteredCategories,
+                        onAddToSelectedCategories: { viewModel.onIntent(.addCategory($0)) },
+                        onRemoveFromSelectedCategories: { viewModel.onIntent(.removeCategory($0)) }
                     )
                 }
                 .padding(.leading)

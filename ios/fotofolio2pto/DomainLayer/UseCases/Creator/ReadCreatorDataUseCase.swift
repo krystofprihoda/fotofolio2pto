@@ -18,6 +18,6 @@ public struct ReadCreatorDataUseCaseImpl: ReadCreatorDataUseCase {
     }
     
     public func execute(id: String) async throws -> Creator {
-        return try await creatorRepository.getCreator(id: id)
+        return try await creatorRepository.readCreator(id: id)
     }
 }

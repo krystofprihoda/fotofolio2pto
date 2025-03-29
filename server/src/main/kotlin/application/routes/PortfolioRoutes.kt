@@ -12,42 +12,29 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Portfolio(
-    val id: Int? = null,
-    val authorId: String = "",
+    val id: String = "",
+    val authorUsername: String = "",
     val creatorId: String = "",
     val name: String = "",
     val photos: List<String> = listOf(), // Assuming photo references/URLs
     val description: String = "",
-    val tags: List<String> = listOf(),
-    val timestamp: Long = System.currentTimeMillis() // Using timestamp in milliseconds
+    val category: List<String> = listOf(),
+    val timestamp: Long = System.currentTimeMillis() / 1000
 )
 
 fun Application.portfolioRoutes() {
     routing {
         authenticate {
-            post("/portfolio") {
+            get("/portfolio") {
                 try {
-                    // Decode the received JSON body
-                    val portfolioData = call.receive<Portfolio>()
-                    println("Received: $portfolioData")
-
                     val db = FirestoreClient.getFirestore()
 
-                    // Create a new portfolio document and get the generated ID
-                    val portfolioRef = db.collection("portfolio").document()
+                    val portfolios = db.collection("portfolio").get().await().documents.mapNotNull { document ->
+                        document.toObject(Portfolio::class.java).copy(id = document.id)
+                    }
 
-                    // Create a copy of the portfolio data with the auto-generated ID
-                    val portfolioToSave = portfolioData.copy(
-                        id = portfolioRef.id.hashCode() // Convert Firestore ID to Int
-                    )
-
-                    portfolioRef.set(portfolioToSave).await() // Ensure Firestore write completes
-
-                    val portfolioId = portfolioRef.id
-                    println("Created Portfolio with ID: $portfolioId")
-
-                    // Respond with success and return the portfolioId
-                    call.respond(HttpStatusCode.OK, mapOf("portfolioId" to portfolioId))
+                    print(portfolios)
+                    call.respond(HttpStatusCode.OK, portfolios)
                 } catch (e: Exception) {
                     call.respond(HttpStatusCode.BadRequest, "Error processing request: ${e.localizedMessage}")
                 }

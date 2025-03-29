@@ -8,7 +8,7 @@
 import Foundation
 
 public protocol UnflagPortfolioUseCase {
-    func execute(id: Int) throws
+    func execute(id: String) throws
 }
 
 public struct UnflagPortfolioUseCaseImpl: UnflagPortfolioUseCase {
@@ -19,7 +19,7 @@ public struct UnflagPortfolioUseCaseImpl: UnflagPortfolioUseCase {
         self.feedRepository = feedRepository
     }
     
-    public func execute(id: Int) throws {
+    public func execute(id: String) throws {
         try feedRepository.removeFromFlagged(portfolioId: id)
     }
 }

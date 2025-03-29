@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct PortfolioDetailView: View {
-    
     private let mediaWidth: CGFloat
     private let portfolio: Portfolio
     private let unflagPortfolio: () -> Void
@@ -32,13 +31,12 @@ struct PortfolioDetailView: View {
     var body: some View {
         VStack {
             /// Folio Author
-            AuthorDetailView(
-                author: portfolio.author,
-                creator: portfolio.creator,
+            PortfolioAuthorDetailView(viewModel: .init(
+                creatorId: portfolio.creatorId,
                 unflagPortfolio: unflagPortfolio,
                 showProfile: showProfile,
                 sendMessage: sendMessage
-            )
+            ))
             
             /// Carousel
             PhotoCarouselView(mediaWidth: mediaWidth, photos: portfolio.photos)
@@ -59,6 +57,6 @@ struct PortfolioDetailView: View {
     }
 }
 
-#Preview {
-    PortfolioDetailView(mediaWidth: 350, portfolio: .dummyPortfolio1, unflagPortfolio: {}, showProfile: {}, sendMessage: {})
-}
+//#Preview {
+//    PortfolioDetailView(mediaWidth: 350, portfolio: .dummyPortfolio1, unflagPortfolio: {}, showProfile: {}, sendMessage: {})
+//}

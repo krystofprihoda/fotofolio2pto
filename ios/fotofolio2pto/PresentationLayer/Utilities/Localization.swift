@@ -66,6 +66,10 @@ public struct L {
         public static let cancel = "Zrušit"
         public static let portfolioRemoved = "Portfolio odstraněno z výběru."
         public static let removedAll = "Všechna portfolia byla odstraněna z vašeho výběru."
+        public static let username = "username"
+        public static let fullName = "Jméno Příjmení"
+        public static let location = "Lokace"
+        public static let profileText = "Profilový popis"
     }
     
     public enum Search {

@@ -23,6 +23,7 @@ final class FeedViewModel: BaseViewModel, ViewModel, ObservableObject {
     @LazyInjected private var unflagPortfolioUseCase: UnflagPortfolioUseCase
     @LazyInjected private var getFlaggedPortfoliosUseCase: GetFlaggedPortfoliosUseCase
     @LazyInjected private var getFilteredPortfoliosUseCase: GetFilteredPortfoliosUseCase
+    @LazyInjected private var readUserDataByCreatorIdUseCase: ReadUserDataByCreatorIdUseCase
     
     private weak var flowController: FeedFlowController?
     
@@ -60,7 +61,7 @@ final class FeedViewModel: BaseViewModel, ViewModel, ObservableObject {
         var isLoading: Bool = false
         var isRefreshing: Bool = false
         var portfolios: [Portfolio] = []
-        var flaggedPortfolioIds: [Int] = []
+        var flaggedPortfolioIds: [String] = []
         var filter: [String] = []
         var toastData: ToastData? = nil
     }
@@ -74,9 +75,9 @@ final class FeedViewModel: BaseViewModel, ViewModel, ObservableObject {
         case sortByDate
         case sortByRating
         case filter
-        case flagPortfolio(Int)
-        case unflagPortfolio(Int)
-        case showProfile(User)
+        case flagPortfolio(String)
+        case unflagPortfolio(String)
+        case showProfile(creatorId: String)
         case setToastData(ToastData?)
         case removeCategory(String)
     }
@@ -91,9 +92,9 @@ final class FeedViewModel: BaseViewModel, ViewModel, ObservableObject {
             case .filter: showFilter()
             case .flagPortfolio(let id): flagPortfolio(withId: id)
             case .unflagPortfolio(let id): unflagPortfolio(withId: id)
-            case .showProfile(let user): showProfile(user: user)
+            case .showProfile(let creatorId): await showProfile(creatorId: creatorId)
             case .setToastData(let toast): setToastData(toast)
-            case .removeCategory(let category): await removeFilterTag(category)
+            case .removeCategory(let category): await removeFilterCategory(category)
             }
         })
     }
@@ -118,6 +119,7 @@ final class FeedViewModel: BaseViewModel, ViewModel, ObservableObject {
         do {
             state.portfolios = try await getAllPortfolios.execute()
         } catch {
+            print("Error converting: \(error.localizedDescription)")
             // handle error
         }
     }
@@ -137,7 +139,7 @@ final class FeedViewModel: BaseViewModel, ViewModel, ObservableObject {
         flowController?.presentFilter(with: state.filter)
     }
     
-    private func flagPortfolio(withId id: Int) {
+    private func flagPortfolio(withId id: String) {
         do {
             try flagPortfolioUseCase.execute(id: id)
             fetchFlaggedPortfolios()
@@ -152,7 +154,7 @@ final class FeedViewModel: BaseViewModel, ViewModel, ObservableObject {
         }
     }
     
-    private func unflagPortfolio(withId id: Int) {
+    private func unflagPortfolio(withId id: String) {
         do {
             try unflagPortfolioUseCase.execute(id: id)
             fetchFlaggedPortfolios()
@@ -170,8 +172,13 @@ final class FeedViewModel: BaseViewModel, ViewModel, ObservableObject {
         state.flaggedPortfolioIds = getFlaggedPortfoliosUseCase.execute(idOnly: true)
     }
     
-    private func showProfile(user: User) {
-        flowController?.showProfile(user: user)
+    private func showProfile(creatorId: String) async {
+        do {
+            let user = try await readUserDataByCreatorIdUseCase.execute(creatorId: creatorId)
+            flowController?.showProfile(user: user)
+        } catch {
+            
+        }
     }
     
     private func setToastData(_ toast: ToastData?) {
@@ -193,19 +200,61 @@ extension FeedViewModel: FilterFeedDelegate {
         }
     }
     
-    func removeFilterTag(_ tag: String) async {
-        state.filter.removeAll(where: { $0 == tag })
+    func removeFilterCategory(_ category: String) async {
+        state.filter.removeAll(where: { $0 == category })
         await filterFeedPortfolios(state.filter)
     }
 }
 
-public struct IImage: Identifiable, Equatable {
+public struct IImage: Identifiable, Equatable, Codable {
     public static func == (lhs: IImage, rhs: IImage) -> Bool {
         lhs.id == rhs.id
     }
     
     public let id = UUID()
-    public var src: MyImageEnum
+    public let src: MyImageEnum
+    
+    enum CodingKeys: String, CodingKey {
+        case id, src
+    }
+    
+    public init(src: MyImageEnum) {
+        self.src = src
+    }
+    
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        // For server responses, we'll always get a string URL
+        let urlString = try container.decode(String.self, forKey: .src)
+        if let url = URL(string: urlString) {
+            self.src = .remote(url)
+        } else {
+            throw DecodingError.dataCorruptedError(
+                forKey: .src,
+                in: container,
+                debugDescription: "Invalid URL string: \(urlString)"
+            )
+        }
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        switch src {
+        case .remote(let url):
+            try container.encode(url.absoluteString, forKey: .src)
+        case .local:
+            // When sending to server, we can't encode local images
+            throw EncodingError.invalidValue(
+                src,
+                EncodingError.Context(
+                    codingPath: encoder.codingPath,
+                    debugDescription: "Cannot encode local images to server"
+                )
+            )
+        }
+    }
 }
 
 public enum MyImageEnum {

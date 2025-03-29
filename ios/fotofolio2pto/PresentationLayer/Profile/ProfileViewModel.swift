@@ -14,7 +14,7 @@ final class ProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
     
     // MARK: Dependencies
     
-    @LazyInjected private var getUserDataUseCase: GetUserDataUseCase
+    @LazyInjected private var readUserByIdUseCase: ReadUserByIdUseCase
     @LazyInjected private var readCreatorDataUseCase: ReadCreatorDataUseCase
     @LazyInjected private var getUserPortfoliosUseCase: GetUserPortfoliosUseCase
     
@@ -90,7 +90,7 @@ final class ProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
         defer { state.isLoading = false }
         
         do {
-            state.userData = try await getUserDataUseCase.execute(id: state.displayedUserId)
+            state.userData = try await readUserByIdUseCase.execute(id: state.displayedUserId)
             
             try await fetchCreatorDataAndPortfolios()
         } catch {

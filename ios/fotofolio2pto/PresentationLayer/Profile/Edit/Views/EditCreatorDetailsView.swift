@@ -65,5 +65,5 @@ struct EditCreatorDetailsView: View {
 }
 
 #Preview {
-    EditCreatorDetailsView(viewModel: .init(flowController: nil, userData: .dummy1, portfolios: [.dummyPortfolio1]))
+    EditCreatorDetailsView(viewModel: .init(flowController: nil, userData: .dummy1, portfolios: []))
 }

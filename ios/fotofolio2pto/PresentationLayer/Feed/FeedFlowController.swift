@@ -9,7 +9,7 @@ import UIKit
 
 public protocol FilterFeedDelegate: AnyObject {
     func filterFeedPortfolios(_ filter: [String]) async
-    func removeFilterTag(_ tag: String) async
+    func removeFilterCategory(_ category: String) async
 }
 
 class FeedFlowController: BaseFlowController {

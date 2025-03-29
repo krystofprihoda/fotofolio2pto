@@ -66,6 +66,32 @@ fun Application.creatorRoutes() {
                 }
             }
 
+            get("/creator/{creatorId}/user") {
+                try {
+                    val id = (call.parameters["creatorId"] as String)
+
+                    val db = FirestoreClient.getFirestore()
+
+                    val creator = db
+                        .collection("creator")
+                        .document(id)
+                        .get()
+                        .await()
+                        .toObject(Creator::class.java) ?: throw Exception("Creator not found")
+
+                    val user = db
+                        .collection("user")
+                        .document(creator.userId)
+                        .get()
+                        .await()
+                        .toObject(User::class.java) ?: throw Exception("User not found")
+
+                    call.respond(HttpStatusCode.OK, user)
+                } catch (e: Exception) {
+                    call.respond(HttpStatusCode.BadRequest, "Error processing request: ${e.localizedMessage}")
+                }
+            }
+
             get("/creator/{creatorId}/portfolio") {
                 try {
                     val creatorId = call.parameters["creatorId"] as String

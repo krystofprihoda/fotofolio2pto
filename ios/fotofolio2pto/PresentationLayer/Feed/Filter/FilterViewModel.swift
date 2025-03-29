@@ -27,7 +27,7 @@ final class FilterViewModel: BaseViewModel, ViewModel, ObservableObject {
     ) {
         self.flowController = flowController
         super.init()
-        state.selectedTags = preselected
+        state.selectedCategories = preselected
     }
 
     // MARK: Lifecycle
@@ -40,8 +40,8 @@ final class FilterViewModel: BaseViewModel, ViewModel, ObservableObject {
 
     struct State {
         var searchInput: String = ""
-        var filteredTags: [String] = photoCategories
-        var selectedTags: [String] = []
+        var filteredCategories: [String] = photoCategories
+        var selectedCategories: [String] = []
     }
 
     @Published private(set) var state = State()
@@ -50,8 +50,8 @@ final class FilterViewModel: BaseViewModel, ViewModel, ObservableObject {
 
     enum Intent {
         case dismiss
-        case addTag(String)
-        case removeTag(String)
+        case addCategory(String)
+        case removeCategory(String)
         case setSearchInput(String)
     }
 
@@ -60,8 +60,8 @@ final class FilterViewModel: BaseViewModel, ViewModel, ObservableObject {
         executeTask(Task {
             switch intent {
             case .dismiss: dismiss()
-            case .addTag(let tag): await addTag(tag)
-            case .removeTag(let tag): await removeTag(tag)
+            case .addCategory(let category): await addCategory(category)
+            case .removeCategory(let category): await removeCategory(category)
             case .setSearchInput(let input): setTagInput(input)
             }
         })
@@ -69,29 +69,29 @@ final class FilterViewModel: BaseViewModel, ViewModel, ObservableObject {
 
     // MARK: Additional methods
     
-    private func addTag(_ tag: String) async {
-        guard !state.selectedTags.contains(tag), state.selectedTags.count < 5 else { return }
-        state.selectedTags.append(tag)
+    private func addCategory(_ category: String) async {
+        guard !state.selectedCategories.contains(category), state.selectedCategories.count < 5 else { return }
+        state.selectedCategories.append(category)
         state.searchInput = ""
         
         cancelTask()
         currentTask = executeTask(Task {
             do {
                 try await Task.sleep(nanoseconds: 500_000_000)
-                await flowController?.filterFeedDelegate?.filterFeedPortfolios(state.selectedTags)
+                await flowController?.filterFeedDelegate?.filterFeedPortfolios(state.selectedCategories)
             } catch {
                 Logger.app.error("[FAIL] \(#file) • \(#line) • \(#function) | Task failed: \(error)")
             }
         })
     }
     
-    private func removeTag(_ tag: String) async {
+    private func removeCategory(_ category: String) async {
         cancelTask()
         currentTask = executeTask(Task {
             do {
                 try await Task.sleep(nanoseconds: 500_000_000)
-                state.selectedTags.removeAll(where: { $0 == tag })
-                await flowController?.filterFeedDelegate?.removeFilterTag(tag)
+                state.selectedCategories.removeAll(where: { $0 == category })
+                await flowController?.filterFeedDelegate?.removeFilterCategory(category)
             } catch {
                 Logger.app.error("[FAIL] \(#file) • \(#line) • \(#function) | Task failed: \(error)")
             }
@@ -102,11 +102,11 @@ final class FilterViewModel: BaseViewModel, ViewModel, ObservableObject {
         state.searchInput = input
         
         if state.searchInput.isEmpty {
-            state.filteredTags = photoCategories
+            state.filteredCategories = photoCategories
             return
         }
         
-        state.filteredTags = photoCategories.filter { $0.localizedCaseInsensitiveContains(state.searchInput) }
+        state.filteredCategories = photoCategories.filter { $0.localizedCaseInsensitiveContains(state.searchInput) }
     }
     
     private func cancelTask() {

@@ -36,19 +36,19 @@ struct FilterView: View {
                 }
                 .padding(Constants.Dimens.spaceMedium)
                 
-                /// Tags
-                TagsSelectionView(
+                /// Categories
+                CategorySelectionView(
                     searchText: Binding(
                         get: { viewModel.state.searchInput },
                         set: { viewModel.onIntent(.setSearchInput($0))}
                     ),
-                    selectedTags: viewModel.state.selectedTags,
-                    filteredTags: viewModel.state.filteredTags,
-                    onAddToSelectedTags: { tag in
-                        viewModel.onIntent(.addTag(tag))
+                    selectedCategories: viewModel.state.selectedCategories,
+                    filteredCategories: viewModel.state.filteredCategories,
+                    onAddToSelectedCategories: { category in
+                        viewModel.onIntent(.addCategory(category))
                     },
-                    onRemoveFromSelectedTags: { tag in
-                        viewModel.onIntent(.removeTag(tag))
+                    onRemoveFromSelectedCategories: { category in
+                        viewModel.onIntent(.removeCategory(category))
                     })
                 
                 Spacer()

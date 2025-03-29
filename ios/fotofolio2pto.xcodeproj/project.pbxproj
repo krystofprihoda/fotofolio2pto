@@ -7,14 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		FE0685662D84A2A90002B217 /* TagsSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE0685652D84A2A90002B217 /* TagsSelectionView.swift */; };
-		FE1815612D94A2490090E440 /* GetUserDataUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1815602D94A2490090E440 /* GetUserDataUseCase.swift */; };
+		FE0685662D84A2A90002B217 /* CategorySelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE0685652D84A2A90002B217 /* CategorySelectionView.swift */; };
+		FE1815612D94A2490090E440 /* ReadUserByIdUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1815602D94A2490090E440 /* ReadUserByIdUseCase.swift */; };
 		FE1815632D954E920090E440 /* ReadCreatorDataUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1815622D954E8C0090E440 /* ReadCreatorDataUseCase.swift */; };
 		FE1815652D9592160090E440 /* SaveSignedInUsernameUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1815642D9592140090E440 /* SaveSignedInUsernameUseCase.swift */; };
 		FE1815672D95941C0090E440 /* GetSignedInUsernameUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1815662D95941B0090E440 /* GetSignedInUsernameUseCase.swift */; };
 		FE1815692D95D92A0090E440 /* CreatorRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1815682D95D9250090E440 /* CreatorRepository.swift */; };
 		FE18156B2D95DAFB0090E440 /* CreatorRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE18156A2D95DAF50090E440 /* CreatorRepositoryImpl.swift */; };
 		FE18156E2D95DD7E0090E440 /* CreateCreatorDataUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE18156D2D95DD7E0090E440 /* CreateCreatorDataUseCase.swift */; };
+		FE1815742D986A420090E440 /* ReadUserDataByCreatorIdUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1815732D986A380090E440 /* ReadUserDataByCreatorIdUseCase.swift */; };
+		FE1815782D9881870090E440 /* PortfolioAuthorDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1815772D9881850090E440 /* PortfolioAuthorDetailViewModel.swift */; };
 		FE34A64F2D78BCF200CB4CAE /* CheckEmailAddressAvailableUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE34A64E2D78BCF200CB4CAE /* CheckEmailAddressAvailableUseCase.swift */; };
 		FE3D23252D91A41400DA22DB /* RegisterUserUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE3D23242D91A41000DA22DB /* RegisterUserUseCase.swift */; };
 		FE3D23272D92FD0D00DA22DB /* SaveUserDataUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE3D23262D92FD0600DA22DB /* SaveUserDataUseCase.swift */; };
@@ -128,7 +130,7 @@
 		FEC94DF42C25F57700FFEB11 /* FilterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC94DF32C25F57700FFEB11 /* FilterViewModel.swift */; };
 		FEC94DF72C26283400FFEB11 /* PortfolioDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC94DF62C26283400FFEB11 /* PortfolioDetailView.swift */; };
 		FEC94DF92C26291E00FFEB11 /* PhotoCarouselView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC94DF82C26291E00FFEB11 /* PhotoCarouselView.swift */; };
-		FEC94DFB2C262AC400FFEB11 /* AuthorDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC94DFA2C262AC400FFEB11 /* AuthorDetailView.swift */; };
+		FEC94DFB2C262AC400FFEB11 /* PortfolioAuthorDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC94DFA2C262AC400FFEB11 /* PortfolioAuthorDetailView.swift */; };
 		FEC94DFD2C262E4000FFEB11 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC94DFC2C262E4000FFEB11 /* User.swift */; };
 		FEC94DFF2C262E8F00FFEB11 /* Creator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC94DFE2C262E8F00FFEB11 /* Creator.swift */; };
 		FEC94E012C26DD2F00FFEB11 /* SearchResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC94E002C26DD2F00FFEB11 /* SearchResultsView.swift */; };
@@ -148,14 +150,16 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		FE0685652D84A2A90002B217 /* TagsSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsSelectionView.swift; sourceTree = "<group>"; };
-		FE1815602D94A2490090E440 /* GetUserDataUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUserDataUseCase.swift; sourceTree = "<group>"; };
+		FE0685652D84A2A90002B217 /* CategorySelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategorySelectionView.swift; sourceTree = "<group>"; };
+		FE1815602D94A2490090E440 /* ReadUserByIdUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadUserByIdUseCase.swift; sourceTree = "<group>"; };
 		FE1815622D954E8C0090E440 /* ReadCreatorDataUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadCreatorDataUseCase.swift; sourceTree = "<group>"; };
 		FE1815642D9592140090E440 /* SaveSignedInUsernameUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveSignedInUsernameUseCase.swift; sourceTree = "<group>"; };
 		FE1815662D95941B0090E440 /* GetSignedInUsernameUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetSignedInUsernameUseCase.swift; sourceTree = "<group>"; };
 		FE1815682D95D9250090E440 /* CreatorRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatorRepository.swift; sourceTree = "<group>"; };
 		FE18156A2D95DAF50090E440 /* CreatorRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatorRepositoryImpl.swift; sourceTree = "<group>"; };
 		FE18156D2D95DD7E0090E440 /* CreateCreatorDataUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCreatorDataUseCase.swift; sourceTree = "<group>"; };
+		FE1815732D986A380090E440 /* ReadUserDataByCreatorIdUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadUserDataByCreatorIdUseCase.swift; sourceTree = "<group>"; };
+		FE1815772D9881850090E440 /* PortfolioAuthorDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioAuthorDetailViewModel.swift; sourceTree = "<group>"; };
 		FE34A64E2D78BCF200CB4CAE /* CheckEmailAddressAvailableUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckEmailAddressAvailableUseCase.swift; sourceTree = "<group>"; };
 		FE3D23242D91A41000DA22DB /* RegisterUserUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterUserUseCase.swift; sourceTree = "<group>"; };
 		FE3D23262D92FD0600DA22DB /* SaveUserDataUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveUserDataUseCase.swift; sourceTree = "<group>"; };
@@ -268,7 +272,7 @@
 		FEC94DF32C25F57700FFEB11 /* FilterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewModel.swift; sourceTree = "<group>"; };
 		FEC94DF62C26283400FFEB11 /* PortfolioDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioDetailView.swift; sourceTree = "<group>"; };
 		FEC94DF82C26291E00FFEB11 /* PhotoCarouselView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCarouselView.swift; sourceTree = "<group>"; };
-		FEC94DFA2C262AC400FFEB11 /* AuthorDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorDetailView.swift; sourceTree = "<group>"; };
+		FEC94DFA2C262AC400FFEB11 /* PortfolioAuthorDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioAuthorDetailView.swift; sourceTree = "<group>"; };
 		FEC94DFC2C262E4000FFEB11 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		FEC94DFE2C262E8F00FFEB11 /* Creator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Creator.swift; sourceTree = "<group>"; };
 		FEC94E002C26DD2F00FFEB11 /* SearchResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsView.swift; sourceTree = "<group>"; };
@@ -304,7 +308,7 @@
 		FE0685642D84A2A50002B217 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				FE0685652D84A2A90002B217 /* TagsSelectionView.swift */,
+				FE0685652D84A2A90002B217 /* CategorySelectionView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -312,10 +316,29 @@
 		FE18156C2D95DCEA0090E440 /* Creator */ = {
 			isa = PBXGroup;
 			children = (
+				FE1815732D986A380090E440 /* ReadUserDataByCreatorIdUseCase.swift */,
 				FE18156D2D95DD7E0090E440 /* CreateCreatorDataUseCase.swift */,
 				FE1815622D954E8C0090E440 /* ReadCreatorDataUseCase.swift */,
 			);
 			path = Creator;
+			sourceTree = "<group>";
+		};
+		FE1815752D9880F30090E440 /* PortfolioDetail */ = {
+			isa = PBXGroup;
+			children = (
+				FE1815762D98817A0090E440 /* Author */,
+				FEC94DF62C26283400FFEB11 /* PortfolioDetailView.swift */,
+			);
+			path = PortfolioDetail;
+			sourceTree = "<group>";
+		};
+		FE1815762D98817A0090E440 /* Author */ = {
+			isa = PBXGroup;
+			children = (
+				FE1815772D9881850090E440 /* PortfolioAuthorDetailViewModel.swift */,
+				FEC94DFA2C262AC400FFEB11 /* PortfolioAuthorDetailView.swift */,
+			);
+			path = Author;
 			sourceTree = "<group>";
 		};
 		FE3D2B0B2D930EAD00DA22DB /* Network */ = {
@@ -418,7 +441,7 @@
 			children = (
 				FE1815662D95941B0090E440 /* GetSignedInUsernameUseCase.swift */,
 				FE1815642D9592140090E440 /* SaveSignedInUsernameUseCase.swift */,
-				FE1815602D94A2490090E440 /* GetUserDataUseCase.swift */,
+				FE1815602D94A2490090E440 /* ReadUserByIdUseCase.swift */,
 				FE3D23262D92FD0600DA22DB /* SaveUserDataUseCase.swift */,
 				FE7FB10C2D7B163B00428A17 /* CheckUsernameAvailableUseCase.swift */,
 				FEA53CC72C2C16E2006F0116 /* GetUserDataFromUsernameUseCase.swift */,
@@ -718,7 +741,7 @@
 		FEC94DBA2C246C3800FFEB11 /* Selection */ = {
 			isa = PBXGroup;
 			children = (
-				FEC94DF52C26282000FFEB11 /* Views */,
+				FE1815752D9880F30090E440 /* PortfolioDetail */,
 				FEC94DC82C2479B300FFEB11 /* SelectionFlowController.swift */,
 				FEC94DCA2C2479BE00FFEB11 /* SelectionView.swift */,
 				FEC94DCC2C2479CD00FFEB11 /* SelectionViewModel.swift */,
@@ -793,15 +816,6 @@
 				FEC94DE92C25BF4B00FFEB11 /* View+Extensions.swift */,
 			);
 			path = Extensions;
-			sourceTree = "<group>";
-		};
-		FEC94DF52C26282000FFEB11 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				FEC94DF62C26283400FFEB11 /* PortfolioDetailView.swift */,
-				FEC94DFA2C262AC400FFEB11 /* AuthorDetailView.swift */,
-			);
-			path = Views;
 			sourceTree = "<group>";
 		};
 		FEC94E0E2C2847BF00FFEB11 /* Views */ = {
@@ -928,7 +942,7 @@
 				FE9777E52D7F6DAC0027DA60 /* RegisterIsCreatorView.swift in Sources */,
 				FEA64F6F2D7712C700B11530 /* RegisterView.swift in Sources */,
 				FE7FB10D2D7B163B00428A17 /* CheckUsernameAvailableUseCase.swift in Sources */,
-				FE1815612D94A2490090E440 /* GetUserDataUseCase.swift in Sources */,
+				FE1815612D94A2490090E440 /* ReadUserByIdUseCase.swift in Sources */,
 				FE9A30B22D86E6A10056CC0A /* Shimmer.swift in Sources */,
 				FEA53CE22C2C88EE006F0116 /* ReadUsersFromQueryUseCase.swift in Sources */,
 				FEC94DE32C25917200FFEB11 /* Portfolio.swift in Sources */,
@@ -958,6 +972,7 @@
 				FEC94E132C28504900FFEB11 /* LoginCredentialsView.swift in Sources */,
 				FE7FB1102D7B1D3900428A17 /* RegisterNameAndEmailView.swift in Sources */,
 				FE18156B2D95DAFB0090E440 /* CreatorRepositoryImpl.swift in Sources */,
+				FE1815742D986A420090E440 /* ReadUserDataByCreatorIdUseCase.swift in Sources */,
 				FEC94DAF2C243EC100FFEB11 /* BaseHostingController.swift in Sources */,
 				FE5F8A892C2975FC001EE8AF /* LogoutUseCase.swift in Sources */,
 				FEC94E052C2701DF00FFEB11 /* Chat.swift in Sources */,
@@ -981,6 +996,7 @@
 				FE3D2B0F2D930EFF00DA22DB /* DefaultNetworkProvider.swift in Sources */,
 				FEC94DC52C246DF400FFEB11 /* BaseViewModel.swift in Sources */,
 				FEC94E092C283D4C00FFEB11 /* NotCreatorView.swift in Sources */,
+				FE1815782D9881870090E440 /* PortfolioAuthorDetailViewModel.swift in Sources */,
 				FE9777DF2D7F69240027DA60 /* HorizontalWheelPicker.swift in Sources */,
 				FEA53C962C29BF2F006F0116 /* Providers+Injection.swift in Sources */,
 				FEC94DC72C24712400FFEB11 /* ViewModel.swift in Sources */,
@@ -1017,7 +1033,7 @@
 				FEC94E0B2C2840AA00FFEB11 /* ProfileUserInfoView.swift in Sources */,
 				FE5F8A842C297338001EE8AF /* UserDefaultsProvider.swift in Sources */,
 				FEA53CCA2C2C174B006F0116 /* UserRepositoryImpl.swift in Sources */,
-				FEC94DFB2C262AC400FFEB11 /* AuthorDetailView.swift in Sources */,
+				FEC94DFB2C262AC400FFEB11 /* PortfolioAuthorDetailView.swift in Sources */,
 				FEA53CC62C2C136E006F0116 /* MessageRepositoryImpl.swift in Sources */,
 				FEC94E072C2701F500FFEB11 /* Message.swift in Sources */,
 				FEC94DFD2C262E4000FFEB11 /* User.swift in Sources */,
@@ -1043,7 +1059,7 @@
 				FEA53CF42C2D791F006F0116 /* EditPortfolioView.swift in Sources */,
 				FEA64F6D2D7711D900B11530 /* RegisterFlowController.swift in Sources */,
 				FEA53CED2C2D5BAC006F0116 /* EditPortfoliosView.swift in Sources */,
-				FE0685662D84A2A90002B217 /* TagsSelectionView.swift in Sources */,
+				FE0685662D84A2A90002B217 /* CategorySelectionView.swift in Sources */,
 				FE1815652D9592160090E440 /* SaveSignedInUsernameUseCase.swift in Sources */,
 				FEA53CCF2C2C2304006F0116 /* NewChatSearchView.swift in Sources */,
 				FEA53CC22C2C12C8006F0116 /* GetChatsForUserUseCase.swift in Sources */,

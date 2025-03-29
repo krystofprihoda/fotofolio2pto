@@ -14,7 +14,7 @@ final class SignInViewModel: BaseViewModel, ViewModel, ObservableObject {
     // MARK: Dependencies
 
     @LazyInjected private var loginWithCredentialsUseCase: LoginWithCredentialsUseCase
-    @LazyInjected private var getUserDataUseCase: GetUserDataUseCase
+    @LazyInjected private var readUserByIdUseCase: ReadUserByIdUseCase
     @LazyInjected private var saveSignedInUsernameUseCase: SaveSignedInUsernameUseCase
 
     private weak var flowController: OnboardingFlowController?
@@ -79,7 +79,7 @@ final class SignInViewModel: BaseViewModel, ViewModel, ObservableObject {
         
         do {
             let authDetails = try await loginWithCredentialsUseCase.execute(email: state.email, password: state.password)
-            let user = try await getUserDataUseCase.execute(id: authDetails.uid)
+            let user = try await readUserByIdUseCase.execute(id: authDetails.uid)
             saveSignedInUsernameUseCase.execute(username: user.username)
             flowController?.signIn(uid: authDetails.uid)
         } catch {

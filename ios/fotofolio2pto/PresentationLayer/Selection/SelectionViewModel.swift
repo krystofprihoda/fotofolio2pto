@@ -16,6 +16,7 @@ final class SelectionViewModel: BaseViewModel, ViewModel, ObservableObject {
     @LazyInjected private var getFlaggedPortfoliosUseCase: GetFlaggedPortfoliosUseCase
     @LazyInjected private var unflagAllPortfoliosUseCase: UnflagAllPortfoliosUseCase
     @LazyInjected private var unflagPortfolioUseCase: UnflagPortfolioUseCase
+    @LazyInjected private var readUserDataByCreatorIdUseCase: ReadUserDataByCreatorIdUseCase
     
     private weak var flowController: SelectionFlowController?
     
@@ -33,7 +34,7 @@ final class SelectionViewModel: BaseViewModel, ViewModel, ObservableObject {
     override func onAppear() {
         super.onAppear()
         
-        executeTask(Task { await getFlaggedPortfolios() })
+        executeTask(Task { await getFlaggedPortfoliosData() })
     }
     
     // MARK: State
@@ -41,6 +42,8 @@ final class SelectionViewModel: BaseViewModel, ViewModel, ObservableObject {
     struct State {
         var isLoading = false
         var portfolios: [Portfolio] = []
+        var portfoliosUserData: [User] = []
+        var portfoliosCreatorData: [Creator] = []
         var alertData: AlertData? = nil
         var toastData: ToastData? = nil
     }
@@ -52,9 +55,9 @@ final class SelectionViewModel: BaseViewModel, ViewModel, ObservableObject {
     enum Intent {
         case getFlagged
         case tapRemoveAllFlagged
-        case tapRemoveFromFlagged(Int)
-        case showProfile(User)
-        case sendMessage(to: User)
+        case tapRemoveFromFlagged(String)
+        case showProfile(creatorId: String)
+        case sendMessage(toCreatorWithId: String)
         case onAlertDataChanged(AlertData?)
         case setToastData(ToastData?)
     }
@@ -63,11 +66,11 @@ final class SelectionViewModel: BaseViewModel, ViewModel, ObservableObject {
     func onIntent(_ intent: Intent) -> Task<Void, Never> {
         executeTask(Task {
             switch intent {
-            case .getFlagged: await getFlaggedPortfolios()
+            case .getFlagged: await getFlaggedPortfoliosData()
             case .tapRemoveAllFlagged: tapRemoveAllFlagged()
             case .tapRemoveFromFlagged(let id): tapRemoveFromFlagged(id: id)
-            case .showProfile(let user): showProfile(user: user)
-            case .sendMessage(let user): sendMessage(to: user)
+            case .showProfile(let creatorId): await showProfile(creatorId: creatorId)
+            case .sendMessage(let creatorId): await sendMessage(toCreatorWithId: creatorId)
             case .onAlertDataChanged(let alertData): onAlertDataChanged(alertData: alertData)
             case .setToastData(let toast): setToastData(toast)
             }
@@ -76,7 +79,7 @@ final class SelectionViewModel: BaseViewModel, ViewModel, ObservableObject {
     
     // MARK: Additional methods
     
-    private func getFlaggedPortfolios() async {
+    private func getFlaggedPortfoliosData() async {
         state.isLoading = true
         defer { state.isLoading = false }
         
@@ -121,7 +124,7 @@ final class SelectionViewModel: BaseViewModel, ViewModel, ObservableObject {
         }
     }
     
-    private func tapRemoveFromFlagged(id: Int) {
+    private func tapRemoveFromFlagged(id: String) {
         state.alertData = .init(
             title: L.Selection.removePortfolioFromSelection,
             message: nil,
@@ -150,7 +153,7 @@ final class SelectionViewModel: BaseViewModel, ViewModel, ObservableObject {
         state.alertData = nil
     }
     
-    private func removeFromFlagged(id: Int) {
+    private func removeFromFlagged(id: String) {
         do {
             try unflagPortfolioUseCase.execute(id: id)
             state.portfolios.removeAll(where: { $0.id == id })
@@ -163,12 +166,22 @@ final class SelectionViewModel: BaseViewModel, ViewModel, ObservableObject {
         }
     }
     
-    private func showProfile(user: User) {
-        flowController?.showProfile(user: user)
+    private func showProfile(creatorId: String) async {
+        do {
+            let user = try await readUserDataByCreatorIdUseCase.execute(creatorId: creatorId)
+            flowController?.showProfile(user: user)
+        } catch {
+            
+        }
     }
     
-    private func sendMessage(to user: User) {
-        flowController?.sendMessage(to: user)
+    private func sendMessage(toCreatorWithId creatorId: String) async {
+        do {
+            let user = try await readUserDataByCreatorIdUseCase.execute(creatorId: creatorId)
+            flowController?.sendMessage(to: user)
+        } catch {
+            
+        }
     }
     
     private func setToastData(_ toast: ToastData?) {
