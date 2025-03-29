@@ -20,7 +20,7 @@ public struct ReadUsersFromQueryUseCaseImpl: ReadUsersFromQueryUseCase {
     }
     
     public func execute(query: String) async throws -> [User] {
-        return try await userRepository.getUsersFromUsernameQuery(query: query)
+        return try await userRepository.getUsersFromQuery(query: query)
     }
     
     

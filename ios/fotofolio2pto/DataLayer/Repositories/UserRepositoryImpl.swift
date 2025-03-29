@@ -19,15 +19,7 @@ public class UserRepositoryImpl: UserRepository {
     
     private static var users = User.sampleData
     
-    public func getUserByUsername(_ username: String) async throws -> User? {
-        try await Task.sleep(for: .seconds(0.3))
-        guard let user = UserRepositoryImpl.users.first(where: { user in
-            user.username == username
-        }) else { throw ObjectError.nonExistent }
-        return user
-    }
-    
-    public func getUsersFromUsernameQuery(query: String) async throws -> [User] {
+    public func getUsersFromQuery(query: String) async throws -> [User] {
         guard let token: String = defaults.read(.token) else { throw AuthError.tokenRetrievalFailed }
         
         let headers = [
@@ -39,23 +31,6 @@ public class UserRepositoryImpl: UserRepository {
         
         let users: [User] = try await network.fetch(endpoint: .user, method: .GET, body: nil, headers: headers, queryParams: queryParams)
         return users
-    }
-    
-    public func getUsersFromLocationQuery(query: String) async throws -> [User] {
-        try await Task.sleep(for: .seconds(0.3))
-        let users = UserRepositoryImpl.users.filter({ user in
-            user.location.lowercased().hasPrefix(query.lowercased())
-        })
-        return users
-    }
-    
-    public func isEmailAddressTaken(_ email: String) async throws {
-        try await Task.sleep(for: .seconds(0.4))
-        guard let _ = UserRepositoryImpl.users.first(where: { user in
-            user.email == email
-        }) else { return }
-        
-        throw ObjectError.emailAlreadyTaken
     }
     
     public func isUsernameTaken(_ username: String) async throws {
