@@ -8,33 +8,42 @@
 import SwiftUI
 
 struct PortfolioDetailView: View {
+    @StateObject private var viewModel: PortfolioDetailViewModel
+    
     private let mediaWidth: CGFloat
-    private let portfolio: Portfolio
-    private let portfolioAuthorDetailViewModel: PortfolioAuthorDetailViewModel
     
     init(
         mediaWidth: CGFloat,
         portfolio: Portfolio,
-        unflagPortfolio: @escaping () -> Void,
-        showProfile: @escaping () -> Void,
-        sendMessage: @escaping () -> Void
+        portfolioSelectionFlowDelegate: PortfolioSelectionFlowDelegate
     ) {
         self.mediaWidth = mediaWidth - Constants.Dimens.spaceXXLarge
-        self.portfolio = portfolio
-        self.portfolioAuthorDetailViewModel = .init(creatorId: portfolio.creatorId, unflagPortfolio: unflagPortfolio, showProfile: showProfile, sendMessage: sendMessage)
+        _viewModel = StateObject(
+            wrappedValue: PortfolioDetailViewModel(
+                portfolio: portfolio,
+                portfolioSelectionFlowDelegate: portfolioSelectionFlowDelegate
+            )
+        )
     }
     
     var body: some View {
         VStack {
             /// Folio Author
-            PortfolioAuthorDetailView(viewModel: portfolioAuthorDetailViewModel)
+            PortfolioAuthorDetailView(
+                isLoading: viewModel.state.isLoading,
+                userData: viewModel.state.userData,
+                creatorData: viewModel.state.creatorData,
+                showProfile: { viewModel.onIntent(.showProfile) },
+                sendMessage: { viewModel.onIntent(.sendMessage) },
+                unflagPortfolio: { viewModel.onIntent(.unflagPortfolio) }
+            )
             
             /// Carousel
-            PhotoCarouselView(mediaWidth: mediaWidth, photos: portfolio.photos)
+            PhotoCarouselView(mediaWidth: mediaWidth, photos: viewModel.state.portfolio.photos)
             
             /// Description
             HStack {
-                Text(portfolio.description)
+                Text(viewModel.state.portfolio.description)
                     .font(.system(size: 16))
                     .foregroundColor(Color(uiColor: UIColor.systemGray))
                 
@@ -47,7 +56,3 @@ struct PortfolioDetailView: View {
         .padding(.bottom, 10)
     }
 }
-
-//#Preview {
-//    PortfolioDetailView(mediaWidth: 350, portfolio: .dummyPortfolio1, unflagPortfolio: {}, showProfile: {}, sendMessage: {})
-//}

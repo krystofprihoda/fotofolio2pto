@@ -16,7 +16,7 @@
 		FE18156B2D95DAFB0090E440 /* CreatorRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE18156A2D95DAF50090E440 /* CreatorRepositoryImpl.swift */; };
 		FE18156E2D95DD7E0090E440 /* CreateCreatorDataUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE18156D2D95DD7E0090E440 /* CreateCreatorDataUseCase.swift */; };
 		FE1815742D986A420090E440 /* ReadUserDataByCreatorIdUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1815732D986A380090E440 /* ReadUserDataByCreatorIdUseCase.swift */; };
-		FE1815782D9881870090E440 /* PortfolioAuthorDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1815772D9881850090E440 /* PortfolioAuthorDetailViewModel.swift */; };
+		FE1815782D9881870090E440 /* PortfolioDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1815772D9881850090E440 /* PortfolioDetailViewModel.swift */; };
 		FE34A64F2D78BCF200CB4CAE /* CheckEmailAddressAvailableUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE34A64E2D78BCF200CB4CAE /* CheckEmailAddressAvailableUseCase.swift */; };
 		FE3D23252D91A41400DA22DB /* RegisterUserUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE3D23242D91A41000DA22DB /* RegisterUserUseCase.swift */; };
 		FE3D23272D92FD0D00DA22DB /* SaveUserDataUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE3D23262D92FD0600DA22DB /* SaveUserDataUseCase.swift */; };
@@ -159,7 +159,7 @@
 		FE18156A2D95DAF50090E440 /* CreatorRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatorRepositoryImpl.swift; sourceTree = "<group>"; };
 		FE18156D2D95DD7E0090E440 /* CreateCreatorDataUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCreatorDataUseCase.swift; sourceTree = "<group>"; };
 		FE1815732D986A380090E440 /* ReadUserDataByCreatorIdUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadUserDataByCreatorIdUseCase.swift; sourceTree = "<group>"; };
-		FE1815772D9881850090E440 /* PortfolioAuthorDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioAuthorDetailViewModel.swift; sourceTree = "<group>"; };
+		FE1815772D9881850090E440 /* PortfolioDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioDetailViewModel.swift; sourceTree = "<group>"; };
 		FE34A64E2D78BCF200CB4CAE /* CheckEmailAddressAvailableUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckEmailAddressAvailableUseCase.swift; sourceTree = "<group>"; };
 		FE3D23242D91A41000DA22DB /* RegisterUserUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterUserUseCase.swift; sourceTree = "<group>"; };
 		FE3D23262D92FD0600DA22DB /* SaveUserDataUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveUserDataUseCase.swift; sourceTree = "<group>"; };
@@ -327,19 +327,19 @@
 		FE1815752D9880F30090E440 /* PortfolioDetail */ = {
 			isa = PBXGroup;
 			children = (
-				FE1815762D98817A0090E440 /* Author */,
+				FE1815762D98817A0090E440 /* SubViews */,
 				FEC94DF62C26283400FFEB11 /* PortfolioDetailView.swift */,
+				FE1815772D9881850090E440 /* PortfolioDetailViewModel.swift */,
 			);
 			path = PortfolioDetail;
 			sourceTree = "<group>";
 		};
-		FE1815762D98817A0090E440 /* Author */ = {
+		FE1815762D98817A0090E440 /* SubViews */ = {
 			isa = PBXGroup;
 			children = (
-				FE1815772D9881850090E440 /* PortfolioAuthorDetailViewModel.swift */,
 				FEC94DFA2C262AC400FFEB11 /* PortfolioAuthorDetailView.swift */,
 			);
-			path = Author;
+			path = SubViews;
 			sourceTree = "<group>";
 		};
 		FE3D2B0B2D930EAD00DA22DB /* Network */ = {
@@ -996,7 +996,7 @@
 				FE3D2B0F2D930EFF00DA22DB /* DefaultNetworkProvider.swift in Sources */,
 				FEC94DC52C246DF400FFEB11 /* BaseViewModel.swift in Sources */,
 				FEC94E092C283D4C00FFEB11 /* NotCreatorView.swift in Sources */,
-				FE1815782D9881870090E440 /* PortfolioAuthorDetailViewModel.swift in Sources */,
+				FE1815782D9881870090E440 /* PortfolioDetailViewModel.swift in Sources */,
 				FE9777DF2D7F69240027DA60 /* HorizontalWheelPicker.swift in Sources */,
 				FEA53C962C29BF2F006F0116 /* Providers+Injection.swift in Sources */,
 				FEC94DC72C24712400FFEB11 /* ViewModel.swift in Sources */,

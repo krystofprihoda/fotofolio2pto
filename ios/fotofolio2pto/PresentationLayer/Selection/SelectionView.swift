@@ -26,13 +26,11 @@ struct SelectionView: View {
                         }
                         .frame(width: geo.size.width, height: geo.size.height)
                     } else if !viewModel.state.portfolios.isEmpty {
-                        ForEach(viewModel.state.portfolios, id: \.id) { portfolio in
+                        ForEach(viewModel.state.portfolios) { portfolio in
                             PortfolioDetailView(
                                 mediaWidth: geo.size.width,
                                 portfolio: portfolio,
-                                unflagPortfolio: { viewModel.onIntent(.tapRemoveFromFlagged(portfolio.id)) },
-                                showProfile: { viewModel.onIntent(.showProfile(creatorId: portfolio.creatorId)) },
-                                sendMessage: { viewModel.onIntent(.sendMessage(toCreatorWithId: portfolio.creatorId)) }
+                                portfolioSelectionFlowDelegate: viewModel
                             )
                         }
                     } else {

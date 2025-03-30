@@ -9,17 +9,35 @@ import SwiftUI
 
 struct PortfolioAuthorDetailView: View {
     
-    @ObservedObject private var viewModel: PortfolioAuthorDetailViewModel
+    private let isLoading: Bool
+    private let userData: User?
+    private let creatorData: Creator?
     
-    init(viewModel: PortfolioAuthorDetailViewModel) {
-        self.viewModel = viewModel
+    private let showProfile: () -> Void
+    private let sendMessage: () -> Void
+    private let unflagPortfolio: () -> Void
+    
+    public init(
+        isLoading: Bool,
+        userData: User?,
+        creatorData: Creator?,
+        showProfile: @escaping () -> Void,
+        sendMessage: @escaping () -> Void,
+        unflagPortfolio: @escaping () -> Void
+    ) {
+        self.isLoading = isLoading
+        self.userData = userData
+        self.creatorData = creatorData
+        self.showProfile = showProfile
+        self.sendMessage = sendMessage
+        self.unflagPortfolio = unflagPortfolio
     }
     
     var body: some View {
         VStack {
             HStack {
-                Button(action: viewModel.showProfile) {
-                    Text("@\(viewModel.state.userData?.username ?? L.Selection.username)")
+                Button(action: showProfile) {
+                    Text("@\(userData?.username ?? L.Selection.username)")
                         .font(.title3)
                         .padding(.leading, 20)
                         .foregroundColor(.mainAccent)
@@ -27,12 +45,12 @@ struct PortfolioAuthorDetailView: View {
                 
                 Spacer()
                 
-                Button(action: viewModel.sendMessage) {
+                Button(action: sendMessage) {
                     Text(L.Selection.typeMessage)
                         .foregroundColor(.gray)
                 }
                 
-                Button(action: viewModel.unflagPortfolio) {
+                Button(action: unflagPortfolio) {
                     Image(systemName: "bookmark.slash")
                         .foregroundColor(.black)
                 }
@@ -42,11 +60,11 @@ struct PortfolioAuthorDetailView: View {
             
             HStack {
                 VStack(alignment: .leading) {
-                    Text("\(viewModel.state.userData?.fullName ?? L.Selection.fullName)")
+                    Text("\(userData?.fullName ?? L.Selection.fullName)")
                         .foregroundColor(.black).brightness(0.3)
                         .font(.system(size: 16))
                     
-                    if let userData = viewModel.state.userData {
+                    if let userData = userData {
                         if userData.rating.isEmpty {
                             Text("\(userData.location), \(L.Selection.noRating)")
                                 .font(.system(size: 12))
@@ -71,7 +89,7 @@ struct PortfolioAuthorDetailView: View {
             }
             
             HStack {
-                Text(viewModel.state.creatorData?.profileText ?? L.Selection.profileText)
+                Text(creatorData?.profileText ?? L.Selection.profileText)
                     .font(.system(size: 16))
                     .foregroundColor(Color(uiColor: UIColor.systemGray))
                 
@@ -81,7 +99,7 @@ struct PortfolioAuthorDetailView: View {
             .padding(.leading, 21)
             .padding(.trailing, 21)
         }
-        .skeleton(viewModel.state.isLoading)
+        .skeleton(isLoading)
     }
 }
 

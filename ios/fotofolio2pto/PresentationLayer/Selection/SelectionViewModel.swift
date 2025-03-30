@@ -8,7 +8,7 @@
 import Foundation
 import Resolver
 
-final class SelectionViewModel: BaseViewModel, ViewModel, ObservableObject {
+final class SelectionViewModel: BaseViewModel, ViewModel, ObservableObject, PortfolioSelectionFlowDelegate {
     // MARK: Stored properties
     
     // MARK: Dependencies
@@ -27,13 +27,13 @@ final class SelectionViewModel: BaseViewModel, ViewModel, ObservableObject {
     ) {
         self.flowController = flowController
         super.init()
-        executeTask(Task { await getFlaggedPortfoliosData() })
     }
     
     // MARK: Lifecycle
     
     override func onAppear() {
         super.onAppear()
+        executeTask(Task { await getFlaggedPortfoliosData() })
     }
     
     // MARK: State
@@ -163,7 +163,11 @@ final class SelectionViewModel: BaseViewModel, ViewModel, ObservableObject {
         }
     }
     
-    private func showProfile(creatorId: String) async {
+    private func setToastData(_ toast: ToastData?) {
+        state.toastData = toast
+    }
+    
+    func showProfile(creatorId: String) async {
         do {
             let user = try await readUserDataByCreatorIdUseCase.execute(creatorId: creatorId)
             flowController?.showProfile(user: user)
@@ -172,7 +176,7 @@ final class SelectionViewModel: BaseViewModel, ViewModel, ObservableObject {
         }
     }
     
-    private func sendMessage(toCreatorWithId creatorId: String) async {
+    func sendMessage(toCreatorWithId creatorId: String) async {
         do {
             let user = try await readUserDataByCreatorIdUseCase.execute(creatorId: creatorId)
             flowController?.sendMessage(to: user)
@@ -181,7 +185,7 @@ final class SelectionViewModel: BaseViewModel, ViewModel, ObservableObject {
         }
     }
     
-    private func setToastData(_ toast: ToastData?) {
-        state.toastData = toast
+    func unflagPortfolio(_ portfolioId: String) {
+        tapRemoveFromFlagged(id: portfolioId)
     }
 }
