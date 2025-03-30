@@ -60,4 +60,8 @@ public class CreatorRepositoryImpl: CreatorRepository {
         print(user)
         return user
     }
+    
+    public func readAllCreatorPortfolios(for: String) async throws -> [Portfolio] {
+        return []
+    }
 }

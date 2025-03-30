@@ -18,11 +18,10 @@ final class FeedViewModel: BaseViewModel, ViewModel, ObservableObject {
     
     // MARK: Dependencies
     
-    @LazyInjected private var getAllPortfolios: GetAllPortfoliosUseCase
+    @LazyInjected private var readAllPortfoliosUseCase: ReadAllPortfoliosUseCase
     @LazyInjected private var flagPortfolioUseCase: FlagPortfolioUseCase
     @LazyInjected private var unflagPortfolioUseCase: UnflagPortfolioUseCase
-    @LazyInjected private var getFlaggedPortfoliosUseCase: GetFlaggedPortfoliosUseCase
-    @LazyInjected private var getFilteredPortfoliosUseCase: GetFilteredPortfoliosUseCase
+    @LazyInjected private var readFlaggedPortfoliosUseCase: ReadFlaggedPortfoliosUseCase
     @LazyInjected private var readUserDataByCreatorIdUseCase: ReadUserDataByCreatorIdUseCase
     
     private weak var flowController: FeedFlowController?
@@ -63,6 +62,7 @@ final class FeedViewModel: BaseViewModel, ViewModel, ObservableObject {
         var portfolios: [Portfolio] = []
         var flaggedPortfolioIds: [String] = []
         var filter: [String] = []
+        var sortBy: SortByEnum = .date
         var toastData: ToastData? = nil
     }
     
@@ -117,19 +117,21 @@ final class FeedViewModel: BaseViewModel, ViewModel, ObservableObject {
         }
         
         do {
-            state.portfolios = try await getAllPortfolios.execute()
+            state.portfolios = try await readAllPortfoliosUseCase.execute(categories: state.filter, sortBy: state.sortBy)
         } catch {
-            print("Error converting: \(error.localizedDescription)")
             // handle error
         }
     }
     
     private func fetchPortfoliosSortedBy(_ sortBy: SortByEnum) async {
+        guard state.sortBy != sortBy else { return }
+        
+        state.sortBy = sortBy
         state.isRefreshing = true
         defer { state.isRefreshing.toggle() }
         
         do {
-            state.portfolios = try await getAllPortfolios.execute(sortBy: sortBy)
+            state.portfolios = try await readAllPortfoliosUseCase.execute(categories: state.filter, sortBy: state.sortBy)
         } catch {
             // handle error
         }
@@ -169,7 +171,7 @@ final class FeedViewModel: BaseViewModel, ViewModel, ObservableObject {
     }
     
     private func fetchFlaggedPortfolios() {
-        state.flaggedPortfolioIds = getFlaggedPortfoliosUseCase.execute(idOnly: true)
+        state.flaggedPortfolioIds = readFlaggedPortfoliosUseCase.execute(idOnly: true)
     }
     
     private func showProfile(creatorId: String) async {
@@ -194,7 +196,7 @@ extension FeedViewModel: FilterFeedDelegate {
         state.filter = filter
         
         do {
-            state.portfolios = try await getFilteredPortfoliosUseCase.execute(filter: filter)
+            state.portfolios = try await readAllPortfoliosUseCase.execute(categories: state.filter, sortBy: state.sortBy)
         } catch {
             
         }

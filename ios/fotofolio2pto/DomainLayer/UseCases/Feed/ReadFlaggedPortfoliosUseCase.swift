@@ -1,5 +1,5 @@
 //
-//  GetFlaggedPortfoliosUseCase.swift
+//  ReadFlaggedPortfoliosUseCase.swift
 //  fotofolio2pto
 //
 //  Created by Kryštof Příhoda on 24.06.2024.
@@ -7,12 +7,12 @@
 
 import Foundation
 
-public protocol GetFlaggedPortfoliosUseCase {
+public protocol ReadFlaggedPortfoliosUseCase {
     func execute() async throws -> [Portfolio]
     func execute(idOnly: Bool) -> [String]
 }
 
-public struct GetFlaggedPortfoliosUseCaseImpl: GetFlaggedPortfoliosUseCase {
+public struct ReadFlaggedPortfoliosUseCaseImpl: ReadFlaggedPortfoliosUseCase {
     
     private let feedRepository: FeedRepository
     
@@ -21,10 +21,10 @@ public struct GetFlaggedPortfoliosUseCaseImpl: GetFlaggedPortfoliosUseCase {
     }
     
     public func execute() async throws -> [Portfolio] {
-        try await feedRepository.getFlagged()
+        try await feedRepository.readFlagged()
     }
     
     public func execute(idOnly: Bool) -> [String] {
-        feedRepository.getFlaggedIds()
+        feedRepository.readFlaggedIds()
     }
 }

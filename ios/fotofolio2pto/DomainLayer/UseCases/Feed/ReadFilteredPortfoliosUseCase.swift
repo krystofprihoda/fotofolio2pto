@@ -1,5 +1,5 @@
 //
-//  GetFilteredPortfoliosUseCase.swift
+//  ReadFilteredPortfoliosUseCase.swift
 //  fotofolio2pto
 //
 //  Created by Kryštof Příhoda on 25.06.2024.
@@ -7,11 +7,11 @@
 
 import Foundation
 
-public protocol GetFilteredPortfoliosUseCase {
+public protocol ReadFilteredPortfoliosUseCase {
     func execute(filter: [String]) async throws -> [Portfolio]
 }
 
-public struct GetFilteredPortfoliosUseCaseImpl: GetFilteredPortfoliosUseCase {
+public struct ReadFilteredPortfoliosUseCaseImpl: ReadFilteredPortfoliosUseCase {
     
     private let feedRepository: FeedRepository
     
@@ -20,6 +20,6 @@ public struct GetFilteredPortfoliosUseCaseImpl: GetFilteredPortfoliosUseCase {
     }
     
     public func execute(filter: [String]) async throws -> [Portfolio] {
-        try await feedRepository.getFilteredPortfolios(filter: filter)
+        try await feedRepository.readAll(categories: filter, sortBy: nil)
     }
 }

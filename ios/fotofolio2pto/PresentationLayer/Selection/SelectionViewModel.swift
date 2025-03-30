@@ -13,7 +13,7 @@ final class SelectionViewModel: BaseViewModel, ViewModel, ObservableObject {
     
     // MARK: Dependencies
     
-    @LazyInjected private var getFlaggedPortfoliosUseCase: GetFlaggedPortfoliosUseCase
+    @LazyInjected private var readFlaggedPortfoliosUseCase: ReadFlaggedPortfoliosUseCase
     @LazyInjected private var unflagAllPortfoliosUseCase: UnflagAllPortfoliosUseCase
     @LazyInjected private var unflagPortfolioUseCase: UnflagPortfolioUseCase
     @LazyInjected private var readUserDataByCreatorIdUseCase: ReadUserDataByCreatorIdUseCase
@@ -84,7 +84,7 @@ final class SelectionViewModel: BaseViewModel, ViewModel, ObservableObject {
         defer { state.isLoading = false }
         
         do {
-            state.portfolios = try await getFlaggedPortfoliosUseCase.execute()
+            state.portfolios = try await readFlaggedPortfoliosUseCase.execute()
         } catch {
             
         }

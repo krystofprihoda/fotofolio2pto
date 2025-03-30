@@ -20,6 +20,6 @@ public struct UpdatePortfolioUseCaseImpl: UpdatePortfolioUseCase {
     }
     
     public func execute(id: String, name: String, photos: [IImage], description: String, category: [String]) async throws {
-        try await feedRepository.updatePortfolio(id: id, name: name, photos: photos, description: description, category: category)
+        // try await feedRepository.updatePortfolio(id: id, name: name, photos: photos, description: description, category: category)
     }
 }

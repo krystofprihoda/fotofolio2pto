@@ -18,7 +18,7 @@ public extension Resolver {
         
         /// User
 //        register { GetUserDataFromUsernameUseCaseImpl(userRepository: resolve()) as GetUserDataFromUsernameUseCase }
-        register { GetUserPortfoliosUseCaseImpl(feedRepository: resolve()) as GetUserPortfoliosUseCase }
+        register { ReadCreatorPortfoliosUseCaseImpl(creatorRepository: resolve()) as ReadCreatorPortfoliosUseCase }
         register { ReadUsersFromQueryUseCaseImpl(userRepository: resolve()) as ReadUsersFromQueryUseCase }
         register { CheckEmailAddressAvailableUseCaseImpl(authRepository: resolve()) as CheckEmailAddressAvailableUseCase }
         register { CheckUsernameAvailableUseCaseImpl(userRepository: resolve()) as CheckUsernameAvailableUseCase }
@@ -32,12 +32,11 @@ public extension Resolver {
         register { ReadCreatorDataUseCaseImpl(creatorRepository: resolve()) as ReadCreatorDataUseCase }
         
         /// Portfolios
-        register { GetAllPortfoliosUseCaseImpl(feedRepository: resolve()) as GetAllPortfoliosUseCase }
+        register { ReadAllPortfoliosUseCaseImpl(feedRepository: resolve()) as ReadAllPortfoliosUseCase }
         register { FlagPortfolioUseCaseImpl(feedRepository: resolve()) as FlagPortfolioUseCase }
         register { UnflagPortfolioUseCaseImpl(feedRepository: resolve()) as UnflagPortfolioUseCase }
-        register { GetFlaggedPortfoliosUseCaseImpl(feedRepository: resolve()) as GetFlaggedPortfoliosUseCase }
+        register { ReadFlaggedPortfoliosUseCaseImpl(feedRepository: resolve()) as ReadFlaggedPortfoliosUseCase }
         register { UnflagAllPortfoliosUseCaseImpl(feedRepository: resolve()) as UnflagAllPortfoliosUseCase }
-        register { GetFilteredPortfoliosUseCaseImpl(feedRepository: resolve()) as GetFilteredPortfoliosUseCase }
         register { CreatePortfolioUseCaseImpl(feedRepository: resolve()) as CreatePortfolioUseCase }
         register { UpdatePortfolioUseCaseImpl(feedRepository: resolve()) as UpdatePortfolioUseCase }
         

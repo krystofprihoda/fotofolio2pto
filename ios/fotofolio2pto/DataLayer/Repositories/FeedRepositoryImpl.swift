@@ -17,58 +17,63 @@ public class FeedRepositoryImpl: FeedRepository {
         self.network = network
     }
     
-    public func getAll() async throws -> [Portfolio] {
+    public func readAll(categories: [String]? = nil, sortBy: SortByEnum? = nil) async throws -> [Portfolio] {
         guard let token: String = defaults.read(.token) else { throw AuthError.tokenRetrievalFailed }
+        
+        var queryParams: [String: String] = [:]
+        
+        if let categories = categories, !categories.isEmpty {
+            for category in categories {
+                queryParams["category"] = category
+            }
+        }
+        
+        if let sortBy = sortBy {
+            switch sortBy {
+            case .date:
+                queryParams["sortBy"] = "timestamp"
+            case .rating:
+                queryParams["sortBy"] = "rating"
+            }
+        }
         
         let headers = [
             "Authorization": "Bearer \(token)",
             "Content-Type": "application/json"
         ]
         
-        let portfolios: [Portfolio] = try await network.fetch(endpoint: .portfolio, method: .GET, body: nil, headers: headers, queryParams: nil)
+        let portfolios: [Portfolio] = try await network.fetch(
+            endpoint: .portfolio,
+            method: .GET,
+            body: nil,
+            headers: headers,
+            queryParams: queryParams
+        )
         return portfolios
     }
     
-    public func getAll(sorted: SortByEnum) async throws -> [Portfolio] {
-        return try await getAll()
-    }
-    
     public func addToFlagged(portfolioId: String) throws {
-        var flagged = getFlaggedIds()
+        var flagged = readFlaggedIds()
         guard !flagged.contains(where: { $0 == portfolioId }) else { return }
         flagged.append(portfolioId)
         defaults.update(.flagged, value: flagged)
     }
     
     public func removeFromFlagged(portfolioId: String) throws {
-        var flagged = getFlaggedIds()
+        var flagged = readFlaggedIds()
         flagged.removeAll(where: { $0 == portfolioId })
         defaults.update(.flagged, value: flagged)
     }
     
-    public func getFlagged() async throws -> [Portfolio] {
+    public func readFlagged() async throws -> [Portfolio] {
         return []
     }
         
-    public func getFlaggedIds() -> [String] {
+    public func readFlaggedIds() -> [String] {
         return defaults.read(.flagged) ?? []
     }
     
     public func removeAllFlagged() throws {
         defaults.delete(.flagged)
-    }
-    
-    public func getFilteredPortfolios(filter: [String]) async throws -> [Portfolio] {
-        return []
-    }
-    
-    public func getUserPortfolios(for username: String) async throws -> [Portfolio] {
-        return []
-    }
-    
-    public func createPortfolio(username: String, name: String, photos: [IImage], description: String, category: [String]) async throws {
-    }
-    
-    public func updatePortfolio(id: String, name: String, photos: [IImage], description: String, category: [String]) async throws {
     }
 }

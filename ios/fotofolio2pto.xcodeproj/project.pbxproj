@@ -51,18 +51,18 @@
 		FEA53C982C29BF97006F0116 /* Repositories+Injection.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53C972C29BF97006F0116 /* Repositories+Injection.swift */; };
 		FEA53C9A2C29BFDF006F0116 /* UseCase+Injection.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53C992C29BFDF006F0116 /* UseCase+Injection.swift */; };
 		FEA53C9D2C29C1BA006F0116 /* Resolver in Frameworks */ = {isa = PBXBuildFile; productRef = FEA53C9C2C29C1BA006F0116 /* Resolver */; };
-		FEA53CA12C29C70B006F0116 /* GetAllPortfoliosUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CA02C29C70B006F0116 /* GetAllPortfoliosUseCase.swift */; };
+		FEA53CA12C29C70B006F0116 /* ReadAllPortfoliosUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CA02C29C70B006F0116 /* ReadAllPortfoliosUseCase.swift */; };
 		FEA53CA32C29C76E006F0116 /* FeedRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CA22C29C76E006F0116 /* FeedRepository.swift */; };
 		FEA53CA52C29C792006F0116 /* FeedRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CA42C29C792006F0116 /* FeedRepositoryImpl.swift */; };
 		FEA53CA72C29D667006F0116 /* FlagPortfolioUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CA62C29D667006F0116 /* FlagPortfolioUseCase.swift */; };
 		FEA53CA92C29D7E8006F0116 /* UnflagPortfolioUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CA82C29D7E8006F0116 /* UnflagPortfolioUseCase.swift */; };
-		FEA53CAB2C29DE1E006F0116 /* GetFlaggedPortfoliosUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CAA2C29DE1E006F0116 /* GetFlaggedPortfoliosUseCase.swift */; };
+		FEA53CAB2C29DE1E006F0116 /* ReadFlaggedPortfoliosUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CAA2C29DE1E006F0116 /* ReadFlaggedPortfoliosUseCase.swift */; };
 		FEA53CAE2C29E08D006F0116 /* Sequence+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CAD2C29E08D006F0116 /* Sequence+Extensions.swift */; };
 		FEA53CB12C29E57A006F0116 /* ObjectError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CB02C29E57A006F0116 /* ObjectError.swift */; };
 		FEA53CB42C2AE81C006F0116 /* AlertData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CB32C2AE81C006F0116 /* AlertData.swift */; };
 		FEA53CB62C2AE84F006F0116 /* AlertData+SwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CB52C2AE84F006F0116 /* AlertData+SwiftUI.swift */; };
 		FEA53CB82C2AE9B1006F0116 /* UnflagAllPortfoliosUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CB72C2AE9B1006F0116 /* UnflagAllPortfoliosUseCase.swift */; };
-		FEA53CBC2C2B0B3D006F0116 /* GetFilteredPortfoliosUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CBB2C2B0B3D006F0116 /* GetFilteredPortfoliosUseCase.swift */; };
+		FEA53CBC2C2B0B3D006F0116 /* ReadFilteredPortfoliosUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CBB2C2B0B3D006F0116 /* ReadFilteredPortfoliosUseCase.swift */; };
 		FEA53CBE2C2B2D3D006F0116 /* GetLoggedInUserUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CBD2C2B2D3C006F0116 /* GetLoggedInUserUseCase.swift */; };
 		FEA53CC22C2C12C8006F0116 /* GetChatsForUserUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CC12C2C12C8006F0116 /* GetChatsForUserUseCase.swift */; };
 		FEA53CC42C2C12EE006F0116 /* MessageRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CC32C2C12EE006F0116 /* MessageRepository.swift */; };
@@ -78,7 +78,7 @@
 		FEA53CDA2C2C3526006F0116 /* SendMessageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CD92C2C3526006F0116 /* SendMessageUseCase.swift */; };
 		FEA53CDC2C2C39F0006F0116 /* GetLatestChatMessagesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CDB2C2C39F0006F0116 /* GetLatestChatMessagesUseCase.swift */; };
 		FEA53CDE2C2C49DF006F0116 /* GetChatUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CDD2C2C49DF006F0116 /* GetChatUseCase.swift */; };
-		FEA53CE02C2C6A20006F0116 /* GetUserPortfoliosUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CDF2C2C6A20006F0116 /* GetUserPortfoliosUseCase.swift */; };
+		FEA53CE02C2C6A20006F0116 /* ReadCreatorPortfoliosUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CDF2C2C6A20006F0116 /* ReadCreatorPortfoliosUseCase.swift */; };
 		FEA53CE22C2C88EE006F0116 /* ReadUsersFromQueryUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CE12C2C88EE006F0116 /* ReadUsersFromQueryUseCase.swift */; };
 		FEA53CE42C2D5A46006F0116 /* EditProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CE32C2D5A46006F0116 /* EditProfileView.swift */; };
 		FEA53CE72C2D5A92006F0116 /* EditPersonalDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CE62C2D5A92006F0116 /* EditPersonalDetailsView.swift */; };
@@ -191,18 +191,18 @@
 		FEA53C952C29BF2F006F0116 /* Providers+Injection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Providers+Injection.swift"; sourceTree = "<group>"; };
 		FEA53C972C29BF97006F0116 /* Repositories+Injection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Repositories+Injection.swift"; sourceTree = "<group>"; };
 		FEA53C992C29BFDF006F0116 /* UseCase+Injection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UseCase+Injection.swift"; sourceTree = "<group>"; };
-		FEA53CA02C29C70B006F0116 /* GetAllPortfoliosUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAllPortfoliosUseCase.swift; sourceTree = "<group>"; };
+		FEA53CA02C29C70B006F0116 /* ReadAllPortfoliosUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadAllPortfoliosUseCase.swift; sourceTree = "<group>"; };
 		FEA53CA22C29C76E006F0116 /* FeedRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedRepository.swift; sourceTree = "<group>"; };
 		FEA53CA42C29C792006F0116 /* FeedRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedRepositoryImpl.swift; sourceTree = "<group>"; };
 		FEA53CA62C29D667006F0116 /* FlagPortfolioUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlagPortfolioUseCase.swift; sourceTree = "<group>"; };
 		FEA53CA82C29D7E8006F0116 /* UnflagPortfolioUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnflagPortfolioUseCase.swift; sourceTree = "<group>"; };
-		FEA53CAA2C29DE1E006F0116 /* GetFlaggedPortfoliosUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetFlaggedPortfoliosUseCase.swift; sourceTree = "<group>"; };
+		FEA53CAA2C29DE1E006F0116 /* ReadFlaggedPortfoliosUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadFlaggedPortfoliosUseCase.swift; sourceTree = "<group>"; };
 		FEA53CAD2C29E08D006F0116 /* Sequence+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sequence+Extensions.swift"; sourceTree = "<group>"; };
 		FEA53CB02C29E57A006F0116 /* ObjectError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectError.swift; sourceTree = "<group>"; };
 		FEA53CB32C2AE81C006F0116 /* AlertData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertData.swift; sourceTree = "<group>"; };
 		FEA53CB52C2AE84F006F0116 /* AlertData+SwiftUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AlertData+SwiftUI.swift"; sourceTree = "<group>"; };
 		FEA53CB72C2AE9B1006F0116 /* UnflagAllPortfoliosUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnflagAllPortfoliosUseCase.swift; sourceTree = "<group>"; };
-		FEA53CBB2C2B0B3D006F0116 /* GetFilteredPortfoliosUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetFilteredPortfoliosUseCase.swift; sourceTree = "<group>"; };
+		FEA53CBB2C2B0B3D006F0116 /* ReadFilteredPortfoliosUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadFilteredPortfoliosUseCase.swift; sourceTree = "<group>"; };
 		FEA53CBD2C2B2D3C006F0116 /* GetLoggedInUserUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLoggedInUserUseCase.swift; sourceTree = "<group>"; };
 		FEA53CC12C2C12C8006F0116 /* GetChatsForUserUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetChatsForUserUseCase.swift; sourceTree = "<group>"; };
 		FEA53CC32C2C12EE006F0116 /* MessageRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageRepository.swift; sourceTree = "<group>"; };
@@ -218,7 +218,7 @@
 		FEA53CD92C2C3526006F0116 /* SendMessageUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendMessageUseCase.swift; sourceTree = "<group>"; };
 		FEA53CDB2C2C39F0006F0116 /* GetLatestChatMessagesUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLatestChatMessagesUseCase.swift; sourceTree = "<group>"; };
 		FEA53CDD2C2C49DF006F0116 /* GetChatUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetChatUseCase.swift; sourceTree = "<group>"; };
-		FEA53CDF2C2C6A20006F0116 /* GetUserPortfoliosUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUserPortfoliosUseCase.swift; sourceTree = "<group>"; };
+		FEA53CDF2C2C6A20006F0116 /* ReadCreatorPortfoliosUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadCreatorPortfoliosUseCase.swift; sourceTree = "<group>"; };
 		FEA53CE12C2C88EE006F0116 /* ReadUsersFromQueryUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadUsersFromQueryUseCase.swift; sourceTree = "<group>"; };
 		FEA53CE32C2D5A46006F0116 /* EditProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileView.swift; sourceTree = "<group>"; };
 		FEA53CE62C2D5A92006F0116 /* EditPersonalDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPersonalDetailsView.swift; sourceTree = "<group>"; };
@@ -319,6 +319,7 @@
 				FE1815732D986A380090E440 /* ReadUserDataByCreatorIdUseCase.swift */,
 				FE18156D2D95DD7E0090E440 /* CreateCreatorDataUseCase.swift */,
 				FE1815622D954E8C0090E440 /* ReadCreatorDataUseCase.swift */,
+				FEA53CDF2C2C6A20006F0116 /* ReadCreatorPortfoliosUseCase.swift */,
 			);
 			path = Creator;
 			sourceTree = "<group>";
@@ -528,13 +529,12 @@
 		FEA53C9F2C29C6FE006F0116 /* Feed */ = {
 			isa = PBXGroup;
 			children = (
-				FEA53CA02C29C70B006F0116 /* GetAllPortfoliosUseCase.swift */,
+				FEA53CA02C29C70B006F0116 /* ReadAllPortfoliosUseCase.swift */,
 				FEA53CA62C29D667006F0116 /* FlagPortfolioUseCase.swift */,
 				FEA53CA82C29D7E8006F0116 /* UnflagPortfolioUseCase.swift */,
-				FEA53CAA2C29DE1E006F0116 /* GetFlaggedPortfoliosUseCase.swift */,
+				FEA53CAA2C29DE1E006F0116 /* ReadFlaggedPortfoliosUseCase.swift */,
 				FEA53CB72C2AE9B1006F0116 /* UnflagAllPortfoliosUseCase.swift */,
-				FEA53CBB2C2B0B3D006F0116 /* GetFilteredPortfoliosUseCase.swift */,
-				FEA53CDF2C2C6A20006F0116 /* GetUserPortfoliosUseCase.swift */,
+				FEA53CBB2C2B0B3D006F0116 /* ReadFilteredPortfoliosUseCase.swift */,
 				FEA53CF82C2D896F006F0116 /* CreatePortfolioUseCase.swift */,
 			);
 			path = Feed;
@@ -1006,12 +1006,12 @@
 				FEC94DC32C246DC000FFEB11 /* FeedViewModel.swift in Sources */,
 				FEA53CF72C2D7960006F0116 /* EditPortfolioViewModel.swift in Sources */,
 				FEA53CD42C2C2722006F0116 /* ChatView.swift in Sources */,
-				FEA53CAB2C29DE1E006F0116 /* GetFlaggedPortfoliosUseCase.swift in Sources */,
-				FEA53CA12C29C70B006F0116 /* GetAllPortfoliosUseCase.swift in Sources */,
+				FEA53CAB2C29DE1E006F0116 /* ReadFlaggedPortfoliosUseCase.swift in Sources */,
+				FEA53CA12C29C70B006F0116 /* ReadAllPortfoliosUseCase.swift in Sources */,
 				FEC94E0D2C2842F500FFEB11 /* ProfilePortfoliosView.swift in Sources */,
 				FEA53C9A2C29BFDF006F0116 /* UseCase+Injection.swift in Sources */,
 				FE5F8A802C2971C7001EE8AF /* AuthRepositoryImpl.swift in Sources */,
-				FEA53CE02C2C6A20006F0116 /* GetUserPortfoliosUseCase.swift in Sources */,
+				FEA53CE02C2C6A20006F0116 /* ReadCreatorPortfoliosUseCase.swift in Sources */,
 				FEA64F712D77135E00B11530 /* RegisterViewModel.swift in Sources */,
 				FEC94E172C2857D100FFEB11 /* OnboardingFlowController.swift in Sources */,
 				FEC94E032C26DD7900FFEB11 /* ProfilePictureView.swift in Sources */,
@@ -1064,7 +1064,7 @@
 				FEA53CCF2C2C2304006F0116 /* NewChatSearchView.swift in Sources */,
 				FEA53CC22C2C12C8006F0116 /* GetChatsForUserUseCase.swift in Sources */,
 				FEC94DF02C25ED5C00FFEB11 /* RoundedCorner.swift in Sources */,
-				FEA53CBC2C2B0B3D006F0116 /* GetFilteredPortfoliosUseCase.swift in Sources */,
+				FEA53CBC2C2B0B3D006F0116 /* ReadFilteredPortfoliosUseCase.swift in Sources */,
 				FEA53CB42C2AE81C006F0116 /* AlertData.swift in Sources */,
 				FEC94DCF2C247C4C00FFEB11 /* SearchViewModel.swift in Sources */,
 				FEC94DD12C247C5500FFEB11 /* SearchFlowController.swift in Sources */,

@@ -16,7 +16,7 @@ final class ProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
     
     @LazyInjected private var readUserByIdUseCase: ReadUserByIdUseCase
     @LazyInjected private var readCreatorDataUseCase: ReadCreatorDataUseCase
-    @LazyInjected private var getUserPortfoliosUseCase: GetUserPortfoliosUseCase
+    @LazyInjected private var readCreatorPortfoliosUseCase: ReadCreatorPortfoliosUseCase
     
     private weak var flowController: ProfileFlowController?
     
@@ -101,7 +101,7 @@ final class ProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
     private func fetchCreatorDataAndPortfolios() async throws {
         guard let creatorId = state.userData?.creatorId else { return }
         
-        state.portfolios = try await getUserPortfoliosUseCase.execute(username: state.displayedUserId)
+        state.portfolios = try await readCreatorPortfoliosUseCase.execute(creatorId: creatorId)
         state.creatorData = try await readCreatorDataUseCase.execute(id: creatorId)
     }
     

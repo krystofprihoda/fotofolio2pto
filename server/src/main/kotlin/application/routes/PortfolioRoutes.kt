@@ -1,5 +1,6 @@
 package application.routes
 
+import com.google.cloud.firestore.Query
 import com.google.firebase.cloud.FirestoreClient
 import com.kborowy.authprovider.firebase.await
 import io.ktor.http.*
@@ -28,13 +29,51 @@ fun Application.portfolioRoutes() {
             get("/portfolio") {
                 try {
                     val db = FirestoreClient.getFirestore()
+                    val categories = call.request.queryParameters.getAll("category")
+                    val sortBy = call.request.queryParameters["sortBy"] // "timestamp" or "rating"
 
-                    val portfolios = db.collection("portfolio").get().await().documents.mapNotNull { document ->
+                    var portfoliosQuery: Query = db.collection("portfolio")
+
+                    // Apply category filter if provided
+                    if (!categories.isNullOrEmpty()) {
+                        portfoliosQuery = portfoliosQuery.whereArrayContainsAny("category", categories)
+                    }
+
+                    val portfolios = portfoliosQuery.get().await().documents.mapNotNull { document ->
                         document.toObject(Portfolio::class.java).copy(id = document.id)
                     }
 
-                    print(portfolios)
-                    call.respond(HttpStatusCode.OK, portfolios)
+                    // Apply sorting
+                    val sortedPortfolios = when (sortBy) {
+                        "timestamp" -> {
+                            portfolios.sortedBy { it.timestamp }
+                        }
+                        "rating" -> {
+                            val portfoliosWithRatings = portfolios.map { portfolio ->
+                                val creator = db.collection("user")
+                                    .document(portfolio.creatorId)
+                                    .get()
+                                    .await()
+                                    .toObject(Creator::class.java) ?: throw Exception("Portfolio creator not found")
+
+                                val user = creator.userId.let { userId ->
+                                    db.collection("user")
+                                        .document(userId)
+                                        .get()
+                                        .await()
+                                        .toObject(User::class.java) ?: throw Exception("Portfolio user/author not found")
+                                }
+
+                                val avgRating = user.rating.values.average()
+                                portfolio to avgRating
+                            }
+
+                            portfoliosWithRatings.sortedByDescending { it.second }.map { it.first }
+                        }
+                        else -> portfolios // No sorting
+                    }
+
+                    call.respond(HttpStatusCode.OK, sortedPortfolios)
                 } catch (e: Exception) {
                     call.respond(HttpStatusCode.BadRequest, "Error processing request: ${e.localizedMessage}")
                 }

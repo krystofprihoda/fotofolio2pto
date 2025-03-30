@@ -8,15 +8,12 @@
 import Foundation
 
 public protocol FeedRepository {
-    func getAll() async throws -> [Portfolio]
-    func getAll(sorted: SortByEnum) async throws -> [Portfolio]
+    func readAll(categories: [String]?, sortBy: SortByEnum?) async throws -> [Portfolio]
     func addToFlagged(portfolioId: String) throws
     func removeFromFlagged(portfolioId: String) throws
-    func getFlagged() async throws -> [Portfolio]
-    func getFlaggedIds() -> [String]
+    func readFlagged() async throws -> [Portfolio]
+    func readFlaggedIds() -> [String]
     func removeAllFlagged() throws
-    func getFilteredPortfolios(filter: [String]) async throws -> [Portfolio]
-    func getUserPortfolios(for: String) async throws -> [Portfolio]
-    func createPortfolio(username: String, name: String, photos: [IImage], description: String, category: [String]) async throws
-    func updatePortfolio(id: String, name: String, photos: [IImage], description: String, category: [String]) async throws
+    // func createPortfolio(username: String, name: String, photos: [IImage], description: String, category: [String]) async throws
+    // func updatePortfolio(id: String, name: String, photos: [IImage], description: String, category: [String]) async throws
 }
