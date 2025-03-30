@@ -30,6 +30,7 @@ public extension Resolver {
         /// Creator
         register { CreateCreatorDataUseCaseImpl(creatorRepository: resolve()) as CreateCreatorDataUseCase }
         register { ReadCreatorDataUseCaseImpl(creatorRepository: resolve()) as ReadCreatorDataUseCase }
+        register { ReadUserDataByCreatorIdUseCaseImpl(creatorRepository: resolve()) as ReadUserDataByCreatorIdUseCase }
         
         /// Portfolios
         register { ReadAllPortfoliosUseCaseImpl(feedRepository: resolve()) as ReadAllPortfoliosUseCase }

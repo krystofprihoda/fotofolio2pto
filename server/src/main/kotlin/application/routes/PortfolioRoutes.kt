@@ -1,5 +1,6 @@
 package application.routes
 
+import com.google.cloud.firestore.FieldPath
 import com.google.cloud.firestore.Query
 import com.google.firebase.cloud.FirestoreClient
 import com.kborowy.authprovider.firebase.await
@@ -31,11 +32,23 @@ fun Application.portfolioRoutes() {
                     val db = FirestoreClient.getFirestore()
                     val categories = call.request.queryParameters.getAll("category")
                     val sortBy = call.request.queryParameters["sortBy"] // "timestamp" or "rating"
+                    val portfolioIdsParam = call.request.queryParameters["id"]
 
                     var portfoliosQuery: Query = db.collection("portfolio")
 
-                    // Apply category filter if provided
-                    if (!categories.isNullOrEmpty()) {
+                    // Parse portfolio IDs from comma-separated string
+                    val portfolioIds = portfolioIdsParam?.split(",")?.map { it.trim() }?.filter { it.isNotEmpty() }
+
+                    if (!portfolioIds.isNullOrEmpty()) {
+                        // Firestore has a limit of 10 IDs for `whereIn`
+                        if (portfolioIds.size > 10) {
+                            call.respond(HttpStatusCode.BadRequest, "Cannot query more than 10 portfolio IDs at a time")
+                            return@get
+                        }
+                        portfoliosQuery = portfoliosQuery.whereIn(FieldPath.documentId(), portfolioIds)
+                    }
+
+                    if (!categories.isNullOrEmpty() && portfolioIds.isNullOrEmpty()) {
                         portfoliosQuery = portfoliosQuery.whereArrayContainsAny("category", categories)
                     }
 
@@ -43,34 +56,35 @@ fun Application.portfolioRoutes() {
                         document.toObject(Portfolio::class.java).copy(id = document.id)
                     }
 
-                    // Apply sorting
-                    val sortedPortfolios = when (sortBy) {
-                        "timestamp" -> {
-                            portfolios.sortedBy { it.timestamp }
-                        }
-                        "rating" -> {
-                            val portfoliosWithRatings = portfolios.map { portfolio ->
-                                val creator = db.collection("user")
-                                    .document(portfolio.creatorId)
-                                    .get()
-                                    .await()
-                                    .toObject(Creator::class.java) ?: throw Exception("Portfolio creator not found")
-
-                                val user = creator.userId.let { userId ->
-                                    db.collection("user")
-                                        .document(userId)
+                    val sortedPortfolios = if (portfolioIds.isNullOrEmpty()) {
+                        when (sortBy) {
+                            "timestamp" -> portfolios.sortedBy { it.timestamp }
+                            "rating" -> {
+                                val portfoliosWithRatings = portfolios.map { portfolio ->
+                                    val creator = db.collection("user")
+                                        .document(portfolio.creatorId)
                                         .get()
                                         .await()
-                                        .toObject(User::class.java) ?: throw Exception("Portfolio user/author not found")
+                                        .toObject(Creator::class.java) ?: throw Exception("Portfolio creator not found")
+
+                                    val user = creator.userId.let { userId ->
+                                        db.collection("user")
+                                            .document(userId)
+                                            .get()
+                                            .await()
+                                            .toObject(User::class.java) ?: throw Exception("Portfolio user/author not found")
+                                    }
+
+                                    val avgRating = user.rating.values.average()
+                                    portfolio to avgRating
                                 }
 
-                                val avgRating = user.rating.values.average()
-                                portfolio to avgRating
+                                portfoliosWithRatings.sortedByDescending { it.second }.map { it.first }
                             }
-
-                            portfoliosWithRatings.sortedByDescending { it.second }.map { it.first }
+                            else -> portfolios // No sorting
                         }
-                        else -> portfolios // No sorting
+                    } else {
+                        portfolios // No sorting when fetching by IDs
                     }
 
                     call.respond(HttpStatusCode.OK, sortedPortfolios)

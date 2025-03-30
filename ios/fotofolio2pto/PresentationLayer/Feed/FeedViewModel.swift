@@ -146,10 +146,8 @@ final class FeedViewModel: BaseViewModel, ViewModel, ObservableObject {
             try flagPortfolioUseCase.execute(id: id)
             fetchFlaggedPortfolios()
             
-            // Show a toast
             state.toastData = .init(message: L.Feed.portfolioAdded, type: .success)
             
-            // Update tab bar
             flowController?.feedTabBadgeFlowDelegate?.updateCount(to: state.flaggedPortfolioIds.count, animated: true)
         } catch {
         

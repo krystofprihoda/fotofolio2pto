@@ -81,6 +81,7 @@ struct PortfolioAuthorDetailView: View {
             .padding(.leading, 21)
             .padding(.trailing, 21)
         }
+        .skeleton(viewModel.state.isLoading)
     }
 }
 

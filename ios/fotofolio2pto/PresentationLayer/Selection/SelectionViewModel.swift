@@ -27,14 +27,13 @@ final class SelectionViewModel: BaseViewModel, ViewModel, ObservableObject {
     ) {
         self.flowController = flowController
         super.init()
+        executeTask(Task { await getFlaggedPortfoliosData() })
     }
     
     // MARK: Lifecycle
     
     override func onAppear() {
         super.onAppear()
-        
-        executeTask(Task { await getFlaggedPortfoliosData() })
     }
     
     // MARK: State
@@ -42,8 +41,6 @@ final class SelectionViewModel: BaseViewModel, ViewModel, ObservableObject {
     struct State {
         var isLoading = false
         var portfolios: [Portfolio] = []
-        var portfoliosUserData: [User] = []
-        var portfoliosCreatorData: [Creator] = []
         var alertData: AlertData? = nil
         var toastData: ToastData? = nil
     }

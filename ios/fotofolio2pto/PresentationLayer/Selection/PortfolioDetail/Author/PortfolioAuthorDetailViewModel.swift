@@ -52,7 +52,7 @@ final class PortfolioAuthorDetailViewModel: BaseViewModel, ViewModel, Observable
     // MARK: State
 
     struct State {
-        var isLoading: Bool = true
+        var isLoading: Bool = false
         var userData: User? = nil
         var creatorData: Creator? = nil
     }
@@ -69,7 +69,9 @@ final class PortfolioAuthorDetailViewModel: BaseViewModel, ViewModel, Observable
     // MARK: Additional methods
 
     private func fetchAuthorData() async {
+        state.isLoading = true
         defer { state.isLoading = false }
+        
         do {
             state.userData = try await readUserDataByCreatorIdUseCase.execute(creatorId: creatorId)
             state.creatorData = try await readCreatorDataUseCase.execute(id: creatorId)

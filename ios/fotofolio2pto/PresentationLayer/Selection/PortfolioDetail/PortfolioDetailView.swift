@@ -10,9 +10,7 @@ import SwiftUI
 struct PortfolioDetailView: View {
     private let mediaWidth: CGFloat
     private let portfolio: Portfolio
-    private let unflagPortfolio: () -> Void
-    private let showProfile: () -> Void
-    private let sendMessage: () -> Void
+    private let portfolioAuthorDetailViewModel: PortfolioAuthorDetailViewModel
     
     init(
         mediaWidth: CGFloat,
@@ -23,20 +21,13 @@ struct PortfolioDetailView: View {
     ) {
         self.mediaWidth = mediaWidth - Constants.Dimens.spaceXXLarge
         self.portfolio = portfolio
-        self.unflagPortfolio = unflagPortfolio
-        self.showProfile = showProfile
-        self.sendMessage = sendMessage
+        self.portfolioAuthorDetailViewModel = .init(creatorId: portfolio.creatorId, unflagPortfolio: unflagPortfolio, showProfile: showProfile, sendMessage: sendMessage)
     }
     
     var body: some View {
         VStack {
             /// Folio Author
-            PortfolioAuthorDetailView(viewModel: .init(
-                creatorId: portfolio.creatorId,
-                unflagPortfolio: unflagPortfolio,
-                showProfile: showProfile,
-                sendMessage: sendMessage
-            ))
+            PortfolioAuthorDetailView(viewModel: portfolioAuthorDetailViewModel)
             
             /// Carousel
             PhotoCarouselView(mediaWidth: mediaWidth, photos: portfolio.photos)

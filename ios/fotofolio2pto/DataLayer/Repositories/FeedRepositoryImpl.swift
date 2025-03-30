@@ -23,9 +23,12 @@ public class FeedRepositoryImpl: FeedRepository {
         var queryParams: [String: String] = [:]
         
         if let categories = categories, !categories.isEmpty {
+            var commaCategories = ""
             for category in categories {
-                queryParams["category"] = category
+                commaCategories += category + ","
             }
+            commaCategories.removeLast()
+            queryParams["category"] = commaCategories
         }
         
         if let sortBy = sortBy {
@@ -66,7 +69,32 @@ public class FeedRepositoryImpl: FeedRepository {
     }
     
     public func readFlagged() async throws -> [Portfolio] {
-        return []
+        guard let token: String = defaults.read(.token) else { throw AuthError.tokenRetrievalFailed }
+        let headers = [
+            "Authorization": "Bearer \(token)",
+            "Content-Type": "application/json"
+        ]
+        
+        let ids = readFlaggedIds()
+        var queryParams: [String: String] = [:]
+        
+        if !ids.isEmpty {
+            var commaIds = ""
+            for id in ids {
+                commaIds += id + ","
+            }
+            commaIds.removeLast()
+            queryParams["id"] = commaIds
+        }
+        
+        let portfolios: [Portfolio] = try await network.fetch(
+            endpoint: .portfolio,
+            method: .GET,
+            body: nil,
+            headers: headers,
+            queryParams: queryParams
+        )
+        return portfolios
     }
         
     public func readFlaggedIds() -> [String] {
