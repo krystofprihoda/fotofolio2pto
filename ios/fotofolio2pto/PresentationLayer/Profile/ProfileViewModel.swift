@@ -39,10 +39,7 @@ final class ProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
     
     override func onAppear() {
         super.onAppear()
-        
-        if state.userData == nil {
-            executeTask(Task { await fetchProfileData() })
-        }
+        executeTask(Task { await fetchProfileData() })
     }
     
     // MARK: State
@@ -94,7 +91,7 @@ final class ProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
             
             try await fetchCreatorDataAndPortfolios()
         } catch {
-            
+            print("something failed")
         }
     }
     

@@ -30,7 +30,7 @@ struct ProfileView: View {
                             profileOwner: viewModel.state.isProfileOwner
                         )
                             .padding(.top, Constants.Dimens.spaceSmall)
-                        if viewModel.state.creatorData != nil {
+                        if !viewModel.state.portfolios.isEmpty {
                             ProfilePortfoliosView(portfolios: viewModel.state.portfolios)
                         } else {
                             NotCreatorView()

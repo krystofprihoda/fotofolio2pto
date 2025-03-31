@@ -118,5 +118,7 @@ public struct L {
         public static let newPortfolioTitle = "Nové portfolio"
         public static let portfolios = "Portfolia"
         public static let goBack = "Opravdu chcete zahodit provedené změny?"
+        public static let userNotACreator = "Uživatel není tvůrce."
+        public static let noPortfoliosToShow = "Žádná portfolia k zobrazení."
     }
 }

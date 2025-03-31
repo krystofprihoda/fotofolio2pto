@@ -1,5 +1,6 @@
 package application.routes
 
+import com.google.cloud.firestore.FieldPath
 import com.google.firebase.cloud.FirestoreClient
 import com.kborowy.authprovider.firebase.await
 import io.ktor.http.*
@@ -12,8 +13,9 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Creator(
+    val id: String = "",
     val userId: String = "",
-    val yearsOfExperience: String = "",
+    val yearsOfExperience: Int = 1,
     val description: String = "",
     val portfolioIds: List<String> = emptyList()
 )
@@ -53,12 +55,14 @@ fun Application.creatorRoutes() {
 
                     val db = FirestoreClient.getFirestore()
 
-                    val res = db
+                    val creator = db
                         .collection("creator")
                         .document(id)
                         .get()
                         .await()
                         .toObject(Creator::class.java) ?: throw Exception("Creator not found")
+
+                    val res = creator.copy(id=id)
 
                     call.respond(HttpStatusCode.OK, res)
                 } catch (e: Exception) {
@@ -99,14 +103,14 @@ fun Application.creatorRoutes() {
                     val db = FirestoreClient.getFirestore()
 
                     // Retrieve the creator document
-                    val creatorSnapshot = db
+                    val creator = db
                         .collection("creator")
                         .document(creatorId)
                         .get()
                         .await()
+                        .toObject(Creator::class.java) ?: throw Exception("Creator not found")
 
-                    val creator = creatorSnapshot.toObject(Creator::class.java)
-                        ?: throw Exception("Creator not found")
+                    print(creator.portfolioIds)
 
                     // If no portfolio IDs, return an empty list
                     if (creator.portfolioIds.isEmpty()) {
@@ -116,10 +120,13 @@ fun Application.creatorRoutes() {
                     // Retrieve portfolios using the stored portfolio IDs
                     val portfolios = db
                         .collection("portfolio")
-                        .whereIn("id", creator.portfolioIds)
+                        .whereIn(FieldPath.documentId(), creator.portfolioIds)
                         .get()
                         .await()
-                        .toObjects(Portfolio::class.java)
+                        .documents
+                        .mapNotNull { document ->
+                            document.toObject(Portfolio::class.java).copy(id = document.id)
+                        }
 
                     call.respond(HttpStatusCode.OK, portfolios)
                 } catch (e: Exception) {

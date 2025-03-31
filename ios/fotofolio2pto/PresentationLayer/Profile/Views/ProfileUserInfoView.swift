@@ -84,7 +84,7 @@ struct ProfileUserInfoView: View {
                             Spacer()
                         }
                         
-                        Text(creator.profileText)
+                        Text(creator.description)
                             .lineSpacing(1)
                             .font(.system(size: 15))
                             .padding(.top, 6)

@@ -111,7 +111,7 @@ final class EditProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
                 let creatorData: Creator = try await readCreatorDataUseCase.execute(id: creatorId)
                 
                 state.yearsOfExperience = creatorData.yearsOfExperience
-                state.profileDescription = creatorData.profileText
+                state.profileDescription = creatorData.description
             } catch { }
         })
     }

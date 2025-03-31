@@ -22,6 +22,6 @@ public struct ReadCreatorPortfoliosUseCaseImpl: ReadCreatorPortfoliosUseCase {
     }
     
     public func execute(creatorId: String) async throws -> [Portfolio] {
-        try await creatorRepository.readAllCreatorPortfolios(for: creatorId)
+        try await creatorRepository.readAllCreatorPortfolios(creatorId: creatorId)
     }
 }

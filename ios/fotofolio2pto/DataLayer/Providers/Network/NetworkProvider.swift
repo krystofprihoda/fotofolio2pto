@@ -21,6 +21,7 @@ enum Endpoint {
     case userById(String)
     case creator
     case creatorById(String)
+    case creatorPortfolios(creatorId: String)
     case userByCreatorId(String)
     case portfolio
     
@@ -34,6 +35,8 @@ enum Endpoint {
             return "/creator"
         case .creatorById(let id):
             return "/creator/\(id)"
+        case .creatorPortfolios(let id):
+            return "/creator/\(id)/portfolio"
         case .userByCreatorId(let id):
             return "/creator/\(id)/user"
         case .portfolio:

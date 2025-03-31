@@ -89,7 +89,7 @@ struct PortfolioAuthorDetailView: View {
             }
             
             HStack {
-                Text(creatorData?.profileText ?? L.Selection.profileText)
+                Text(creatorData?.description ?? L.Selection.profileText)
                     .font(.system(size: 16))
                     .foregroundColor(Color(uiColor: UIColor.systemGray))
                 

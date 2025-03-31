@@ -61,7 +61,21 @@ public class CreatorRepositoryImpl: CreatorRepository {
         return user
     }
     
-    public func readAllCreatorPortfolios(for: String) async throws -> [Portfolio] {
-        return []
+    public func readAllCreatorPortfolios(creatorId: String) async throws -> [Portfolio] {
+        guard let token: String = defaults.read(.token) else { throw AuthError.tokenRetrievalFailed }
+        
+        let headers = [
+            "Authorization": "Bearer \(token)",
+            "Content-Type": "application/json"
+        ]
+        
+        let portfolios: [Portfolio] = try await network.fetch(
+            endpoint: .creatorPortfolios(creatorId: creatorId),
+            method: .GET,
+            body: [:],
+            headers: headers,
+            queryParams: nil
+        )
+        return portfolios
     }
 }
