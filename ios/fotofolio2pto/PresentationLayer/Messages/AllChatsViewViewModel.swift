@@ -1,5 +1,5 @@
 //
-//  MessagesViewModel.swift
+//  AllChatsViewViewModel.swift
 //  fotofolio2pto
 //
 //  Created by Kryštof Příhoda on 20.06.2024.
@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 import Resolver
 
-final class MessagesViewModel: BaseViewModel, ViewModel, ObservableObject {
+final class AllChatsViewViewModel: BaseViewModel, ViewModel, ObservableObject {
     // MARK: Stored properties
     
     private var chatUpdateTimer: Timer?
@@ -17,6 +17,7 @@ final class MessagesViewModel: BaseViewModel, ViewModel, ObservableObject {
     // MARK: Dependencies
     
     @LazyInjected private var readChatsUseCase: ReadChatsUseCase
+    @LazyInjected private var readUserByIdUseCase: ReadUserByIdUseCase
     
     private weak var flowController: MessagesFlowController?
     
@@ -30,7 +31,7 @@ final class MessagesViewModel: BaseViewModel, ViewModel, ObservableObject {
         super.init()
         state.senderId = senderId
         
-        executeTask(Task { await fetchChats() })
+        executeTask(Task { await updateChats() })
     }
     
     // MARK: Lifecycle
@@ -40,7 +41,7 @@ final class MessagesViewModel: BaseViewModel, ViewModel, ObservableObject {
         
         executeTask(Task { await updateChats() })
         
-        // Update every 2 seconds
+        // Update every 5 seconds
         // startFetchingChats()
     }
     
@@ -52,9 +53,10 @@ final class MessagesViewModel: BaseViewModel, ViewModel, ObservableObject {
     // MARK: State
     
     struct State: Equatable {
-        var isLoading: Bool = true
+        var isLoading: Bool = false
         var senderId = ""
         var chats: [Chat] = []
+        var receivers: [String: String] = [:]
     }
     
     @Published private(set) var state = State()
@@ -73,7 +75,7 @@ final class MessagesViewModel: BaseViewModel, ViewModel, ObservableObject {
             switch intent {
             case .showChat(let chat): showChat(chat)
             case .showNewChat: showNewChat()
-            case .refreshChats: await fetchChats()
+            case .refreshChats: await updateChats()
             }
         })
     }
@@ -82,7 +84,7 @@ final class MessagesViewModel: BaseViewModel, ViewModel, ObservableObject {
     
     private func startFetchingChats() {
         chatUpdateTimer?.invalidate() // Prevent multiple timers
-        chatUpdateTimer = Timer.scheduledTimer(withTimeInterval: 2.0, repeats: true) { [weak self] _ in
+        chatUpdateTimer = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: true) { [weak self] _ in
             Task {
                 await self?.updateChats()
             }
@@ -90,31 +92,21 @@ final class MessagesViewModel: BaseViewModel, ViewModel, ObservableObject {
     }
     
     private func updateChats() async {
-        guard !state.senderId.isEmpty else { return }
-
-        do {
-            let newChats = try await readChatsUseCase.execute()
-            state.chats = newChats
-        } catch {
-            #warning("TODO: Log error")
-        }
-    }
-    
-    private func fetchChats() async {
-        state.isLoading = true
-        defer { state.isLoading = false }
-        
-        guard !state.senderId.isEmpty else { return }
-        
         do {
             state.chats = try await readChatsUseCase.execute()
+            
+            for chat in state.chats {
+                guard let receiverId = chat.chatOwnerIds.first(where: { ownerId in ownerId != state.senderId }) else { continue }
+                let receiverData = try await readUserByIdUseCase.execute(id: receiverId)
+                state.receivers[receiverId] = receiverData.username
+            }
         } catch {
             #warning("TODO: Log error")
         }
     }
     
     private func showChat(_ chat: Chat) {
-        guard let receiverId = chat.getReceiver(sender: state.senderId) else { return }
+        guard let receiverId = chat.getReceiverId(senderId: state.senderId) else { return }
         flowController?.showChat(senderId: state.senderId, receiverId: receiverId)
     }
     

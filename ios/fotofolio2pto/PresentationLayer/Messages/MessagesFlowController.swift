@@ -30,8 +30,8 @@ class MessagesFlowController: BaseFlowController {
             let vc = BaseHostingController(rootView: view)
             return vc
         } else {
-            let vm = MessagesViewModel(flowController: self, senderId: senderId)
-            let view = MessagesView(viewModel: vm)
+            let vm = AllChatsViewViewModel(flowController: self, senderId: senderId)
+            let view = AllChatsView(viewModel: vm)
             let vc = BaseHostingController(rootView: view)
             return vc
         }

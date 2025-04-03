@@ -35,8 +35,8 @@ public struct Chat: Identifiable, Equatable {
         return lhs.id == rhs.id
     }
     
-    public func getReceiver(sender: String) -> String? {
-        return sender == chatOwnerIds.first ? chatOwnerIds.last : chatOwnerIds.first
+    public func getReceiverId(senderId: String) -> String? {
+        return senderId == chatOwnerIds.first ? chatOwnerIds.last : chatOwnerIds.first
     }
 }
 

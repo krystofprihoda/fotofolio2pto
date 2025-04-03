@@ -1,5 +1,5 @@
 //
-//  MessagesView.swift
+//  AllChatsView.swift
 //  fotofolio2pto
 //
 //  Created by Kryštof Příhoda on 20.06.2024.
@@ -7,11 +7,11 @@
 
 import SwiftUI
 
-struct MessagesView: View {
+struct AllChatsView: View {
     
-    @ObservedObject private var viewModel: MessagesViewModel
+    @ObservedObject private var viewModel: AllChatsViewViewModel
     
-    init(viewModel: MessagesViewModel) {
+    init(viewModel: AllChatsViewViewModel) {
         self.viewModel = viewModel
     }
     
@@ -29,29 +29,29 @@ struct MessagesView: View {
                             .foregroundColor(.gray)
                     } else {
                         VStack(spacing: Constants.Dimens.spaceNone) {
-                            ForEach(viewModel.state.chats) { chat in
-                                if let message = chat.messageIds.last {
-                                    Button(action: {}) {
-                                        HStack {
-//                                            ProfilePictureView(
-//                                                profilePicture: viewModel.getReceiverProfilePicture(chat: chat),
-//                                                width: Constants.Dimens.frameSizeSmall * Constants.Dimens.halfMultiplier
-//                                            )
-                                            
-                                            VStack(alignment: .leading, spacing: Constants.Dimens.spaceXXSmall) {
-                                                Text("@" + (chat.getReceiver(sender: viewModel.state.senderId) ?? L.Messages.sender))
+                            ForEach(viewModel.state.chats) { (chat: Chat) in
+                                Button(action: { viewModel.onIntent(.showChat(chat))}) {
+                                    HStack {
+                                        ProfilePictureView(
+                                            width: Constants.Dimens.frameSizeSmall * Constants.Dimens.halfMultiplier
+                                        )
+                                        
+                                        VStack(alignment: .leading, spacing: Constants.Dimens.spaceXXSmall) {
+                                            if let receiverId = chat.getReceiverId(senderId: viewModel.state.senderId),
+                                               let receiver = viewModel.state.receivers[receiverId] {
+                                                Text("@" + receiver)
                                                     .font(.body)
                                                     .fontWeight(.medium)
                                                     .foregroundColor(.mainAccent)
-                                                
-                                                Text(formatMessage(fromId: "id", "Blablabla"))
-                                                    .foregroundColor(.gray)
-                                                    .font(.body)
                                             }
-                                            .padding(.leading, Constants.Dimens.spaceSmall)
                                             
-                                            Spacer()
+                                            Text(formatMessage(fromId: chat.lastSenderId, chat.lastMessage))
+                                                .foregroundColor(.gray)
+                                                .font(.body)
                                         }
+                                        .padding(.leading, Constants.Dimens.spaceSmall)
+                                        
+                                        Spacer()
                                     }
                                 }
                             }
@@ -86,5 +86,5 @@ struct MessagesView: View {
 }
 
 #Preview {
-    MessagesView(viewModel: .init(flowController: nil, senderId: ""))
+    AllChatsView(viewModel: .init(flowController: nil, senderId: ""))
 }
