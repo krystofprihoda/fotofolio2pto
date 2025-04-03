@@ -9,49 +9,126 @@ import Foundation
 
 public class MessageRepositoryImpl: MessageRepository {
     
-    private static var chats: [Chat] = Chat.sampleData
+    private let defaults: UserDefaultsProvider
+    private let network: NetworkProvider
     
-    public func getChatsForUser(_ user: String) async throws -> [Chat] {
-        try await Task.sleep(for: .seconds(0.5))
-        return MessageRepositoryImpl.chats.filter({ chat in
-            chat.chatOwners.contains(where: { owner in
-                owner.username == user
-            })
-        })
+    init(defaults: UserDefaultsProvider, network: NetworkProvider) {
+        self.defaults = defaults
+        self.network = network
     }
     
-    public func createNewChat(sender: User, receiver: User) async throws -> Chat {
-        try await Task.sleep(for: .seconds(0.3))
-        let latestId = MessageRepositoryImpl.chats.last?.id ?? 0
-        let chat = Chat(id: latestId + 1, chatOwners: [sender, receiver])
-        MessageRepositoryImpl.chats.append(chat)
+    public func createNewChatWithMessage(receiverId: String, message: String) async throws -> Chat {
+        guard let token: String = defaults.read(.token) else { throw AuthError.tokenRetrievalFailed }
+        let headers = [
+            "Authorization": "Bearer \(token)",
+            "Content-Type": "application/json"
+        ]
+        
+        var body = [String:String]()
+        body["message"] = message
+        
+        let chat: Chat = try await network.fetch(
+            endpoint: .chat,
+            method: .POST,
+            body: body,
+            headers: headers,
+            queryParams: nil
+        )
         return chat
     }
     
-    public func sendMessage(_ text: String, chat: Chat, sender: String) async throws {
-        try await Task.sleep(for: .seconds(0.2))
-        guard let idx = MessageRepositoryImpl.chats.firstIndex(where: { $0 == chat }) else {
-            throw ObjectError.nonExistent
-        }
-        guard let receiver = chat.getReceiver(sender: sender) else { throw ObjectError.nonExistent }
-        let message = Message(from: sender, to: receiver, body: text, timestamp: .now)
-        MessageRepositoryImpl.chats[idx].messages.append(message)
-    }
-    
-    public func getLatestChatMessages(for chat: Chat) async throws -> [Message] {
-        try await Task.sleep(for: .seconds(0.3))
-        guard let updatedChat = MessageRepositoryImpl.chats.first(where: { $0 == chat }) else { throw ObjectError.nonExistent }
-        return updatedChat.messages
-    }
-    
-    public func getOrCreateChatFor(sender: User, receiver: User) async throws -> Chat {
-        try await Task.sleep(for: .seconds(0.3))
-        guard let existingChat = MessageRepositoryImpl.chats.first(where: {
-            $0.chatOwners.contains(where: { $0 == sender }) && $0.chatOwners.contains(where: { $0 == receiver })
-        }) else {
-            return try await createNewChat(sender: sender, receiver: receiver)
-        }
+    public func readUserChats() async throws -> [Chat] {
+        guard let token: String = defaults.read(.token) else { throw AuthError.tokenRetrievalFailed }
+        let headers = [
+            "Authorization": "Bearer \(token)",
+            "Content-Type": "application/json"
+        ]
         
-        return existingChat
+        let chats: [Chat] = try await network.fetch(
+            endpoint: .chat,
+            method: .GET,
+            body: nil,
+            headers: headers,
+            queryParams: nil
+        )
+        return chats
+    }
+    
+    public func readChat(receiverId: String) async throws -> Chat {
+        guard let token: String = defaults.read(.token) else { throw AuthError.tokenRetrievalFailed }
+        let headers = [
+            "Authorization": "Bearer \(token)",
+            "Content-Type": "application/json"
+        ]
+        
+        var queryParams: [String: String] = [:]
+        queryParams["receiverId"] = receiverId
+        
+        let chat: Chat = try await network.fetch(
+            endpoint: .chat,
+            method: .GET,
+            body: nil,
+            headers: headers,
+            queryParams: queryParams
+        )
+        return chat
+    }
+    
+    public func readMessages(chatId: String) async throws -> [Message] {
+        guard let token: String = defaults.read(.token) else { throw AuthError.tokenRetrievalFailed }
+        let headers = [
+            "Authorization": "Bearer \(token)",
+            "Content-Type": "application/json"
+        ]
+        
+        let messages: [Message] = try await network.fetch(
+            endpoint: .messageByChatId(chatId),
+            method: .GET,
+            body: nil,
+            headers: headers,
+            queryParams: nil
+        )
+        return messages
+    }
+    
+    public func sendMessage(chatId: String, message: String) async throws -> Chat {
+        guard let token: String = defaults.read(.token) else { throw AuthError.tokenRetrievalFailed }
+        let headers = [
+            "Authorization": "Bearer \(token)",
+            "Content-Type": "application/json"
+        ]
+        
+        var body = [String:String]()
+        body["message"] = message
+        
+        let chat: Chat = try await network.fetch(
+            endpoint: .messageByChatId(chatId),
+            method: .POST,
+            body: body,
+            headers: headers,
+            queryParams: nil
+        )
+        return chat
+    }
+    
+    public func sendMessage(receiverId: String, message: String) async throws -> Chat {
+        guard let token: String = defaults.read(.token) else { throw AuthError.tokenRetrievalFailed }
+        let headers = [
+            "Authorization": "Bearer \(token)",
+            "Content-Type": "application/json"
+        ]
+        
+        var body = [String:String]()
+        body["message"] = message
+        body["receiverId"] = receiverId
+        
+        let chat: Chat = try await network.fetch(
+            endpoint: .chat,
+            method: .POST,
+            body: body,
+            headers: headers,
+            queryParams: nil
+        )
+        return chat
     }
 }

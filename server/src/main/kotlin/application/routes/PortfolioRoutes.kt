@@ -3,6 +3,7 @@ package application.routes
 import com.google.cloud.firestore.FieldPath
 import com.google.cloud.firestore.Query
 import com.google.firebase.cloud.FirestoreClient
+import com.kborowy.authprovider.firebase.FirebaseToken
 import com.kborowy.authprovider.firebase.await
 import io.ktor.http.*
 import io.ktor.server.application.*
@@ -30,20 +31,20 @@ fun Application.portfolioRoutes() {
             get("/portfolio") {
                 try {
                     val db = FirestoreClient.getFirestore()
-                    val categories = call.request.queryParameters.getAll("category")
-                    val sortBy = call.request.queryParameters["sortBy"] // "timestamp" or "rating"
+                    val categoryParams = call.request.queryParameters["category"]
+                    val sortByParam = call.request.queryParameters["sortBy"] // "timestamp" or "rating"
                     val portfolioIdsParam = call.request.queryParameters["id"]
 
                     var portfoliosQuery: Query = db.collection("portfolio")
 
                     // Parse portfolio IDs from comma-separated string
                     val portfolioIds = portfolioIdsParam?.split(",")?.map { it.trim() }?.filter { it.isNotEmpty() }
+                    val categories = categoryParams?.split(",")?.map { it.trim() }?.filter { it.isNotEmpty() }
 
                     if (!portfolioIds.isNullOrEmpty()) {
                         // Firestore has a limit of 10 IDs for `whereIn`
                         if (portfolioIds.size > 10) {
-                            call.respond(HttpStatusCode.BadRequest, "Cannot query more than 10 portfolio IDs at a time")
-                            return@get
+                            throw Exception("Cannot query more than 10 portfolio IDs at a time")
                         }
                         portfoliosQuery = portfoliosQuery.whereIn(FieldPath.documentId(), portfolioIds)
                     }
@@ -57,7 +58,7 @@ fun Application.portfolioRoutes() {
                     }
 
                     val sortedPortfolios = if (portfolioIds.isNullOrEmpty()) {
-                        when (sortBy) {
+                        when (sortByParam) {
                             "timestamp" -> portfolios.sortedBy { it.timestamp }
                             "rating" -> {
                                 val portfoliosWithRatings = portfolios.map { portfolio ->

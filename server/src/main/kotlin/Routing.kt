@@ -1,6 +1,7 @@
 package cz.cvut.fit
 
 import application.routes.creatorRoutes
+import application.routes.messageRoutes
 import application.routes.portfolioRoutes
 import application.routes.userRoutes
 import io.ktor.server.application.*
@@ -11,5 +12,6 @@ fun Application.configureRouting() {
         userRoutes()
         creatorRoutes()
         portfolioRoutes()
+        messageRoutes()
     }
 }

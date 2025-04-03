@@ -11,7 +11,7 @@ import SwiftUI
 // Move
 let LOREMFLICKR = "https://loremflickr.com/1000/1000/"
 
-public struct Portfolio: Identifiable, Equatable, Codable {
+public struct Portfolio: Identifiable, Equatable {
     public let id: String
     public let creatorId: String
     public let authorUsername: String
@@ -21,6 +21,32 @@ public struct Portfolio: Identifiable, Equatable, Codable {
     public let category: [String]
     public let timestamp: Date
     
+    public init(
+        id: String,
+        creatorId: String,
+        authorUsername: String,
+        name: String,
+        photos: [IImage],
+        description: String,
+        category: [String],
+        timestamp: Date
+    ) {
+        self.id = id
+        self.creatorId = creatorId
+        self.authorUsername = authorUsername
+        self.name = name
+        self.photos = photos
+        self.description = description
+        self.category = category
+        self.timestamp = timestamp
+    }
+    
+    public static func == (lhs: Portfolio, rhs: Portfolio) -> Bool {
+        lhs.id == rhs.id
+    }
+}
+
+extension Portfolio: Codable {
     enum CodingKeys: String, CodingKey {
         case id, creatorId, authorUsername, name, photos, description, category, timestamp
     }
@@ -48,52 +74,28 @@ public struct Portfolio: Identifiable, Equatable, Codable {
             timestamp = Date(timeIntervalSince1970: timeInterval)
         }
         
-        public func encode(to encoder: Encoder) throws {
-            var container = encoder.container(keyedBy: CodingKeys.self)
-            try container.encode(id, forKey: .id)
-            try container.encode(creatorId, forKey: .creatorId)
-            try container.encode(authorUsername, forKey: .authorUsername)
-            try container.encode(name, forKey: .name)
-            
-            // Convert photos to URL strings
-            let photoURLs = photos.compactMap { image in
-                switch image.src {
-                case .remote(let url):
-                    return url.absoluteString
-                case .local:
-                    return nil
-                }
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(id, forKey: .id)
+        try container.encode(creatorId, forKey: .creatorId)
+        try container.encode(authorUsername, forKey: .authorUsername)
+        try container.encode(name, forKey: .name)
+        
+        // Convert photos to URL strings
+        let photoURLs = photos.compactMap { image in
+            switch image.src {
+            case .remote(let url):
+                return url.absoluteString
+            case .local:
+                return nil
             }
-            try container.encode(photoURLs, forKey: .photos)
-            
-            try container.encode(description, forKey: .description)
-            try container.encode(category, forKey: .category)
-            
-            try container.encode(timestamp.timeIntervalSince1970, forKey: .timestamp)
         }
-    
-    public init(
-        id: String,
-        creatorId: String,
-        authorUsername: String,
-        name: String,
-        photos: [IImage],
-        description: String,
-        category: [String],
-        timestamp: Date
-    ) {
-        self.id = id
-        self.creatorId = creatorId
-        self.authorUsername = authorUsername
-        self.name = name
-        self.photos = photos
-        self.description = description
-        self.category = category
-        self.timestamp = timestamp
-    }
-    
-    public static func == (lhs: Portfolio, rhs: Portfolio) -> Bool {
-        lhs.id == rhs.id
+        try container.encode(photoURLs, forKey: .photos)
+        
+        try container.encode(description, forKey: .description)
+        try container.encode(category, forKey: .category)
+        
+        try container.encode(timestamp.timeIntervalSince1970, forKey: .timestamp)
     }
 }
 

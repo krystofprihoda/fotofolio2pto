@@ -10,44 +10,44 @@ import UIKit
 
 class MessagesFlowController: BaseFlowController {
     
-    private let sender: String
-    private let receiver: String?
+    private let senderId: String
+    private let receiverId: String?
     
     init(
         navigationController: UINavigationController,
-        sender: String,
-        receiver: String? = nil
+        senderId: String,
+        receiverId: String? = nil
     ) {
-        self.sender = sender
-        self.receiver = receiver
+        self.senderId = senderId
+        self.receiverId = receiverId
         super.init(navigationController: navigationController)
     }
     
     override func setup() -> UIViewController {
-        if let receiver {
-            let vm = ChatViewModel(flowController: self, sender: sender, receiver: receiver)
+        if let receiverId {
+            let vm = ChatViewModel(flowController: self, senderId: senderId, receiverId: receiverId)
             let view = ChatView(viewModel: vm)
             let vc = BaseHostingController(rootView: view)
             return vc
         } else {
-            let vm = MessagesViewModel(flowController: self, sender: sender)
+            let vm = MessagesViewModel(flowController: self, senderId: senderId)
             let view = MessagesView(viewModel: vm)
             let vc = BaseHostingController(rootView: view)
             return vc
         }
     }
     
-    public func showChat(sender: String, receiver: String) {
-        let vm = ChatViewModel(flowController: self, sender: sender, receiver: receiver)
+    public func showChat(senderId: String, receiverId: String) {
+        let vm = ChatViewModel(flowController: self, senderId: senderId, receiverId: receiverId)
         let view = ChatView(viewModel: vm)
         let vc = BaseHostingController(rootView: view)
         navigationController.pushViewController(vc, animated: true)
     }
     
     public func showNewChat() {
-        let vm = NewChatSearchViewModel(flowController: self, sender: sender)
-        let view = NewChatSearchView(viewModel: vm)
-        let vc = BaseHostingController(rootView: view)
+        let vm = SearchViewModel(messagesFlowController: self, signedInUserId: senderId, searchIntent: .chat)
+        let view = SearchView(viewModel: vm)
+        let vc = BaseHostingController(rootView: view, hideBackButton: true)
         navigationController.pushViewController(vc, animated: true)
     }
 }

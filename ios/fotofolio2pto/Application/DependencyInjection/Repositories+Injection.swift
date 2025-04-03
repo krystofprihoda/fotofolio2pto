@@ -14,6 +14,6 @@ public extension Resolver {
         register { UserRepositoryImpl(defaults: resolve(), network: resolve()) as UserRepository }
         register { CreatorRepositoryImpl(defaults: resolve(), network: resolve()) as CreatorRepository }
         register { FeedRepositoryImpl(defaults: resolve(), network: resolve()) as FeedRepository }
-        register { MessageRepositoryImpl() as MessageRepository }
+        register { MessageRepositoryImpl(defaults: resolve(), network: resolve()) as MessageRepository }
     }
 }

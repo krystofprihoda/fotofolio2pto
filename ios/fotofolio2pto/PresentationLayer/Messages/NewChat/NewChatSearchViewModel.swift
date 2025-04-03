@@ -72,7 +72,7 @@ final class NewChatSearchViewModel: BaseViewModel, ViewModel, ObservableObject {
     private func showNewChatWithUser(_ receiver: User) async {
         do {
 //            let _ = try await createNewChatUseCase.execute(sender: state.sender, receiver: receiver)
-            flowController?.showChat(sender: state.sender, receiver: receiver.username)
+            flowController?.showChat(senderId: state.sender, receiverId: receiver.username)
         } catch {
             
         }

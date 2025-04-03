@@ -8,9 +8,10 @@
 import Foundation
 
 public protocol MessageRepository {
-    func getChatsForUser(_ user: String) async throws -> [Chat]
-    func createNewChat(sender: User, receiver: User) async throws -> Chat
-    func sendMessage(_ text: String, chat: Chat, sender: String) async throws
-    func getLatestChatMessages(for chat: Chat) async throws -> [Message]
-    func getOrCreateChatFor(sender: User, receiver: User) async throws -> Chat
+    func createNewChatWithMessage(receiverId: String, message: String) async throws -> Chat
+    func sendMessage(chatId: String, message: String) async throws -> Chat
+    func sendMessage(receiverId: String, message: String) async throws -> Chat
+    func readChat(receiverId: String) async throws -> Chat
+    func readUserChats() async throws -> [Chat]
+    func readMessages(chatId: String) async throws -> [Message]
 }

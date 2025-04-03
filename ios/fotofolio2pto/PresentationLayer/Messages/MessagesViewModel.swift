@@ -16,7 +16,7 @@ final class MessagesViewModel: BaseViewModel, ViewModel, ObservableObject {
     
     // MARK: Dependencies
     
-    @LazyInjected private var getChatsForUserUseCase: GetChatsForUserUseCase
+    @LazyInjected private var readChatsUseCase: ReadChatsUseCase
     
     private weak var flowController: MessagesFlowController?
     
@@ -24,11 +24,11 @@ final class MessagesViewModel: BaseViewModel, ViewModel, ObservableObject {
     
     init(
         flowController: MessagesFlowController?,
-        sender: String
+        senderId: String
     ) {
         self.flowController = flowController
         super.init()
-        state.sender = sender
+        state.senderId = senderId
         
         executeTask(Task { await fetchChats() })
     }
@@ -53,8 +53,8 @@ final class MessagesViewModel: BaseViewModel, ViewModel, ObservableObject {
     
     struct State: Equatable {
         var isLoading: Bool = true
+        var senderId = ""
         var chats: [Chat] = []
-        var sender = ""
     }
     
     @Published private(set) var state = State()
@@ -90,13 +90,11 @@ final class MessagesViewModel: BaseViewModel, ViewModel, ObservableObject {
     }
     
     private func updateChats() async {
-        guard !state.sender.isEmpty else { return }
+        guard !state.senderId.isEmpty else { return }
 
         do {
-           let newChats = try await getChatsForUserUseCase.execute(user: state.sender)
-           await MainActor.run {
-               state.chats = newChats
-           }
+            let newChats = try await readChatsUseCase.execute()
+            state.chats = newChats
         } catch {
             #warning("TODO: Log error")
         }
@@ -106,25 +104,21 @@ final class MessagesViewModel: BaseViewModel, ViewModel, ObservableObject {
         state.isLoading = true
         defer { state.isLoading = false }
         
-        guard !state.sender.isEmpty else { return }
+        guard !state.senderId.isEmpty else { return }
         
         do {
-            state.chats = try await getChatsForUserUseCase.execute(user: state.sender)
+            state.chats = try await readChatsUseCase.execute()
         } catch {
             #warning("TODO: Log error")
         }
     }
     
     private func showChat(_ chat: Chat) {
-        guard let receiver = chat.getReceiver(sender: state.sender) else { return }
-        flowController?.showChat(sender: state.sender, receiver: receiver)
+        guard let receiverId = chat.getReceiver(sender: state.senderId) else { return }
+        flowController?.showChat(senderId: state.senderId, receiverId: receiverId)
     }
     
     private func showNewChat() {
         flowController?.showNewChat()
-    }
-    
-    public func getReceiverProfilePicture(chat: Chat) -> IImage? {
-        return chat.chatOwners.first(where: { state.sender != $0.username })?.profilePicture
     }
 }

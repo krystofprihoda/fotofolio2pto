@@ -7,9 +7,7 @@
 
 import Foundation
 
-let PROFILE_PIC = URL(string: "https://loremflickr.com/320/320/person")!
-
-public struct User: Identifiable, Equatable, Codable {
+public struct User: Identifiable, Equatable {
     public var id: String
     public var username: String
     public var fullName: String
@@ -39,6 +37,23 @@ public struct User: Identifiable, Equatable, Codable {
         self.creatorId = creatorId
     }
     
+    public var averageRating: Double {
+        if rating.isEmpty { return 0 }
+        
+        let sum = rating.values.reduce(0, +)
+        return Double(sum) / Double(rating.count)
+    }
+    
+    public var isCreator: Bool {
+        return creatorId != nil
+    }
+    
+    public static func == (lhs: User, rhs: User) -> Bool {
+        lhs.id == rhs.id
+    }
+}
+
+extension User: Codable {
     enum CodingKeys: String, CodingKey {
         case id = "userId"
         case username, fullName, email, location, profilePicture, rating, creatorId
@@ -52,7 +67,13 @@ public struct User: Identifiable, Equatable, Codable {
         email = try container.decode(String.self, forKey: .email)
         location = try container.decode(String.self, forKey: .location)
         rating = try container.decode([String: Int].self, forKey: .rating)
-        creatorId = try container.decodeIfPresent(String.self, forKey: .creatorId)
+        
+        let rawCreatorId = try container.decodeIfPresent(String.self, forKey: .creatorId)
+        if let rawCreatorId, !rawCreatorId.isEmpty {
+            creatorId = rawCreatorId
+        } else {
+            creatorId = nil
+        }
 
         // Decode profilePicture as a URL and wrap it in MyImageEnum.remote
         if let profilePictureURLString = try? container.decode(String.self, forKey: .profilePicture),
@@ -79,22 +100,9 @@ public struct User: Identifiable, Equatable, Codable {
             try container.encode(url.absoluteString, forKey: .profilePicture)
         }
     }
-    
-    public var averageRating: Double {
-        if rating.isEmpty { return 0 }
-        
-        let sum = rating.values.reduce(0, +)
-        return Double(sum) / Double(rating.count)
-    }
-    
-    public var isCreator: Bool {
-        return creatorId != nil
-    }
-    
-    public static func == (lhs: User, rhs: User) -> Bool {
-        lhs.id == rhs.id
-    }
 }
+
+let PROFILE_PIC = URL(string: "https://loremflickr.com/320/320/person")!
 
 extension User {
     static let sampleData: [User] = [dummy1, dummy2, dummy3, dummy4, dummy5, dummy6]

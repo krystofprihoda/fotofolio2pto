@@ -29,7 +29,13 @@ public class UserRepositoryImpl: UserRepository {
         
         let queryParams = query.isEmpty ? nil : ["query": query]
         
-        let users: [User] = try await network.fetch(endpoint: .user, method: .GET, body: nil, headers: headers, queryParams: queryParams)
+        let users: [User] = try await network.fetch(
+            endpoint: .user,
+            method: .GET,
+            body: nil,
+            headers: headers,
+            queryParams: queryParams
+        )
         return users
     }
     
@@ -60,7 +66,13 @@ public class UserRepositoryImpl: UserRepository {
             "profilePicture": profilePicture
         ]
         
-        _ = try await network.request(endpoint: .user, method: .POST, body: body, headers: headers, queryParams: nil)
+        _ = try await network.request(
+                endpoint: .user,
+                method: .POST,
+                body: body,
+                headers: headers,
+                queryParams: nil
+            )
     }
     
     public func getUser(id: String) async throws -> User {
@@ -71,8 +83,13 @@ public class UserRepositoryImpl: UserRepository {
             "Content-Type": "application/json"
         ]
         
-        let user: User = try await network.fetch(endpoint: .userById(id), method: .GET, body: [:], headers: headers, queryParams: nil)
-        print(user)
+        let user: User = try await network.fetch(
+            endpoint: .userById(id),
+            method: .GET,
+            body: [:],
+            headers: headers,
+            queryParams: nil
+        )
         return user
     }
     

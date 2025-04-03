@@ -44,16 +44,24 @@ struct SearchView: View {
             
             SearchResultsView(
                 results: viewModel.state.searchResults,
-                showProfile: { user in viewModel.onIntent(
-                    .showProfile(of: user)
-                )}
+                onResultTap: { user in viewModel.onIntent(.onResultTap(of: user)) }
             )
         }
         .padding([.horizontal, .top])
-        .setupNavBarAndTitle(L.Search.title)
+        .setupNavBarAndTitle(L.Search.title, hideBack: true)
+        .navigationBarItems(leading: backButton)
+    }
+    
+    var backButton: some View {
+        Button(L.Profile.back) {
+            viewModel.onIntent(.goBack)
+        }
+        .foregroundStyle(.black)
+        .disabled(!viewModel.state.showDismiss)
+        .opacity(viewModel.state.showDismiss ? 1 : 0)
     }
 }
 
 #Preview {
-    SearchView(viewModel: .init(flowController: nil, signedInUserId: ""))
+    SearchView(viewModel: .init(searchFlowController: nil, messagesFlowController: nil, signedInUserId: "", searchIntent: .profile))
 }

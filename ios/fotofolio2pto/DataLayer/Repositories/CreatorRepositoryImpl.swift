@@ -44,7 +44,6 @@ public class CreatorRepositoryImpl: CreatorRepository {
         ]
         
         let creator: Creator = try await network.fetch(endpoint: .creatorById(id), method: .GET, body: nil, headers: headers, queryParams: nil)
-        print(creator)
         return creator
     }
     
@@ -57,7 +56,6 @@ public class CreatorRepositoryImpl: CreatorRepository {
         ]
         
         let user: User = try await network.fetch(endpoint: .userByCreatorId(creatorId), method: .GET, body: [:], headers: headers, queryParams: nil)
-        print(user)
         return user
     }
     
@@ -70,7 +68,7 @@ public class CreatorRepositoryImpl: CreatorRepository {
         ]
         
         let portfolios: [Portfolio] = try await network.fetch(
-            endpoint: .creatorPortfolios(creatorId: creatorId),
+            endpoint: .creatorPortfolio(creatorId: creatorId),
             method: .GET,
             body: [:],
             headers: headers,

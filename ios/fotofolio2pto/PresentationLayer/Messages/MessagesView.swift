@@ -30,21 +30,21 @@ struct MessagesView: View {
                     } else {
                         VStack(spacing: Constants.Dimens.spaceNone) {
                             ForEach(viewModel.state.chats) { chat in
-                                if let message = chat.messages.last {
-                                    Button(action: { viewModel.onIntent(.showChat(chat)) }) {
+                                if let message = chat.messageIds.last {
+                                    Button(action: {}) {
                                         HStack {
-                                            ProfilePictureView(
-                                                profilePicture: viewModel.getReceiverProfilePicture(chat: chat),
-                                                width: Constants.Dimens.frameSizeSmall * Constants.Dimens.halfMultiplier
-                                            )
+//                                            ProfilePictureView(
+//                                                profilePicture: viewModel.getReceiverProfilePicture(chat: chat),
+//                                                width: Constants.Dimens.frameSizeSmall * Constants.Dimens.halfMultiplier
+//                                            )
                                             
                                             VStack(alignment: .leading, spacing: Constants.Dimens.spaceXXSmall) {
-                                                Text("@" + (chat.getReceiver(sender: viewModel.state.sender) ?? L.Messages.sender))
+                                                Text("@" + (chat.getReceiver(sender: viewModel.state.senderId) ?? L.Messages.sender))
                                                     .font(.body)
                                                     .fontWeight(.medium)
                                                     .foregroundColor(.mainAccent)
                                                 
-                                                Text(formatMessage(from: message.from, message.body))
+                                                Text(formatMessage(fromId: "id", "Blablabla"))
                                                     .foregroundColor(.gray)
                                                     .font(.body)
                                             }
@@ -80,11 +80,11 @@ struct MessagesView: View {
         .setupNavBarAndTitle(L.Messages.title)
     }
     
-    private func formatMessage(from: String, _ message: String) -> String {
-        return from == viewModel.state.sender ? "\(L.Messages.youFormat) \"\(message)\"" : "\"\(message)\""
+    private func formatMessage(fromId: String, _ message: String) -> String {
+        return fromId == viewModel.state.senderId ? "\(L.Messages.youFormat) \"\(message)\"" : "\"\(message)\""
     }
 }
 
 #Preview {
-    MessagesView(viewModel: .init(flowController: nil, sender: ""))
+    MessagesView(viewModel: .init(flowController: nil, senderId: ""))
 }

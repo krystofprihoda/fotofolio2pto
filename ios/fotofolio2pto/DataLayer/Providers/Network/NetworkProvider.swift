@@ -16,14 +16,42 @@ enum HTTPMethod: String {
     case GET, POST, PUT, DELETE, PATCH
 }
 
+enum NetworkError: Error {
+    case badURL
+    case unauthorized
+    case notFound
+    case serverError(statusCode: Int)
+    case decodingError
+    case unknownError
+    
+    var localizedDescription: String {
+        switch self {
+        case .badURL:
+            return "Invalid URL."
+        case .unauthorized:
+            return "Unauthorized request."
+        case .notFound:
+            return "Requested resource was not found."
+        case .serverError(let statusCode):
+            return "Server error (status code: \(statusCode))."
+        case .decodingError:
+            return "Failed to decode response."
+        case .unknownError:
+            return "An unknown error occurred."
+        }
+    }
+}
+
 enum Endpoint {
     case user
     case userById(String)
     case creator
     case creatorById(String)
-    case creatorPortfolios(creatorId: String)
+    case creatorPortfolio(creatorId: String)
     case userByCreatorId(String)
     case portfolio
+    case chat
+    case messageByChatId(String)
     
     var path: String {
         switch self {
@@ -35,12 +63,16 @@ enum Endpoint {
             return "/creator"
         case .creatorById(let id):
             return "/creator/\(id)"
-        case .creatorPortfolios(let id):
+        case .creatorPortfolio(let id):
             return "/creator/\(id)/portfolio"
         case .userByCreatorId(let id):
             return "/creator/\(id)/user"
         case .portfolio:
             return "/portfolio"
+        case .chat:
+            return "/chat"
+        case .messageByChatId(let chatId):
+            return "/chat/\(chatId)/message"
         }
     }
 }

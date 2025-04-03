@@ -8,7 +8,8 @@
 import Foundation
 
 public protocol SendMessageUseCase {
-    func execute(text: String, chat: Chat, sender: String) async throws
+    func execute(chatId: String, message: String) async throws -> Chat
+    func execute(receiverId: String, message: String) async throws -> Chat
 }
 
 public struct SendMessageUseCaseImpl: SendMessageUseCase {
@@ -19,7 +20,11 @@ public struct SendMessageUseCaseImpl: SendMessageUseCase {
         self.messageRepository = messageRepository
     }
     
-    public func execute(text: String, chat: Chat, sender: String) async throws {
-        try await messageRepository.sendMessage(text, chat: chat, sender: sender)
+    public func execute(chatId: String, message: String) async throws -> Chat {
+        try await messageRepository.sendMessage(chatId: chatId, message: message)
+    }
+    
+    public func execute(receiverId: String, message: String) async throws -> Chat {
+        try await messageRepository.sendMessage(receiverId: receiverId, message: message)
     }
 }

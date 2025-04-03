@@ -45,13 +45,6 @@ class FirebaseProvider: AuthProvider {
             }
         }
     }
-//            Auth.auth().currentUser?.sendEmailVerification { error in
-//                print("Your email is pending verification, please check your emails for a verification link.")
-//            }
-    
-    func createUser(username: String) async throws {
-        
-    }
     
     func login(email: String, password: String) async throws -> AuthDataResult {
         return try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<AuthDataResult, Error>) in

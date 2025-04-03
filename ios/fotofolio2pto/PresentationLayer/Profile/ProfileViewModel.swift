@@ -91,7 +91,7 @@ final class ProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
             
             try await fetchCreatorDataAndPortfolios()
         } catch {
-            print("something failed")
+            
         }
     }
     

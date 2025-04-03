@@ -121,7 +121,7 @@ public class MainFlowController: BaseFlowController {
             image: UIImage(systemName: "message"),
             tag: MainTab.messages.rawValue
         )
-        let messagesFlowController = MessagesFlowController(navigationController: messagesNavController, sender: userId)
+        let messagesFlowController = MessagesFlowController(navigationController: messagesNavController, senderId: userId)
         let messagesRootVC = startChildFlow(messagesFlowController)
         messagesNavController.viewControllers = [messagesRootVC]
         

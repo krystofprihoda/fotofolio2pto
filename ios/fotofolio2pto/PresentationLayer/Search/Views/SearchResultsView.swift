@@ -10,20 +10,20 @@ import SwiftUI
 struct SearchResultsView: View {
     
     private let results: [User]
-    private let showProfile: (User) -> Void
+    private let onResultTap: (User) -> Void
     
     init(
         results: [User],
-        showProfile: @escaping (User) -> Void
+        onResultTap: @escaping (User) -> Void
     ) {
         self.results = results
-        self.showProfile = showProfile
+        self.onResultTap = onResultTap
     }
     
     var body: some View {
         ScrollView(showsIndicators: false) {
             ForEach(results, id: \.id) { user in
-                Button(action: { showProfile(user) }, label: {
+                Button(action: { onResultTap(user) }, label: {
                     HStack {
                         ProfilePictureView(profilePicture: user.profilePicture, width: 60.0)
                         
@@ -51,5 +51,5 @@ struct SearchResultsView: View {
 }
 
 #Preview {
-    SearchResultsView(results: [.dummy1], showProfile: { _ in })
+    SearchResultsView(results: [.dummy1], onResultTap: { _ in })
 }

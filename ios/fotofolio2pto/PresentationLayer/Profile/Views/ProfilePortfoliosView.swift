@@ -71,8 +71,7 @@ struct ProfilePortfoliosView: View {
                                     }
                                 }
                             }
-                            .padding([.leading, .trailing], Constants.Dimens.spaceMedium)
-                            .padding(.bottom, Constants.Dimens.spaceMedium)
+                            .padding([.leading, .trailing, .bottom], Constants.Dimens.spaceMedium)
                         }
                         
                         if showText {

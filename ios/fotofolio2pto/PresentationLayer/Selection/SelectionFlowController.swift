@@ -43,7 +43,7 @@ class SelectionFlowController: BaseFlowController {
     }
     
     func sendMessage(to receiver: User) {
-        let fc = MessagesFlowController(navigationController: navigationController, sender: signedInUserId, receiver: receiver.username)
+        let fc = MessagesFlowController(navigationController: navigationController, senderId: signedInUserId, receiverId: receiver.id)
         let vc = startChildFlow(fc)
         navigationController.pushViewController(vc, animated: true)
     }

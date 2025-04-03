@@ -18,16 +18,16 @@ struct ChatView: View {
     var body: some View {
         VStack {
             ScrollView {
-                VStack {
+                VStack(spacing: Constants.Dimens.spaceXSmall) {
                     if viewModel.state.isLoading {
                         ProgressView()
                             .progressViewStyle(.circular)
                             .padding(.top, Constants.Dimens.spaceXXLarge)
                     } else {
-                        if let messages = viewModel.state.chat?.messages {
-                            ForEach(messages) { message in
+                        if !viewModel.state.messages.isEmpty {
+                            ForEach(viewModel.state.messages) { message in
                                 HStack {
-                                    let isSender = message.from == viewModel.state.sender
+                                    let isSender = message.from == viewModel.state.senderId
                                     
                                     if isSender { Spacer() }
                                     
@@ -65,15 +65,21 @@ struct ChatView: View {
                         .padding(Constants.Dimens.textFieldButtonSpace)
                         .background(.mainAccent)
                         .cornerRadius(Constants.Dimens.radiusXSmall)
-                        .foregroundColor(.white)
+                        .foregroundColor(viewModel.state.isSendingMessage ? .clear : .white)
                         .disabledOverlay(viewModel.state.textInput.isEmpty)
                         .padding(.trailing, Constants.Dimens.spaceXSmall)
                 })
+                .overlay {
+                    if viewModel.state.isSendingMessage {
+                        ProgressView()
+                            .progressViewStyle(.circular)
+                    }
+                }
             }
         }
         .padding()
         .navigationBarItems(leading: backButton)
-        .setupNavBarAndTitle(viewModel.state.receiver, hideBack: true)
+        .setupNavBarAndTitle(viewModel.state.receiverData?.username ?? "", hideBack: true)
         .lifecycle(viewModel)
     }
     
@@ -86,5 +92,5 @@ struct ChatView: View {
 }
 
 #Preview {
-    ChatView(viewModel: .init(flowController: nil, sender: "", receiver: ""))
+    ChatView(viewModel: .init(flowController: nil, senderId: "", receiverId: ""))
 }

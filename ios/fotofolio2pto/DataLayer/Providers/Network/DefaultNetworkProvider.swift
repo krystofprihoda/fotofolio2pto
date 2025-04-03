@@ -17,8 +17,8 @@ final class DefaultNetworkProvider: NetworkProvider {
     }
     
     func request(endpoint: Endpoint, method: HTTPMethod, body: [String: Any]? = nil, headers: [String: String]?, queryParams: [String: String]? = nil) async throws -> Data {
-            guard var urlComponents = URLComponents(string: "\(baseURL.rawValue)\(endpoint.path)") else {
-                throw URLError(.badURL)
+        guard var urlComponents = URLComponents(string: "\(baseURL.rawValue)\(endpoint.path)") else {
+                throw NetworkError.badURL
             }
             
             if let queryParams = queryParams {
@@ -26,7 +26,7 @@ final class DefaultNetworkProvider: NetworkProvider {
             }
             
             guard let url = urlComponents.url else {
-                throw URLError(.badURL)
+                throw NetworkError.badURL
             }
             
             var request = URLRequest(url: url)
@@ -45,11 +45,22 @@ final class DefaultNetworkProvider: NetworkProvider {
             
             if baseURL == .test { Logger.log(response: response, data: data) }
             
-            guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
-                throw NSError(domain: "ServerError", code: -1, userInfo: [NSLocalizedDescriptionKey: "Request failed"])
+            guard let httpResponse = response as? HTTPURLResponse else {
+                throw NetworkError.unknownError
             }
             
-            return data
+            switch httpResponse.statusCode {
+            case 200...299:
+                return data
+            case 401:
+                throw NetworkError.unauthorized
+            case 404:
+                throw NetworkError.notFound
+            case 500...599:
+                throw NetworkError.serverError(statusCode: httpResponse.statusCode)
+            default:
+                throw NetworkError.unknownError
+            }
         }
         
         func fetch<T: Decodable>(endpoint: Endpoint, method: HTTPMethod = .GET, body: [String: Any]? = nil, headers: [String: String]? = nil, queryParams: [String: String]? = nil) async throws -> T {

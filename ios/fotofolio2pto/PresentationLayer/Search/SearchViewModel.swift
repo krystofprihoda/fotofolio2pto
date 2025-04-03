@@ -9,6 +9,11 @@ import Foundation
 import SwiftUI
 import Resolver
 
+enum SearchIntent {
+    case profile
+    case chat
+}
+
 final class SearchViewModel: BaseViewModel, ViewModel, ObservableObject {
     // MARK: Stored properties
     
@@ -18,17 +23,24 @@ final class SearchViewModel: BaseViewModel, ViewModel, ObservableObject {
     
     @LazyInjected private var readUsersFromQueryUseCase: ReadUsersFromQueryUseCase
     
-    private weak var flowController: SearchFlowController?
+    private weak var searchFlowController: SearchFlowController?
+    private weak var messagesFlowController: MessagesFlowController?
     
     // MARK: Init
     
     init(
-        flowController: SearchFlowController?,
-        signedInUserId: String
+        searchFlowController: SearchFlowController? = nil,
+        messagesFlowController: MessagesFlowController? = nil,
+        signedInUserId: String,
+        searchIntent: SearchIntent
     ) {
-        self.flowController = flowController
+        self.searchFlowController = searchFlowController
+        self.messagesFlowController = messagesFlowController
         super.init()
         state.signedInUserId = signedInUserId
+        state.intent = searchIntent
+        
+        if searchIntent == .chat { state.showDismiss = true }
     }
     
     // MARK: Lifecycle
@@ -41,8 +53,10 @@ final class SearchViewModel: BaseViewModel, ViewModel, ObservableObject {
     
     struct State {
         var signedInUserId = ""
+        var intent: SearchIntent = .profile
         var textInput: String = ""
         var searchResults: [User] = []
+        var showDismiss = false
     }
     
     @Published private(set) var state = State()
@@ -52,7 +66,8 @@ final class SearchViewModel: BaseViewModel, ViewModel, ObservableObject {
     enum Intent {
         case setTextInput(String)
         case search
-        case showProfile(of: User)
+        case onResultTap(of: User)
+        case goBack
     }
     
     @discardableResult
@@ -61,7 +76,8 @@ final class SearchViewModel: BaseViewModel, ViewModel, ObservableObject {
             switch intent {
             case .setTextInput(let input): setTextInput(input)
             case .search: search()
-            case .showProfile(let user): showProfile(of: user)
+            case .onResultTap(let user): onResultTap(of: user)
+            case .goBack: dismissScreen()
             }
         })
     }
@@ -85,7 +101,21 @@ final class SearchViewModel: BaseViewModel, ViewModel, ObservableObject {
         }
     }
     
-    private func showProfile(of user: User) {
-        flowController?.showProfile(of: user)
+    private func onResultTap(of user: User) {
+        switch state.intent {
+        case .profile:
+            searchFlowController?.showProfile(of: user)
+        case .chat:
+            messagesFlowController?.showChat(senderId: state.signedInUserId, receiverId: user.id)
+        }
+    }
+    
+    private func dismissScreen() {
+        switch state.intent {
+        case .profile:
+            searchFlowController?.navigationController.popViewController(animated: true)
+        case .chat:
+            messagesFlowController?.navigationController.popViewController(animated: true)
+        }
     }
 }

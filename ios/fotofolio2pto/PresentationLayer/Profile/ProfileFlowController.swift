@@ -47,8 +47,8 @@ class ProfileFlowController: BaseFlowController {
         return vc
     }
     
-    public func sendMessage(from sender: String, to receiver: String) {
-        let fc = MessagesFlowController(navigationController: navigationController, sender: sender, receiver: receiver)
+    public func sendMessage(from senderId: String, to receiverId: String) {
+        let fc = MessagesFlowController(navigationController: navigationController, senderId: senderId, receiverId: receiverId)
         let vc = startChildFlow(fc)
         navigationController.pushViewController(vc, animated: true)
     }

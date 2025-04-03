@@ -17,7 +17,6 @@ public extension Resolver {
         register { RegisterUserUseCaseImpl(authRepository: resolve()) as RegisterUserUseCase }
         
         /// User
-//        register { GetUserDataFromUsernameUseCaseImpl(userRepository: resolve()) as GetUserDataFromUsernameUseCase }
         register { ReadCreatorPortfoliosUseCaseImpl(creatorRepository: resolve()) as ReadCreatorPortfoliosUseCase }
         register { ReadUsersFromQueryUseCaseImpl(userRepository: resolve()) as ReadUsersFromQueryUseCase }
         register { CheckEmailAddressAvailableUseCaseImpl(authRepository: resolve()) as CheckEmailAddressAvailableUseCase }
@@ -42,10 +41,10 @@ public extension Resolver {
         register { UpdatePortfolioUseCaseImpl(feedRepository: resolve()) as UpdatePortfolioUseCase }
         
         /// Messages
-        register { GetChatsForUserUseCaseImpl(messageRepository: resolve()) as GetChatsForUserUseCase }
-//        register { CreateNewChatUseCaseImpl(messageRepository: resolve(), userRepository: resolve()) as CreateNewChatUseCase }
+        register { CreateNewChatWithMessageUseCaseImpl(messageRepository: resolve()) as CreateNewChatWithMessageUseCase }
         register { SendMessageUseCaseImpl(messageRepository: resolve()) as SendMessageUseCase }
-        register { GetLatestChatMessagesUseCaseImpl(messageRepository: resolve()) as GetLatestChatMessagesUseCase }
-//        register { GetChatUseCaseImpl(messageRepository: resolve(), userRepository: resolve()) as GetChatUseCase }
+        register { ReadChatUseCaseImpl(messageRepository: resolve()) as ReadChatUseCase }
+        register { ReadChatsUseCaseImpl(messageRepository: resolve()) as ReadChatsUseCase }
+        register { ReadMessagesFromChatUseCaseImpl(messageRepository: resolve()) as ReadMessagesFromChatUseCase }
     }
 }

@@ -16,9 +16,10 @@ final class ChatViewModel: BaseViewModel, ViewModel, ObservableObject {
     
     // MARK: Dependencies
 
-//    @LazyInjected private var getChatUseCase: GetChatUseCase
+    @LazyInjected private var readChatUseCase: ReadChatUseCase
+    @LazyInjected private var readUserByIdUseCase: ReadUserByIdUseCase
     @LazyInjected private var sendMessageUseCase: SendMessageUseCase
-    @LazyInjected private var getLatestChatMessagesUseCase: GetLatestChatMessagesUseCase
+    @LazyInjected private var readMessagesFromChatUseCase: ReadMessagesFromChatUseCase
 
     private weak var flowController: MessagesFlowController?
     
@@ -26,23 +27,20 @@ final class ChatViewModel: BaseViewModel, ViewModel, ObservableObject {
 
     init(
         flowController: MessagesFlowController?,
-        sender: String,
-        receiver: String
+        senderId: String,
+        receiverId: String
     ) {
         self.flowController = flowController
         super.init()
-        state.sender = sender
-        state.receiver = receiver
+        state.senderId = senderId
+        state.receiverId = receiverId
     }
 
     // MARK: Lifecycle
 
     override func onAppear() {
         super.onAppear()
-        
-        if state.chat == nil {
-            executeTask(Task { await fetchChat() })
-        }
+        executeTask(Task { await fetchReceiverAndChatData() })
         
         // Fetch messages every second
         // startFetchingNewMessages()
@@ -57,9 +55,12 @@ final class ChatViewModel: BaseViewModel, ViewModel, ObservableObject {
 
     struct State {
         var isLoading: Bool = false
-        var chat: Chat? = nil
-        var sender = ""
-        var receiver = ""
+        var isSendingMessage: Bool = false
+        var senderId = ""
+        var receiverId = ""
+        var receiverData: User? = nil
+        var chat: Chat = .empty
+        var messages: [Message] = []
         var textInput = ""
     }
 
@@ -86,14 +87,19 @@ final class ChatViewModel: BaseViewModel, ViewModel, ObservableObject {
 
     // MARK: Additional methods
     
-    private func fetchChat() async {
+    private func fetchReceiverAndChatData() async {
         state.isLoading = true
         defer { state.isLoading = false }
         
         do {
-//            state.chat = try await getChatUseCase.execute(sender: state.sender, receiver: state.receiver)
+            state.receiverData = try await readUserByIdUseCase.execute(id: state.receiverId)
+            
+            let chat = try await readChatUseCase.execute(receiverId: state.receiverId)
+            state.chat = chat
+            
+            state.messages = try await readMessagesFromChatUseCase.execute(chatId: chat.id)
         } catch {
-            // Log
+            print(error.localizedDescription)
         }
     }
     
@@ -107,13 +113,10 @@ final class ChatViewModel: BaseViewModel, ViewModel, ObservableObject {
     }
     
     private func fetchNewMessages() async {
-        guard let chat = state.chat else { return }
+        guard state.chat != .empty else { return }
         
         do {
-            let newMessages = try await getLatestChatMessagesUseCase.execute(for: chat)
-            await MainActor.run {
-                state.chat?.messages = newMessages
-            }
+            state.messages = try await readMessagesFromChatUseCase.execute(chatId: state.chat.id)
         } catch {
             // Log
         }
@@ -124,13 +127,18 @@ final class ChatViewModel: BaseViewModel, ViewModel, ObservableObject {
     }
     
     private func sendMessage() async {
+        state.isSendingMessage = true
+        defer { state.isSendingMessage = false }
+        
         do {
-            guard let chat = state.chat else { return }
-            try await sendMessageUseCase.execute(text: state.textInput, chat: chat, sender: state.sender)
-            let newMessages = try await getLatestChatMessagesUseCase.execute(for: chat)
+            if state.chat == .empty {
+                state.chat = try await sendMessageUseCase.execute(receiverId: state.receiverId, message: state.textInput)
+            } else {
+                state.chat = try await sendMessageUseCase.execute(chatId: state.chat.id, message: state.textInput)
+            }
             
-            state.chat?.messages = newMessages
             state.textInput = ""
+            await fetchNewMessages()
         } catch {
             // Log
         }
