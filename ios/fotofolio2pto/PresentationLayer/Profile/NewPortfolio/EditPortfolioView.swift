@@ -111,23 +111,24 @@ struct EditPortfolioView: View {
     
     var photosScrollView: some View {
         ScrollView(.horizontal, showsIndicators: false) {
-            LazyHStack {
+            LazyHStack(spacing: Constants.Dimens.spaceSemiMedium) {
                 if viewModel.state.media.isEmpty {
-                    Button(action: { viewModel.onIntent(.pickMedia) }) {
-                        ZStack {
-                            RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
-                                .fill(.textFieldBackground)
-                                .aspectRatio(1.0, contentMode: .fill)
-                                .frame(width: Constants.Dimens.frameSizeXXLarge, height: Constants.Dimens.frameSizeXXLarge)
-                            
-                            Image(systemName: "plus")
-                                .resizable()
-                                .frame(width: Constants.Dimens.frameSizeXSmall, height: Constants.Dimens.frameSizeXSmall)
-                                .foregroundColor(.black)
-                                .opacity(Constants.Dimens.opacityMid)
+                    if viewModel.state.portfolioIntent == .createNew {
+                        Button(action: { viewModel.onIntent(.pickMedia) }) {
+                            ZStack {
+                                RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
+                                    .fill(.textFieldBackground)
+                                    .aspectRatio(1.0, contentMode: .fill)
+                                    .frame(width: Constants.Dimens.frameSizeXXLarge, height: Constants.Dimens.frameSizeXXLarge)
+                                
+                                Image(systemName: "plus")
+                                    .resizable()
+                                    .frame(width: Constants.Dimens.frameSizeXSmall, height: Constants.Dimens.frameSizeXSmall)
+                                    .foregroundColor(.black)
+                                    .opacity(Constants.Dimens.opacityMid)
+                            }
                         }
                     }
-                    .padding(.leading)
                     
                     ForEach(0..<2) { i in
                         RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
@@ -146,7 +147,6 @@ struct EditPortfolioView: View {
                                     .frame(width: Constants.Dimens.frameSizeXXLarge, height: Constants.Dimens.frameSizeXXLarge)
                                     .clipped()
                                     .cornerRadius(Constants.Dimens.radiusXSmall)
-                                    .padding(.leading, idx == 0 ? Constants.Dimens.spaceLarge : Constants.Dimens.spaceNone)
                             } else if case MyImageEnum.remote(let url) = iimg.src {
                                 AsyncImage(url: URL(string: url)!) { image in
                                     image
@@ -155,54 +155,62 @@ struct EditPortfolioView: View {
                                         .frame(width: Constants.Dimens.frameSizeXXLarge, height: Constants.Dimens.frameSizeXXLarge)
                                         .clipped()
                                         .cornerRadius(Constants.Dimens.radiusXSmall)
-                                        .padding(.leading, idx == 0 ? Constants.Dimens.spaceLarge : Constants.Dimens.spaceNone)
                                 } placeholder: {
-                                    RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
-                                        .frame(width: Constants.Dimens.frameSizeXXLarge, height: Constants.Dimens.frameSizeXXLarge)
-                                        .cornerRadius(Constants.Dimens.radiusXSmall)
-                                        .foregroundStyle(.red)
-                                        .opacity(Constants.Dimens.opacityLow)
-                                        .padding(.leading, idx == 0 ? Constants.Dimens.spaceLarge : Constants.Dimens.spaceNone)
+                                    ZStack {
+                                        RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
+                                            .fill(.gray)
+                                            .brightness(Double.random(in: 0.15...0.4))
+                                            .aspectRatio(1.0, contentMode: .fit)
+                                            .frame(width: Constants.Dimens.frameSizeXXLarge, height: Constants.Dimens.frameSizeXXLarge)
+
+                                        ProgressView()
+                                            .progressViewStyle(CircularProgressViewStyle())
+                                    }
                                 }
                             }
                             
-                            Button(action: { viewModel.onIntent(.removePic(iimg.id)) }) {
-                                ZStack {
-                                    RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
-                                        .fill(.white)
-                                        .aspectRatio(1.0, contentMode: .fit)
-                                        .frame(width: Constants.Dimens.frameSizeSmall, height: Constants.Dimens.frameSizeSmall)
-                                        .opacity(Constants.Dimens.opacityMid)
-                                    
-                                    Image(systemName: "xmark")
-                                        .resizable()
-                                        .frame(width: Constants.Dimens.spaceLarge, height: Constants.Dimens.spaceLarge)
-                                        .foregroundColor(.red)
-                                        .opacity(Constants.Dimens.opacityHigh)
-                                        .padding()
+                            // Portfolio must have at least one photo,
+                            if viewModel.state.media.count > 1 || viewModel.state.portfolioIntent == .createNew {
+                                Button(action: { viewModel.onIntent(.removePic(iimg.id)) }) {
+                                    ZStack {
+                                        RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
+                                            .fill(.white)
+                                            .aspectRatio(1.0, contentMode: .fit)
+                                            .frame(width: Constants.Dimens.frameSizeSmall, height: Constants.Dimens.frameSizeSmall)
+                                            .opacity(Constants.Dimens.opacityMid)
+                                        
+                                        Image(systemName: "xmark")
+                                            .resizable()
+                                            .frame(width: Constants.Dimens.spaceLarge, height: Constants.Dimens.spaceLarge)
+                                            .foregroundColor(.red)
+                                            .opacity(Constants.Dimens.opacityHigh)
+                                            .padding(Constants.Dimens.spaceXLarge)
+                                    }
                                 }
-                                .padding(Constants.Dimens.spaceXSmall)
                             }
                         }
                     }
                     
-                    Button(action: { viewModel.onIntent(.pickMedia) }) {
-                        ZStack {
-                            RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
-                                .fill(.textFieldBackground)
-                                .aspectRatio(1.0, contentMode: .fit)
-                                .frame(width: Constants.Dimens.frameSizeXXLarge, height: Constants.Dimens.frameSizeXXLarge)
-                            
-                            Image(systemName: "plus")
-                                .resizable()
-                                .frame(width: Constants.Dimens.frameSizeXSmall, height: Constants.Dimens.frameSizeXSmall)
-                                .foregroundColor(.black)
-                                .opacity(Constants.Dimens.opacityMid)
+                    if viewModel.state.portfolioIntent == .createNew {
+                        Button(action: { viewModel.onIntent(.pickMedia) }) {
+                            ZStack {
+                                RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
+                                    .fill(.textFieldBackground)
+                                    .aspectRatio(1.0, contentMode: .fit)
+                                    .frame(width: Constants.Dimens.frameSizeXXLarge, height: Constants.Dimens.frameSizeXXLarge)
+                                
+                                Image(systemName: "plus")
+                                    .resizable()
+                                    .frame(width: Constants.Dimens.frameSizeXSmall, height: Constants.Dimens.frameSizeXSmall)
+                                    .foregroundColor(.black)
+                                    .opacity(Constants.Dimens.opacityMid)
+                            }
                         }
+                        .padding(.trailing, Constants.Dimens.spaceLarge)
                     }
-                    .padding(.trailing)
                 }
             }
+            .padding(.horizontal, Constants.Dimens.spaceLarge)
         }
         .frame(height: Constants.Dimens.frameSizeXXLarge)
     }

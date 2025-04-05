@@ -15,6 +15,7 @@ import io.ktor.server.routing.*
 import io.ktor.http.content.*
 import java.io.ByteArrayOutputStream
 import io.ktor.utils.io.jvm.javaio.toInputStream
+import java.net.URLEncoder
 import java.util.*
 import kotlin.io.copyTo
 
@@ -29,8 +30,9 @@ fun Application.portfolioRoutes() {
                     var name: String? = null
                     var description: String? = null
                     var category: List<String> = emptyList()
-                    val photoUrls = mutableListOf<String>()
+                    val photoBytesList = mutableListOf<Pair<String, ByteArray>>() // store filenames and their bytes
 
+                    // First parse all data and gather images
                     multipart.forEachPart { part ->
                         when (part) {
                             is PartData.FormItem -> {
@@ -56,27 +58,8 @@ fun Application.portfolioRoutes() {
                                 }
 
                                 val fileBytes = outputStream.toByteArray()
-
                                 val fileName = part.originalFileName ?: "image_${System.currentTimeMillis()}.jpg"
-                                val contentType = part.contentType?.toString() ?: "image/jpeg"
-
-                                val bucket = StorageClient.getInstance().bucket("fotofolio-3.firebasestorage.app")
-                                val blob = bucket.create(
-                                    "portfolio_images/$fileName",
-                                    fileBytes,
-                                    contentType
-                                )
-
-                                val accessToken = UUID.randomUUID().toString()
-                                val metadata = blob.toBuilder()
-                                    .setMetadata(mapOf("firebaseStorageDownloadTokens" to accessToken))
-                                    .build()
-                                    .update()
-
-                                val token = metadata.metadata?.get("firebaseStorageDownloadTokens")
-
-                                val downloadUrl = "https://firebasestorage.googleapis.com/v0/b/${bucket.name}/o/portfolio_images%2F${fileName}?alt=media&token=$token"
-                                photoUrls.add(downloadUrl)
+                                photoBytesList.add(fileName to fileBytes)
                             }
 
                             else -> Unit
@@ -91,20 +74,56 @@ fun Application.portfolioRoutes() {
 
                     val db = FirestoreClient.getFirestore()
 
-                    val usersQuery = db.collection("users")
+                    // Get the user to fetch their username AND userId (needed for storage path)
+                    val usersQuery = db.collection("user")
                         .whereEqualTo("creatorId", creatorId)
                         .limit(1)
                         .get()
                         .await()
 
-                    val authorUsername = if (!usersQuery.isEmpty) {
-                        usersQuery.documents.first().toObject(User::class.java).username
-                    } else {
+                    if (usersQuery.isEmpty) {
                         call.respond(HttpStatusCode.NotFound, "Creator's username not found")
                         return@post
                     }
 
+                    val userDoc = usersQuery.documents.first()
+                    val user = userDoc.toObject(User::class.java)
+                    val userId = user.userId
+                    val authorUsername = user.username
+
+                    // Create Firestore doc to get the portfolioId
+                    val portfolioDocRef = db.collection("portfolio").document()
+                    val portfolioId = portfolioDocRef.id
+
+                    val bucket = StorageClient.getInstance().bucket("fotofolio-3.firebasestorage.app")
+                    val photoUrls = mutableListOf<String>()
+
+                    // Upload each image to the correct path
+                    for ((fileName, fileBytes) in photoBytesList) {
+                        val contentType = "image/jpeg"
+                        val storagePath = "user/$userId/creator/portfolio/$portfolioId/$fileName"
+
+                        val blob = bucket.create(
+                            storagePath,
+                            fileBytes,
+                            contentType
+                        )
+
+                        val accessToken = UUID.randomUUID().toString()
+                        val metadata = blob.toBuilder()
+                            .setMetadata(mapOf("firebaseStorageDownloadTokens" to accessToken))
+                            .build()
+                            .update()
+
+                        val token = metadata.metadata?.get("firebaseStorageDownloadTokens")
+
+                        val encodedPath = URLEncoder.encode(storagePath, "UTF-8")
+                        val downloadUrl = "https://firebasestorage.googleapis.com/v0/b/${bucket.name}/o/$encodedPath?alt=media&token=$token"
+                        photoUrls.add(downloadUrl)
+                    }
+
                     val portfolio = Portfolio(
+                        id = portfolioId,
                         creatorId = creatorId!!,
                         authorUsername = authorUsername,
                         name = name!!,
@@ -114,26 +133,25 @@ fun Application.portfolioRoutes() {
                         timestamp = System.currentTimeMillis()
                     )
 
-                    val docRef = db.collection("portfolio").document()
-                    docRef.set(portfolio.copy(id = docRef.id)).await()
+                    // Save portfolio to Firestore
+                    portfolioDocRef.set(portfolio).await()
 
-                    // Update the creator's portfolioIds list
+                    // Update the creator document
                     val creatorRef = db.collection("creator").document(creatorId!!)
                     val creatorSnapshot = creatorRef.get().await()
 
                     if (creatorSnapshot.exists()) {
                         val creator = creatorSnapshot.toObject(Creator::class.java)
                         val updatedPortfolioIds = creator?.portfolioIds?.toMutableList() ?: mutableListOf()
-                        updatedPortfolioIds.add(docRef.id)
+                        updatedPortfolioIds.add(portfolioId)
 
-                        // Update the creator's portfolioIds
                         creatorRef.update("portfolioIds", updatedPortfolioIds).await()
                     } else {
                         call.respond(HttpStatusCode.NotFound, "Creator not found")
                         return@post
                     }
 
-                    call.respond(HttpStatusCode.Created, mapOf("id" to docRef.id))
+                    call.respond(HttpStatusCode.Created, mapOf("id" to portfolioId))
                 } catch (e: Exception) {
                     call.respond(HttpStatusCode.BadRequest, "Error: ${e.localizedMessage}")
                 }
@@ -170,7 +188,7 @@ fun Application.portfolioRoutes() {
 
                     val sortedPortfolios = if (portfolioIds.isNullOrEmpty()) {
                         when (sortByParam) {
-                            "timestamp" -> portfolios.sortedBy { it.timestamp }
+                            "timestamp" -> portfolios.sortedByDescending { it.timestamp }
                             "rating" -> {
                                 val portfoliosWithRatings = portfolios.map { portfolio ->
                                     val creator = db.collection("creator")
