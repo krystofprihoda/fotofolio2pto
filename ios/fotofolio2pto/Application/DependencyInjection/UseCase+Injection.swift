@@ -39,6 +39,7 @@ public extension Resolver {
         register { UnflagAllPortfoliosUseCaseImpl(feedRepository: resolve()) as UnflagAllPortfoliosUseCase }
         register { CreatePortfolioUseCaseImpl(feedRepository: resolve()) as CreatePortfolioUseCase }
         register { UpdatePortfolioUseCaseImpl(feedRepository: resolve()) as UpdatePortfolioUseCase }
+        register { ReadRemoteImageUseCaseImpl(feedRepository: resolve()) as ReadRemoteImageUseCase }
         
         /// Messages
         register { CreateNewChatWithMessageUseCaseImpl(messageRepository: resolve()) as CreateNewChatWithMessageUseCase }

@@ -18,6 +18,9 @@
 		FE1815742D986A420090E440 /* ReadUserDataByCreatorIdUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1815732D986A380090E440 /* ReadUserDataByCreatorIdUseCase.swift */; };
 		FE1815782D9881870090E440 /* PortfolioDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1815772D9881850090E440 /* PortfolioDetailViewModel.swift */; };
 		FE34A64F2D78BCF200CB4CAE /* CheckEmailAddressAvailableUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE34A64E2D78BCF200CB4CAE /* CheckEmailAddressAvailableUseCase.swift */; };
+		FE3827C42DA14535007A933E /* RemoteImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE3827C32DA14535007A933E /* RemoteImageView.swift */; };
+		FE3827C62DA147D4007A933E /* ReadRemoteImageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE3827C52DA147D4007A933E /* ReadRemoteImageUseCase.swift */; };
+		FE3827C92DA1610E007A933E /* RemoteImageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE3827C82DA1610E007A933E /* RemoteImageViewModel.swift */; };
 		FE3D23252D91A41400DA22DB /* RegisterUserUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE3D23242D91A41000DA22DB /* RegisterUserUseCase.swift */; };
 		FE3D23272D92FD0D00DA22DB /* SaveUserDataUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE3D23262D92FD0600DA22DB /* SaveUserDataUseCase.swift */; };
 		FE3D2B0D2D930EB800DA22DB /* NetworkProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE3D2B0C2D930EB200DA22DB /* NetworkProvider.swift */; };
@@ -159,6 +162,9 @@
 		FE1815732D986A380090E440 /* ReadUserDataByCreatorIdUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadUserDataByCreatorIdUseCase.swift; sourceTree = "<group>"; };
 		FE1815772D9881850090E440 /* PortfolioDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioDetailViewModel.swift; sourceTree = "<group>"; };
 		FE34A64E2D78BCF200CB4CAE /* CheckEmailAddressAvailableUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckEmailAddressAvailableUseCase.swift; sourceTree = "<group>"; };
+		FE3827C32DA14535007A933E /* RemoteImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteImageView.swift; sourceTree = "<group>"; };
+		FE3827C52DA147D4007A933E /* ReadRemoteImageUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadRemoteImageUseCase.swift; sourceTree = "<group>"; };
+		FE3827C82DA1610E007A933E /* RemoteImageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteImageViewModel.swift; sourceTree = "<group>"; };
 		FE3D23242D91A41000DA22DB /* RegisterUserUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterUserUseCase.swift; sourceTree = "<group>"; };
 		FE3D23262D92FD0600DA22DB /* SaveUserDataUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveUserDataUseCase.swift; sourceTree = "<group>"; };
 		FE3D2B0C2D930EB200DA22DB /* NetworkProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProvider.swift; sourceTree = "<group>"; };
@@ -336,6 +342,15 @@
 				FEC94DFA2C262AC400FFEB11 /* PortfolioAuthorDetailView.swift */,
 			);
 			path = SubViews;
+			sourceTree = "<group>";
+		};
+		FE3827C72DA16104007A933E /* RemoteImage */ = {
+			isa = PBXGroup;
+			children = (
+				FE3827C82DA1610E007A933E /* RemoteImageViewModel.swift */,
+				FE3827C32DA14535007A933E /* RemoteImageView.swift */,
+			);
+			path = RemoteImage;
 			sourceTree = "<group>";
 		};
 		FE3D2B0B2D930EAD00DA22DB /* Network */ = {
@@ -525,6 +540,7 @@
 		FEA53C9F2C29C6FE006F0116 /* Feed */ = {
 			isa = PBXGroup;
 			children = (
+				FE3827C52DA147D4007A933E /* ReadRemoteImageUseCase.swift */,
 				FEA53CA02C29C70B006F0116 /* ReadAllPortfoliosUseCase.swift */,
 				FEA53CA62C29D667006F0116 /* FlagPortfolioUseCase.swift */,
 				FEA53CA82C29D7E8006F0116 /* UnflagPortfolioUseCase.swift */,
@@ -689,6 +705,7 @@
 		FEC94DAC2C243EA400FFEB11 /* BaseViews */ = {
 			isa = PBXGroup;
 			children = (
+				FE3827C72DA16104007A933E /* RemoteImage */,
 				FE9A30BA2D88473E0056CC0A /* Toast.swift */,
 				FE9777E02D7F695C0027DA60 /* PulsingCircleView.swift */,
 				FE9777DE2D7F69240027DA60 /* HorizontalWheelPicker.swift */,
@@ -943,6 +960,7 @@
 				FEA53C982C29BF97006F0116 /* Repositories+Injection.swift in Sources */,
 				FE9A30BD2D88B2000056CC0A /* SettingsView.swift in Sources */,
 				FEC94DD32C247C6100FFEB11 /* SearchView.swift in Sources */,
+				FE3827C92DA1610E007A933E /* RemoteImageViewModel.swift in Sources */,
 				FEA53CA92C29D7E8006F0116 /* UnflagPortfolioUseCase.swift in Sources */,
 				FEC94DD52C247C9500FFEB11 /* AllChatsViewViewModel.swift in Sources */,
 				FEA53CC82C2C16E2006F0116 /* GetUserDataFromUsernameUseCase.swift in Sources */,
@@ -975,6 +993,7 @@
 				FEC94DF22C25EF7900FFEB11 /* FilterView.swift in Sources */,
 				FE1815692D95D92A0090E440 /* CreatorRepository.swift in Sources */,
 				FE9A30C02D88B7A40056CC0A /* SettingsViewModel.swift in Sources */,
+				FE3827C42DA14535007A933E /* RemoteImageView.swift in Sources */,
 				FEA53CDE2C2C49DF006F0116 /* ReadChatUseCase.swift in Sources */,
 				FEC94DEA2C25BF4B00FFEB11 /* View+Extensions.swift in Sources */,
 				FEC94DCD2C2479CD00FFEB11 /* SelectionViewModel.swift in Sources */,
@@ -1034,6 +1053,7 @@
 				FEC94DF92C26291E00FFEB11 /* PhotoCarouselView.swift in Sources */,
 				FECADFDE2D805356004023F6 /* RegisterFailedView.swift in Sources */,
 				FEC94DBF2C246C5C00FFEB11 /* FeedFlowController.swift in Sources */,
+				FE3827C62DA147D4007A933E /* ReadRemoteImageUseCase.swift in Sources */,
 				FEA53CE42C2D5A46006F0116 /* EditProfileView.swift in Sources */,
 				FE9777E32D7F6D940027DA60 /* RegisterCreatorDetailsView.swift in Sources */,
 				FEC94DDF2C247D9800FFEB11 /* ProfileFlowController.swift in Sources */,

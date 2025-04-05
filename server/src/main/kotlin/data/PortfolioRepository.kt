@@ -9,7 +9,7 @@ internal class PortfolioRepositoryImpl : PortfolioRepository {
     }
 
     override fun getPortfoliosForUser(userId: String): List<Portfolio> {
-        return Portfolio.mocks().filter { folio -> folio.ownerId == userId }
+        return Portfolio.mocks().filter { folio -> folio.creatorId == userId }
     }
 
     override fun deletePortfolio(id: Int) {

@@ -23,31 +23,34 @@ struct ProfilePictureView: View {
     var body: some View {
         if let pic = profilePicture {
             if case MyImageEnum.remote(let url) = pic.src {
-                AsyncImage(url: url) { image in
-                    image
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                        .frame(width: width, height: width)
-                        .clipped()
-                        .cornerRadius(Constants.Dimens.radiusMax)
-                } placeholder: {
-                    ZStack {
-                        Circle()
-                            .foregroundColor(.gray).brightness(Constants.Dimens.opacityLow)
-                            .aspectRatio(1.0, contentMode: .fit)
+                #warning("TODO: replace with RemoteImage")
+//                AsyncImage(url: URL(string: url)!) { image in
+//                    image
+//                        .resizable()
+//                        .aspectRatio(contentMode: .fill)
+//                        .frame(width: width, height: width)
+//                        .clipped()
+//                        .cornerRadius(Constants.Dimens.radiusMax)
+//                } placeholder: {
+//                    ZStack {
+//                        Circle()
+//                            .foregroundColor(.gray).brightness(Constants.Dimens.opacityLow)
+//                            .aspectRatio(1.0, contentMode: .fit)
+//
+//                        ProgressView()
+//                            .progressViewStyle(CircularProgressViewStyle())
+//                    }
+//                    .frame(width: width)
+//                }
+                ZStack {
+                    Circle()
+                        .foregroundColor(.gray).brightness(Constants.Dimens.opacityLow)
+                        .aspectRatio(1.0, contentMode: .fit)
 
-                        ProgressView()
-                            .progressViewStyle(CircularProgressViewStyle())
-                    }
-                    .frame(width: width)
+                    ProgressView()
+                        .progressViewStyle(CircularProgressViewStyle())
                 }
-            } else if case MyImageEnum.local(let img) = pic.src {
-                img
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .frame(width: width, height: width)
-                    .clipped()
-                    .cornerRadius(Constants.Dimens.radiusMax)
+                .frame(width: width)
             }
         } else {
             Circle()

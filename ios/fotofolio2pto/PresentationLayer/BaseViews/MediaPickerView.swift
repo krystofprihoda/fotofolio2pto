@@ -79,7 +79,7 @@ public struct MediaPickerView: UIViewControllerRepresentable {
                         guard let self = self else { return }
                         
                         if let image = image as? UIImage {
-                            self.parent.media.append(IImage(src: MyImageEnum.local(Image(uiImage: image))))
+                            self.parent.media.append(IImage(src: MyImageEnum.local(image)))
                         } else {
                             print("Could not load image", error?.localizedDescription ?? "")
                         }

@@ -28,17 +28,17 @@ final class EditPortfolioViewModel: BaseViewModel, ViewModel, ObservableObject {
 
     init(
         flowController: ProfileFlowController?,
-        portfolioAuthorUsername: String,
+        creatorId: String,
         intent: PortfolioIntent = .createNew
     ) {
         self.flowController = flowController
         super.init()
-        state.portfolioAuthor = portfolioAuthorUsername
+        state.creatorId = creatorId
         state.portfolioIntent = intent
         
         switch state.portfolioIntent {
         case .createNew:
-            return
+            break
         case .updateExisting(let portfolio):
             state.portfolioId = portfolio.id
             state.name = portfolio.name
@@ -59,7 +59,7 @@ final class EditPortfolioViewModel: BaseViewModel, ViewModel, ObservableObject {
     struct State: Equatable {
         var isLoading: Bool = false
         var portfolioIntent: PortfolioIntent = .createNew
-        var portfolioAuthor = ""
+        var creatorId = ""
         var portfolioId: String? = nil
         var name = ""
         var description = ""
@@ -172,7 +172,7 @@ final class EditPortfolioViewModel: BaseViewModel, ViewModel, ObservableObject {
         
         do {
             try await createPortfolioUseCase.execute(
-                username: state.portfolioAuthor,
+                creatorId: state.creatorId,
                 name: state.name,
                 photos: state.media,
                 description: state.description,

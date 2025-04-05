@@ -3,31 +3,142 @@ package application.routes
 import com.google.cloud.firestore.FieldPath
 import com.google.cloud.firestore.Query
 import com.google.firebase.cloud.FirestoreClient
-import com.kborowy.authprovider.firebase.FirebaseToken
+import com.google.firebase.cloud.StorageClient
 import com.kborowy.authprovider.firebase.await
+import domain.model.Portfolio
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import kotlinx.serialization.Serializable
-
-@Serializable
-data class Portfolio(
-    val id: String = "",
-    val authorUsername: String = "",
-    val creatorId: String = "",
-    val name: String = "",
-    val photos: List<String> = listOf(), // Assuming photo references/URLs
-    val description: String = "",
-    val category: List<String> = listOf(),
-    val timestamp: Long = System.currentTimeMillis() / 1000
-)
+import io.ktor.http.content.*
+import java.io.ByteArrayOutputStream
+import io.ktor.utils.io.jvm.javaio.toInputStream
+import java.util.*
+import kotlin.io.copyTo
 
 fun Application.portfolioRoutes() {
     routing {
         authenticate {
+            post("/portfolio") {
+                try {
+                    val multipart = call.receiveMultipart()
+
+                    var creatorId: String? = null
+                    var name: String? = null
+                    var description: String? = null
+                    var category: List<String> = emptyList()
+                    val photoUrls = mutableListOf<String>()
+
+                    multipart.forEachPart { part ->
+                        when (part) {
+                            is PartData.FormItem -> {
+                                when (part.name) {
+                                    "creatorId" -> creatorId = part.value
+                                    "name" -> name = part.value
+                                    "description" -> description = part.value
+                                    "category" -> {
+                                        category = part.value.split(",").map { it.trim() }
+                                    }
+                                }
+                            }
+
+                            is PartData.FileItem -> {
+                                val byteChannel = part.provider()
+                                val inputStream = byteChannel.toInputStream()
+
+                                val outputStream = ByteArrayOutputStream()
+                                inputStream.use { input ->
+                                    outputStream.use { output ->
+                                        input.copyTo(output)
+                                    }
+                                }
+
+                                val fileBytes = outputStream.toByteArray()
+
+                                val fileName = part.originalFileName ?: "image_${System.currentTimeMillis()}.jpg"
+                                val contentType = part.contentType?.toString() ?: "image/jpeg"
+
+                                val bucket = StorageClient.getInstance().bucket("fotofolio-3.firebasestorage.app")
+                                val blob = bucket.create(
+                                    "portfolio_images/$fileName",
+                                    fileBytes,
+                                    contentType
+                                )
+
+                                val accessToken = UUID.randomUUID().toString()
+                                val metadata = blob.toBuilder()
+                                    .setMetadata(mapOf("firebaseStorageDownloadTokens" to accessToken))
+                                    .build()
+                                    .update()
+
+                                val token = metadata.metadata?.get("firebaseStorageDownloadTokens")
+
+                                val downloadUrl = "https://firebasestorage.googleapis.com/v0/b/${bucket.name}/o/portfolio_images%2F${fileName}?alt=media&token=$token"
+                                photoUrls.add(downloadUrl)
+                            }
+
+                            else -> Unit
+                        }
+                        part.dispose()
+                    }
+
+                    if (creatorId == null || name == null || description == null) {
+                        call.respond(HttpStatusCode.BadRequest, "Missing fields")
+                        return@post
+                    }
+
+                    val db = FirestoreClient.getFirestore()
+
+                    val usersQuery = db.collection("users")
+                        .whereEqualTo("creatorId", creatorId)
+                        .limit(1)
+                        .get()
+                        .await()
+
+                    val authorUsername = if (!usersQuery.isEmpty) {
+                        usersQuery.documents.first().toObject(User::class.java).username
+                    } else {
+                        call.respond(HttpStatusCode.NotFound, "Creator's username not found")
+                        return@post
+                    }
+
+                    val portfolio = Portfolio(
+                        creatorId = creatorId!!,
+                        authorUsername = authorUsername,
+                        name = name!!,
+                        description = description!!,
+                        photos = photoUrls,
+                        category = category,
+                        timestamp = System.currentTimeMillis()
+                    )
+
+                    val docRef = db.collection("portfolio").document()
+                    docRef.set(portfolio.copy(id = docRef.id)).await()
+
+                    // Update the creator's portfolioIds list
+                    val creatorRef = db.collection("creator").document(creatorId!!)
+                    val creatorSnapshot = creatorRef.get().await()
+
+                    if (creatorSnapshot.exists()) {
+                        val creator = creatorSnapshot.toObject(Creator::class.java)
+                        val updatedPortfolioIds = creator?.portfolioIds?.toMutableList() ?: mutableListOf()
+                        updatedPortfolioIds.add(docRef.id)
+
+                        // Update the creator's portfolioIds
+                        creatorRef.update("portfolioIds", updatedPortfolioIds).await()
+                    } else {
+                        call.respond(HttpStatusCode.NotFound, "Creator not found")
+                        return@post
+                    }
+
+                    call.respond(HttpStatusCode.Created, mapOf("id" to docRef.id))
+                } catch (e: Exception) {
+                    call.respond(HttpStatusCode.BadRequest, "Error: ${e.localizedMessage}")
+                }
+            }
+
             get("/portfolio") {
                 try {
                     val db = FirestoreClient.getFirestore()
@@ -62,7 +173,7 @@ fun Application.portfolioRoutes() {
                             "timestamp" -> portfolios.sortedBy { it.timestamp }
                             "rating" -> {
                                 val portfoliosWithRatings = portfolios.map { portfolio ->
-                                    val creator = db.collection("user")
+                                    val creator = db.collection("creator")
                                         .document(portfolio.creatorId)
                                         .get()
                                         .await()

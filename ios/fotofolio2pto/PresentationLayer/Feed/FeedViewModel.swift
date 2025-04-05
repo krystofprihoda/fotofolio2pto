@@ -227,15 +227,7 @@ public struct IImage: Identifiable, Equatable, Codable {
         
         // For server responses, we'll always get a string URL
         let urlString = try container.decode(String.self, forKey: .src)
-        if let url = URL(string: urlString) {
-            self.src = .remote(url)
-        } else {
-            throw DecodingError.dataCorruptedError(
-                forKey: .src,
-                in: container,
-                debugDescription: "Invalid URL string: \(urlString)"
-            )
-        }
+        self.src = .remote(urlString)
     }
     
     public func encode(to encoder: Encoder) throws {
@@ -243,7 +235,7 @@ public struct IImage: Identifiable, Equatable, Codable {
         
         switch src {
         case .remote(let url):
-            try container.encode(url.absoluteString, forKey: .src)
+            try container.encode(url, forKey: .src)
         case .local:
             // When sending to server, we can't encode local images
             throw EncodingError.invalidValue(
@@ -258,6 +250,6 @@ public struct IImage: Identifiable, Equatable, Codable {
 }
 
 public enum MyImageEnum {
-    case remote(URL)
-    case local(Image)
+    case remote(String)
+    case local(UIImage)
 }

@@ -80,4 +80,7 @@ enum Endpoint {
 protocol NetworkProvider {
     func request(endpoint: Endpoint, method: HTTPMethod, body: [String: Any]?, headers: [String: String]?, queryParams: [String: String]?) async throws -> Data
     func fetch<T: Decodable>(endpoint: Endpoint, method: HTTPMethod, body: [String: Any]?, headers: [String: String]?, queryParams: [String: String]?) async throws -> T
+    func request(endpoint: Endpoint, method: HTTPMethod, rawBody: Data?, headers: [String: String]?, queryParams: [String: String]?) async throws -> Data
+    func fetch<T: Decodable>(endpoint: Endpoint, method: HTTPMethod, rawBody: Data?, headers: [String: String]?, queryParams: [String: String]?) async throws -> T
+    func fetchImageData(url: String, headers: [String: String]) async throws -> Data
 }

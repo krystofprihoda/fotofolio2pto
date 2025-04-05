@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 public protocol FeedRepository {
     func readAll(categories: [String]?, sortBy: SortByEnum?) async throws -> [Portfolio]
@@ -14,6 +15,7 @@ public protocol FeedRepository {
     func readFlagged() async throws -> [Portfolio]
     func readFlaggedIds() -> [String]
     func removeAllFlagged() throws
-    // func createPortfolio(username: String, name: String, photos: [IImage], description: String, category: [String]) async throws
+    func createPortfolio(creatorId: String, name: String, photos: [IImage], description: String, category: [String]) async throws
+    func readImageFromURL(url: String) async throws -> UIImage
     // func updatePortfolio(id: String, name: String, photos: [IImage], description: String, category: [String]) async throws
 }

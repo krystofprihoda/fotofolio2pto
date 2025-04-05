@@ -3,6 +3,7 @@ package application.routes
 import com.google.cloud.firestore.FieldPath
 import com.google.firebase.cloud.FirestoreClient
 import com.kborowy.authprovider.firebase.await
+import domain.model.Portfolio
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
@@ -27,7 +28,6 @@ fun Application.creatorRoutes() {
                 try {
                     // Decode the received JSON body
                     val creatorData = call.receive<Creator>()
-                    println("Received: $creatorData")
 
                     val db = FirestoreClient.getFirestore()
 
@@ -36,7 +36,6 @@ fun Application.creatorRoutes() {
                     creatorRef.set(creatorData).await() // Ensure Firestore write completes
 
                     val creatorId = creatorRef.id // Get the newly created document ID
-                    println("Created Creator with ID: $creatorId")
 
                     // Update the user document with the new creatorId
                     val userRef = db.collection("user").document(creatorData.userId)
@@ -110,11 +109,9 @@ fun Application.creatorRoutes() {
                         .await()
                         .toObject(Creator::class.java) ?: throw Exception("Creator not found")
 
-                    print(creator.portfolioIds)
-
                     // If no portfolio IDs, return an empty list
                     if (creator.portfolioIds.isEmpty()) {
-                        call.respond(HttpStatusCode.OK, emptyList<Portfolio>())
+                        call.respond(HttpStatusCode.OK, emptyList<String>())
                     }
 
                     // Retrieve portfolios using the stored portfolio IDs

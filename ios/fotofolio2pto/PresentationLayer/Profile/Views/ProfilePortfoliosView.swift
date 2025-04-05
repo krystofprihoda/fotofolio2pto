@@ -42,7 +42,7 @@ struct ProfilePortfoliosView: View {
                             HStack(spacing: Constants.Dimens.spaceMedium) {
                                 ForEach(portfolio.photos) { photo in
                                     if case MyImageEnum.remote(let url) = photo.src {
-                                        AsyncImage(url: url) { image in
+                                        AsyncImage(url: URL(string: url)!) { image in
                                             image
                                                 .resizable()
                                                 .aspectRatio(contentMode: .fill)
@@ -61,13 +61,6 @@ struct ProfilePortfoliosView: View {
                                                     .progressViewStyle(CircularProgressViewStyle())
                                             }
                                         }
-                                    } else if case MyImageEnum.local(let image) = photo.src {
-                                        image
-                                            .resizable()
-                                            .aspectRatio(contentMode: .fill)
-                                            .frame(width: Constants.Dimens.frameSizeXLarge, height: Constants.Dimens.frameSizeXLarge)
-                                            .clipped()
-                                            .cornerRadius(Constants.Dimens.radiusXSmall)
                                     }
                                 }
                             }

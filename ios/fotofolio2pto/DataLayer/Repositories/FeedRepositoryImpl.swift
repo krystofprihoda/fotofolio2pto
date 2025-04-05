@@ -5,6 +5,7 @@
 //  Created by Kryštof Příhoda on 24.06.2024.
 //
 
+import UIKit
 import Foundation
 
 public class FeedRepositoryImpl: FeedRepository {
@@ -55,6 +56,19 @@ public class FeedRepositoryImpl: FeedRepository {
         return portfolios
     }
     
+    public func readImageFromURL(url: String) async throws -> UIImage {
+        guard let token: String = defaults.read(.token) else { throw AuthError.tokenRetrievalFailed }
+        
+        let headers = [
+            "Authorization": "Bearer \(token)",
+            "Content-Type": "application/json"
+        ]
+        
+        let imageData = try await network.fetchImageData(url: url, headers: headers)
+        guard let image = UIImage(data: imageData) else { throw NetworkError.decodingError }
+        return image
+    }
+    
     public func addToFlagged(portfolioId: String) throws {
         var flagged = readFlaggedIds()
         guard !flagged.contains(where: { $0 == portfolioId }) else { return }
@@ -103,5 +117,58 @@ public class FeedRepositoryImpl: FeedRepository {
     
     public func removeAllFlagged() throws {
         defaults.delete(.flagged)
+    }
+    
+    public func createPortfolio(creatorId: String, name: String, photos: [IImage], description: String, category: [String]) async throws {
+        guard let token: String = defaults.read(.token) else { throw AuthError.tokenRetrievalFailed }
+
+        let boundary = UUID().uuidString
+        var body = Data()
+
+        // Append text fields
+        body.appendFormField(name: "creatorId", value: creatorId, boundary: boundary)
+        body.appendFormField(name: "name", value: name, boundary: boundary)
+        body.appendFormField(name: "description", value: description, boundary: boundary)
+        body.appendFormField(name: "category", value: category.joined(separator: ","), boundary: boundary)
+
+        // Append images
+        for (index, iimage) in photos.enumerated() {
+            guard case .local(let image) = iimage.src else {
+                continue
+            }
+            
+            guard let imageData = image.jpegData(compressionQuality: 0.8) else { continue }
+
+            let boundaryPrefix = "--\(boundary)\r\n"
+            body.append(Data(boundaryPrefix.utf8))
+            body.append(Data("Content-Disposition: form-data; name=\"photo\(index)\"; filename=\"photo\(index).jpg\"\r\n".utf8))
+            body.append(Data("Content-Type: image/jpeg\r\n\r\n".utf8))
+            body.append(imageData)
+            body.append(Data("\r\n".utf8))  // Important newline
+        }
+
+        body.append(Data("--\(boundary)--\r\n".utf8))
+
+        let headers = [
+            "Authorization": "Bearer \(token)",
+            "Content-Type": "multipart/form-data; boundary=\(boundary)"
+        ]
+        
+        _ = try await network.request(
+            endpoint: .portfolio,
+            method: .POST,
+            rawBody: body,
+            headers: headers,
+            queryParams: nil
+        )
+    }
+}
+
+extension Data {
+    mutating func appendFormField(name: String, value: String, boundary: String) {
+        let boundaryPrefix = "--\(boundary)\r\n"
+        self.append(Data(boundaryPrefix.utf8))
+        self.append(Data("Content-Disposition: form-data; name=\"\(name)\"\r\n\r\n".utf8))
+        self.append(Data("\(value)\r\n".utf8))
     }
 }

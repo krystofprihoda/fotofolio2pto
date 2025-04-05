@@ -76,9 +76,8 @@ extension User: Codable {
         }
 
         // Decode profilePicture as a URL and wrap it in MyImageEnum.remote
-        if let profilePictureURLString = try? container.decode(String.self, forKey: .profilePicture),
-           let profilePictureURL = URL(string: profilePictureURLString) {
-            profilePicture = IImage(src: .remote(profilePictureURL))
+        if let profilePictureURLString = try? container.decode(String.self, forKey: .profilePicture) {
+            profilePicture = IImage(src: .remote(profilePictureURLString))
         } else {
             profilePicture = nil
         }
@@ -97,12 +96,12 @@ extension User: Codable {
         // Encode profilePicture as a URL string
         if let profilePicture = profilePicture,
            case .remote(let url) = profilePicture.src {
-            try container.encode(url.absoluteString, forKey: .profilePicture)
+            try container.encode(url, forKey: .profilePicture)
         }
     }
 }
 
-let PROFILE_PIC = URL(string: "https://loremflickr.com/320/320/person")!
+let PROFILE_PIC = "https://loremflickr.com/320/320/person"
 
 extension User {
     static let sampleData: [User] = [dummy1, dummy2, dummy3, dummy4, dummy5, dummy6]

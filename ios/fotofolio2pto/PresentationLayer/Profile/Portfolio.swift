@@ -61,10 +61,7 @@ extension Portfolio: Codable {
             // Special handling for photos
             let photoURLs = try container.decode([String].self, forKey: .photos)
             photos = photoURLs.compactMap { urlString in
-                if let url = URL(string: urlString) {
-                    return IImage(src: .remote(url))
-                }
-                return nil
+                return IImage(src: .remote(urlString))
             }
             
             description = try container.decode(String.self, forKey: .description)
@@ -85,7 +82,7 @@ extension Portfolio: Codable {
         let photoURLs = photos.compactMap { image in
             switch image.src {
             case .remote(let url):
-                return url.absoluteString
+                return url
             case .local:
                 return nil
             }

@@ -141,7 +141,8 @@ final class EditProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
     }
     
     private func presentEditPortfolio(_ portfolio: Portfolio) {
-        flowController?.showEditPortfolio(portfolio, author: state.username)
+        guard let creatorId = state.creatorId else { return }
+        flowController?.showEditPortfolio(portfolio, creatorId: creatorId)
         updateSaveButtonVisibility()
     }
     

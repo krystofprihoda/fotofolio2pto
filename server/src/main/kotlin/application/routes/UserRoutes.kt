@@ -38,9 +38,6 @@ fun Application.userRoutes() {
                     // Decode the received JSON body
                     val userData = call.receive<User>()
 
-                    // Print the received user data
-                    println("Received: $userData")
-
                     val db = FirestoreClient.getFirestore()
 
                     db.collection("user")

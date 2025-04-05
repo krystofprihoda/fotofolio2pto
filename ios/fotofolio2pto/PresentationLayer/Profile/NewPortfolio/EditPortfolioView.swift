@@ -140,7 +140,7 @@ struct EditPortfolioView: View {
                     ForEach(Array(zip(viewModel.state.media.indices, viewModel.state.media)), id: \.0) { idx, iimg in
                         ZStack(alignment: .topTrailing) {
                             if case MyImageEnum.local(let image) = iimg.src {
-                                image
+                                Image(uiImage: image)
                                     .resizable()
                                     .aspectRatio(contentMode: .fill)
                                     .frame(width: Constants.Dimens.frameSizeXXLarge, height: Constants.Dimens.frameSizeXXLarge)
@@ -148,7 +148,7 @@ struct EditPortfolioView: View {
                                     .cornerRadius(Constants.Dimens.radiusXSmall)
                                     .padding(.leading, idx == 0 ? Constants.Dimens.spaceLarge : Constants.Dimens.spaceNone)
                             } else if case MyImageEnum.remote(let url) = iimg.src {
-                                AsyncImage(url: url) { image in
+                                AsyncImage(url: URL(string: url)!) { image in
                                     image
                                         .resizable()
                                         .aspectRatio(contentMode: .fill)
@@ -235,5 +235,5 @@ struct EditPortfolioView: View {
 }
 
 #Preview {
-    EditPortfolioView(viewModel: .init(flowController: nil, portfolioAuthorUsername: "author"))
+    EditPortfolioView(viewModel: .init(flowController: nil, creatorId: "creatorId"))
 }
