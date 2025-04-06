@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ProfilePictureView: View {
+    
     private let profilePicture: IImage?
     private var width: Double
     
@@ -30,16 +31,7 @@ struct ProfilePictureView: View {
                         .clipped()
                         .cornerRadius(Constants.Dimens.radiusMax)
                 } placeholder: {
-                    ZStack {
-                        Circle()
-                            .foregroundColor(.gray)
-                            .brightness(Constants.Dimens.opacityLow)
-                            .aspectRatio(1.0, contentMode: .fit)
-
-                        ProgressView()
-                            .progressViewStyle(CircularProgressViewStyle())
-                    }
-                    .frame(width: width)
+                    progressView
                 }
             } else if case MyImageEnum.local(let image) = pic.src {
                 Image(uiImage: image)
@@ -50,11 +42,7 @@ struct ProfilePictureView: View {
                     .cornerRadius(Constants.Dimens.radiusMax)
             }
         } else {
-            Circle()
-                .foregroundColor(.gray)
-                .brightness(Constants.Dimens.opacityLow)
-                .aspectRatio(1.0, contentMode: .fit)
-                .frame(width: width)
+            placeholderView
         }
     }
     

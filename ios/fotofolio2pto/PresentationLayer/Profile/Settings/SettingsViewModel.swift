@@ -33,7 +33,7 @@ final class SettingsViewModel: BaseViewModel, ViewModel, ObservableObject {
     // MARK: State
     
     struct State {
-        var userData: User? = nil
+        var userData: User! = nil
         var portfolios: [Portfolio] = []
     }
     

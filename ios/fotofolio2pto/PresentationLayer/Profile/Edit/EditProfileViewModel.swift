@@ -142,12 +142,7 @@ final class EditProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
     }
     
     private func updateSaveButtonVisibility() {
-        if state.profilePicture != nil, !state.profileDescription.isEmpty, !state.location.isEmpty, !media.isEmpty {
-            state.isSaveButtonDisabled = false
-            return
-        }
-        
-        state.isSaveButtonDisabled = true
+        state.isSaveButtonDisabled = false
     }
     
     private func cancelEdit() {

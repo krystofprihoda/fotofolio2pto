@@ -24,11 +24,13 @@ struct SettingsView: View {
                 })
             }
             
-            Section(header: Text(L.Profile.portfolios)) {
-                Button(action: { viewModel.onIntent(.editPortfolios) }, label: {
-                    Label(L.Profile.editPortfolios, systemImage: "text.below.photo")
-                        .foregroundStyle(.black)
-                })
+            if viewModel.state.userData.isCreator {
+                Section(header: Text(L.Profile.portfolios)) {
+                    Button(action: { viewModel.onIntent(.editPortfolios) }, label: {
+                        Label(L.Profile.editPortfolios, systemImage: "text.below.photo")
+                            .foregroundStyle(.black)
+                    })
+                }
             }
             
             Section {
