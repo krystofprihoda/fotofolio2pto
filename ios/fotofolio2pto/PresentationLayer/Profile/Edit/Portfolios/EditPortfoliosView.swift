@@ -9,23 +9,18 @@ import SwiftUI
 
 struct EditPortfoliosView: View {
     
-    @ObservedObject var viewModel: EditProfileViewModel
+    @ObservedObject var viewModel: EditPortfoliosViewModel
     
-    init(viewModel: EditProfileViewModel) {
+    init(viewModel: EditPortfoliosViewModel) {
         self.viewModel = viewModel
     }
     
     var body: some View {
         VStack(alignment: .leading) {
-            Text(L.Profile.portfolios)
-                .font(.footnote)
-                .foregroundColor(.black)
-                .padding(.leading)
-            
             ForEach(viewModel.state.portfolios) { portfolio in
-                VStack(alignment: .leading) {
+                VStack(alignment: .leading, spacing: Constants.Dimens.spaceMedium) {
                     Text(portfolio.name)
-                        .font(.body)
+                        .font(.headline)
                         .padding(.leading)
                     
                     ScrollView(.horizontal, showsIndicators: false) {
@@ -97,13 +92,18 @@ struct EditPortfoliosView: View {
                                                     )
                                                 )
                                         } placeholder: {
-                                            RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
-                                                .fill(Color.gray).brightness(Constants.Dimens.opacityLow)
-                                                .aspectRatio(1.0, contentMode: .fit)
-                                                .frame(
-                                                    width: Constants.Dimens.frameSizeMediumLarge,
-                                                    height: Constants.Dimens.frameSizeMediumLarge
-                                                )
+                                            ZStack {
+                                                RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
+                                                    .fill(Color.gray).brightness(Constants.Dimens.opacityLow)
+                                                    .aspectRatio(1.0, contentMode: .fit)
+                                                    .frame(
+                                                        width: Constants.Dimens.frameSizeMediumLarge,
+                                                        height: Constants.Dimens.frameSizeMediumLarge
+                                                    )
+                                                
+                                                ProgressView()
+                                                    .progressViewStyle(.circular)
+                                            }
                                         }
                                     } else if case MyImageEnum.local(let image) = img.src {
                                         Image(uiImage: image)
@@ -125,15 +125,32 @@ struct EditPortfoliosView: View {
                             }
                         }
                     }
+                    .frame(height: Constants.Dimens.frameSizeMediumLarge)
                 }
             }
-            .padding(.bottom)
+            
+            Spacer()
         }
+        .padding(.top, Constants.Dimens.spaceMedium)
+        .alert(item: Binding<AlertData?>(
+            get: { viewModel.state.alertData },
+            set: { alertData in
+                viewModel.onIntent(.onAlertDataChanged(alertData))
+            }
+        )) { alert in .init(alert) }
         .animation(.default, value: viewModel.state)
-        .navigationBarBackButtonHidden(true)
+        .setupNavBarAndTitle(L.Profile.editPortfolios, hideBack: true)
+        .navigationBarItems(leading: cancelButton)
+    }
+    
+    private var cancelButton: some View {
+        Button(action: { viewModel.onIntent(.cancel) }) {
+            Text(L.Profile.back)
+                .foregroundColor(.black)
+        }
     }
 }
 
 #Preview {
-    EditPortfoliosView(viewModel: .init(flowController: nil, userData: .dummy1, portfolios: []))
+    EditPortfoliosView(viewModel: .init(flowController: nil, creatorId: "id", portfolios: []))
 }

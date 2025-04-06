@@ -14,6 +14,10 @@ internal enum PortfolioIntent: Equatable {
     case updateExisting(Portfolio)
 }
 
+public protocol UpdatePortfolioProfileFlowDelegate: AnyObject {
+    func updatePortfolios(with: Portfolio)
+}
+
 final class EditPortfolioViewModel: BaseViewModel, ViewModel, ObservableObject {
     // MARK: Stored properties
 
@@ -23,15 +27,18 @@ final class EditPortfolioViewModel: BaseViewModel, ViewModel, ObservableObject {
     @LazyInjected private var updatePortfolioUseCase: UpdatePortfolioUseCase
 
     private weak var flowController: ProfileFlowController?
+    private weak var updatePortfolioProfileFlowDelegate: UpdatePortfolioProfileFlowDelegate?
 
     // MARK: Init
 
     init(
         flowController: ProfileFlowController?,
+        updatePortfolioProfileFlowDelegate: UpdatePortfolioProfileFlowDelegate? = nil,
         creatorId: String,
         intent: PortfolioIntent = .createNew
     ) {
         self.flowController = flowController
+        self.updatePortfolioProfileFlowDelegate = updatePortfolioProfileFlowDelegate
         super.init()
         state.creatorId = creatorId
         state.portfolioIntent = intent
@@ -200,6 +207,7 @@ final class EditPortfolioViewModel: BaseViewModel, ViewModel, ObservableObject {
     private func updatePortfolio() async {
         guard let portfolioId = state.portfolioId,
               !state.description.isEmpty,
+              !state.name.isEmpty,
               !state.media.isEmpty,
               !state.selectedCategories.isEmpty
         else {
@@ -210,13 +218,22 @@ final class EditPortfolioViewModel: BaseViewModel, ViewModel, ObservableObject {
         defer { state.isLoading = false }
         
         do {
-            try await updatePortfolioUseCase.execute(
+            let updated = try await updatePortfolioUseCase.execute(
                 id: portfolioId,
                 name: state.name,
-                photos: state.media,
+                photos: state.media.compactMap { photo in
+                    switch photo.src {
+                    case .remote(let url):
+                        return url
+                    default:
+                        return nil
+                    }
+                },
                 description: state.description,
                 category: state.selectedCategories
             )
+            
+            updatePortfolioProfileFlowDelegate?.updatePortfolios(with: updated)
             dismissView()
         } catch {
             

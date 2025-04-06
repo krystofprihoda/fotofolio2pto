@@ -84,7 +84,7 @@ struct FeedView: View {
     
     var categoryBar: some View {
         ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: Constants.Dimens.spaceNone) {
+            HStack(spacing: Constants.Dimens.spaceSmall) {
                 ForEach(Array(zip(viewModel.state.filter.indices, viewModel.state.filter)), id: \.0) { idx, category in
                     Button(action: { viewModel.onIntent(.removeCategory(category)) }, label: {
                         HStack {
@@ -106,10 +106,10 @@ struct FeedView: View {
                                 .opacity(Constants.Dimens.opacityMid)
                         )
                         .clipShape(RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall))
-                        .padding(.leading, idx == 0 ? Constants.Dimens.spaceLarge : Constants.Dimens.spaceSmall)
                     })
                 }
             }
+            .padding(.leading, Constants.Dimens.spaceLarge)
         }
     }
 }

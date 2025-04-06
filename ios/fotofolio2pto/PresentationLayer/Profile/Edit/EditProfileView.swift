@@ -19,7 +19,6 @@ struct EditProfileView: View {
                 
                 if viewModel.state.isCreator {
                     EditCreatorDetailsView(viewModel: viewModel)
-                    EditPortfoliosView(viewModel: viewModel)
                 }
             }
         }
@@ -50,5 +49,5 @@ struct EditProfileView: View {
 }
 
 #Preview {
-    EditProfileView(viewModel: .init(flowController: nil, userData: .dummy1, portfolios: []))
+    EditProfileView(viewModel: .init(flowController: nil, userData: .dummy1))
 }

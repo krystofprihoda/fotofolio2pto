@@ -56,6 +56,41 @@ public class FeedRepositoryImpl: FeedRepository {
         return portfolios
     }
     
+    public func updatePortfolio(id: String, name: String, photos: [String], description: String, category: [String]) async throws -> Portfolio {
+        guard let token: String = defaults.read(.token) else { throw AuthError.tokenRetrievalFailed }
+        
+        let headers = [
+            "Authorization": "Bearer \(token)",
+            "Content-Type": "application/json"
+        ]
+        
+        var body = [String:String]()
+        body["name"] = name
+        body["description"] = description
+        if !category.isEmpty {
+            var commaCategories = ""
+            for c in category {
+                commaCategories += c + ","
+            }
+            
+            commaCategories.removeLast()
+            body["category"] = commaCategories
+        }
+        if !photos.isEmpty {
+            var commaPhotos = ""
+            for photo in photos {
+                commaPhotos += photo + ","
+            }
+            
+            commaPhotos.removeLast()
+            body["photoURLs"] = commaPhotos
+        }
+        
+        
+        let updated: Portfolio = try await network.fetch(endpoint: .portfolioById(id), method: .PUT, body: body, headers: headers, queryParams: nil)
+        return updated
+    }
+    
     public func readImageFromURL(url: String) async throws -> UIImage {
         guard let token: String = defaults.read(.token) else { throw AuthError.tokenRetrievalFailed }
         
@@ -161,6 +196,15 @@ public class FeedRepositoryImpl: FeedRepository {
             headers: headers,
             queryParams: nil
         )
+    }
+    
+    public func removePortfolio(id: String) async throws {
+        guard let token: String = defaults.read(.token) else { throw AuthError.tokenRetrievalFailed }
+        let headers = [
+            "Authorization": "Bearer \(token)"
+        ]
+        
+        let _ = try await network.request(endpoint: .portfolioById(id), method: .DELETE, body: nil, headers: headers, queryParams: nil)
     }
 }
 

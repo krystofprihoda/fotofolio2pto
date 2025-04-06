@@ -24,6 +24,13 @@ struct SettingsView: View {
                 })
             }
             
+            Section(header: Text(L.Profile.portfolios)) {
+                Button(action: { viewModel.onIntent(.editPortfolios) }, label: {
+                    Label(L.Profile.editPortfolios, systemImage: "text.below.photo")
+                        .foregroundStyle(.black)
+                })
+            }
+            
             Section {
                 Button(action: { viewModel.onIntent(.signOut) }, label: {
                     Label(L.Profile.signOut, systemImage: "arrow.backward.circle")

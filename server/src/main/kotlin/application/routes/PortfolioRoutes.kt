@@ -15,6 +15,7 @@ import io.ktor.server.routing.*
 import io.ktor.http.content.*
 import java.io.ByteArrayOutputStream
 import io.ktor.utils.io.jvm.javaio.toInputStream
+import java.net.URLDecoder
 import java.net.URLEncoder
 import java.util.*
 import kotlin.io.copyTo
@@ -244,20 +245,72 @@ fun Application.portfolioRoutes() {
 
             put("/portfolio/{portfolioId}") {
                 try {
+                    val requestBody = call.receive<Map<String, String>>()
+
                     val portfolioId = call.parameters["portfolioId"] as String
-                    val updatedPortfolioData = call.receive<Portfolio>()
+                    val name = requestBody["name"]
+                    val description = requestBody["description"]
+                    val categoryRaw = requestBody["category"]
+                    val photoURLsRaw = requestBody["photoURLs"]
+
+                    if (name == null || description == null || categoryRaw == null || photoURLsRaw == null) {
+                        call.respond(HttpStatusCode.BadRequest, "Missing one or more required fields")
+                        return@put
+                    }
+
+                    val category = categoryRaw.split(",").map { it.trim() }
+                    val updatedPhotoURLs = photoURLsRaw.split(",").map { it.trim() }
 
                     val db = FirestoreClient.getFirestore()
+                    val portfolioRef = db.collection("portfolio").document(portfolioId)
+                    val snapshot = portfolioRef.get().await()
 
-                    // Update the existing portfolio document
-                    db.collection("portfolio")
-                        .document(portfolioId)
-                        .set(updatedPortfolioData)
+                    if (!snapshot.exists()) {
+                        call.respond(HttpStatusCode.NotFound, "Portfolio not found")
+                        return@put
+                    }
+
+                    val portfolio = snapshot.toObject(Portfolio::class.java)
+                    val existingPhotoUrls = portfolio?.photos ?: emptyList()
+
+                    // Determine which photos to delete
+                    val photosToDelete = existingPhotoUrls.filterNot { updatedPhotoURLs.contains(it) }
+
+                    val bucket = StorageClient.getInstance().bucket("fotofolio-3.firebasestorage.app")
+
+                    // Delete unused photos from storage
+                    photosToDelete.forEach { url ->
+                        val decodedPath = url
+                            .substringAfter("/o/")
+                            .substringBefore("?")
+                            .let { URLDecoder.decode(it, "UTF-8") }
+
+                        try {
+                            val blob = bucket.get(decodedPath)
+                            blob?.delete()
+                        } catch (e: Exception) {
+                            println("Failed to delete image from storage: $decodedPath")
+                        }
+                    }
+
+                    // Update portfolio in Firestore, authorUsername & creatorId remain
+                    val updates = mapOf(
+                        "description" to description,
+                        "category" to category,
+                        "photos" to updatedPhotoURLs,
+                        "name" to name
+                    )
+
+                    portfolioRef.update(updates).await()
+
+                    val updated = portfolioRef
+                        .get()
                         .await()
+                        .toObject(Portfolio::class.java)?: throw Exception("Updated portfolio not retrieved")
 
-                    call.respond(HttpStatusCode.OK, mapOf("message" to "Portfolio updated successfully"))
+                    call.respond(HttpStatusCode.OK, updated)
                 } catch (e: Exception) {
-                    call.respond(HttpStatusCode.BadRequest, "Error processing request: ${e.localizedMessage}")
+                    call.respond(HttpStatusCode.InternalServerError, "Error: ${e.localizedMessage}")
                 }
             }
 
@@ -266,16 +319,56 @@ fun Application.portfolioRoutes() {
                     val portfolioId = call.parameters["portfolioId"] as String
 
                     val db = FirestoreClient.getFirestore()
+                    val portfolioRef = db.collection("portfolio").document(portfolioId)
+                    val snapshot = portfolioRef.get().await()
 
-                    // Delete the portfolio document
-                    db.collection("portfolio")
-                        .document(portfolioId)
-                        .delete()
-                        .await()
+                    if (!snapshot.exists()) {
+                        call.respond(HttpStatusCode.NotFound, "Portfolio not found")
+                        return@delete
+                    }
 
-                    call.respond(HttpStatusCode.OK, mapOf("message" to "Portfolio deleted successfully"))
+                    val portfolio = snapshot.toObject(Portfolio::class.java)
+                    val photoURLs = portfolio?.photos ?: emptyList()
+
+                    val bucket = StorageClient.getInstance().bucket("fotofolio-3.firebasestorage.app")
+
+                    // Delete all the images in the portfolio from Firebase Storage
+                    photoURLs.forEach { url ->
+                        val decodedPath = url
+                            .substringAfter("/o/")
+                            .substringBefore("?")
+                            .let { URLDecoder.decode(it, "UTF-8") }
+
+                        try {
+                            val blob = bucket.get(decodedPath)
+                            blob?.delete()
+                        } catch (e: Exception) {
+                            println("Failed to delete image from storage: $decodedPath")
+                        }
+                    }
+
+                    // Delete the portfolio document from Firestore
+                    portfolioRef.delete().await()
+
+                    // Optionally, delete the creator reference from the creator's portfolio list
+                    val creatorId = portfolio?.creatorId
+                    if (creatorId != null) {
+                        val creatorRef = db.collection("creator").document(creatorId)
+                        val creatorSnapshot = creatorRef.get().await()
+
+                        if (creatorSnapshot.exists()) {
+                            val creator = creatorSnapshot.toObject(Creator::class.java)
+                            val updatedPortfolioIds = creator?.portfolioIds?.toMutableList() ?: mutableListOf()
+
+                            updatedPortfolioIds.remove(portfolioId)
+
+                            creatorRef.update("portfolioIds", updatedPortfolioIds).await()
+                        }
+                    }
+
+                    call.respond(HttpStatusCode.OK, "Portfolio deleted successfully")
                 } catch (e: Exception) {
-                    call.respond(HttpStatusCode.BadRequest, "Error processing request: ${e.localizedMessage}")
+                    call.respond(HttpStatusCode.InternalServerError, "Error: ${e.localizedMessage}")
                 }
             }
         }

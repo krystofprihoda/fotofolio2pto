@@ -43,6 +43,7 @@ final class SettingsViewModel: BaseViewModel, ViewModel, ObservableObject {
     
     enum Intent {
         case editProfile
+        case editPortfolios
         case signOut
         case goBack
     }
@@ -52,6 +53,7 @@ final class SettingsViewModel: BaseViewModel, ViewModel, ObservableObject {
         executeTask(Task {
             switch intent {
             case .editProfile: editProfile()
+            case .editPortfolios: editPortfolios()
             case .signOut: signOut()
             case .goBack: dismissView()
             }
@@ -62,7 +64,12 @@ final class SettingsViewModel: BaseViewModel, ViewModel, ObservableObject {
     
     private func editProfile() {
         guard let userData = state.userData else { return }
-        flowController?.showProfileEdit(userData: userData, portfolios: state.portfolios)
+        flowController?.showProfileEdit(userData: userData)
+    }
+    
+    private func editPortfolios() {
+        guard let creatorId = state.userData?.creatorId else { return }
+        flowController?.showPortfoliosEdit(creatorId: creatorId, portfolios: state.portfolios)
     }
     
     private func signOut() {

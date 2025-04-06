@@ -50,6 +50,7 @@ enum Endpoint {
     case creatorPortfolio(creatorId: String)
     case userByCreatorId(String)
     case portfolio
+    case portfolioById(String)
     case chat
     case messageByChatId(String)
     
@@ -69,6 +70,8 @@ enum Endpoint {
             return "/creator/\(id)/user"
         case .portfolio:
             return "/portfolio"
+        case .portfolioById(let id):
+            return "/portfolio/\(id)"
         case .chat:
             return "/chat"
         case .messageByChatId(let chatId):

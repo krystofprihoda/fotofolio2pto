@@ -60,9 +60,16 @@ class ProfileFlowController: BaseFlowController {
         navigationController.pushViewController(vc, animated: true)
     }
     
-    public func showProfileEdit(userData: User, portfolios: [Portfolio]) {
-        let vm = EditProfileViewModel(flowController: self, userData: userData, portfolios: portfolios)
+    public func showProfileEdit(userData: User) {
+        let vm = EditProfileViewModel(flowController: self, userData: userData)
         let view = EditProfileView(viewModel: vm)
+        let vc = BaseHostingController(rootView: view, hideBackButton: true)
+        navigationController.pushViewController(vc, animated: true)
+    }
+    
+    public func showPortfoliosEdit(creatorId: String, portfolios: [Portfolio]) {
+        let vm = EditPortfoliosViewModel(flowController: self, creatorId: creatorId, portfolios: portfolios)
+        let view = EditPortfoliosView(viewModel: vm)
         let vc = BaseHostingController(rootView: view, hideBackButton: true)
         navigationController.pushViewController(vc, animated: true)
     }
@@ -84,8 +91,13 @@ class ProfileFlowController: BaseFlowController {
         navigationController.present(vc, animated: true)
     }
     
-    public func showEditPortfolio(_ portfolio: Portfolio, creatorId: String) {
-        let vm = EditPortfolioViewModel(flowController: self, creatorId: creatorId, intent: .updateExisting(portfolio))
+    public func showEditPortfolio(_ portfolio: Portfolio, creatorId: String, updatePortfolioProfileFlowDelegate: UpdatePortfolioProfileFlowDelegate?) {
+        let vm = EditPortfolioViewModel(
+            flowController: self,
+            updatePortfolioProfileFlowDelegate: updatePortfolioProfileFlowDelegate,
+            creatorId: creatorId,
+            intent: .updateExisting(portfolio)
+        )
         let view = EditPortfolioView(viewModel: vm)
         let vc = BaseHostingController(rootView: view, hideBackButton: true)
         navigationController.pushViewController(vc, animated: true)

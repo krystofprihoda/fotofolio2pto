@@ -22,8 +22,7 @@ final class EditProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
 
     init(
         flowController: ProfileFlowController?,
-        userData: User,
-        portfolios: [Portfolio]
+        userData: User
     ) {
         self.flowController = flowController
         super.init()
@@ -33,7 +32,6 @@ final class EditProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
         state.profilePicture = userData.profilePicture
         state.isCreator = userData.isCreator
         state.creatorId = userData.creatorId
-        state.portfolios = portfolios
         state.rawUserData = userData
         
         fetchCreatorData()
@@ -57,11 +55,8 @@ final class EditProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
         var yearsOfExperience: Int = 2
         var profileDescription = ""
         var location = ""
-        var portfolios: [Portfolio] = []
         var rawUserData: User? = nil
-        var portfolioTagsInput = ""
         var mediaFromPicker: [IImage] = []
-        var removedPortfolios: [String] = []
         var isSaveButtonDisabled = true
         var alertData: AlertData? = nil
     }
@@ -75,8 +70,6 @@ final class EditProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
         case setLocation(String)
         case setYearsOfExperience(Int)
         case setProfileDescription(String)
-        case editPorfolio(Portfolio)
-        case removePortfolio(String)
         case onAlertDataChanged(AlertData?)
         case saveChanges
         case cancel
@@ -90,8 +83,6 @@ final class EditProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
             case .setLocation(let location): setLocation(location)
             case .setYearsOfExperience(let yoe): setYearsOfExperience(yoe)
             case .setProfileDescription(let description): setProfileDescription(description)
-            case .editPorfolio(let portfolio): presentEditPortfolio(portfolio)
-            case .removePortfolio(let id): addToRemoved(id)
             case .onAlertDataChanged(let alertData): setAlertData(alertData)
             case .saveChanges: saveChanges()
             case .cancel: cancelEdit()
@@ -140,17 +131,6 @@ final class EditProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
         updateSaveButtonVisibility()
     }
     
-    private func presentEditPortfolio(_ portfolio: Portfolio) {
-        guard let creatorId = state.creatorId else { return }
-        flowController?.showEditPortfolio(portfolio, creatorId: creatorId)
-        updateSaveButtonVisibility()
-    }
-    
-    private func addToRemoved(_ portfolio: String) {
-        state.removedPortfolios.append(portfolio)
-        updateSaveButtonVisibility()
-    }
-    
     private func setAlertData(_ alertData: AlertData?) {
         state.alertData = alertData
         updateSaveButtonVisibility()
@@ -188,7 +168,6 @@ final class EditProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
     
     private func saveChanges() {
         #warning("TODO: Update profile info")
-        #warning("TODO: Remove portfolios to be removed")
         
         dismissView()
     }
