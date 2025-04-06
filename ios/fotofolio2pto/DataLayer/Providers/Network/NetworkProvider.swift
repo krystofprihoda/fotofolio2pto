@@ -45,6 +45,7 @@ enum NetworkError: Error {
 enum Endpoint {
     case user
     case userById(String)
+    case userProfilePicture(String)
     case creator
     case creatorById(String)
     case creatorPortfolio(creatorId: String)
@@ -60,6 +61,8 @@ enum Endpoint {
             return "/user"
         case .userById(let id):
             return "/user/\(id)"
+        case .userProfilePicture(let id):
+            return "/user/\(id)/profilepicture"
         case .creator:
             return "/creator"
         case .creatorById(let id):

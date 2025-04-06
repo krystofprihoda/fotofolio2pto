@@ -76,4 +76,20 @@ public class CreatorRepositoryImpl: CreatorRepository {
         )
         return portfolios
     }
+    
+    public func updateCreatorData(creatorId: String, yearsOfExperience: Int, profileDescription: String) async throws {
+        guard let token: String = defaults.read(.token) else { throw AuthError.tokenRetrievalFailed }
+        
+        let headers = [
+            "Authorization": "Bearer \(token)",
+            "Content-Type": "application/json"
+        ]
+        
+        let body: [String: String] = [
+            "yearsOfExperience": String(yearsOfExperience),
+            "description": profileDescription
+        ]
+        
+        let _ = try await network.request(endpoint: .creatorById(creatorId), method: .PATCH, body: body, headers: headers, queryParams: nil)
+    }
 }

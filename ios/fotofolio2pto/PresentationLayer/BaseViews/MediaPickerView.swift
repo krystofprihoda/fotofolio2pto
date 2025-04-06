@@ -24,7 +24,7 @@ public struct MediaPickerView: UIViewControllerRepresentable {
     public init(
         media: Binding<[IImage]>,
         selectionLimit: Int = 5,
-        filter: PHPickerFilter? = PHPickerFilter.any(of: [.images, .videos]),
+        filter: PHPickerFilter? = PHPickerFilter.any(of: [.images]),
         itemProviders: [NSItemProvider] = []
     ) {
         self._media = media
@@ -63,33 +63,36 @@ public struct MediaPickerView: UIViewControllerRepresentable {
         public func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
             picker.dismiss(animated: true)
 
-            if !results.isEmpty {
-                parent.itemProviders = []
-                parent.media = []
-            }
-            
+            guard !results.isEmpty else { return }
+
             parent.itemProviders = results.map(\.itemProvider)
+
             loadMedia()
         }
         
         private func loadMedia() {
+            var loadedMedia: [IImage] = []
+            let group = DispatchGroup()
+
             for itemProvider in parent.itemProviders {
                 if itemProvider.canLoadObject(ofClass: UIImage.self) {
-                    itemProvider.loadObject(ofClass: UIImage.self) { [weak self] image, error in
-                        guard let self = self else { return }
-                        
+                    group.enter()
+                    itemProvider.loadObject(ofClass: UIImage.self) { image, error in
                         if let image = image as? UIImage {
-                            self.parent.media.append(IImage(src: MyImageEnum.local(image)))
+                            let wrapped = IImage(src: MyImageEnum.local(image))
+                            loadedMedia.append(wrapped)
                         } else {
                             print("Could not load image", error?.localizedDescription ?? "")
                         }
+                        group.leave()
                     }
-                } else if itemProvider.hasItemConformingToTypeIdentifier(UTType.movie.identifier) {
-                    // Skip video for now
                 }
             }
+
+            group.notify(queue: .main) {
+                self.parent.media = loadedMedia
+            }
         }
-        
     }
 }
 

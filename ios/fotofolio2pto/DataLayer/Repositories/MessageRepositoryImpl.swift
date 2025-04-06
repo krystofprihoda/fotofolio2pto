@@ -24,8 +24,9 @@ public class MessageRepositoryImpl: MessageRepository {
             "Content-Type": "application/json"
         ]
         
-        var body = [String:String]()
-        body["message"] = message
+        var body: [String:String] = [
+            "message": message
+        ]
         
         let chat: Chat = try await network.fetch(
             endpoint: .chat,
@@ -61,8 +62,9 @@ public class MessageRepositoryImpl: MessageRepository {
             "Content-Type": "application/json"
         ]
         
-        var queryParams: [String: String] = [:]
-        queryParams["receiverId"] = receiverId
+        var queryParams: [String: String] = [
+            "receiverId": receiverId
+        ]
         
         let chat: Chat = try await network.fetch(
             endpoint: .chat,
@@ -98,8 +100,9 @@ public class MessageRepositoryImpl: MessageRepository {
             "Content-Type": "application/json"
         ]
         
-        var body = [String:String]()
-        body["message"] = message
+        var body: [String:String] = [
+            "message": message
+        ]
         
         let chat: Chat = try await network.fetch(
             endpoint: .messageByChatId(chatId),
@@ -118,9 +121,10 @@ public class MessageRepositoryImpl: MessageRepository {
             "Content-Type": "application/json"
         ]
         
-        var body = [String:String]()
-        body["message"] = message
-        body["receiverId"] = receiverId
+        var body: [String:String] = [
+            "message": message,
+            "receiverId": receiverId
+        ]
         
         let chat: Chat = try await network.fetch(
             endpoint: .chat,

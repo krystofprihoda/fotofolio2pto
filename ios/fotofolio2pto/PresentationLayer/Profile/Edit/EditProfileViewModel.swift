@@ -15,6 +15,9 @@ final class EditProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
     // MARK: Dependencies
 
     @LazyInjected private var readCreatorDataUseCase: ReadCreatorDataUseCase
+    @LazyInjected private var updateUserDataUseCase: UpdateUserDataUseCase
+    @LazyInjected private var saveUserProfilePictureUseCase: SaveUserProfilePictureUseCase
+    @LazyInjected private var updateCreatorDataUseCase: UpdateCreatorDataUseCase
 
     private weak var flowController: ProfileFlowController?
 
@@ -29,6 +32,7 @@ final class EditProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
         state.username = userData.username
         state.fullName = userData.fullName
         state.location = userData.location
+        state.updatedLocation = userData.location
         state.profilePicture = userData.profilePicture
         state.isCreator = userData.isCreator
         state.creatorId = userData.creatorId
@@ -55,8 +59,8 @@ final class EditProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
         var yearsOfExperience: Int = 2
         var profileDescription = ""
         var location = ""
+        var updatedLocation = ""
         var rawUserData: User? = nil
-        var mediaFromPicker: [IImage] = []
         var isSaveButtonDisabled = true
         var alertData: AlertData? = nil
     }
@@ -84,7 +88,7 @@ final class EditProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
             case .setYearsOfExperience(let yoe): setYearsOfExperience(yoe)
             case .setProfileDescription(let description): setProfileDescription(description)
             case .onAlertDataChanged(let alertData): setAlertData(alertData)
-            case .saveChanges: saveChanges()
+            case .saveChanges: await saveChanges()
             case .cancel: cancelEdit()
             }
         })
@@ -108,16 +112,17 @@ final class EditProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
     }
 
     private func pickProfilePicture() {
-        flowController?.presentPickerModal(source: self)
+        flowController?.presentPickerModal(source: self, limit: 1)
     }
     
     private func setMedia(_ media: [IImage]) {
-        state.mediaFromPicker = media
+        guard let image = media.first else { return }
+        state.profilePicture = image
         updateSaveButtonVisibility()
     }
     
     private func setLocation(_ location: String) {
-        state.location = location
+        state.updatedLocation = location
         updateSaveButtonVisibility()
     }
     
@@ -146,6 +151,11 @@ final class EditProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
     }
     
     private func cancelEdit() {
+        guard !state.isSaveButtonDisabled else {
+            dismissView()
+            return
+        }
+        
         state.alertData = .init(
             title: L.Profile.goBack,
             message: nil,
@@ -166,8 +176,40 @@ final class EditProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
         )
     }
     
-    private func saveChanges() {
-        #warning("TODO: Update profile info")
+    private func saveChanges() async {
+        state.isLoading = true
+        defer { state.isLoading = false }
+        
+        // update user data
+        if state.updatedLocation != state.location {
+            do {
+                try await updateUserDataUseCase.execute(location: state.updatedLocation)
+            } catch {
+                
+            }
+        }
+        
+        if let creatorId = state.creatorId {
+            do {
+                try await updateCreatorDataUseCase
+                    .execute(
+                        creatorId: creatorId,
+                        yearsOfExperience: state.yearsOfExperience,
+                        profileDescription: state.profileDescription
+                    )
+            } catch {
+                
+            }
+        }
+        
+        // save profile image if displayed type == .local
+        if let profilePicture = state.profilePicture?.src, case .local(let image) = profilePicture {
+            do {
+                try await saveUserProfilePictureUseCase.execute(image: image)
+            } catch {
+                
+            }
+        }
         
         dismissView()
     }
@@ -180,8 +222,13 @@ final class EditProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
 extension EditProfileViewModel: MediaPickerSource {
     var media: Binding<[IImage]> {
         Binding<[IImage]>(
-            get: { [weak self] in self?.state.mediaFromPicker ?? [] },
-            set: { [weak self] media in self?.setMedia(media) }
+            get: { [weak self] in
+                guard let profilePic = self?.state.profilePicture else { return [] }
+                return [profilePic]
+            },
+            set: { [weak self] media in
+                self?.setMedia(media)
+            }
         )
     }
 }

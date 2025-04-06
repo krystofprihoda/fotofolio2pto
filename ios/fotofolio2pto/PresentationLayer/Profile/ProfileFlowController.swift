@@ -81,11 +81,11 @@ class ProfileFlowController: BaseFlowController {
         navigationController.pushViewController(vc, animated: true)
     }
     
-    public func presentPickerModal(source: MediaPickerSource) {
+    public func presentPickerModal(source: MediaPickerSource, limit: Int) {
         let vc = BaseHostingController(
             rootView: MediaPickerView(
                 media: source.media,
-                selectionLimit: 5
+                selectionLimit: limit
             )
         )
         navigationController.present(vc, animated: true)

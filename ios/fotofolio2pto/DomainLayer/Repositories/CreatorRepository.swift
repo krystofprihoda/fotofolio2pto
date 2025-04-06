@@ -12,4 +12,5 @@ public protocol CreatorRepository {
     func createCreator(yearsOfExperience: Int) async throws
     func readUserByCreatorId(creatorId: String) async throws -> User
     func readAllCreatorPortfolios(creatorId: String) async throws -> [Portfolio]
+    func updateCreatorData(creatorId: String, yearsOfExperience: Int, profileDescription: String) async throws
 }

@@ -191,7 +191,7 @@ struct EditPortfolioView: View {
                         }
                     }
                     
-                    if viewModel.state.portfolioIntent == .createNew {
+                    if viewModel.state.portfolioIntent == .createNew, viewModel.state.media.count < 7 {
                         Button(action: { viewModel.onIntent(.pickMedia) }) {
                             ZStack {
                                 RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 public class UserRepositoryImpl: UserRepository {
     
@@ -100,5 +101,52 @@ public class UserRepositoryImpl: UserRepository {
     public func getSignedInUsername() throws -> String {
         guard let username: String = defaults.read(.username) else { throw ObjectError.nonExistent }
         return username
+    }
+    
+    public func updateUserData(location: String) async throws {
+        guard let token: String = defaults.read(.token) else { throw AuthError.tokenRetrievalFailed }
+        guard let userId: String = defaults.read(.userId) else { throw AuthError.missingUserId }
+        
+        let headers = [
+            "Authorization": "Bearer \(token)",
+            "Content-Type": "application/json"
+        ]
+        
+        let body: [String:String] = [
+            "location": location
+        ]
+        
+        let _ = try await network.request(endpoint: .userById(userId), method: .PATCH, body: body, headers: headers, queryParams: nil)
+    }
+    
+    public func saveUserProfilePicture(image: UIImage) async throws {
+        guard let token: String = defaults.read(.token) else { throw AuthError.tokenRetrievalFailed }
+        guard let userId: String = defaults.read(.userId) else { throw AuthError.missingUserId }
+        
+        let boundary = UUID().uuidString
+        var body = Data()
+
+        guard let imageData = image.jpegData(compressionQuality: 0.8) else { throw ObjectError.imageConversionFailed }
+
+        let boundaryPrefix = "--\(boundary)\r\n"
+        body.append(Data(boundaryPrefix.utf8))
+        body.append(Data("Content-Disposition: form-data; name=\"profilepicture\"; filename=\"profilepicture.jpg\"\r\n".utf8))
+        body.append(Data("Content-Type: image/jpeg\r\n\r\n".utf8))
+        body.append(imageData)
+        body.append(Data("\r\n".utf8))
+        body.append(Data("--\(boundary)--\r\n".utf8))
+
+        let headers = [
+            "Authorization": "Bearer \(token)",
+            "Content-Type": "multipart/form-data; boundary=\(boundary)"
+        ]
+        
+        _ = try await network.request(
+            endpoint: .userProfilePicture(userId),
+            method: .POST,
+            rawBody: body,
+            headers: headers,
+            queryParams: nil
+        )
     }
 }

@@ -34,7 +34,12 @@ struct EditProfileView: View {
     
     private var saveButton: some View {
         Button(action: { viewModel.onIntent(.saveChanges) }) {
-            Text(L.Profile.save)
+            if viewModel.state.isLoading {
+                ProgressView()
+                    .progressViewStyle(.circular)
+            } else {
+                Text(L.Profile.save)
+            }
         }
         .foregroundColor(viewModel.state.isSaveButtonDisabled ? .gray : .black)
         .disabled(viewModel.state.isSaveButtonDisabled)

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 public protocol UserRepository {
     func createUser(username: String, email: String, fullName: String, location: String, profilePicture: String) async throws
@@ -13,5 +14,7 @@ public protocol UserRepository {
     func saveSignedInUsername(_ username: String)
     func getSignedInUsername() throws -> String
     func getUsersFromQuery(query: String) async throws -> [User]
+    func updateUserData(location: String) async throws
+    func saveUserProfilePicture(image: UIImage) async throws
     func isUsernameTaken(_ username: String) async throws
 }

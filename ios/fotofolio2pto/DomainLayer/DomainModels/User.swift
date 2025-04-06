@@ -76,7 +76,7 @@ extension User: Codable {
         }
 
         // Decode profilePicture as a URL and wrap it in MyImageEnum.remote
-        if let profilePictureURLString = try? container.decode(String.self, forKey: .profilePicture) {
+        if let profilePictureURLString = try? container.decode(String.self, forKey: .profilePicture), !profilePictureURLString.isEmpty {
             profilePicture = IImage(src: .remote(profilePictureURLString))
         } else {
             profilePicture = nil

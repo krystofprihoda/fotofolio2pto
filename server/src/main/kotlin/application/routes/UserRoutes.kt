@@ -1,6 +1,6 @@
 package application.routes
 
-import com.google.firebase.auth.FirebaseAuth
+import io.ktor.utils.io.jvm.javaio.toInputStream
 import domain.repository.PortfolioRepository
 import domain.repository.UserRepository
 import io.ktor.http.*
@@ -13,6 +13,11 @@ import io.ktor.server.routing.*
 import kotlinx.serialization.Serializable
 import com.google.firebase.cloud.FirestoreClient
 import com.kborowy.authprovider.firebase.await
+import io.ktor.http.content.*
+import java.io.ByteArrayOutputStream
+import com.google.firebase.cloud.StorageClient
+import java.util.*
+import java.net.URLEncoder
 
 // temporary location
 @Serializable
@@ -54,6 +59,62 @@ fun Application.userRoutes() {
                     call.respond(HttpStatusCode.OK, res)
                 } catch (e: Exception) {
                     call.respond(HttpStatusCode.BadRequest, "Error processing request: ${e.localizedMessage}")
+                }
+            }
+
+            post("/user/{userId}/profilepicture") {
+                try {
+                    val userId = call.parameters["userId"] ?: return@post call.respond(
+                        HttpStatusCode.BadRequest, "Missing userId"
+                    )
+
+                    val multipart = call.receiveMultipart()
+                    var profilePicBytes: ByteArray? = null
+
+                    multipart.forEachPart { part ->
+                        if (part is PartData.FileItem && part.name == "profilepicture") {
+                            val byteChannel = part.provider()
+                            val inputStream = byteChannel.toInputStream()
+                            val outputStream = ByteArrayOutputStream()
+                            inputStream.copyTo(outputStream)
+                            profilePicBytes = outputStream.toByteArray()
+                        }
+                        part.dispose()
+                    }
+
+                    if (profilePicBytes == null) {
+                        call.respond(HttpStatusCode.BadRequest, "Missing image data")
+                        return@post
+                    }
+
+                    // Upload to Firebase Storage
+                    val bucket = StorageClient.getInstance().bucket("fotofolio-3.firebasestorage.app")
+                    val path = "user/$userId/profilepicture.jpeg"
+
+                    val blob = bucket.create(
+                        path,
+                        profilePicBytes,
+                        "image/jpeg"
+                    )
+
+                    val token = UUID.randomUUID().toString()
+                    val updatedBlob = blob.toBuilder()
+                        .setMetadata(mapOf("firebaseStorageDownloadTokens" to token))
+                        .build()
+                        .update()
+
+                    val encodedPath = URLEncoder.encode(path, "UTF-8")
+                    val downloadUrl = "https://firebasestorage.googleapis.com/v0/b/${bucket.name}/o/$encodedPath?alt=media&token=$token"
+
+                    // Save to Firestore
+                    val db = FirestoreClient.getFirestore()
+                    val userRef = db.collection("user").document(userId)
+
+                    userRef.update("profilePicture", downloadUrl).await()
+
+                    call.respond(HttpStatusCode.OK, mapOf("profilePictureUrl" to downloadUrl))
+                } catch (e: Exception) {
+                    call.respond(HttpStatusCode.InternalServerError, "Error: ${e.localizedMessage}")
                 }
             }
 
@@ -161,6 +222,40 @@ fun Application.userRoutes() {
                     call.respond(HttpStatusCode.OK, updatedUser)
                 } catch (e: Exception) {
                     call.respond(HttpStatusCode.BadRequest, "Error updating user: ${e.localizedMessage}")
+                }
+            }
+
+            patch("/user/{userId}") {
+                try {
+                    val userId = call.parameters["userId"] ?: return@patch call.respond(
+                        HttpStatusCode.BadRequest, "Missing userId"
+                    )
+
+                    val updateData = call.receive<Map<String, String>>()
+
+                    if (updateData.isEmpty()) {
+                        call.respond(HttpStatusCode.BadRequest, "No fields to update")
+                        return@patch
+                    }
+
+                    val db = FirestoreClient.getFirestore()
+                    val userRef = db.collection("user").document(userId)
+
+                    // Ensure user exists
+                    val existingUserSnapshot = userRef.get().await()
+                    if (!existingUserSnapshot.exists()) {
+                        call.respond(HttpStatusCode.NotFound, "User not found")
+                        return@patch
+                    }
+
+                    val allowedFields = listOf("location")
+                    val filteredData = updateData.filterKeys { it in allowedFields }
+
+                    userRef.update(filteredData).await()
+
+                    call.respond(HttpStatusCode.OK, "User updated successfully")
+                } catch (e: Exception) {
+                    call.respond(HttpStatusCode.InternalServerError, "Error updating user data: ${e.localizedMessage}")
                 }
             }
         }

@@ -64,9 +64,11 @@ public class FeedRepositoryImpl: FeedRepository {
             "Content-Type": "application/json"
         ]
         
-        var body = [String:String]()
-        body["name"] = name
-        body["description"] = description
+        var body: [String:String] = [
+            "name": name,
+            "description": description
+        ]
+        
         if !category.isEmpty {
             var commaCategories = ""
             for c in category {
@@ -205,14 +207,5 @@ public class FeedRepositoryImpl: FeedRepository {
         ]
         
         let _ = try await network.request(endpoint: .portfolioById(id), method: .DELETE, body: nil, headers: headers, queryParams: nil)
-    }
-}
-
-extension Data {
-    mutating func appendFormField(name: String, value: String, boundary: String) {
-        let boundaryPrefix = "--\(boundary)\r\n"
-        self.append(Data(boundaryPrefix.utf8))
-        self.append(Data("Content-Disposition: form-data; name=\"\(name)\"\r\n\r\n".utf8))
-        self.append(Data("\(value)\r\n".utf8))
     }
 }

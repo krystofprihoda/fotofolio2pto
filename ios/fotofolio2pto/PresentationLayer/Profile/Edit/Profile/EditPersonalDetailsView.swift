@@ -60,7 +60,7 @@ struct EditPersonalDetailsView: View {
                 TextField(
                     L.Profile.activePlace,
                     text: Binding(
-                        get: { viewModel.state.location },
+                        get: { viewModel.state.updatedLocation },
                         set: { viewModel.onIntent(.setLocation($0)) })
                 )
                     .font(.body)

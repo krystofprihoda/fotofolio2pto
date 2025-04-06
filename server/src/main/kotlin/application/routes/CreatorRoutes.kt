@@ -161,6 +161,45 @@ fun Application.creatorRoutes() {
                     call.respond(HttpStatusCode.BadRequest, "Error updating creator: ${e.localizedMessage}")
                 }
             }
+
+            patch("/creator/{creatorId}") {
+                try {
+                    val creatorId = call.parameters["creatorId"] ?: return@patch call.respond(
+                        HttpStatusCode.BadRequest, "Missing creatorId"
+                    )
+
+                    val body = call.receive<Map<String, String>>()
+
+                    val db = FirestoreClient.getFirestore()
+                    val creatorRef = db.collection("creator").document(creatorId)
+
+                    val existingCreatorSnapshot = creatorRef.get().await()
+                    if (!existingCreatorSnapshot.exists()) {
+                        throw Exception("Creator not found")
+                    }
+
+                    val updates = mutableMapOf<String, Any>()
+
+                    body["yearsOfExperience"]?.let {
+                        updates["yearsOfExperience"] = it.toIntOrNull() ?: throw Exception("Invalid yearsOfExperience value")
+                    }
+
+                    body["description"]?.let {
+                        updates["description"] = it
+                    }
+
+                    if (updates.isEmpty()) {
+                        call.respond(HttpStatusCode.BadRequest, "No valid fields to update")
+                        return@patch
+                    }
+
+                    creatorRef.update(updates).await()
+
+                    call.respond(HttpStatusCode.OK, "Creator updated successfully")
+                } catch (e: Exception) {
+                    call.respond(HttpStatusCode.BadRequest, "Error updating creator: ${e.localizedMessage}")
+                }
+            }
         }
     }
 }

@@ -118,7 +118,7 @@ final class EditPortfolioViewModel: BaseViewModel, ViewModel, ObservableObject {
     // MARK: Additional methods
 
     private func pickMedia() {
-        flowController?.presentPickerModal(source: self)
+        flowController?.presentPickerModal(source: self, limit: 7)
     }
     
     private func setMedia(_ media: [IImage]) {
