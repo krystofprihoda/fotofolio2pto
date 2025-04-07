@@ -27,7 +27,8 @@ struct ProfileView: View {
                         ProfileUserInfoView(
                             user: viewModel.state.userData,
                             creator: viewModel.state.creatorData,
-                            profileOwner: viewModel.state.isProfileOwner
+                            profileOwner: viewModel.state.isProfileOwner,
+                            onGiveRatingTap: { viewModel.onIntent(.giveRating) }
                         )
                             .padding(.top, Constants.Dimens.spaceSmall)
                         if !viewModel.state.portfolios.isEmpty {
@@ -40,47 +41,8 @@ struct ProfileView: View {
             }
             .refreshable { viewModel.onIntent(.fetchProfileData) }
         }
-        .toolbar {
-            ToolbarItemGroup(placement: .navigationBarTrailing) {
-                HStack(spacing: Constants.Dimens.spaceXSmall) {
-                    if viewModel.state.isProfileOwner && viewModel.state.creatorData != nil {
-                        Button(action: {
-                            viewModel.onIntent(.createNewPortfolio)
-                        }) {
-                            Image(systemName: "plus")
-                                .resizable()
-                                .aspectRatio(1, contentMode: .fit)
-                                .frame(height: Constants.Dimens.frameSizeXSmall)
-                                .foregroundColor(.gray)
-                        }
-                    }
-                    
-                    if viewModel.state.isProfileOwner {
-                        Button(action: {
-                            viewModel.onIntent(.showProfileSettings)
-                        }, label: {
-                            Image(systemName: "slider.horizontal.3")
-                                .resizable()
-                                .aspectRatio(1, contentMode: .fit)
-                                .frame(height: Constants.Dimens.frameSizeXSmall)
-                                .foregroundColor(.gray)
-                        })
-                    } else {
-                        Button(action: {
-                            viewModel.onIntent(.sendMessage)
-                        }, label: {
-                            Image(systemName: "paperplane")
-                                .resizable()
-                                .aspectRatio(1, contentMode: .fit)
-                                .frame(height: Constants.Dimens.frameSizeXSmall)
-                                .foregroundColor(.gray)
-                        })
-                    }
-                }
-            }
-        }
-        .navigationBarItems(leading: backButton)
-        .setupNavBarAndTitle("@\(viewModel.state.userData?.username ?? L.Profile.title)", hideBack: true)
+        .navigationBarItems(leading: backButton, trailing: trailingButtons)
+        .setupNavBarAndTitle(viewModel.state.userData?.username ?? "", hideBack: true)
         .lifecycle(viewModel)
     }
     
@@ -90,6 +52,49 @@ struct ProfileView: View {
         }
         .disabled(!viewModel.state.showDismiss)
         .opacity(viewModel.state.showDismiss ? 1 : 0)
+    }
+    
+    var trailingButtons: some View {
+        HStack(spacing: Constants.Dimens.spaceXSmall) {
+            if viewModel.state.isLoading {
+                ProgressView()
+                    .progressViewStyle(.circular)
+            } else {
+                if viewModel.state.isProfileOwner, viewModel.state.creatorData != nil {
+                    Button(action: {
+                        viewModel.onIntent(.createNewPortfolio)
+                    }) {
+                        Image(systemName: "plus")
+                            .resizable()
+                            .aspectRatio(1, contentMode: .fit)
+                            .frame(height: Constants.Dimens.frameSizeXSmall)
+                            .foregroundColor(.gray)
+                    }
+                }
+                
+                if viewModel.state.isProfileOwner {
+                    Button(action: {
+                        viewModel.onIntent(.showProfileSettings)
+                    }, label: {
+                        Image(systemName: "slider.horizontal.3")
+                            .resizable()
+                            .aspectRatio(1, contentMode: .fit)
+                            .frame(height: Constants.Dimens.frameSizeXSmall)
+                            .foregroundColor(.gray)
+                    })
+                } else {
+                    Button(action: {
+                        viewModel.onIntent(.sendMessage)
+                    }, label: {
+                        Image(systemName: "paperplane")
+                            .resizable()
+                            .aspectRatio(1, contentMode: .fit)
+                            .frame(height: Constants.Dimens.frameSizeXSmall)
+                            .foregroundColor(.gray)
+                    })
+                }
+            }
+        }
     }
 }
 

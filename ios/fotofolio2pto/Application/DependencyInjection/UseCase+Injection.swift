@@ -27,6 +27,7 @@ public extension Resolver {
         register { GetSignedInUsernameUseCaseImpl(userRepository: resolve()) as GetSignedInUsernameUseCase }
         register { SaveUserProfilePictureUseCaseImpl(userRepository: resolve()) as SaveUserProfilePictureUseCase }
         register { UpdateUserDataUseCaseImpl(userRepository: resolve()) as UpdateUserDataUseCase }
+        register { GiveRatingUseCaseImpl(userRepository: resolve()) as GiveRatingUseCase }
         
         /// Creator
         register { CreateCreatorDataUseCaseImpl(creatorRepository: resolve()) as CreateCreatorDataUseCase }

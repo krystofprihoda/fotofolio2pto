@@ -44,16 +44,7 @@ struct SelectionView: View {
             }
         }
         .toast(toastData: Binding(get: { viewModel.state.toastData }, set: { viewModel.onIntent(.setToastData($0)) }))
-        .toolbar {
-            ToolbarItemGroup(placement: .navigationBarTrailing) {
-                if !viewModel.state.portfolios.isEmpty {
-                    Button(L.Selection.removeAll) {
-                        viewModel.onIntent(.tapRemoveAllFlagged)
-                    }
-                    .padding(.trailing, 5)
-                }
-            }
-        }
+        .navigationBarItems(trailing: removeAllButton)
         .setupNavBarAndTitle(L.Selection.title)
         .animation(.default, value: viewModel.state.portfolios)
         .lifecycle(viewModel)
@@ -63,6 +54,16 @@ struct SelectionView: View {
                 viewModel.onIntent(.onAlertDataChanged(alertData))
             }
         )) { alert in .init(alert) }
+    }
+    
+    private var removeAllButton: some View {
+        VStack {
+            if !viewModel.state.portfolios.isEmpty {
+                Button(L.Selection.removeAll) {
+                    viewModel.onIntent(.tapRemoveAllFlagged)
+                }
+            }
+        }
     }
 }
 

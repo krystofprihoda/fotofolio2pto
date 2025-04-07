@@ -25,24 +25,25 @@ struct SearchResultsView: View {
             ForEach(results, id: \.id) { user in
                 Button(action: { onResultTap(user) }, label: {
                     HStack {
-                        ProfilePictureView(profilePicture: user.profilePicture, width: 60.0)
+                        ProfilePictureView(profilePicture: user.profilePicture, width: Constants.Dimens.frameSizeSmallMedium)
                         
-                        VStack(alignment: .leading, spacing: 0) {
+                        VStack(alignment: .leading, spacing: Constants.Dimens.spaceNone) {
                             Text(user.username)
-                                .font(.system(size: 16))
-                                .foregroundColor(.black).brightness(0.2)
-                                .padding(.bottom, 4)
+                                .font(.body)
+                                .foregroundColor(.black)
+                                .brightness(Constants.Dimens.opacityLow)
+                                .padding(.bottom, Constants.Dimens.spaceXSmall)
                             
                             Text(user.location)
-                                .font(.system(size: 13))
-                                .foregroundColor(.black).brightness(0.3)
-                                .padding(.bottom, 2)
+                                .font(.callout)
+                                .foregroundColor(.black).brightness(Constants.Dimens.opacityLow)
+                                .padding(.bottom, Constants.Dimens.spaceXXSmall)
                         }
-                        .padding(.leading, 7)
+                        .padding(.leading, Constants.Dimens.spaceSmall)
                         
                         Spacer()
                     }
-                    .padding(.top, 12)
+                    .padding(.top, Constants.Dimens.spaceMedium)
                     .transition(.move(edge: .trailing))
                 })
             }

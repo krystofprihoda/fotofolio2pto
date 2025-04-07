@@ -39,7 +39,7 @@ struct PortfolioAuthorDetailView: View {
                 Button(action: showProfile) {
                     Text("@\(userData?.username ?? L.Selection.username)")
                         .font(.title3)
-                        .padding(.leading, 20)
+                        .padding(.leading, Constants.Dimens.spaceSemiXLarge)
                         .foregroundColor(.mainAccent)
                 }
                 
@@ -54,55 +54,51 @@ struct PortfolioAuthorDetailView: View {
                     Image(systemName: "bookmark.slash")
                         .foregroundColor(.black)
                 }
-                .padding(.trailing, 20)
+                .padding(.trailing, Constants.Dimens.spaceSemiXLarge)
             }
-            .padding(.bottom, 1)
             
             HStack {
                 VStack(alignment: .leading) {
                     Text("\(userData?.fullName ?? L.Selection.fullName)")
-                        .foregroundColor(.black).brightness(0.3)
-                        .font(.system(size: 16))
+                        .foregroundColor(.black).brightness(Constants.Dimens.opacityLow)
+                        .font(.body)
                     
                     if let userData = userData {
                         if userData.rating.isEmpty {
-                            Text("\(userData.location), \(L.Selection.noRating)")
-                                .font(.system(size: 12))
-                                .foregroundColor(.black).brightness(0.3)
+                            Text("📍 \(userData.location) • \(L.Selection.noRating)")
+                                .font(.caption)
+                                .foregroundColor(.black)
+                                .brightness(Constants.Dimens.opacityLow)
                         } else {
-                            HStack {
-                                Text("\(userData.location), " + String(format: "%.1f", userData.averageRating) + L.Selection.outOf5)
-                                    .font(.system(size: 12))
-                                    .foregroundColor(.black).brightness(0.3)
+                            HStack(alignment: .center, spacing: Constants.Dimens.spaceXXSmall) {
+                                Text("📍 \(userData.location) • " + String(format: "%.1f", userData.averageRating) + L.Selection.outOf5)
+                                    .font(.caption)
+                                    .foregroundColor(.black)
+                                    .brightness(Constants.Dimens.opacityLow)
                                 
                                 Image(systemName: "star.fill")
-                                    .font(.system(size: 8))
-                                    .foregroundColor(.black).brightness(0.3)
-                                    .offset(x: -5)
+                                    .font(.caption2)
+                                    .foregroundColor(.black)
+                                    .brightness(Constants.Dimens.opacityLow)
                             }
                         }
                     }
                 }
-                .padding(.leading, 25)
+                .padding(.leading, Constants.Dimens.spaceXLarge)
                 
                 Spacer()
             }
             
             HStack {
                 Text(creatorData?.description ?? L.Selection.profileText)
-                    .font(.system(size: 16))
+                    .font(.body)
                     .foregroundColor(Color(uiColor: UIColor.systemGray))
                 
                 Spacer()
             }
-            .padding(.top, 5)
-            .padding(.leading, 21)
-            .padding(.trailing, 21)
+            .padding(.top, Constants.Dimens.spaceXSmall)
+            .padding(.horizontal, Constants.Dimens.textFieldButtonSpace)
         }
         .skeleton(isLoading)
     }
 }
-
-//#Preview {
-//    AuthorDetailView(author: .dummy1, creator: .dummy1, unflagPortfolio: {}, showProfile: {}, sendMessage: {})
-//}

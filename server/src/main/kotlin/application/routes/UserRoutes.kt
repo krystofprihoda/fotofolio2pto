@@ -118,6 +118,35 @@ fun Application.userRoutes() {
                 }
             }
 
+            post("/user/{receiverId}/rating") {
+                try {
+                    val receiverId = call.parameters["receiverId"] ?: throw Exception("Missing receiverId")
+
+                    val principalId = call.principal<UserIdPrincipal>()?.name ?: throw Exception("Unauthorized")
+                    val requestBody = call.receive<Map<String, String>>()
+                    val rating = requestBody["rating"] ?: throw Exception("Rating value is required")
+
+                    val db = FirestoreClient.getFirestore()
+                    val userRef = db.collection("user").document(receiverId)
+
+                    // Fetch the user
+                    val snapshot = userRef.get().await()
+                    if (!snapshot.exists()) { throw Exception("User not found") }
+
+                    // Update rating map
+                    val currentRatings = snapshot.get("rating") as? Map<String, Int> ?: emptyMap()
+                    val updatedRatings = currentRatings.toMutableMap()
+                    updatedRatings[principalId] = rating.toInt()
+
+                    // Save back to Firestore
+                    userRef.update("rating", updatedRatings).await()
+
+                    call.respond(HttpStatusCode.OK, "Rating saved")
+                } catch (e: Exception) {
+                    call.respond(HttpStatusCode.BadRequest, "Error saving rating: ${e.localizedMessage}")
+                }
+            }
+
             get("/user") {
                 try {
                     val searchQuery = call.request.queryParameters["query"]

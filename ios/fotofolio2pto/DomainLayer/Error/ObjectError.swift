@@ -12,4 +12,5 @@ public enum ObjectError: Error, Equatable {
     case emailAlreadyTaken
     case usernameAlreadyTaken
     case imageConversionFailed
+    case averageRetrievalFailed
 }

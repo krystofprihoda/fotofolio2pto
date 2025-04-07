@@ -44,15 +44,14 @@ struct PortfolioDetailView: View {
             /// Description
             HStack {
                 Text(viewModel.state.portfolio.description)
-                    .font(.system(size: 16))
+                    .font(.body)
                     .foregroundColor(Color(uiColor: UIColor.systemGray))
                 
                 Spacer()
             }
-            .padding(.top, 5)
-            .padding(.leading, 21)
-            .padding(.trailing, 21)
+            .padding(.top, Constants.Dimens.spaceXSmall)
+            .padding(.horizontal, Constants.Dimens.spaceSemiXLarge)
         }
-        .padding(.bottom, 10)
+        .padding(.bottom, Constants.Dimens.spaceSemiMedium)
     }
 }

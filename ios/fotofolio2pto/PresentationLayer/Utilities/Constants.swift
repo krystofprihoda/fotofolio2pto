@@ -45,7 +45,7 @@ public struct Constants {
         /**
         * Spacing of 20
         */
-        public static let spaceSemiLarge: CGFloat = 20
+        public static let spaceSemiXLarge: CGFloat = 20
         /**
         * Spacing of 24
         */
@@ -146,6 +146,10 @@ public struct Constants {
         * Line width of 2
         */
         public static let lineWidthSmall: CGFloat = 2
+        /**
+        * Opacity of 0.1
+        */
+        public static let opacityLowLow: CGFloat = 0.1
         /**
         * Opacity of 0.3
         */

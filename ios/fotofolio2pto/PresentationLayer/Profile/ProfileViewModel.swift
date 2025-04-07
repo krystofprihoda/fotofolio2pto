@@ -33,13 +33,18 @@ final class ProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
         state.displayedUserId = displayedUserId
         state.signedInUserId = signedInUserId
         state.showDismiss = showDismiss
+        
+        executeTask(Task { await fetchProfileData() })
     }
     
     // MARK: Lifecycle
     
     override func onAppear() {
         super.onAppear()
-        executeTask(Task { await fetchProfileData() })
+        
+        if state.userData == nil {
+            executeTask(Task { await fetchProfileData() })
+        }
     }
     
     // MARK: State
@@ -64,6 +69,7 @@ final class ProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
         case sendMessage
         case showProfileSettings
         case createNewPortfolio
+        case giveRating
         case goBack
     }
     
@@ -75,6 +81,7 @@ final class ProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
             case .sendMessage: sendMessage()
             case .showProfileSettings: showProfileSettings()
             case .createNewPortfolio: createNewPortfolio()
+            case .giveRating: giveRating()
             case .goBack: goBack()
             }
         })
@@ -114,6 +121,10 @@ final class ProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
     private func createNewPortfolio() {
         guard let creatorId = state.userData?.creatorId else { return }
         flowController?.showCreateNewPortfolio(creatorId: creatorId)
+    }
+    
+    private func giveRating() {
+        flowController?.showGiveRating(receiverId: state.displayedUserId)
     }
     
     private func goBack() {

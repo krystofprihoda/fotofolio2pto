@@ -28,10 +28,11 @@ struct ProfilePortfoliosView: View {
                         if showText {
                             HStack {
                                 Text(portfolio.name)
-                                    .font(.system(size: 20))
+                                    .font(.headline)
                                     .padding(.bottom, Constants.Dimens.spaceSmall)
                                     .padding([.leading, .trailing], Constants.Dimens.spaceXLarge)
-                                    .foregroundColor(.black).brightness(0.3)
+                                    .foregroundColor(.black)
+                                    .brightness(Constants.Dimens.opacityLow)
                                     .transition(.opacity)
 
                                 Spacer()
@@ -53,7 +54,7 @@ struct ProfilePortfoliosView: View {
                                             ZStack {
                                                 RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
                                                     .fill(.gray)
-                                                    .brightness(Double.random(in: 0.15...0.4))
+                                                    .brightness(Double.random(in: Constants.Dimens.opacityLowLow...Constants.Dimens.opacityLow))
                                                     .aspectRatio(1.0, contentMode: .fit)
                                                     .frame(width: Constants.Dimens.frameSizeXLarge)
 
@@ -69,10 +70,10 @@ struct ProfilePortfoliosView: View {
                         
                         if showText {
                             Text(portfolio.description)
-                                .font(.system(size: 15))
+                                .font(.body)
                                 .padding([.leading, .trailing], Constants.Dimens.spaceXLarge)
                                 .padding(.bottom, Constants.Dimens.spaceXSmall)
-                                .foregroundColor(.gray).brightness(0.1)
+                                .foregroundColor(.gray).brightness(Constants.Dimens.opacityLowLow)
                                 .transition(.opacity)
                             
                             Divider()

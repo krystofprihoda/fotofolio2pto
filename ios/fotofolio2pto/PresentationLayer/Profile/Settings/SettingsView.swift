@@ -24,7 +24,7 @@ struct SettingsView: View {
                 })
             }
             
-            if viewModel.state.userData.isCreator {
+            if viewModel.state.userData.isCreator, !viewModel.state.portfolios.isEmpty {
                 Section(header: Text(L.Profile.portfolios)) {
                     Button(action: { viewModel.onIntent(.editPortfolios) }, label: {
                         Label(L.Profile.editPortfolios, systemImage: "text.below.photo")

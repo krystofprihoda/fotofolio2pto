@@ -149,4 +149,19 @@ public class UserRepositoryImpl: UserRepository {
             queryParams: nil
         )
     }
+    
+    public func giveRatingToUser(receiverId: String, rating: Int) async throws {
+        guard let token: String = defaults.read(.token) else { throw AuthError.tokenRetrievalFailed }
+        
+        let headers = [
+            "Authorization": "Bearer \(token)",
+            "Content-Type": "application/json"
+        ]
+        
+        let body: [String:String] = [
+            "rating": String(rating)
+        ]
+        
+        let _ = try await network.request(endpoint: .userRating(receiverId), method: .POST, body: body, headers: headers, queryParams: nil)
+    }
 }

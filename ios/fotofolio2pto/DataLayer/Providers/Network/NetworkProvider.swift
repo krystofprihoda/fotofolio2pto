@@ -46,6 +46,7 @@ enum Endpoint {
     case user
     case userById(String)
     case userProfilePicture(String)
+    case userRating(String)
     case creator
     case creatorById(String)
     case creatorPortfolio(creatorId: String)
@@ -63,6 +64,8 @@ enum Endpoint {
             return "/user/\(id)"
         case .userProfilePicture(let id):
             return "/user/\(id)/profilepicture"
+        case .userRating(let receiverId):
+            return "/user/\(receiverId)/rating"
         case .creator:
             return "/creator"
         case .creatorById(let id):

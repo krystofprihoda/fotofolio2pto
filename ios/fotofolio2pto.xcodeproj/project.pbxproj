@@ -27,6 +27,9 @@
 		FE3827D22DA30151007A933E /* UpdateCreatorDataUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE3827D12DA30150007A933E /* UpdateCreatorDataUseCase.swift */; };
 		FE3827D42DA302C3007A933E /* Data+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE3827D32DA302BF007A933E /* Data+Extensions.swift */; };
 		FE3827D62DA30EDF007A933E /* SaveUserProfilePictureUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE3827D52DA30EDE007A933E /* SaveUserProfilePictureUseCase.swift */; };
+		FE3827DA2DA3C8FE007A933E /* GiveRatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE3827D92DA3C8FD007A933E /* GiveRatingView.swift */; };
+		FE3827DC2DA3C90E007A933E /* GiveRatingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE3827DB2DA3C90C007A933E /* GiveRatingViewModel.swift */; };
+		FE3827DE2DA3CA8E007A933E /* GiveRatingUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE3827DD2DA3CA8D007A933E /* GiveRatingUseCase.swift */; };
 		FE3D23252D91A41400DA22DB /* RegisterUserUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE3D23242D91A41000DA22DB /* RegisterUserUseCase.swift */; };
 		FE3D23272D92FD0D00DA22DB /* SaveUserDataUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE3D23262D92FD0600DA22DB /* SaveUserDataUseCase.swift */; };
 		FE3D2B0D2D930EB800DA22DB /* NetworkProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE3D2B0C2D930EB200DA22DB /* NetworkProvider.swift */; };
@@ -177,6 +180,9 @@
 		FE3827D12DA30150007A933E /* UpdateCreatorDataUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateCreatorDataUseCase.swift; sourceTree = "<group>"; };
 		FE3827D32DA302BF007A933E /* Data+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Extensions.swift"; sourceTree = "<group>"; };
 		FE3827D52DA30EDE007A933E /* SaveUserProfilePictureUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveUserProfilePictureUseCase.swift; sourceTree = "<group>"; };
+		FE3827D92DA3C8FD007A933E /* GiveRatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiveRatingView.swift; sourceTree = "<group>"; };
+		FE3827DB2DA3C90C007A933E /* GiveRatingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiveRatingViewModel.swift; sourceTree = "<group>"; };
+		FE3827DD2DA3CA8D007A933E /* GiveRatingUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiveRatingUseCase.swift; sourceTree = "<group>"; };
 		FE3D23242D91A41000DA22DB /* RegisterUserUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterUserUseCase.swift; sourceTree = "<group>"; };
 		FE3D23262D92FD0600DA22DB /* SaveUserDataUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveUserDataUseCase.swift; sourceTree = "<group>"; };
 		FE3D2B0C2D930EB200DA22DB /* NetworkProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProvider.swift; sourceTree = "<group>"; };
@@ -369,10 +375,29 @@
 		FE3827CC2DA2DC7F007A933E /* Portfolios */ = {
 			isa = PBXGroup;
 			children = (
+				FEA53CF52C2D794F006F0116 /* Portfolio */,
 				FE3827CA2DA2DC67007A933E /* EditPortfoliosViewModel.swift */,
 				FEA53CEC2C2D5BAC006F0116 /* EditPortfoliosView.swift */,
 			);
 			path = Portfolios;
+			sourceTree = "<group>";
+		};
+		FE3827D72DA3C7BB007A933E /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				FEA53CE62C2D5A92006F0116 /* EditPersonalDetailsView.swift */,
+				FEA53CEA2C2D5B65006F0116 /* EditCreatorDetailsView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		FE3827D82DA3C8B7007A933E /* Rating */ = {
+			isa = PBXGroup;
+			children = (
+				FE3827DB2DA3C90C007A933E /* GiveRatingViewModel.swift */,
+				FE3827D92DA3C8FD007A933E /* GiveRatingView.swift */,
+			);
+			path = Rating;
 			sourceTree = "<group>";
 		};
 		FE3D2B0B2D930EAD00DA22DB /* Network */ = {
@@ -474,6 +499,7 @@
 		FE5F8A872C2975E9001EE8AF /* User */ = {
 			isa = PBXGroup;
 			children = (
+				FE3827DD2DA3CA8D007A933E /* GiveRatingUseCase.swift */,
 				FE3827D52DA30EDE007A933E /* SaveUserProfilePictureUseCase.swift */,
 				FE3827CF2DA2FC1A007A933E /* UpdateUserDataUseCase.swift */,
 				FE1815662D95941B0090E440 /* GetSignedInUsernameUseCase.swift */,
@@ -638,20 +664,19 @@
 		FEA53CF22C2D628E006F0116 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
-				FEA53CE62C2D5A92006F0116 /* EditPersonalDetailsView.swift */,
-				FEA53CEA2C2D5B65006F0116 /* EditCreatorDetailsView.swift */,
+				FE3827D72DA3C7BB007A933E /* Views */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
 		};
-		FEA53CF52C2D794F006F0116 /* NewPortfolio */ = {
+		FEA53CF52C2D794F006F0116 /* Portfolio */ = {
 			isa = PBXGroup;
 			children = (
 				FE0685642D84A2A50002B217 /* Views */,
 				FEA53CF32C2D791F006F0116 /* EditPortfolioView.swift */,
 				FEA53CF62C2D795F006F0116 /* EditPortfolioViewModel.swift */,
 			);
-			path = NewPortfolio;
+			path = Portfolio;
 			sourceTree = "<group>";
 		};
 		FEA64F6B2D77111B00B11530 /* Register */ = {
@@ -738,6 +763,7 @@
 				FEC94DAE2C243EC100FFEB11 /* BaseHostingController.swift */,
 				FEC94DEF2C25ED5C00FFEB11 /* RoundedCorner.swift */,
 				FEA53CEE2C2D6123006F0116 /* MediaPickerView.swift */,
+				FEC94E022C26DD7900FFEB11 /* ProfilePictureView.swift */,
 			);
 			path = BaseViews;
 			sourceTree = "<group>";
@@ -804,8 +830,8 @@
 		FEC94DBD2C246C4B00FFEB11 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				FE3827D82DA3C8B7007A933E /* Rating */,
 				FE9A30BE2D88B7820056CC0A /* Settings */,
-				FEA53CF52C2D794F006F0116 /* NewPortfolio */,
 				FEA53CE52C2D5A7C006F0116 /* Edit */,
 				FEC94DDA2C247D4B00FFEB11 /* ProfileView.swift */,
 				FEC94DDC2C247D7600FFEB11 /* ProfileViewModel.swift */,
@@ -850,7 +876,6 @@
 		FEC94E0E2C2847BF00FFEB11 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				FEC94E022C26DD7900FFEB11 /* ProfilePictureView.swift */,
 				FEC94E082C283D4C00FFEB11 /* NotCreatorView.swift */,
 				FEC94E0A2C2840AA00FFEB11 /* ProfileUserInfoView.swift */,
 				FEC94E0C2C2842F500FFEB11 /* ProfilePortfoliosView.swift */,
@@ -1024,6 +1049,7 @@
 				FEA53CDE2C2C49DF006F0116 /* ReadChatUseCase.swift in Sources */,
 				FEC94DEA2C25BF4B00FFEB11 /* View+Extensions.swift in Sources */,
 				FEC94DCD2C2479CD00FFEB11 /* SelectionViewModel.swift in Sources */,
+				FE3827DE2DA3CA8E007A933E /* GiveRatingUseCase.swift in Sources */,
 				FEA53CA72C29D667006F0116 /* FlagPortfolioUseCase.swift in Sources */,
 				FE3D2B0F2D930EFF00DA22DB /* DefaultNetworkProvider.swift in Sources */,
 				FEC94DC52C246DF400FFEB11 /* BaseViewModel.swift in Sources */,
@@ -1034,6 +1060,7 @@
 				FEC94DC72C24712400FFEB11 /* ViewModel.swift in Sources */,
 				FEA53CD82C2C30BD006F0116 /* ChatViewModel.swift in Sources */,
 				FE34A64F2D78BCF200CB4CAE /* CheckEmailAddressAvailableUseCase.swift in Sources */,
+				FE3827DC2DA3C90E007A933E /* GiveRatingViewModel.swift in Sources */,
 				FEA53CA52C29C792006F0116 /* FeedRepositoryImpl.swift in Sources */,
 				FEC94DC32C246DC000FFEB11 /* FeedViewModel.swift in Sources */,
 				FEA53CF72C2D7960006F0116 /* EditPortfolioViewModel.swift in Sources */,
@@ -1074,6 +1101,7 @@
 				FEA53CB12C29E57A006F0116 /* ObjectError.swift in Sources */,
 				FEC94DD92C247CCA00FFEB11 /* MessagesFlowController.swift in Sources */,
 				FEC94E192C28661100FFEB11 /* SignInViewModel.swift in Sources */,
+				FE3827DA2DA3C8FE007A933E /* GiveRatingView.swift in Sources */,
 				FEA53CE72C2D5A92006F0116 /* EditPersonalDetailsView.swift in Sources */,
 				FEA53CDA2C2C3526006F0116 /* SendMessageUseCase.swift in Sources */,
 				FECADFDC2D80534B004023F6 /* RegisterCreatingUserView.swift in Sources */,

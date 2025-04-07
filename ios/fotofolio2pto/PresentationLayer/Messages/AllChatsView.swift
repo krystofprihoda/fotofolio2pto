@@ -39,8 +39,8 @@ struct AllChatsView: View {
                                         VStack(alignment: .leading, spacing: Constants.Dimens.spaceXXSmall) {
                                             if let receiverId = chat.getReceiverId(senderId: viewModel.state.senderId),
                                                let receiver = viewModel.state.receivers[receiverId] {
-                                                Text("@" + receiver)
-                                                    .font(.body)
+                                                Text(receiver)
+                                                    .font(.title3)
                                                     .fontWeight(.medium)
                                                     .foregroundColor(.mainAccent)
                                             }
@@ -65,19 +65,18 @@ struct AllChatsView: View {
             .animation(.default, value: viewModel.state)
         }
         .lifecycle(viewModel)
-        .toolbar {
-            ToolbarItemGroup(placement: .navigationBarTrailing) {
-                Button(action: { viewModel.onIntent(.showNewChat) }) {
-                    Image(systemName: "square.and.pencil")
-                        .resizable()
-                        .aspectRatio(1, contentMode: .fit)
-                        .frame(height: Constants.Dimens.frameSizeXSmall)
-                        .foregroundColor(.gray)
-                }
-                .padding(.trailing, Constants.Dimens.spaceXSmall)
-            }
-        }
+        .navigationBarItems(trailing: newChatButton)
         .setupNavBarAndTitle(L.Messages.title)
+    }
+    
+    private var newChatButton: some View {
+        Button(action: { viewModel.onIntent(.showNewChat) }) {
+            Image(systemName: "square.and.pencil")
+                .resizable()
+                .aspectRatio(1, contentMode: .fit)
+                .frame(height: Constants.Dimens.frameSizeXSmall)
+                .foregroundColor(.gray)
+        }
     }
     
     private func formatMessage(fromId: String, _ message: String) -> String {

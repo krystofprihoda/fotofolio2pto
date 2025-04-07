@@ -81,6 +81,13 @@ class ProfileFlowController: BaseFlowController {
         navigationController.pushViewController(vc, animated: true)
     }
     
+    public func showGiveRating(receiverId: String) {
+        let vm = GiveRatingViewModel(flowController: self, receiverId: receiverId)
+        let view = GiveRatingView(viewModel: vm)
+        let vc = BaseHostingController(rootView: view, hideBackButton: true)
+        navigationController.pushViewController(vc, animated: true)
+    }
+    
     public func presentPickerModal(source: MediaPickerSource, limit: Int) {
         let vc = BaseHostingController(
             rootView: MediaPickerView(

@@ -16,5 +16,6 @@ public protocol UserRepository {
     func getUsersFromQuery(query: String) async throws -> [User]
     func updateUserData(location: String) async throws
     func saveUserProfilePicture(image: UIImage) async throws
+    func giveRatingToUser(receiverId: String, rating: Int) async throws
     func isUsernameTaken(_ username: String) async throws
 }

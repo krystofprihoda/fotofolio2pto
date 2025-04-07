@@ -8,96 +8,105 @@
 import SwiftUI
 
 struct ProfileUserInfoView: View {
+    
     private let user: User?
     private let creator: Creator?
     private let profileOwner: Bool
+    private let onGiveRatingTap: () -> Void
     
-    init(user: User?, creator: Creator?, profileOwner: Bool) {
+    init(user: User?, creator: Creator?, profileOwner: Bool, onGiveRatingTap: @escaping () -> Void) {
         self.user = user
         self.creator = creator
         self.profileOwner = profileOwner
+        self.onGiveRatingTap = onGiveRatingTap
     }
     
     var body: some View {
         if let user = user {
             VStack {
                 HStack {
-                    ProfilePictureView(profilePicture: user.profilePicture)
-                        .padding(.leading, 20)
+                    ProfilePictureView(profilePicture: user.profilePicture, width: Constants.Dimens.frameSizeMedium)
+                        .padding(.leading, Constants.Dimens.spaceSemiXLarge)
                     
-                    VStack(alignment: .leading, spacing: 0) {
+                    VStack(alignment: .leading, spacing: Constants.Dimens.spaceNone) {
                         Text(user.fullName)
-                            .font(.system(size: 17))
-                            .foregroundColor(.black).brightness(0.2)
-                            .padding(.bottom, 4)
+                            .font(.headline)
+                            .foregroundColor(.black)
+                            .brightness(Constants.Dimens.opacityLow)
+                            .padding(.bottom, Constants.Dimens.spaceXSmall)
                         
                         Text(user.location)
-                            .font(.system(size: 13))
-                            .foregroundColor(.black).brightness(0.3)
-                            .padding(.bottom, 2)
+                            .font(.subheadline)
+                            .foregroundColor(.black)
+                            .brightness(Constants.Dimens.opacityLow)
+                            .padding(.bottom, Constants.Dimens.spaceXXSmall)
                         
                         if !user.rating.isEmpty {
-                            HStack {
-                                Text(String(format: "%.1f", user.averageRating) + " z 5")
-                                    .font(.system(size: 12))
-                                    .foregroundColor(.black).brightness(0.3)
+                            HStack(alignment: .center, spacing: Constants.Dimens.spaceXXSmall) {
+                                Text(String(format: "%.1f", user.averageRating) + L.Profile.outOf5)
+                                    .font(.caption)
                                 
                                 Image(systemName: "star.fill")
-                                    .font(.system(size: 8))
-                                    .foregroundColor(.black).brightness(0.3)
-                                    .offset(x: -5)
+                                    .font(.caption2)
                             }
+                            .foregroundStyle(.black)
+                            .brightness(Constants.Dimens.opacityLow)
                         } else {
-                            Text("Zatím bez hodnocení.")
-                                .font(.system(size: 12))
-                                .foregroundColor(.black).brightness(0.3)
+                            Text(L.Profile.noRating)
+                                .font(.footnote)
+                                .foregroundColor(.black)
+                                .brightness(Constants.Dimens.opacityLow)
                         }
                         
                         if !profileOwner {
-                            Button(action: { }, label: {
-                                Text("Udělit hodnocení")
-                                    .font(.system(size: 12))
+                            Button(action: onGiveRatingTap, label: {
+                                Text(L.Profile.giveRating)
+                                    .font(.footnote)
                                     .underline()
-                                    .foregroundColor(.red).brightness(0.25)
+                                    .foregroundColor(.red).brightness(Constants.Dimens.opacityLow)
+                                    .padding(.top, Constants.Dimens.spaceXXSmall)
+                                    .padding(.top, Constants.Dimens.spaceSmall)
                             })
                         }
                     }
-                    .padding(.leading, 5)
+                    .padding(.leading, Constants.Dimens.spaceXSmall)
                     
                     Spacer()
                 }
-                .padding(.top, 10)
+                .padding(.top, Constants.Dimens.spaceSemiMedium)
                 
                 Divider()
                     .padding([.leading, .trailing], Constants.Dimens.spaceLarge)
                     .padding([.top, .bottom], Constants.Dimens.spaceXSmall)
                 
                 if let creator = creator {
-                    VStack(alignment: .leading, spacing: 0) {
+                    VStack(alignment: .leading, spacing: Constants.Dimens.spaceNone) {
                         HStack {
                             Text("\(creator.yearsOfExperience)" + yearFormatString(creator.yearsOfExperience))
-                                .font(.system(size: 15))
-                                .padding(.top, 5)
-                                .padding(.leading, 23)
-                                .foregroundColor(.black).brightness(0.3)
+                                .font(.subheadline)
+                                .padding(.top, Constants.Dimens.spaceXSmall)
+                                .padding(.leading, Constants.Dimens.spaceSemiXLarge)
+                                .foregroundColor(.black)
+                                .brightness(Constants.Dimens.opacityLow)
+
                             
                             Spacer()
                         }
                         
                         Text(creator.description)
-                            .lineSpacing(1)
-                            .font(.system(size: 15))
-                            .padding(.top, 6)
-                            .padding(.leading, 23)
-                            .padding(.trailing, 5)
-                            .foregroundColor(.gray).brightness(0.1)
+                            .lineSpacing(Constants.Dimens.spaceXXSmall)
+                            .font(.body)
+                            .padding(.top, Constants.Dimens.spaceXSmall)
+                            .padding(.leading, Constants.Dimens.spaceSemiXLarge)
+                            .padding(.trailing, Constants.Dimens.spaceXXSmall)
+                            .foregroundColor(.gray)
+                            .brightness(Constants.Dimens.opacityLowLow)
                     }
                     
                     Divider()
-                        .padding(.leading, 18)
-                        .padding(.trailing, 18)
-                        .padding(.bottom, 10)
-                        .padding(.top, 5)
+                        .padding([.leading, .trailing], Constants.Dimens.textFieldButtonSpace)
+                        .padding(.bottom, Constants.Dimens.spaceSemiMedium)
+                        .padding(.top, Constants.Dimens.spaceXSmall)
                 }
             }
         } else {
@@ -107,12 +116,12 @@ struct ProfileUserInfoView: View {
     }
     
     func yearFormatString(_ yearsOfExperience: Int) -> String {
-        if yearsOfExperience == 1 { return " rok fotografem" }
-        if yearsOfExperience < 5 { return " roky fotografem" }
-        return " let fotografem"
+        if yearsOfExperience == 1 { return L.Profile.singleYearExperience }
+        if yearsOfExperience < 5 { return L.Profile.lessThanFiveExperience }
+        return L.Profile.moreThanFiveExperience
     }
 }
 
 #Preview {
-    ProfileUserInfoView(user: .dummy1, creator: .dummy1, profileOwner: true)
+    ProfileUserInfoView(user: .dummy1, creator: .dummy1, profileOwner: true, onGiveRatingTap: {})
 }

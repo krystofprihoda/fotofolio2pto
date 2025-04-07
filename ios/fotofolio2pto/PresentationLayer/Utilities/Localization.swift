@@ -124,5 +124,12 @@ public struct L {
         public static let deletePortfolio = "Opravdu chcete portfolio smazat? Tato akce je nevratná."
         public static let userNotACreator = "Uživatel není tvůrce."
         public static let noPortfoliosToShow = "Žádná portfolia k zobrazení."
+        public static let rating = "Hodnocení"
+        public static let noRating = "Zatím bez hodnocení."
+        public static let giveRating = "Udělit hodnocení"
+        public static let singleYearExperience = " rok fotografem"
+        public static let lessThanFiveExperience = " roky fotografem"
+        public static let moreThanFiveExperience = " let fotografem"
+        public static let outOf5 = " z 5"
     }
 }

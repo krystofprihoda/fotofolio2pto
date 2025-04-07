@@ -96,7 +96,12 @@ final class AllChatsViewViewModel: BaseViewModel, ViewModel, ObservableObject {
             state.chats = try await readChatsUseCase.execute()
             
             for chat in state.chats {
-                guard let receiverId = chat.chatOwnerIds.first(where: { ownerId in ownerId != state.senderId }) else { continue }
+                guard let receiverId = chat.chatOwnerIds.first(where: { ownerId in ownerId != state.senderId }) else {
+                    let receiverData = try await readUserByIdUseCase.execute(id: state.senderId)
+                    state.receivers[state.senderId] = receiverData.username
+                    continue
+                }
+                
                 let receiverData = try await readUserByIdUseCase.execute(id: receiverId)
                 state.receivers[receiverId] = receiverData.username
             }

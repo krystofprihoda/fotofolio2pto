@@ -64,7 +64,7 @@ struct PortfolioView: View {
                 
                 Spacer()
             }
-            .padding(.top, 5)
+            .padding(.top, Constants.Dimens.spaceXSmall)
             .padding([.leading, .trailing, .bottom])
         }
         .transition(.opacity)

@@ -26,7 +26,7 @@ struct FeedView: View {
                         }
                         .frame(width: geo.size.width, height: geo.size.height)
                     }
-                    else if !viewModel.state.filter.isEmpty && viewModel.state.portfolios.isEmpty {
+                    else if !viewModel.state.filter.isEmpty, viewModel.state.portfolios.isEmpty {
                         VStack(alignment: .center) {
                             Text(L.Feed.noFilterResults)
                                 .foregroundColor(.red)
@@ -65,24 +65,24 @@ struct FeedView: View {
             }
         }
         .toast(toastData: Binding(get: { viewModel.state.toastData ?? nil }, set: { viewModel.onIntent(.setToastData($0)) }))
-        .toolbar {
-            ToolbarItemGroup(placement: .navigationBarLeading) {
-                Menu(L.Feed.sort) {
-                    Button(L.Feed.sortByDate, action: { viewModel.onIntent(.sortByDate) })
-                    Button(L.Feed.soryByRating, action: { viewModel.onIntent(.sortByRating) })
-                }
-            }
-            
-            ToolbarItemGroup(placement: .navigationBarTrailing) {
-                Button(L.Feed.filter, action: { viewModel.onIntent(.filter) })
-            }
-        }
+        .navigationBarItems(leading: sortButton, trailing: filterButton)
         .animation(.default, value: viewModel.state)
         .setupNavBarAndTitle(L.Feed.title)
         .lifecycle(viewModel)
     }
     
-    var categoryBar: some View {
+    private var sortButton: some View {
+        Menu(L.Feed.sort) {
+            Button(L.Feed.sortByDate, action: { viewModel.onIntent(.sortByDate) })
+            Button(L.Feed.soryByRating, action: { viewModel.onIntent(.sortByRating) })
+        }
+    }
+    
+    private var filterButton: some View {
+        Button(L.Feed.filter, action: { viewModel.onIntent(.filter) })
+    }
+    
+    private var categoryBar: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: Constants.Dimens.spaceSmall) {
                 ForEach(Array(zip(viewModel.state.filter.indices, viewModel.state.filter)), id: \.0) { idx, category in
