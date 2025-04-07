@@ -20,6 +20,7 @@ class ProfileFlowController: BaseFlowController {
     private let showDismiss: Bool
     
     weak var profileSignOutDelegate: ProfileSignOutDelegate?
+    weak var updateProfileFlowDelegate: UpdateProfileFlowDelegate?
 
     init(
         navigationController: UINavigationController,
@@ -42,6 +43,7 @@ class ProfileFlowController: BaseFlowController {
             displayedUserId: displayedUserId,
             showDismiss: showDismiss
         )
+        updateProfileFlowDelegate = vm
         let view = ProfileView(viewModel: vm)
         let vc = BaseHostingController(rootView: view, hideBackButton: true)
         return vc

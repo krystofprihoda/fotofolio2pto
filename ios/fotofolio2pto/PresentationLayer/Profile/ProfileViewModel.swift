@@ -9,7 +9,11 @@ import Foundation
 import SwiftUI
 import Resolver
 
-final class ProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
+public protocol UpdateProfileFlowDelegate: AnyObject {
+    func fetchProfileData() async
+}
+
+final class ProfileViewModel: BaseViewModel, ViewModel, ObservableObject, UpdateProfileFlowDelegate {
     // MARK: Stored properties
     
     // MARK: Dependencies
@@ -89,7 +93,7 @@ final class ProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
     
     // MARK: Additional methods
     
-    private func fetchProfileData() async {
+    func fetchProfileData() async {
         state.isLoading = true
         defer { state.isLoading = false }
         

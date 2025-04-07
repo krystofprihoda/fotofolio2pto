@@ -185,6 +185,8 @@ final class EditPortfolioViewModel: BaseViewModel, ViewModel, ObservableObject {
                 description: state.description,
                 category: state.selectedCategories
             )
+            
+            await flowController?.updateProfileFlowDelegate?.fetchProfileData()
             dismissView()
         } catch {
             
