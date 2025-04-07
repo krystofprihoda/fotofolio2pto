@@ -14,19 +14,22 @@ public struct UserAuthDetails {
 
 public class AuthRepositoryImpl: AuthRepository {
     
-    private let defaults: UserDefaultsProvider
+    private let defaults: LocalStorageProvider
+    private let encryptedStorage: EncryptedLocalStorageProvider
     private let authProvider: AuthProvider
     
-    init(defaults: UserDefaultsProvider, authProvider: AuthProvider) {
+    init(defaults: LocalStorageProvider, encryptedStorage: EncryptedLocalStorageProvider, authProvider: AuthProvider) {
         self.defaults = defaults
+        self.encryptedStorage = encryptedStorage
         self.authProvider = authProvider
     }
     
     public func logout() throws {
         try authProvider.logout()
         
-        defaults.delete(.token)
-        defaults.delete(.userId)
+        encryptedStorage.delete(.token)
+        encryptedStorage.delete(.userId)
+        
         defaults.delete(.flagged)
     }
     
@@ -34,15 +37,15 @@ public class AuthRepositoryImpl: AuthRepository {
         let result = try await authProvider.login(email: email, password: password)
         let token = try await result.user.getIDToken()
         
-        defaults.update(.token, value: token)
-        defaults.update(.userId, value: result.user.uid)
+        encryptedStorage.update(.token, value: token)
+        encryptedStorage.update(.userId, value: result.user.uid)
         defaults.update(.email, value: result.user.email)
         
         return UserAuthDetails(uid: result.user.uid, token: token)
     }
     
     public func getLoggedInUser() -> String? {
-        return defaults.read(.userId)
+        return encryptedStorage.read(.userId)
     }
     
     public func checkEmailAvailable(email: String) async throws {
@@ -52,8 +55,8 @@ public class AuthRepositoryImpl: AuthRepository {
     public func registerUser(email: String, password: String) async throws {
         let data = try await authProvider.registerUser(email: email, password: password)
         
-        defaults.update(.userId, value: data.uid)
-        defaults.update(.token, value: data.token)
+        encryptedStorage.update(.userId, value: data.uid)
+        encryptedStorage.update(.token, value: data.token)
     }
     
     public func readLastSignedInEmail() -> String {

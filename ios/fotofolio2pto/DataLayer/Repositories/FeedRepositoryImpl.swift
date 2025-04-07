@@ -10,16 +10,18 @@ import Foundation
 
 public class FeedRepositoryImpl: FeedRepository {
     
-    private let defaults: UserDefaultsProvider
+    private let defaults: LocalStorageProvider
+    private let encryptedStorage: EncryptedLocalStorageProvider
     private let network: NetworkProvider
     
-    init(defaults: UserDefaultsProvider, network: NetworkProvider) {
+    init(defaults: LocalStorageProvider, encryptedStorage: EncryptedLocalStorageProvider, network: NetworkProvider) {
         self.defaults = defaults
+        self.encryptedStorage = encryptedStorage
         self.network = network
     }
     
     public func readAll(categories: [String]? = nil, sortBy: SortByEnum? = nil) async throws -> [Portfolio] {
-        guard let token: String = defaults.read(.token) else { throw AuthError.tokenRetrievalFailed }
+        guard let token: String = encryptedStorage.read(.token) else { throw AuthError.tokenRetrievalFailed }
         
         var queryParams: [String: String] = [:]
         
@@ -57,7 +59,7 @@ public class FeedRepositoryImpl: FeedRepository {
     }
     
     public func updatePortfolio(id: String, name: String, photos: [String], description: String, category: [String]) async throws -> Portfolio {
-        guard let token: String = defaults.read(.token) else { throw AuthError.tokenRetrievalFailed }
+        guard let token: String = encryptedStorage.read(.token) else { throw AuthError.tokenRetrievalFailed }
         
         let headers = [
             "Authorization": "Bearer \(token)",
@@ -94,7 +96,7 @@ public class FeedRepositoryImpl: FeedRepository {
     }
     
     public func readImageFromURL(url: String) async throws -> UIImage {
-        guard let token: String = defaults.read(.token) else { throw AuthError.tokenRetrievalFailed }
+        guard let token: String = encryptedStorage.read(.token) else { throw AuthError.tokenRetrievalFailed }
         
         let headers = [
             "Authorization": "Bearer \(token)",
@@ -120,7 +122,7 @@ public class FeedRepositoryImpl: FeedRepository {
     }
     
     public func readFlagged() async throws -> [Portfolio] {
-        guard let token: String = defaults.read(.token) else { throw AuthError.tokenRetrievalFailed }
+        guard let token: String = encryptedStorage.read(.token) else { throw AuthError.tokenRetrievalFailed }
         let headers = [
             "Authorization": "Bearer \(token)",
             "Content-Type": "application/json"
@@ -157,7 +159,7 @@ public class FeedRepositoryImpl: FeedRepository {
     }
     
     public func createPortfolio(creatorId: String, name: String, photos: [IImage], description: String, category: [String]) async throws {
-        guard let token: String = defaults.read(.token) else { throw AuthError.tokenRetrievalFailed }
+        guard let token: String = encryptedStorage.read(.token) else { throw AuthError.tokenRetrievalFailed }
 
         let boundary = UUID().uuidString
         var body = Data()
@@ -201,7 +203,7 @@ public class FeedRepositoryImpl: FeedRepository {
     }
     
     public func removePortfolio(id: String) async throws {
-        guard let token: String = defaults.read(.token) else { throw AuthError.tokenRetrievalFailed }
+        guard let token: String = encryptedStorage.read(.token) else { throw AuthError.tokenRetrievalFailed }
         let headers = [
             "Authorization": "Bearer \(token)"
         ]

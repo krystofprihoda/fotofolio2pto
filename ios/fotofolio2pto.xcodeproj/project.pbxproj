@@ -39,8 +39,8 @@
 		FE5F8A782C296D81001EE8AF /* AuthRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE5F8A772C296D81001EE8AF /* AuthRepository.swift */; };
 		FE5F8A7C2C296ECA001EE8AF /* LoginWithCredentialsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE5F8A7B2C296ECA001EE8AF /* LoginWithCredentialsUseCase.swift */; };
 		FE5F8A802C2971C7001EE8AF /* AuthRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE5F8A7F2C2971C7001EE8AF /* AuthRepositoryImpl.swift */; };
-		FE5F8A842C297338001EE8AF /* UserDefaultsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE5F8A832C297338001EE8AF /* UserDefaultsProvider.swift */; };
-		FE5F8A862C29737F001EE8AF /* SystemUserDefaultsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE5F8A852C29737F001EE8AF /* SystemUserDefaultsProvider.swift */; };
+		FE5F8A842C297338001EE8AF /* LocalStorageProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE5F8A832C297338001EE8AF /* LocalStorageProvider.swift */; };
+		FE5F8A862C29737F001EE8AF /* UserDefaultsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE5F8A852C29737F001EE8AF /* UserDefaultsProvider.swift */; };
 		FE5F8A892C2975FC001EE8AF /* LogoutUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE5F8A882C2975FC001EE8AF /* LogoutUseCase.swift */; };
 		FE7FB10D2D7B163B00428A17 /* CheckUsernameAvailableUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE7FB10C2D7B163B00428A17 /* CheckUsernameAvailableUseCase.swift */; };
 		FE7FB1102D7B1D3900428A17 /* RegisterNameAndEmailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE7FB10F2D7B1D3900428A17 /* RegisterNameAndEmailView.swift */; };
@@ -156,6 +156,9 @@
 		FECADFDA2D804DE8004023F6 /* StringConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = FECADFD92D804DDE004023F6 /* StringConstants.swift */; };
 		FECADFDC2D80534B004023F6 /* RegisterCreatingUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FECADFDB2D80534B004023F6 /* RegisterCreatingUserView.swift */; };
 		FECADFDE2D805356004023F6 /* RegisterFailedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FECADFDD2D805356004023F6 /* RegisterFailedView.swift */; };
+		FEE211AF2DA4298D00A95907 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = FEE211AE2DA4298D00A95907 /* KeychainAccess */; };
+		FEE211B22DA42B6D00A95907 /* EncryptedLocalStorageProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEE211B12DA42B6D00A95907 /* EncryptedLocalStorageProvider.swift */; };
+		FEE211B52DA42C3300A95907 /* KeychainProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEE211B42DA42C3300A95907 /* KeychainProvider.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -191,8 +194,8 @@
 		FE5F8A772C296D81001EE8AF /* AuthRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRepository.swift; sourceTree = "<group>"; };
 		FE5F8A7B2C296ECA001EE8AF /* LoginWithCredentialsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginWithCredentialsUseCase.swift; sourceTree = "<group>"; };
 		FE5F8A7F2C2971C7001EE8AF /* AuthRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRepositoryImpl.swift; sourceTree = "<group>"; };
-		FE5F8A832C297338001EE8AF /* UserDefaultsProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsProvider.swift; sourceTree = "<group>"; };
-		FE5F8A852C29737F001EE8AF /* SystemUserDefaultsProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemUserDefaultsProvider.swift; sourceTree = "<group>"; };
+		FE5F8A832C297338001EE8AF /* LocalStorageProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStorageProvider.swift; sourceTree = "<group>"; };
+		FE5F8A852C29737F001EE8AF /* UserDefaultsProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsProvider.swift; sourceTree = "<group>"; };
 		FE5F8A882C2975FC001EE8AF /* LogoutUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoutUseCase.swift; sourceTree = "<group>"; };
 		FE7FB10C2D7B163B00428A17 /* CheckUsernameAvailableUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckUsernameAvailableUseCase.swift; sourceTree = "<group>"; };
 		FE7FB10F2D7B1D3900428A17 /* RegisterNameAndEmailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterNameAndEmailView.swift; sourceTree = "<group>"; };
@@ -307,6 +310,8 @@
 		FECADFD92D804DDE004023F6 /* StringConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringConstants.swift; sourceTree = "<group>"; };
 		FECADFDB2D80534B004023F6 /* RegisterCreatingUserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterCreatingUserView.swift; sourceTree = "<group>"; };
 		FECADFDD2D805356004023F6 /* RegisterFailedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterFailedView.swift; sourceTree = "<group>"; };
+		FEE211B12DA42B6D00A95907 /* EncryptedLocalStorageProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncryptedLocalStorageProvider.swift; sourceTree = "<group>"; };
+		FEE211B42DA42C3300A95907 /* KeychainProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainProvider.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -314,6 +319,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FEE211AF2DA4298D00A95907 /* KeychainAccess in Frameworks */,
 				FE8D4E2D2D916E1100A8BF4E /* FirebaseAnalytics in Frameworks */,
 				FE8D4E2F2D916E1100A8BF4E /* FirebaseAuth in Frameworks */,
 				FEA53C9D2C29C1BA006F0116 /* Resolver in Frameworks */,
@@ -479,20 +485,21 @@
 		FE5F8A812C29731A001EE8AF /* Providers */ = {
 			isa = PBXGroup;
 			children = (
+				FEE211B02DA42B4D00A95907 /* EncryptedLocalStorage */,
 				FE3D2B0B2D930EAD00DA22DB /* Network */,
 				FE8D56132D918A5800A8BF4E /* Authentication */,
-				FE5F8A822C297325001EE8AF /* UserDefaults */,
+				FE5F8A822C297325001EE8AF /* LocalStorage */,
 			);
 			path = Providers;
 			sourceTree = "<group>";
 		};
-		FE5F8A822C297325001EE8AF /* UserDefaults */ = {
+		FE5F8A822C297325001EE8AF /* LocalStorage */ = {
 			isa = PBXGroup;
 			children = (
-				FE5F8A832C297338001EE8AF /* UserDefaultsProvider.swift */,
-				FE5F8A852C29737F001EE8AF /* SystemUserDefaultsProvider.swift */,
+				FE5F8A832C297338001EE8AF /* LocalStorageProvider.swift */,
+				FE5F8A852C29737F001EE8AF /* UserDefaultsProvider.swift */,
 			);
-			path = UserDefaults;
+			path = LocalStorage;
 			sourceTree = "<group>";
 		};
 		FE5F8A872C2975E9001EE8AF /* User */ = {
@@ -909,6 +916,15 @@
 			path = Onboarding;
 			sourceTree = "<group>";
 		};
+		FEE211B02DA42B4D00A95907 /* EncryptedLocalStorage */ = {
+			isa = PBXGroup;
+			children = (
+				FEE211B42DA42C3300A95907 /* KeychainProvider.swift */,
+				FEE211B12DA42B6D00A95907 /* EncryptedLocalStorageProvider.swift */,
+			);
+			path = EncryptedLocalStorage;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -929,6 +945,7 @@
 				FEA53C9C2C29C1BA006F0116 /* Resolver */,
 				FE8D4E2C2D916E1100A8BF4E /* FirebaseAnalytics */,
 				FE8D4E2E2D916E1100A8BF4E /* FirebaseAuth */,
+				FEE211AE2DA4298D00A95907 /* KeychainAccess */,
 			);
 			productName = fotofolio2pto;
 			productReference = FEC94D912C24398200FFEB11 /* fotofolio2pto.app */;
@@ -961,6 +978,7 @@
 			packageReferences = (
 				FEA53C9B2C29C1BA006F0116 /* XCRemoteSwiftPackageReference "Resolver" */,
 				FE8D4E2B2D916E1100A8BF4E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				FEE211AD2DA4298D00A95907 /* XCRemoteSwiftPackageReference "KeychainAccess" */,
 			);
 			productRefGroup = FEC94D922C24398200FFEB11 /* Products */;
 			projectDirPath = "";
@@ -1017,11 +1035,12 @@
 				FEC94D9F2C24398200FFEB11 /* fotofolio2pto.xcdatamodeld in Sources */,
 				FEA53CD62C2C2CEC006F0116 /* CreateNewChatWithMessageUseCase.swift in Sources */,
 				FE9A30BB2D88473E0056CC0A /* Toast.swift in Sources */,
-				FE5F8A862C29737F001EE8AF /* SystemUserDefaultsProvider.swift in Sources */,
+				FE5F8A862C29737F001EE8AF /* UserDefaultsProvider.swift in Sources */,
 				FE3D23272D92FD0D00DA22DB /* SaveUserDataUseCase.swift in Sources */,
 				FE3D2B122D9312B300DA22DB /* Logger+Extensions.swift in Sources */,
 				FEC94DEC2C25DC1600FFEB11 /* Constants.swift in Sources */,
 				FE9A30B52D8737650056CC0A /* UpdatePortfolioUseCase.swift in Sources */,
+				FEE211B22DA42B6D00A95907 /* EncryptedLocalStorageProvider.swift in Sources */,
 				FE3D23252D91A41400DA22DB /* RegisterUserUseCase.swift in Sources */,
 				FEC94E132C28504900FFEB11 /* LoginCredentialsView.swift in Sources */,
 				FE7FB1102D7B1D3900428A17 /* RegisterNameAndEmailView.swift in Sources */,
@@ -1060,6 +1079,7 @@
 				FE3827DC2DA3C90E007A933E /* GiveRatingViewModel.swift in Sources */,
 				FEA53CA52C29C792006F0116 /* FeedRepositoryImpl.swift in Sources */,
 				FEC94DC32C246DC000FFEB11 /* FeedViewModel.swift in Sources */,
+				FEE211B52DA42C3300A95907 /* KeychainProvider.swift in Sources */,
 				FEA53CF72C2D7960006F0116 /* EditPortfolioViewModel.swift in Sources */,
 				FEA53CD42C2C2722006F0116 /* ChatView.swift in Sources */,
 				FEA53CAB2C29DE1E006F0116 /* ReadFlaggedPortfoliosUseCase.swift in Sources */,
@@ -1089,7 +1109,7 @@
 				FEA53CC42C2C12EE006F0116 /* MessageRepository.swift in Sources */,
 				FECADFDA2D804DE8004023F6 /* StringConstants.swift in Sources */,
 				FEC94E0B2C2840AA00FFEB11 /* ProfileUserInfoView.swift in Sources */,
-				FE5F8A842C297338001EE8AF /* UserDefaultsProvider.swift in Sources */,
+				FE5F8A842C297338001EE8AF /* LocalStorageProvider.swift in Sources */,
 				FEA53CCA2C2C174B006F0116 /* UserRepositoryImpl.swift in Sources */,
 				FEC94DFB2C262AC400FFEB11 /* PortfolioAuthorDetailView.swift in Sources */,
 				FEA53CC62C2C136E006F0116 /* MessageRepositoryImpl.swift in Sources */,
@@ -1366,6 +1386,14 @@
 				minimumVersion = 1.5.1;
 			};
 		};
+		FEE211AD2DA4298D00A95907 /* XCRemoteSwiftPackageReference "KeychainAccess" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kishikawakatsumi/KeychainAccess";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1383,6 +1411,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = FEA53C9B2C29C1BA006F0116 /* XCRemoteSwiftPackageReference "Resolver" */;
 			productName = Resolver;
+		};
+		FEE211AE2DA4298D00A95907 /* KeychainAccess */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FEE211AD2DA4298D00A95907 /* XCRemoteSwiftPackageReference "KeychainAccess" */;
+			productName = KeychainAccess;
 		};
 /* End XCSwiftPackageProductDependency section */
 

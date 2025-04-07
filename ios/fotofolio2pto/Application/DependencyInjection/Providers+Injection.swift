@@ -10,7 +10,8 @@ import Resolver
 
 public extension Resolver {
     static func registerProviders() {
-        register { SystemUserDefaultsProvider() as UserDefaultsProvider }
+        register { UserDefaultsProvider() as LocalStorageProvider }
+        register { KeychainProvider() as EncryptedLocalStorageProvider }
         register { FirebaseProvider() as AuthProvider }
         register { DefaultNetworkProvider() as NetworkProvider }
     }

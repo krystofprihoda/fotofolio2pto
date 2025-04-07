@@ -10,16 +10,16 @@ import UIKit
 
 public class UserRepositoryImpl: UserRepository {
     
-    private let defaults: UserDefaultsProvider
+    private let encryptedStorage: EncryptedLocalStorageProvider
     private let network: NetworkProvider
     
-    init(defaults: UserDefaultsProvider, network: NetworkProvider) {
-        self.defaults = defaults
+    init(encryptedStorage: EncryptedLocalStorageProvider, network: NetworkProvider) {
+        self.encryptedStorage = encryptedStorage
         self.network = network
     }
     
     public func getUsersFromQuery(query: String) async throws -> [User] {
-        guard let token: String = defaults.read(.token) else { throw AuthError.tokenRetrievalFailed }
+        guard let token: String = encryptedStorage.read(.token) else { throw AuthError.tokenRetrievalFailed }
         
         let headers = [
             "Authorization": "Bearer \(token)",
@@ -53,8 +53,8 @@ public class UserRepositoryImpl: UserRepository {
     }
     
     public func createUser(username: String, email: String, fullName: String, location: String, profilePicture: String) async throws {
-        guard let token: String = defaults.read(.token) else { throw AuthError.tokenRetrievalFailed }
-        guard let userId: String = defaults.read(.userId) else { throw AuthError.missingUserId }
+        guard let token: String = encryptedStorage.read(.token) else { throw AuthError.tokenRetrievalFailed }
+        guard let userId: String = encryptedStorage.read(.userId) else { throw AuthError.missingUserId }
         
         let headers = [
             "Authorization": "Bearer \(token)",
@@ -80,7 +80,7 @@ public class UserRepositoryImpl: UserRepository {
     }
     
     public func getUser(id: String) async throws -> User {
-        guard let token: String = defaults.read(.token) else { throw AuthError.tokenRetrievalFailed }
+        guard let token: String = encryptedStorage.read(.token) else { throw AuthError.tokenRetrievalFailed }
         
         let headers = [
             "Authorization": "Bearer \(token)",
@@ -98,8 +98,8 @@ public class UserRepositoryImpl: UserRepository {
     }
     
     public func updateUserData(location: String) async throws {
-        guard let token: String = defaults.read(.token) else { throw AuthError.tokenRetrievalFailed }
-        guard let userId: String = defaults.read(.userId) else { throw AuthError.missingUserId }
+        guard let token: String = encryptedStorage.read(.token) else { throw AuthError.tokenRetrievalFailed }
+        guard let userId: String = encryptedStorage.read(.userId) else { throw AuthError.missingUserId }
         
         let headers = [
             "Authorization": "Bearer \(token)",
@@ -114,8 +114,8 @@ public class UserRepositoryImpl: UserRepository {
     }
     
     public func saveUserProfilePicture(image: UIImage) async throws {
-        guard let token: String = defaults.read(.token) else { throw AuthError.tokenRetrievalFailed }
-        guard let userId: String = defaults.read(.userId) else { throw AuthError.missingUserId }
+        guard let token: String = encryptedStorage.read(.token) else { throw AuthError.tokenRetrievalFailed }
+        guard let userId: String = encryptedStorage.read(.userId) else { throw AuthError.missingUserId }
         
         let boundary = UUID().uuidString
         var body = Data()
@@ -145,7 +145,7 @@ public class UserRepositoryImpl: UserRepository {
     }
     
     public func giveRatingToUser(receiverId: String, rating: Int) async throws {
-        guard let token: String = defaults.read(.token) else { throw AuthError.tokenRetrievalFailed }
+        guard let token: String = encryptedStorage.read(.token) else { throw AuthError.tokenRetrievalFailed }
         
         let headers = [
             "Authorization": "Bearer \(token)",

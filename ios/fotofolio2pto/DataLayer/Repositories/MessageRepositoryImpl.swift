@@ -9,16 +9,16 @@ import Foundation
 
 public class MessageRepositoryImpl: MessageRepository {
     
-    private let defaults: UserDefaultsProvider
+    private let encryptedStorage: EncryptedLocalStorageProvider
     private let network: NetworkProvider
     
-    init(defaults: UserDefaultsProvider, network: NetworkProvider) {
-        self.defaults = defaults
+    init(encryptedStorage: EncryptedLocalStorageProvider, network: NetworkProvider) {
+        self.encryptedStorage = encryptedStorage
         self.network = network
     }
     
     public func createNewChatWithMessage(receiverId: String, message: String) async throws -> Chat {
-        guard let token: String = defaults.read(.token) else { throw AuthError.tokenRetrievalFailed }
+        guard let token: String = encryptedStorage.read(.token) else { throw AuthError.tokenRetrievalFailed }
         let headers = [
             "Authorization": "Bearer \(token)",
             "Content-Type": "application/json"
@@ -39,7 +39,7 @@ public class MessageRepositoryImpl: MessageRepository {
     }
     
     public func readUserChats() async throws -> [Chat] {
-        guard let token: String = defaults.read(.token) else { throw AuthError.tokenRetrievalFailed }
+        guard let token: String = encryptedStorage.read(.token) else { throw AuthError.tokenRetrievalFailed }
         let headers = [
             "Authorization": "Bearer \(token)",
             "Content-Type": "application/json"
@@ -56,7 +56,7 @@ public class MessageRepositoryImpl: MessageRepository {
     }
     
     public func readChat(receiverId: String) async throws -> Chat {
-        guard let token: String = defaults.read(.token) else { throw AuthError.tokenRetrievalFailed }
+        guard let token: String = encryptedStorage.read(.token) else { throw AuthError.tokenRetrievalFailed }
         let headers = [
             "Authorization": "Bearer \(token)",
             "Content-Type": "application/json"
@@ -77,7 +77,7 @@ public class MessageRepositoryImpl: MessageRepository {
     }
     
     public func readMessages(chatId: String) async throws -> [Message] {
-        guard let token: String = defaults.read(.token) else { throw AuthError.tokenRetrievalFailed }
+        guard let token: String = encryptedStorage.read(.token) else { throw AuthError.tokenRetrievalFailed }
         let headers = [
             "Authorization": "Bearer \(token)",
             "Content-Type": "application/json"
@@ -94,7 +94,7 @@ public class MessageRepositoryImpl: MessageRepository {
     }
     
     public func sendMessage(chatId: String, message: String) async throws -> Chat {
-        guard let token: String = defaults.read(.token) else { throw AuthError.tokenRetrievalFailed }
+        guard let token: String = encryptedStorage.read(.token) else { throw AuthError.tokenRetrievalFailed }
         let headers = [
             "Authorization": "Bearer \(token)",
             "Content-Type": "application/json"
@@ -115,7 +115,7 @@ public class MessageRepositoryImpl: MessageRepository {
     }
     
     public func sendMessage(receiverId: String, message: String) async throws -> Chat {
-        guard let token: String = defaults.read(.token) else { throw AuthError.tokenRetrievalFailed }
+        guard let token: String = encryptedStorage.read(.token) else { throw AuthError.tokenRetrievalFailed }
         let headers = [
             "Authorization": "Bearer \(token)",
             "Content-Type": "application/json"

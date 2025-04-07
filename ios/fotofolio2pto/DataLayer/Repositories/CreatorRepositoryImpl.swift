@@ -9,17 +9,17 @@ import Foundation
 
 public class CreatorRepositoryImpl: CreatorRepository {
     
-    private let defaults: UserDefaultsProvider
+    private let encryptedStorage: EncryptedLocalStorageProvider
     private let network: NetworkProvider
     
-    init(defaults: UserDefaultsProvider, network: NetworkProvider) {
-        self.defaults = defaults
+    init(encryptedStorage: EncryptedLocalStorageProvider, network: NetworkProvider) {
+        self.encryptedStorage = encryptedStorage
         self.network = network
     }
     
     public func createCreator(yearsOfExperience: Int) async throws {
-        guard let token: String = defaults.read(.token) else { throw AuthError.tokenRetrievalFailed }
-        guard let userId: String = defaults.read(.userId) else { throw AuthError.missingUserId }
+        guard let token: String = encryptedStorage.read(.token) else { throw AuthError.tokenRetrievalFailed }
+        guard let userId: String = encryptedStorage.read(.userId) else { throw AuthError.missingUserId }
         
         let headers = [
             "Authorization": "Bearer \(token)",
@@ -36,7 +36,7 @@ public class CreatorRepositoryImpl: CreatorRepository {
     }
     
     public func readCreator(id: String) async throws -> Creator {
-        guard let token: String = defaults.read(.token) else { throw AuthError.tokenRetrievalFailed }
+        guard let token: String = encryptedStorage.read(.token) else { throw AuthError.tokenRetrievalFailed }
         
         let headers = [
             "Authorization": "Bearer \(token)",
@@ -48,7 +48,7 @@ public class CreatorRepositoryImpl: CreatorRepository {
     }
     
     public func readUserByCreatorId(creatorId: String) async throws -> User {
-        guard let token: String = defaults.read(.token) else { throw AuthError.tokenRetrievalFailed }
+        guard let token: String = encryptedStorage.read(.token) else { throw AuthError.tokenRetrievalFailed }
         
         let headers = [
             "Authorization": "Bearer \(token)",
@@ -60,7 +60,7 @@ public class CreatorRepositoryImpl: CreatorRepository {
     }
     
     public func readAllCreatorPortfolios(creatorId: String) async throws -> [Portfolio] {
-        guard let token: String = defaults.read(.token) else { throw AuthError.tokenRetrievalFailed }
+        guard let token: String = encryptedStorage.read(.token) else { throw AuthError.tokenRetrievalFailed }
         
         let headers = [
             "Authorization": "Bearer \(token)",
@@ -78,7 +78,7 @@ public class CreatorRepositoryImpl: CreatorRepository {
     }
     
     public func updateCreatorData(creatorId: String, yearsOfExperience: Int, profileDescription: String) async throws {
-        guard let token: String = defaults.read(.token) else { throw AuthError.tokenRetrievalFailed }
+        guard let token: String = encryptedStorage.read(.token) else { throw AuthError.tokenRetrievalFailed }
         
         let headers = [
             "Authorization": "Bearer \(token)",
