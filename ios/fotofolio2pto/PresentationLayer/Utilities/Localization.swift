@@ -36,6 +36,7 @@ public struct L {
         public static let skyIsTheLimit = "Sky is the limit! 🌟"
         public static let creatorDescription = "Tvůrci mohou vytvářet portfolia a prezentovat svou práci."
         public static let yearsOfExperience = "Roky zkušeností ve fotografii"
+        public static let wrongCredentials = "Špatné přihlašovací údaje."
     }
     
     public enum Feed {

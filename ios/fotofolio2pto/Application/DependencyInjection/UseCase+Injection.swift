@@ -15,6 +15,7 @@ public extension Resolver {
         register { LoginWithCredentialsUseCaseImpl(authRepository: resolve(), userRepository: resolve()) as LoginWithCredentialsUseCase }
         register { GetLoggedInUserUseCaseImpl(authRepository: resolve()) as GetLoggedInUserUseCase }
         register { RegisterUserUseCaseImpl(authRepository: resolve()) as RegisterUserUseCase }
+        register { ReadLastSignedInEmailUseCaseImpl(authRepository: resolve()) as ReadLastSignedInEmailUseCase }
         
         /// User
         register { ReadCreatorPortfoliosUseCaseImpl(creatorRepository: resolve()) as ReadCreatorPortfoliosUseCase }
@@ -23,8 +24,6 @@ public extension Resolver {
         register { CheckUsernameAvailableUseCaseImpl(userRepository: resolve()) as CheckUsernameAvailableUseCase }
         register { SaveUserDataUseCaseImpl(userRepository: resolve()) as SaveUserDataUseCase }
         register { ReadUserByIdUseCaseImpl(userRepository: resolve()) as ReadUserByIdUseCase }
-        register { SaveSignedInUsernameUseCaseImpl(userRepository: resolve()) as SaveSignedInUsernameUseCase }
-        register { GetSignedInUsernameUseCaseImpl(userRepository: resolve()) as GetSignedInUsernameUseCase }
         register { SaveUserProfilePictureUseCaseImpl(userRepository: resolve()) as SaveUserProfilePictureUseCase }
         register { UpdateUserDataUseCaseImpl(userRepository: resolve()) as UpdateUserDataUseCase }
         register { GiveRatingUseCaseImpl(userRepository: resolve()) as GiveRatingUseCase }

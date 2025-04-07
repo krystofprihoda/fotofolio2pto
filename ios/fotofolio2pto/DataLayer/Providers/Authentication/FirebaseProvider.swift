@@ -49,7 +49,7 @@ class FirebaseProvider: AuthProvider {
     func login(email: String, password: String) async throws -> AuthDataResult {
         return try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<AuthDataResult, Error>) in
             auth.signIn(withEmail: email, password: password) { result, error in
-                if let error = error {
+                if let _ = error {
                     continuation.resume(throwing: AuthError.wrongCredentials)
                     return
                 }

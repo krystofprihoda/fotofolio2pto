@@ -24,7 +24,7 @@ public class MessageRepositoryImpl: MessageRepository {
             "Content-Type": "application/json"
         ]
         
-        var body: [String:String] = [
+        let body: [String:String] = [
             "message": message
         ]
         
@@ -62,7 +62,7 @@ public class MessageRepositoryImpl: MessageRepository {
             "Content-Type": "application/json"
         ]
         
-        var queryParams: [String: String] = [
+        let queryParams: [String: String] = [
             "receiverId": receiverId
         ]
         
@@ -100,7 +100,7 @@ public class MessageRepositoryImpl: MessageRepository {
             "Content-Type": "application/json"
         ]
         
-        var body: [String:String] = [
+        let body: [String:String] = [
             "message": message
         ]
         
@@ -121,7 +121,7 @@ public class MessageRepositoryImpl: MessageRepository {
             "Content-Type": "application/json"
         ]
         
-        var body: [String:String] = [
+        let body: [String:String] = [
             "message": message,
             "receiverId": receiverId
         ]

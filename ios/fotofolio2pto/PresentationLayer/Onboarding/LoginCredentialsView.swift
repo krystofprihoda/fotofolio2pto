@@ -8,21 +8,39 @@
 import SwiftUI
 
 struct LoginCredentialsView: View {
-    @Binding var email: String
-    @Binding var password: String
+    @Binding private var email: String
+    @Binding private var password: String
     
-    @State var hiddenPassword = true
+    private var onClearEmailTap: () -> Void
+    
+    @State private var hiddenPassword = true
+    
+    public init(email: Binding<String>, password: Binding<String>, onClearEmailTap: @escaping () -> Void) {
+        self._email = email
+        self._password = password
+        self.onClearEmailTap = onClearEmailTap
+    }
     
     var body: some View {
         VStack(spacing: Constants.Dimens.spaceLarge) {
-            TextField(L.Onboarding.email, text: $email)
-                .font(.body)
-                .frame(height: Constants.Dimens.textFieldHeight)
-                .padding()
-                .background(.textFieldBackground)
-                .cornerRadius(Constants.Dimens.radiusXSmall)
-                .autocapitalization(.none)
-                .disableAutocorrection(true)
+            ZStack(alignment: .trailing) {
+                TextField(L.Onboarding.email, text: $email)
+                    .font(.body)
+                    .frame(height: Constants.Dimens.textFieldHeight)
+                    .padding()
+                    .background(.textFieldBackground)
+                    .cornerRadius(Constants.Dimens.radiusXSmall)
+                    .autocapitalization(.none)
+                    .disableAutocorrection(true)
+                
+                if !email.isEmpty {
+                    Button(action: onClearEmailTap, label: {
+                        Image(systemName: "xmark.circle.fill")
+                            .padding()
+                            .foregroundColor(.gray)
+                    })
+                }
+            }
             
             ZStack(alignment: .trailing) {
                 if hiddenPassword {
@@ -55,5 +73,5 @@ struct LoginCredentialsView: View {
 }
 
 #Preview {
-    LoginCredentialsView(email: .constant(""), password: .constant(""))
+    LoginCredentialsView(email: .constant(""), password: .constant(""), onClearEmailTap: {})
 }

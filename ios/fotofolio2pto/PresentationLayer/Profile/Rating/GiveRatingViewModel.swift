@@ -76,8 +76,7 @@ final class GiveRatingViewModel: BaseViewModel, ViewModel, ObservableObject {
         defer { state.isLoading = false }
         
         do {
-            let average = try await giveRatingUseCase.execute(receiverId: state.receiverId, rating: state.rating)
-            // assign average to profileview using flowdelegate
+            try await giveRatingUseCase.execute(receiverId: state.receiverId, rating: state.rating)
             goBack()
         } catch {
             

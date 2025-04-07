@@ -40,7 +40,7 @@ struct AllChatsView: View {
                                             if let receiverId = chat.getReceiverId(senderId: viewModel.state.senderId),
                                                let receiver = viewModel.state.receivers[receiverId] {
                                                 Text(receiver)
-                                                    .font(.title3)
+                                                    .font(.headline)
                                                     .fontWeight(.medium)
                                                     .foregroundColor(.mainAccent)
                                             }

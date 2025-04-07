@@ -10,8 +10,7 @@
 		FE0685662D84A2A90002B217 /* CategorySelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE0685652D84A2A90002B217 /* CategorySelectionView.swift */; };
 		FE1815612D94A2490090E440 /* ReadUserByIdUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1815602D94A2490090E440 /* ReadUserByIdUseCase.swift */; };
 		FE1815632D954E920090E440 /* ReadCreatorDataUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1815622D954E8C0090E440 /* ReadCreatorDataUseCase.swift */; };
-		FE1815652D9592160090E440 /* SaveSignedInUsernameUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1815642D9592140090E440 /* SaveSignedInUsernameUseCase.swift */; };
-		FE1815672D95941C0090E440 /* GetSignedInUsernameUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1815662D95941B0090E440 /* GetSignedInUsernameUseCase.swift */; };
+		FE1815672D95941C0090E440 /* ReadLastSignedInEmailUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1815662D95941B0090E440 /* ReadLastSignedInEmailUseCase.swift */; };
 		FE1815692D95D92A0090E440 /* CreatorRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1815682D95D9250090E440 /* CreatorRepository.swift */; };
 		FE18156B2D95DAFB0090E440 /* CreatorRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE18156A2D95DAF50090E440 /* CreatorRepositoryImpl.swift */; };
 		FE18156E2D95DD7E0090E440 /* CreateCreatorDataUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE18156D2D95DD7E0090E440 /* CreateCreatorDataUseCase.swift */; };
@@ -163,8 +162,7 @@
 		FE0685652D84A2A90002B217 /* CategorySelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategorySelectionView.swift; sourceTree = "<group>"; };
 		FE1815602D94A2490090E440 /* ReadUserByIdUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadUserByIdUseCase.swift; sourceTree = "<group>"; };
 		FE1815622D954E8C0090E440 /* ReadCreatorDataUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadCreatorDataUseCase.swift; sourceTree = "<group>"; };
-		FE1815642D9592140090E440 /* SaveSignedInUsernameUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveSignedInUsernameUseCase.swift; sourceTree = "<group>"; };
-		FE1815662D95941B0090E440 /* GetSignedInUsernameUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetSignedInUsernameUseCase.swift; sourceTree = "<group>"; };
+		FE1815662D95941B0090E440 /* ReadLastSignedInEmailUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadLastSignedInEmailUseCase.swift; sourceTree = "<group>"; };
 		FE1815682D95D9250090E440 /* CreatorRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatorRepository.swift; sourceTree = "<group>"; };
 		FE18156A2D95DAF50090E440 /* CreatorRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatorRepositoryImpl.swift; sourceTree = "<group>"; };
 		FE18156D2D95DD7E0090E440 /* CreateCreatorDataUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCreatorDataUseCase.swift; sourceTree = "<group>"; };
@@ -446,6 +444,7 @@
 		FE5F8A7A2C296EB7001EE8AF /* Auth */ = {
 			isa = PBXGroup;
 			children = (
+				FE1815662D95941B0090E440 /* ReadLastSignedInEmailUseCase.swift */,
 				FE3D23242D91A41000DA22DB /* RegisterUserUseCase.swift */,
 				FE5F8A882C2975FC001EE8AF /* LogoutUseCase.swift */,
 				FE34A64E2D78BCF200CB4CAE /* CheckEmailAddressAvailableUseCase.swift */,
@@ -502,8 +501,6 @@
 				FE3827DD2DA3CA8D007A933E /* GiveRatingUseCase.swift */,
 				FE3827D52DA30EDE007A933E /* SaveUserProfilePictureUseCase.swift */,
 				FE3827CF2DA2FC1A007A933E /* UpdateUserDataUseCase.swift */,
-				FE1815662D95941B0090E440 /* GetSignedInUsernameUseCase.swift */,
-				FE1815642D9592140090E440 /* SaveSignedInUsernameUseCase.swift */,
 				FE1815602D94A2490090E440 /* ReadUserByIdUseCase.swift */,
 				FE3D23262D92FD0600DA22DB /* SaveUserDataUseCase.swift */,
 				FE7FB10C2D7B163B00428A17 /* CheckUsernameAvailableUseCase.swift */,
@@ -1040,7 +1037,7 @@
 				FEC94DB62C2447F000FFEB11 /* BaseFlowController.swift in Sources */,
 				FE9777D92D7EF25D0027DA60 /* RegisterUsernameView.swift in Sources */,
 				FEA53CAE2C29E08D006F0116 /* Sequence+Extensions.swift in Sources */,
-				FE1815672D95941C0090E440 /* GetSignedInUsernameUseCase.swift in Sources */,
+				FE1815672D95941C0090E440 /* ReadLastSignedInEmailUseCase.swift in Sources */,
 				FE9777E12D7F695C0027DA60 /* PulsingCircleView.swift in Sources */,
 				FEC94DF22C25EF7900FFEB11 /* FilterView.swift in Sources */,
 				FE1815692D95D92A0090E440 /* CreatorRepository.swift in Sources */,
@@ -1124,7 +1121,6 @@
 				FEA64F6D2D7711D900B11530 /* RegisterFlowController.swift in Sources */,
 				FEA53CED2C2D5BAC006F0116 /* EditPortfoliosView.swift in Sources */,
 				FE0685662D84A2A90002B217 /* CategorySelectionView.swift in Sources */,
-				FE1815652D9592160090E440 /* SaveSignedInUsernameUseCase.swift in Sources */,
 				FEC94DF02C25ED5C00FFEB11 /* RoundedCorner.swift in Sources */,
 				FEA53CBC2C2B0B3D006F0116 /* ReadFilteredPortfoliosUseCase.swift in Sources */,
 				FEA53CB42C2AE81C006F0116 /* AlertData.swift in Sources */,

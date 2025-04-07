@@ -34,8 +34,6 @@ public class AuthRepositoryImpl: AuthRepository {
         let result = try await authProvider.login(email: email, password: password)
         let token = try await result.user.getIDToken()
         
-        print("FIREBASE TOKEN:\n\(token)")
-        
         defaults.update(.token, value: token)
         defaults.update(.userId, value: result.user.uid)
         defaults.update(.email, value: result.user.email)
@@ -56,5 +54,9 @@ public class AuthRepositoryImpl: AuthRepository {
         
         defaults.update(.userId, value: data.uid)
         defaults.update(.token, value: data.token)
+    }
+    
+    public func readLastSignedInEmail() -> String {
+        return defaults.read(.email) ?? ""
     }
 }

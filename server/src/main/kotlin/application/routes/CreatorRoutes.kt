@@ -17,7 +17,7 @@ data class Creator(
     val id: String = "",
     val userId: String = "",
     val yearsOfExperience: Int = 1,
-    val description: String = "",
+    val description: String = "Profilový popis",
     val portfolioIds: List<String> = emptyList()
 )
 

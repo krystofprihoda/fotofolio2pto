@@ -10,12 +10,14 @@ import Resolver
 
 final class SignInViewModel: BaseViewModel, ViewModel, ObservableObject {
     // MARK: Stored properties
+    
+    private let emailRegex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
 
     // MARK: Dependencies
 
     @LazyInjected private var loginWithCredentialsUseCase: LoginWithCredentialsUseCase
     @LazyInjected private var readUserByIdUseCase: ReadUserByIdUseCase
-    @LazyInjected private var saveSignedInUsernameUseCase: SaveSignedInUsernameUseCase
+    @LazyInjected private var readLastSignedInEmailUseCase: ReadLastSignedInEmailUseCase
 
     private weak var flowController: OnboardingFlowController?
 
@@ -26,6 +28,7 @@ final class SignInViewModel: BaseViewModel, ViewModel, ObservableObject {
     ) {
         self.flowController = flowController
         super.init()
+        state.email = readLastSignedInEmailUseCase.execute()
     }
 
     // MARK: Lifecycle
@@ -38,6 +41,7 @@ final class SignInViewModel: BaseViewModel, ViewModel, ObservableObject {
 
     struct State: Equatable {
         var email = ""
+        var isValidEmail = false
         var password = ""
         var hiddenPassword = true
         var fillUsernameAlert = false
@@ -79,11 +83,9 @@ final class SignInViewModel: BaseViewModel, ViewModel, ObservableObject {
         
         do {
             let authDetails = try await loginWithCredentialsUseCase.execute(email: state.email, password: state.password)
-            let user = try await readUserByIdUseCase.execute(id: authDetails.uid)
-            saveSignedInUsernameUseCase.execute(username: user.username)
             flowController?.signIn(uid: authDetails.uid)
         } catch {
-            state.error = "Špatné přihlašovací údaje."
+            state.error = L.Onboarding.wrongCredentials
             state.password = ""
         }
     }
@@ -93,7 +95,13 @@ final class SignInViewModel: BaseViewModel, ViewModel, ObservableObject {
     }
     
     private func setPassword(_ password: String) {
+        state.isValidEmail = isValidEmail(state.email)
         state.password = password
+    }
+    
+    func isValidEmail(_ email: String) -> Bool {
+        let pred = NSPredicate(format:"SELF MATCHES %@", emailRegex)
+        return pred.evaluate(with: email)
     }
     
     private func registerUser() {

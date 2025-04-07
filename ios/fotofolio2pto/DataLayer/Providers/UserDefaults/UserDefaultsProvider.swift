@@ -13,7 +13,6 @@ public enum UserDefaultsCoding: String, CaseIterable {
     case flagged
     #warning("TODO: Use keychain instead for token")
     case token
-    case username
 }
 
 public protocol UserDefaultsProvider {

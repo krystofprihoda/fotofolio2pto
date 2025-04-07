@@ -24,7 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Resolver.registerRepositories()
         Resolver.registerUseCases()
         
-        #warning("TODO: Clean Architecture")
+        // Firebase setup
         FirebaseApp.configure()
         
         // Fix for flickering black navBar: https://stackoverflow.com/questions/30763979/why-is-the-uinavigationbar-turning-black

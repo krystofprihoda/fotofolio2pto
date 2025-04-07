@@ -97,15 +97,6 @@ public class UserRepositoryImpl: UserRepository {
         return user
     }
     
-    public func saveSignedInUsername(_ username: String) {
-        defaults.update(.username, value: username)
-    }
-    
-    public func getSignedInUsername() throws -> String {
-        guard let username: String = defaults.read(.username) else { throw ObjectError.nonExistent }
-        return username
-    }
-    
     public func updateUserData(location: String) async throws {
         guard let token: String = defaults.read(.token) else { throw AuthError.tokenRetrievalFailed }
         guard let userId: String = defaults.read(.userId) else { throw AuthError.missingUserId }

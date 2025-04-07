@@ -105,9 +105,7 @@ final class AllChatsViewViewModel: BaseViewModel, ViewModel, ObservableObject {
                 let receiverData = try await readUserByIdUseCase.execute(id: receiverId)
                 state.receivers[receiverId] = receiverData.username
             }
-        } catch {
-            #warning("TODO: Log error")
-        }
+        } catch { }
     }
     
     private func showChat(_ chat: Chat) {

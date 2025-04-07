@@ -58,7 +58,8 @@ struct SignInView: View {
                             
                             LoginCredentialsView(
                                 email: Binding(get: { viewModel.state.email }, set: { viewModel.onIntent(.setEmail($0)) }),
-                                password: Binding(get: { viewModel.state.password }, set: { viewModel.onIntent(.setPassword($0)) })
+                                password: Binding(get: { viewModel.state.password }, set: { viewModel.onIntent(.setPassword($0)) }),
+                                onClearEmailTap: { viewModel.onIntent(.setEmail("")) }
                             )
                             
                             Button(action: { viewModel.onIntent(.signIn) }, label: {
@@ -71,7 +72,7 @@ struct SignInView: View {
                                     .background(.mainAccent)
                                     .cornerRadius(Constants.Dimens.radiusXSmall)
                             })
-                            .disabledOverlay(viewModel.state.email.isEmpty || viewModel.state.password.isEmpty)
+                            .disabledOverlay(!viewModel.state.isValidEmail || viewModel.state.password.isEmpty)
                             .skeleton(viewModel.state.isSigningIn)
                         }
                     }
