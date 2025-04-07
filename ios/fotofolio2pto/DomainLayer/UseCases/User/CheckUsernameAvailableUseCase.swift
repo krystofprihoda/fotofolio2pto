@@ -21,7 +21,6 @@ public struct CheckUsernameAvailableUseCaseImpl: CheckUsernameAvailableUseCase {
     }
     
     public func execute(_ username: String) async throws {
-        return
         try await userRepository.isUsernameTaken(username)
     }
 }

@@ -26,7 +26,7 @@ data class User(
     val username: String = "",
     val email: String = "",
     val fullName: String = "",
-    val location: String = "",
+    val location: String = "Neznámé místo působení",
     val profilePicture: String = "",
     val rating: Map<String, Int> = emptyMap(),
     val creatorId: String = ""
@@ -37,6 +37,31 @@ fun Application.userRoutes() {
     val portfolioRepository by inject<PortfolioRepository>()
 
     routing {
+        get("/user/available") {
+            try {
+                val username = call.request.queryParameters["username"]
+
+                if (username.isNullOrBlank()) {
+                    throw Exception("Missing or empty 'username' query parameter")
+                }
+
+                val db = FirestoreClient.getFirestore()
+
+                val snapshot = db.collection("username")
+                    .document(username)
+                    .get()
+                    .await()
+
+                if (!snapshot.exists()) {
+                    call.respond(HttpStatusCode.NoContent) // username available
+                } else {
+                    call.respond(HttpStatusCode.Conflict, "Username is already taken")
+                }
+            } catch (e: Exception) {
+                call.respond(HttpStatusCode.InternalServerError, "Error checking availability: ${e.message}")
+            }
+        }
+
         authenticate {
             post("/user") {
                 try {
@@ -48,6 +73,10 @@ fun Application.userRoutes() {
                     db.collection("user")
                         .document(userData.userId)
                         .set(userData)
+
+                    db.collection("username")
+                        .document(userData.username)
+                        .set(mapOf("userId" to userData.userId))
 
                     val res = db
                         .collection("user")

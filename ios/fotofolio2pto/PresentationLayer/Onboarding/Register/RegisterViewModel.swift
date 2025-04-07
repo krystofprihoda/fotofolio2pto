@@ -216,12 +216,11 @@ final class RegisterViewModel: BaseViewModel, ViewModel, ObservableObject {
         }
         
         do {
-            #warning("TODO: Add BE username availability check")
             try await checkUsernameAvailableUseCase.execute(state.username)
-        } catch ObjectError.usernameAlreadyTaken {
+        } catch {
             state.usernameError = L.Onboarding.usernameTaken
             return
-        } catch { }
+        }
         
         state.usernameError = ""
         state.stage = .password

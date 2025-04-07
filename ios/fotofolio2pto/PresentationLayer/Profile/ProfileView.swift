@@ -31,7 +31,7 @@ struct ProfileView: View {
                             onGiveRatingTap: { viewModel.onIntent(.giveRating) }
                         )
                             .padding(.top, Constants.Dimens.spaceSmall)
-                        if !viewModel.state.portfolios.isEmpty {
+                        if viewModel.state.creatorData != nil {
                             ProfilePortfoliosView(portfolios: viewModel.state.portfolios)
                         } else {
                             NotCreatorView()

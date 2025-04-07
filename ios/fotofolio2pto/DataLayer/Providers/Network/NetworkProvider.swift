@@ -23,6 +23,7 @@ enum NetworkError: Error {
     case serverError(statusCode: Int)
     case decodingError
     case unknownError
+    case alreadyTaken
     
     var localizedDescription: String {
         switch self {
@@ -38,6 +39,8 @@ enum NetworkError: Error {
             return "Failed to decode response."
         case .unknownError:
             return "An unknown error occurred."
+        case .alreadyTaken:
+            return "Already taken."
         }
     }
 }
@@ -47,6 +50,7 @@ enum Endpoint {
     case userById(String)
     case userProfilePicture(String)
     case userRating(String)
+    case usernameAvailable
     case creator
     case creatorById(String)
     case creatorPortfolio(creatorId: String)
@@ -66,6 +70,8 @@ enum Endpoint {
             return "/user/\(id)/profilepicture"
         case .userRating(let receiverId):
             return "/user/\(receiverId)/rating"
+        case .usernameAvailable:
+            return "/user/available"
         case .creator:
             return "/creator"
         case .creatorById(let id):

@@ -18,8 +18,6 @@ public class UserRepositoryImpl: UserRepository {
         self.network = network
     }
     
-    private static var users = User.sampleData
-    
     public func getUsersFromQuery(query: String) async throws -> [User] {
         guard let token: String = defaults.read(.token) else { throw AuthError.tokenRetrievalFailed }
         
@@ -41,12 +39,17 @@ public class UserRepositoryImpl: UserRepository {
     }
     
     public func isUsernameTaken(_ username: String) async throws {
-        try await Task.sleep(for: .seconds(0.3))
-        guard let _ = UserRepositoryImpl.users.first(where: { user in
-            user.username == username
-        }) else { return }
+        let queryParams: [String:String] = [
+            "username": username
+        ]
         
-        throw ObjectError.usernameAlreadyTaken
+        _ = try await network.request(
+            endpoint: .usernameAvailable,
+            method: .GET,
+            body: nil,
+            headers: nil,
+            queryParams: queryParams
+        )
     }
     
     public func createUser(username: String, email: String, fullName: String, location: String, profilePicture: String) async throws {
@@ -68,12 +71,12 @@ public class UserRepositoryImpl: UserRepository {
         ]
         
         _ = try await network.request(
-                endpoint: .user,
-                method: .POST,
-                body: body,
-                headers: headers,
-                queryParams: nil
-            )
+            endpoint: .user,
+            method: .POST,
+            body: body,
+            headers: headers,
+            queryParams: nil
+        )
     }
     
     public func getUser(id: String) async throws -> User {

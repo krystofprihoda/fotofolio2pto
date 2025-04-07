@@ -10,8 +10,7 @@ version = "0.0.1"
 application {
     mainClass = "io.ktor.server.netty.EngineMain"
 
-    // val isDevelopment: Boolean = project.ext.has("development")
-    val isDevelopment: Boolean = true
+    val isDevelopment = true
     applicationDefaultJvmArgs = listOf("-Dio.ktor.development=$isDevelopment")
 }
 
