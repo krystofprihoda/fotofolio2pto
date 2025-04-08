@@ -8,28 +8,9 @@ import io.ktor.server.auth.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import kotlinx.serialization.Serializable
+import domain.model.Chat
+import domain.model.Message
 import com.google.cloud.firestore.Query
-
-@Serializable
-data class Message(
-    val id: String = "",
-    val chatId: String = "",
-    val from: String = "",
-    val to: String = "",
-    val body: String = "",
-    val timestamp: Long = System.currentTimeMillis()
-)
-
-@Serializable
-data class Chat(
-    val id: String = "",
-    val chatOwnerIds: List<String> = listOf(),
-    val messageIds: List<String> = listOf(),
-    val lastUpdated: Long = System.currentTimeMillis(),
-    val lastMessage: String = "",
-    val lastSenderId: String = ""
-)
 
 fun Application.messageRoutes() {
     routing {

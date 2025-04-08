@@ -6,12 +6,12 @@ import java.net.URL
 @Serializable
 data class Portfolio(
     val id: String = "",
-    val authorUsername: String = "",
     val creatorId: String = "",
+    val authorUsername: String = "",
     val name: String = "",
-    val photos: List<String> = listOf(),
     val description: String = "",
-    val category: List<String> = listOf(),
+    val photos: List<String> = emptyList(),
+    val category: List<String> = emptyList(),
     val timestamp: Long = System.currentTimeMillis()
 ) {
     companion object {

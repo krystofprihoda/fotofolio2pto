@@ -10,16 +10,8 @@ import io.ktor.server.auth.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import kotlinx.serialization.Serializable
-
-@Serializable
-data class Creator(
-    val id: String = "",
-    val userId: String = "",
-    val yearsOfExperience: Int = 1,
-    val description: String = "Profilový popis",
-    val portfolioIds: List<String> = emptyList()
-)
+import domain.model.Creator
+import domain.model.User
 
 fun Application.creatorRoutes() {
     routing {

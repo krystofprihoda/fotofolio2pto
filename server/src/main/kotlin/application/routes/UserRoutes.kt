@@ -1,7 +1,6 @@
 package application.routes
 
 import io.ktor.utils.io.jvm.javaio.toInputStream
-import domain.repository.PortfolioRepository
 import domain.repository.UserRepository
 import io.ktor.http.*
 import org.koin.ktor.ext.inject
@@ -10,31 +9,14 @@ import io.ktor.server.auth.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import kotlinx.serialization.Serializable
 import com.google.firebase.cloud.FirestoreClient
 import com.kborowy.authprovider.firebase.await
 import io.ktor.http.content.*
 import java.io.ByteArrayOutputStream
-import com.google.firebase.cloud.StorageClient
-import java.util.*
-import java.net.URLEncoder
-
-// temporary location
-@Serializable
-data class User(
-    val userId: String = "",
-    val username: String = "",
-    val email: String = "",
-    val fullName: String = "",
-    val location: String = "Neznámé místo působení",
-    val profilePicture: String = "",
-    val rating: Map<String, Int> = emptyMap(),
-    val creatorId: String = ""
-)
+import domain.model.User
 
 fun Application.userRoutes() {
     val userRepository by inject<UserRepository>()
-    val portfolioRepository by inject<PortfolioRepository>()
 
     routing {
         get("/user/available") {
@@ -45,14 +27,7 @@ fun Application.userRoutes() {
                     throw Exception("Missing or empty 'username' query parameter")
                 }
 
-                val db = FirestoreClient.getFirestore()
-
-                val snapshot = db.collection("username")
-                    .document(username)
-                    .get()
-                    .await()
-
-                if (!snapshot.exists()) {
+                if (userRepository.isUsernameAvailable(username)) {
                     call.respond(HttpStatusCode.NoContent) // username available
                 } else {
                     call.respond(HttpStatusCode.Conflict, "Username is already taken")
@@ -116,31 +91,7 @@ fun Application.userRoutes() {
                         return@post
                     }
 
-                    // Upload to Firebase Storage
-                    val bucket = StorageClient.getInstance().bucket("fotofolio-3.firebasestorage.app")
-                    val path = "user/$userId/profilepicture.jpeg"
-
-                    val blob = bucket.create(
-                        path,
-                        profilePicBytes,
-                        "image/jpeg"
-                    )
-
-                    val token = UUID.randomUUID().toString()
-                    val updatedBlob = blob.toBuilder()
-                        .setMetadata(mapOf("firebaseStorageDownloadTokens" to token))
-                        .build()
-                        .update()
-
-                    val encodedPath = URLEncoder.encode(path, "UTF-8")
-                    val downloadUrl = "https://firebasestorage.googleapis.com/v0/b/${bucket.name}/o/$encodedPath?alt=media&token=$token"
-
-                    // Save to Firestore
-                    val db = FirestoreClient.getFirestore()
-                    val userRef = db.collection("user").document(userId)
-
-                    userRef.update("profilePicture", downloadUrl).await()
-
+                    val downloadUrl = userRepository.uploadProfilePicture(userId, profilePicBytes!!)
                     call.respond(HttpStatusCode.OK, mapOf("profilePictureUrl" to downloadUrl))
                 } catch (e: Exception) {
                     call.respond(HttpStatusCode.InternalServerError, "Error: ${e.localizedMessage}")
@@ -150,26 +101,11 @@ fun Application.userRoutes() {
             post("/user/{receiverId}/rating") {
                 try {
                     val receiverId = call.parameters["receiverId"] ?: throw Exception("Missing receiverId")
-
                     val principalId = call.principal<UserIdPrincipal>()?.name ?: throw Exception("Unauthorized")
                     val requestBody = call.receive<Map<String, String>>()
-                    val rating = requestBody["rating"] ?: throw Exception("Rating value is required")
+                    val rating = requestBody["rating"]?.toIntOrNull() ?: throw Exception("Valid rating value is required")
 
-                    val db = FirestoreClient.getFirestore()
-                    val userRef = db.collection("user").document(receiverId)
-
-                    // Fetch the user
-                    val snapshot = userRef.get().await()
-                    if (!snapshot.exists()) { throw Exception("User not found") }
-
-                    // Update rating map
-                    val currentRatings = snapshot.get("rating") as? Map<String, Int> ?: emptyMap()
-                    val updatedRatings = currentRatings.toMutableMap()
-                    updatedRatings[principalId] = rating.toInt()
-
-                    // Save back to Firestore
-                    userRef.update("rating", updatedRatings).await()
-
+                    userRepository.rateUser(receiverId, principalId, rating)
                     call.respond(HttpStatusCode.OK, "Rating saved")
                 } catch (e: Exception) {
                     call.respond(HttpStatusCode.BadRequest, "Error saving rating: ${e.localizedMessage}")
@@ -179,52 +115,8 @@ fun Application.userRoutes() {
             get("/user") {
                 try {
                     val searchQuery = call.request.queryParameters["query"]
-                    val db = FirestoreClient.getFirestore()
-
-                    // If no query provided, return all users
-                    if (searchQuery.isNullOrBlank()) {
-                        val snapshot = db.collection("user")
-                            .get()
-                            .await()
-
-                        val users = snapshot.toObjects(User::class.java)
-                        call.respond(HttpStatusCode.OK, users)
-                        return@get
-                    }
-
-                    // Perform case-insensitive substring searches across multiple fields
-                    val searchQueryLower = searchQuery.lowercase()
-
-                    // Perform multiple queries and collect unique results
-                    val usernameQuery = db.collection("user")
-                        .whereGreaterThanOrEqualTo("username", searchQueryLower)
-                        .whereLessThan("username", searchQueryLower + "\uf8ff")
-                        .get()
-                        .await()
-
-                    val fullnameQuery = db.collection("user")
-                        .whereGreaterThanOrEqualTo("fullName", searchQueryLower)
-                        .whereLessThan("fullName", searchQueryLower + "\uf8ff")
-                        .get()
-                        .await()
-
-                    val locationQuery = db.collection("user")
-                        .whereGreaterThanOrEqualTo("location", searchQueryLower)
-                        .whereLessThan("location", searchQueryLower + "\uf8ff")
-                        .get()
-                        .await()
-
-                    // Combine and deduplicate results
-                    val combinedUsers = mutableSetOf<User>()
-
-                    usernameQuery.toObjects(User::class.java).forEach { combinedUsers.add(it) }
-                    fullnameQuery.toObjects(User::class.java).forEach { combinedUsers.add(it) }
-                    locationQuery.toObjects(User::class.java).forEach { combinedUsers.add(it) }
-
-                    // Convert to list and respond
-                    val uniqueUsers = combinedUsers.toList()
-                    call.respond(HttpStatusCode.OK, uniqueUsers)
-
+                    val users = userRepository.searchUsers(searchQuery)
+                    call.respond(HttpStatusCode.OK, users)
                 } catch (e: Exception) {
                     call.respond(HttpStatusCode.BadRequest, "Error searching users: ${e.localizedMessage}")
                 }
@@ -232,54 +124,11 @@ fun Application.userRoutes() {
 
             get("/user/{userId}") {
                 try {
-                    val id = (call.parameters["userId"] as String)
-
-                    val db = FirestoreClient.getFirestore()
-
-                    val res = db
-                        .collection("user")
-                        .document(id)
-                        .get()
-                        .await()
-                        .toObject(User::class.java) ?: throw Exception("User not found")
-
-                    call.respond(HttpStatusCode.OK, res)
+                    val id = call.parameters["userId"] as String
+                    val user = userRepository.getUserById(id)
+                    call.respond(HttpStatusCode.OK, user)
                 } catch (e: Exception) {
                     call.respond(HttpStatusCode.BadRequest, "Error processing request: ${e.localizedMessage}")
-                }
-            }
-
-            put("/user/{userId}") {
-                try {
-                    val userId = call.parameters["userId"] as String
-
-                    // Receive the updated user data
-                    val updatedUserData = call.receive<User>()
-
-                    val db = FirestoreClient.getFirestore()
-
-                    // Check if the user exists first
-                    val userRef = db.collection("user").document(userId)
-                    val existingUserSnapshot = userRef.get().await()
-
-                    if (!existingUserSnapshot.exists()) {
-                        throw Exception("User not found")
-                    }
-
-                    // Update the user document
-                    // Use set() to replace the entire document with the new data
-                    userRef.set(updatedUserData).await()
-
-                    // Retrieve the updated user to confirm and return
-                    val updatedUser = userRef
-                        .get()
-                        .await()
-                        .toObject(User::class.java) ?: throw Exception("Failed to retrieve updated user")
-
-                    // Respond with the updated user
-                    call.respond(HttpStatusCode.OK, updatedUser)
-                } catch (e: Exception) {
-                    call.respond(HttpStatusCode.BadRequest, "Error updating user: ${e.localizedMessage}")
                 }
             }
 
@@ -296,26 +145,16 @@ fun Application.userRoutes() {
                         return@patch
                     }
 
-                    val db = FirestoreClient.getFirestore()
-                    val userRef = db.collection("user").document(userId)
-
-                    // Ensure user exists
-                    val existingUserSnapshot = userRef.get().await()
-                    if (!existingUserSnapshot.exists()) {
-                        call.respond(HttpStatusCode.NotFound, "User not found")
-                        return@patch
+                    val success = userRepository.updateUserFields(userId, updateData)
+                    if (success) {
+                        call.respond(HttpStatusCode.OK, "User updated successfully")
+                    } else {
+                        call.respond(HttpStatusCode.BadRequest, "No valid fields to update")
                     }
-
-                    val allowedFields = listOf("location")
-                    val filteredData = updateData.filterKeys { it in allowedFields }
-
-                    userRef.update(filteredData).await()
-
-                    call.respond(HttpStatusCode.OK, "User updated successfully")
                 } catch (e: Exception) {
                     call.respond(HttpStatusCode.InternalServerError, "Error updating user data: ${e.localizedMessage}")
                 }
             }
-        }
+            }
     }
 }

@@ -19,6 +19,8 @@ import java.net.URLDecoder
 import java.net.URLEncoder
 import java.util.*
 import kotlin.io.copyTo
+import domain.model.User
+import domain.model.Creator
 
 fun Application.portfolioRoutes() {
     routing {

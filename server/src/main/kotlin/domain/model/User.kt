@@ -3,11 +3,13 @@ package domain.model
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class User(val id: String, val username: String) {
-    companion object {
-        fun mocks(): List<User> {
-            return List(5) { User("id$it", "name$it") }
-        }
-    }
-
-}
+data class User(
+    val userId: String = "",
+    val username: String = "",
+    val email: String = "",
+    val fullName: String = "",
+    val location: String = "Neznámé místo působení",
+    val profilePicture: String = "",
+    val rating: Map<String, Int> = emptyMap(),
+    val creatorId: String = ""
+)
