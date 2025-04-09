@@ -1,4 +1,4 @@
-package data
+package data.repository
 
 import domain.model.User
 import domain.repository.UserRepository

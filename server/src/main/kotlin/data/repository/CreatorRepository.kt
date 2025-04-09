@@ -1,4 +1,4 @@
-package data
+package data.repository
 
 import data.source.FirestoreSource
 import domain.model.Creator

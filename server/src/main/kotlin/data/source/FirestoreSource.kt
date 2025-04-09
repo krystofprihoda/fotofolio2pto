@@ -9,7 +9,7 @@ import com.google.firebase.FirebaseApp
 import com.google.firebase.FirebaseOptions
 import com.google.firebase.cloud.FirestoreClient
 import com.kborowy.authprovider.firebase.await
-import cz.cvut.fit.FirebaseInitializer
+import config.FirebaseInitializer
 import java.io.File
 import java.io.FileInputStream
 
@@ -32,7 +32,7 @@ class FirebaseFirestoreSource : FirestoreSource {
     private val db: Firestore by lazy {
         if (!FirebaseInitializer.isInitialized()) {
             // For unauthenticated endpoints, we need to create a direct Firestore connection
-            println("[FIRESTORE] Firebase not initialized, creating direct Firestore connection")
+            println("[FIRESTORE] Not yet initialized, creating for public endpoints")
 
             // Create a direct connection to Firestore for unauthenticated endpoints only
             val serviceAccountFile = File("fotofolio-3-firebase-key.json")

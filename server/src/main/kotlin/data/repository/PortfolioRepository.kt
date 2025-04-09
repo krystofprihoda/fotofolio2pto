@@ -1,4 +1,4 @@
-package data
+package data.repository
 
 import com.google.cloud.firestore.FieldPath
 import com.google.cloud.firestore.Query
