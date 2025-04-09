@@ -90,7 +90,9 @@ class PortfolioRepositoryImpl(
             return emptyList()
         }
 
-        return firestoreSource.getDocumentsByIds("portfolio", creator.portfolioIds, Portfolio::class.java)
+        return firestoreSource
+            .getDocumentsByIds("portfolio", creator.portfolioIds, Portfolio::class.java)
+            .sortedByDescending { it.timestamp }
     }
 
     override suspend fun searchPortfolios(
@@ -98,49 +100,13 @@ class PortfolioRepositoryImpl(
         portfolioIds: List<String>?,
         sortBy: String?
     ): List<Portfolio> {
-        // FirestoreClient direct use for complex queries -> Move to source directly
-        val db = FirestoreClient.getFirestore()
-        var portfoliosQuery: Query = db.collection("portfolio")
-
+        // If portfolio IDs are provided, fetch by ID
         if (!portfolioIds.isNullOrEmpty()) {
-            if (portfolioIds.size > 10) {
-                throw Exception("Cannot query more than 10 portfolio IDs at a time")
-            }
-            portfoliosQuery = portfoliosQuery.whereIn(FieldPath.documentId(), portfolioIds)
+            return firestoreSource.getDocumentsByIds("portfolio", portfolioIds, Portfolio::class.java)
         }
 
-        if (!categories.isNullOrEmpty() && portfolioIds.isNullOrEmpty()) {
-            portfoliosQuery = portfoliosQuery.whereArrayContainsAny("category", categories)
-        }
-
-        val portfolios = portfoliosQuery.get().await().documents.mapNotNull { document ->
-            document.toObject(Portfolio::class.java)
-        }
-
-        // Sort results if needed
-        return if (portfolioIds.isNullOrEmpty()) {
-            when (sortBy) {
-                "timestamp" -> portfolios.sortedByDescending { it.timestamp }
-                "rating" -> {
-                    // Complex sorting by creator's ratings
-                    val portfoliosWithRatings = portfolios.map { portfolio ->
-                        val creator = firestoreSource.getDocument("creator", portfolio.creatorId, Creator::class.java)
-                            ?: throw Exception("Portfolio creator not found")
-
-                        val user = firestoreSource.getDocument("user", creator.userId, User::class.java)
-                            ?: throw Exception("Portfolio user/author not found")
-
-                        val avgRating = if (user.rating.isEmpty()) 0.0 else user.rating.values.average()
-                        portfolio to avgRating
-                    }
-
-                    portfoliosWithRatings.sortedByDescending { it.second }.map { it.first }
-                }
-                else -> portfolios // No sorting
-            }
-        } else {
-            portfolios // No sorting when fetching by IDs
-        }
+        // Otherwise, search by categories with optional sorting
+        return firestoreSource.searchPortfoliosByCategories(categories, sortBy)
     }
 
     override suspend fun updatePortfolio(

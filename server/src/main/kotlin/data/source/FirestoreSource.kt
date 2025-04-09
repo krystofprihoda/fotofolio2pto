@@ -10,6 +10,7 @@ import com.google.firebase.FirebaseOptions
 import com.google.firebase.cloud.FirestoreClient
 import com.kborowy.authprovider.firebase.await
 import config.FirebaseInitializer
+import domain.model.Portfolio
 import java.io.File
 import java.io.FileInputStream
 
@@ -45,6 +46,13 @@ interface FirestoreSource {
         collection: String,
         field: String,
         value: Any,
+        clazz: Class<T>
+    ): List<T>
+
+    suspend fun <T> getDocumentsWhereArrayContainsAny(
+        collection: String,
+        field: String,
+        values: List<Any>,
         clazz: Class<T>
     ): List<T>
 
@@ -101,6 +109,15 @@ interface FirestoreSource {
         direction: Query.Direction,
         clazz: Class<T>
     ): List<T>
+
+    suspend fun searchPortfoliosByCategories(
+        categories: List<String>?,
+        sortBy: String?
+    ): List<Portfolio>
+
+    suspend fun getPortfoliosByIds(
+        portfolioIds: List<String>
+    ): List<Portfolio>
 }
 
 class FirebaseFirestoreSource : FirestoreSource {
@@ -174,6 +191,14 @@ class FirebaseFirestoreSource : FirestoreSource {
     override suspend fun <T> getDocumentsWhereArrayContains(collection: String, field: String, value: Any, clazz: Class<T>): List<T> {
         return db.collection(collection)
             .whereArrayContains(field, value)
+            .get()
+            .await()
+            .toObjects(clazz)
+    }
+
+    override suspend fun <T> getDocumentsWhereArrayContainsAny(collection: String, field: String, values: List<Any>, clazz: Class<T>): List<T> {
+        return db.collection(collection)
+            .whereArrayContainsAny(field, values)
             .get()
             .await()
             .toObjects(clazz)
@@ -271,5 +296,58 @@ class FirebaseFirestoreSource : FirestoreSource {
             .get()
             .await()
             .toObjects(clazz)
+    }
+
+    override suspend fun searchPortfoliosByCategories(
+        categories: List<String>?,
+        sortBy: String?
+    ): List<Portfolio> {
+        var portfolios: List<Portfolio> = emptyList()
+
+        // Get portfolios by categories if available
+        if (!categories.isNullOrEmpty()) {
+            portfolios = getDocumentsWhereArrayContainsAny(
+                collection = "portfolio",
+                field = "category",
+                values = categories,
+                clazz = Portfolio::class.java
+            )
+        } else {
+            // Otherwise, get all portfolios
+            portfolios = getDocuments("portfolio", Portfolio::class.java)
+        }
+
+        // Apply sorting if needed
+        return when (sortBy) {
+            "timestamp" -> portfolios.sortedByDescending { it.timestamp }
+            "rating" -> {
+                // Complex sorting by creator's ratings
+                val portfoliosWithRatings = portfolios.map { portfolio ->
+                    val creator = getDocument("creator", portfolio.creatorId, domain.model.Creator::class.java)
+                        ?: throw Exception("Portfolio creator not found")
+
+                    val user = getDocument("user", creator.userId, domain.model.User::class.java)
+                        ?: throw Exception("Portfolio user/author not found")
+
+                    val avgRating = if (user.rating.isEmpty()) 0.0 else user.rating.values.average()
+                    portfolio to avgRating
+                }
+
+                portfoliosWithRatings.sortedByDescending { it.second }.map { it.first }
+            }
+            else -> portfolios // No sorting
+        }
+    }
+
+    override suspend fun getPortfoliosByIds(portfolioIds: List<String>): List<Portfolio> {
+        if (portfolioIds.isEmpty()) {
+            return emptyList()
+        }
+
+        if (portfolioIds.size > 10) {
+            throw Exception("Cannot query more than 10 portfolio IDs at a time")
+        }
+
+        return getDocumentsByIds("portfolio", portfolioIds, Portfolio::class.java)
     }
 }
