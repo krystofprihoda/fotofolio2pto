@@ -9,8 +9,6 @@ import io.ktor.server.auth.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import com.google.firebase.cloud.FirestoreClient
-import com.kborowy.authprovider.firebase.await
 import io.ktor.http.content.*
 import java.io.ByteArrayOutputStream
 import domain.model.User
@@ -40,27 +38,9 @@ fun Application.userRoutes() {
         authenticate {
             post("/user") {
                 try {
-                    // Decode the received JSON body
                     val userData = call.receive<User>()
-
-                    val db = FirestoreClient.getFirestore()
-
-                    db.collection("user")
-                        .document(userData.userId)
-                        .set(userData)
-
-                    db.collection("username")
-                        .document(userData.username)
-                        .set(mapOf("userId" to userData.userId))
-
-                    val res = db
-                        .collection("user")
-                        .document(userData.userId)
-                        .get()
-                        .await()
-                        .toObject(User::class.java) ?: throw Exception("Creating user failed")
-
-                    call.respond(HttpStatusCode.OK, res)
+                    val createdUser = userRepository.createUser(userData)
+                    call.respond(HttpStatusCode.OK, createdUser)
                 } catch (e: Exception) {
                     call.respond(HttpStatusCode.BadRequest, "Error processing request: ${e.localizedMessage}")
                 }

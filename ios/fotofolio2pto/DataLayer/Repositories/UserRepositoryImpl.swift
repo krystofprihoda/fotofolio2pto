@@ -62,7 +62,7 @@ public class UserRepositoryImpl: UserRepository {
         ]
         
         let body: [String: String] = [
-            "userId": userId,
+            "id": userId,
             "username": username,
             "email": email,
             "fullName": fullName,

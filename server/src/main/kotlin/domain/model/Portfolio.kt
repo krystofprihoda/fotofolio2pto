@@ -13,19 +13,17 @@ data class Portfolio(
     val photos: List<String> = emptyList(),
     val category: List<String> = emptyList(),
     val timestamp: Long = System.currentTimeMillis()
-) {
-    companion object {
-        fun mocks(): List<Portfolio> {
-            return List(5) { index ->
-                Portfolio(
-                    id = "id$index",
-                    creatorId = "id$index",
-                    name = "Portfolio $index",
-                    description = "Description for portfolio $index",
-                    category = listOf("Portrét", "Svatba"),
-                    photos = emptyList()
-                )
-            }
-        }
-    }
+)
+
+fun Portfolio.toMap(): Map<String, Any> {
+    return mapOf(
+        "id" to id,
+        "creatorId" to creatorId,
+        "authorUsername" to authorUsername,
+        "name" to name,
+        "description" to description,
+        "photos" to photos,
+        "category" to category,
+        "timestamp" to timestamp
+    )
 }

@@ -2,23 +2,23 @@ package data
 
 import domain.model.User
 import domain.repository.UserRepository
-import com.google.firebase.cloud.FirestoreClient
 import data.source.FirestoreSource
 import data.source.StorageSource
+import domain.model.toMap
 
 internal class UserRepositoryImpl(
     private val firestoreSource: FirestoreSource,
-     private val storageSource: StorageSource
+    private val storageSource: StorageSource
 ) : UserRepository {
 
     override suspend fun isUsernameAvailable(username: String): Boolean {
         return !firestoreSource.checkDocumentExists("username", username)
     }
 
-    override suspend fun createUser(userData: Map<String, String>): User {
-        val id = firestoreSource.createDocument("user", userData)
-        firestoreSource.createDocument("username", mapOf("userId" to id))
-        return firestoreSource.getDocument("user", id, User::class.java) ?: throw Exception("Creating user failed")
+    override suspend fun createUser(userData: User): User {
+        firestoreSource.setDocument("user", userData.id, userData.toMap())
+        firestoreSource.setDocument("username", userData.username, mapOf("userId" to userData.id))
+        return firestoreSource.getDocument("user", userData.id, User::class.java) ?: throw Exception("Creating user failed")
     }
 
     override suspend fun getUserById(userId: String): User {

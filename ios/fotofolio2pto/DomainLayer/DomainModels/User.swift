@@ -55,8 +55,7 @@ public struct User: Identifiable, Equatable {
 
 extension User: Codable {
     enum CodingKeys: String, CodingKey {
-        case id = "userId"
-        case username, fullName, email, location, profilePicture, rating, creatorId
+        case id, username, fullName, email, location, profilePicture, rating, creatorId
     }
 
     public init(from decoder: Decoder) throws {

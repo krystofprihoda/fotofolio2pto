@@ -11,15 +11,6 @@ import org.koin.logger.slf4jLogger
 import java.io.File
 
 fun Application.configureFrameworks() {
-    install(Koin) {
-        slf4jLogger()
-        modules(appModule)
-    }
-
-    install(ContentNegotiation) {
-        json()
-    }
-
     install(Authentication) {
         firebase {
             adminFile = File("fotofolio-3-firebase-key.json")
@@ -29,5 +20,14 @@ fun Application.configureFrameworks() {
                 UserIdPrincipal(credential.uid)
             }
         }
+    }
+
+    install(Koin) {
+        slf4jLogger()
+        modules(appModule)
+    }
+
+    install(ContentNegotiation) {
+        json()
     }
 }

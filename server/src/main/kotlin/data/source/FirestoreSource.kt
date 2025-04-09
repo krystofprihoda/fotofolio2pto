@@ -6,7 +6,6 @@ import com.google.cloud.firestore.Query
 import com.google.firebase.cloud.FirestoreClient
 import com.kborowy.authprovider.firebase.await
 
-
 interface FirestoreSource {
     suspend fun <T> getDocument(collection: String, documentId: String, clazz: Class<T>): T?
     suspend fun <T> getDocuments(collection: String, clazz: Class<T>): List<T>
@@ -86,8 +85,11 @@ class FirebaseFirestoreSource : FirestoreSource {
 
     override suspend fun createDocument(collection: String, data: Map<String, Any>): String {
         val docRef = db.collection(collection).document()
-        docRef.set(data).await()
-        return docRef.id
+        val id = docRef.id
+        val dataWithId = data + ("id" to id)
+
+        docRef.set(dataWithId).await()
+        return id
     }
 
     override suspend fun updateDocument(collection: String, documentId: String, updates: Map<String, Any>): Boolean {
