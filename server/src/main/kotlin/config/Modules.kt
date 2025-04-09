@@ -1,3 +1,7 @@
+package config
+
+import cz.cvut.fit.application.mapper.DefaultRequestParser
+import cz.cvut.fit.application.mapper.RequestParser
 import data.repository.CreatorRepositoryImpl
 import data.repository.MessageRepositoryImpl
 import data.repository.PortfolioRepositoryImpl
@@ -24,6 +28,10 @@ val repositoryModule = module {
     single<MessageRepository> { MessageRepositoryImpl(get()) }
 }
 
+val utilsModule = module {
+    single<RequestParser> { DefaultRequestParser() }
+}
+
 val appModule = module {
-    includes(dataSourceModule, repositoryModule)
+    includes(dataSourceModule, repositoryModule, utilsModule)
 }

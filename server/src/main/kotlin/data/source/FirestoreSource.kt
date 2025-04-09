@@ -14,18 +14,93 @@ import java.io.File
 import java.io.FileInputStream
 
 interface FirestoreSource {
-    suspend fun <T> getDocument(collection: String, documentId: String, clazz: Class<T>): T?
-    suspend fun <T> getDocuments(collection: String, clazz: Class<T>): List<T>
-    suspend fun <T> getDocumentsWhere(collection: String, field: String, value: Any, clazz: Class<T>): List<T>
-    suspend fun <T> getDocumentsWhereArrayContains(collection: String, field: String, value: Any, clazz: Class<T>): List<T>
-    suspend fun <T> getDocumentsWhereIn(collection: String, field: FieldPath, values: List<Any>, clazz: Class<T>): List<T>
-    suspend fun checkDocumentExists(collection: String, documentId: String): Boolean
-    suspend fun setDocument(collection: String, documentId: String, data: Map<String, Any>): Boolean
-    suspend fun createDocument(collection: String, data: Map<String, Any>): String
-    suspend fun updateDocument(collection: String, documentId: String, updates: Map<String, Any>): Boolean
-    suspend fun deleteDocument(collection: String, documentId: String): Boolean
-    suspend fun <T> queryDocumentsByPrefix(collection: String, field: String, prefix: String, clazz: Class<T>): List<T>
-    suspend fun <T> getDocumentsOrdered(collection: String, field: String, direction: Query.Direction, clazz: Class<T>): List<T>
+    suspend fun <T> getDocument(
+        collection: String,
+        documentId: String,
+        clazz: Class<T>
+    ): T?
+
+    suspend fun <T> getDocuments(
+        collection: String,
+        clazz: Class<T>
+    ): List<T>
+
+    suspend fun <T> getDocumentsWhere(
+        collection: String,
+        field: String,
+        value: Any,
+        clazz: Class<T>
+    ): List<T>
+
+    suspend fun <T> getDocumentsWhereOrdered(
+        collection: String,
+        field: String,
+        value: Any,
+        orderField: String,
+        direction: Query.Direction,
+        clazz: Class<T>
+    ): List<T>
+
+    suspend fun <T> getDocumentsWhereArrayContains(
+        collection: String,
+        field: String,
+        value: Any,
+        clazz: Class<T>
+    ): List<T>
+
+    suspend fun <T> getDocumentsWhereIn(
+        collection: String,
+        field: FieldPath,
+        values: List<Any>,
+        clazz: Class<T>
+    ): List<T>
+
+    suspend fun <T> getDocumentsByIds(
+        collection: String,
+        ids: List<String>,
+        clazz: Class<T>
+    ): List<T>
+
+    suspend fun checkDocumentExists(
+        collection: String,
+        documentId: String
+    ): Boolean
+
+    suspend fun setDocument(
+        collection: String,
+        documentId: String,
+        data: Map<String, Any>
+    ): Boolean
+
+    suspend fun createDocument(
+        collection: String,
+        data: Map<String, Any>
+    ): String
+
+    suspend fun updateDocument(
+        collection: String,
+        documentId: String,
+        updates: Map<String, Any>
+    ): Boolean
+
+    suspend fun deleteDocument(
+        collection: String,
+        documentId: String
+    ): Boolean
+
+    suspend fun <T> queryDocumentsByPrefix(
+        collection: String,
+        field: String,
+        prefix: String,
+        clazz: Class<T>
+    ): List<T>
+
+    suspend fun <T> getDocumentsOrdered(
+        collection: String,
+        field: String,
+        direction: Query.Direction,
+        clazz: Class<T>
+    ): List<T>
 }
 
 class FirebaseFirestoreSource : FirestoreSource {
@@ -83,6 +158,19 @@ class FirebaseFirestoreSource : FirestoreSource {
             .toObjects(clazz)
     }
 
+    override suspend fun <T> getDocumentsWhereOrdered(collection: String, field: String, value: Any, orderField: String, direction: Query.Direction, clazz: Class<T>
+    ): List<T> {
+        return db.collection(collection)
+            .whereEqualTo(field, value)
+            .orderBy(orderField, direction)
+            .get()
+            .await()
+            .documents
+            .mapNotNull { document ->
+                document.toObject(clazz)
+            }
+    }
+
     override suspend fun <T> getDocumentsWhereArrayContains(collection: String, field: String, value: Any, clazz: Class<T>): List<T> {
         return db.collection(collection)
             .whereArrayContains(field, value)
@@ -97,6 +185,21 @@ class FirebaseFirestoreSource : FirestoreSource {
             .get()
             .await()
             .toObjects(clazz)
+    }
+
+    override suspend fun <T> getDocumentsByIds(collection: String, ids: List<String>, clazz: Class<T>): List<T> {
+        if (ids.isEmpty()) {
+            return emptyList()
+        }
+
+        return db.collection(collection)
+            .whereIn(FieldPath.documentId(), ids)
+            .get()
+            .await()
+            .documents
+            .mapNotNull { document ->
+                document.toObject(clazz)
+            }
     }
 
     override suspend fun checkDocumentExists(collection: String, documentId: String): Boolean {

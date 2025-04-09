@@ -109,14 +109,13 @@ class MessageRepositoryImpl(
     }
 
     override suspend fun getChatMessages(chatId: String, userId: String): List<Message> {
-        // Need to use FirestoreClient directly for orderBy
-        val db = FirestoreClient.getFirestore()
-        return db.collection("message")
-            .whereEqualTo("chatId", chatId)
-            .orderBy("timestamp", Query.Direction.ASCENDING)
-            .get()
-            .await()
-            .documents
-            .mapNotNull { it.toObject(Message::class.java) }
+        return firestoreSource.getDocumentsWhereOrdered(
+            collection = "message",
+            field = "chatId",
+            value = chatId,
+            orderField = "timestamp",
+            direction = Query.Direction.ASCENDING,
+            clazz = Message::class.java
+        )
     }
 }

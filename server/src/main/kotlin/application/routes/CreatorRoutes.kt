@@ -22,6 +22,7 @@ fun Application.creatorRoutes() {
                 try {
                     val creatorData = call.receive<Creator>()
                     val creatorId = creatorRepository.createCreator(creatorData)
+
                     call.respond(HttpStatusCode.OK, mapOf("creatorId" to creatorId))
                 } catch (e: Exception) {
                     call.respond(HttpStatusCode.BadRequest, "Error processing request: ${e.localizedMessage}")
@@ -32,6 +33,7 @@ fun Application.creatorRoutes() {
                 try {
                     val id = call.parameters["creatorId"] as String
                     val creator = creatorRepository.getCreatorById(id)
+
                     call.respond(HttpStatusCode.OK, creator)
                 } catch (e: Exception) {
                     call.respond(HttpStatusCode.BadRequest, "Error processing request: ${e.localizedMessage}")
@@ -42,6 +44,7 @@ fun Application.creatorRoutes() {
                 try {
                     val id = call.parameters["creatorId"] as String
                     val user = creatorRepository.getUserByCreatorId(id)
+
                     call.respond(HttpStatusCode.OK, user)
                 } catch (e: Exception) {
                     call.respond(HttpStatusCode.BadRequest, "Error processing request: ${e.localizedMessage}")
@@ -52,6 +55,7 @@ fun Application.creatorRoutes() {
                 try {
                     val creatorId = call.parameters["creatorId"] as String
                     val portfolios = portfolioRepository.getPortfoliosByCreatorId(creatorId)
+
                     call.respond(HttpStatusCode.OK, portfolios)
                 } catch (e: Exception) {
                     call.respond(HttpStatusCode.BadRequest, "Error retrieving portfolios: ${e.localizedMessage}")

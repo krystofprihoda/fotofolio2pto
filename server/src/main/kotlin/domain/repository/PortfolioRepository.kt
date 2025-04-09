@@ -1,14 +1,12 @@
 package domain.repository
 
+import cz.cvut.fit.application.dto.portfolio.CreatePortfolioDTO
+import cz.cvut.fit.application.dto.portfolio.UpdatePortfolioDTO
 import domain.model.Portfolio
 
 interface PortfolioRepository {
     suspend fun createPortfolio(
-        creatorId: String,
-        name: String,
-        description: String,
-        category: List<String>,
-        photos: List<Pair<String, ByteArray>>
+        createPortfolioDTO: CreatePortfolioDTO
     ): String
     suspend fun getPortfolioById(portfolioId: String): Portfolio
     suspend fun getPortfoliosByCreatorId(creatorId: String): List<Portfolio>
@@ -18,11 +16,7 @@ interface PortfolioRepository {
         sortBy: String? = null
     ): List<Portfolio>
     suspend fun updatePortfolio(
-        portfolioId: String,
-        name: String,
-        description: String,
-        category: List<String>,
-        photoURLs: List<String>
+        updatePortfolioDTO: UpdatePortfolioDTO
     ): Portfolio
     suspend fun deletePortfolio(portfolioId: String): Boolean
 }

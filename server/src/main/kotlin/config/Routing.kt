@@ -1,4 +1,4 @@
-package cz.cvut.fit
+package cz.cvut.fit.config
 
 import application.routes.creatorRoutes
 import application.routes.messageRoutes

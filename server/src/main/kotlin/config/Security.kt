@@ -1,4 +1,4 @@
-package cz.cvut.fit
+package cz.cvut.fit.config
 
 import com.kborowy.authprovider.firebase.firebase
 import io.ktor.server.application.*

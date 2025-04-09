@@ -1,6 +1,4 @@
-package cz.cvut.fit
-
-import appModule
+package config
 
 import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.application.*
@@ -10,8 +8,9 @@ import org.koin.logger.slf4jLogger
 
 fun Application.configureFrameworks() {
     install(Koin) {
-        println("[SETUP] Initializing Koin Modules")
         slf4jLogger()
+
+        println("[SETUP] Initializing Koin Modules")
         modules(appModule)
     }
 

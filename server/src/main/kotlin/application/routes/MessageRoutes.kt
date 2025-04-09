@@ -19,10 +19,12 @@ fun Application.messageRoutes() {
                 try {
                     val principalId = call.principal<UserIdPrincipal>()?.name ?: throw Exception("Unauthorized")
                     val requestBody = call.receive<Map<String, String>>()
+
                     val messageBody = requestBody["message"] ?: throw Exception("Message is required")
                     val receiverId = requestBody["receiverId"] ?: throw Exception("Receiver ID is required")
 
                     val chat = messageRepository.createChat(principalId, receiverId, messageBody)
+
                     call.respond(HttpStatusCode.Created, chat)
                 } catch (e: Exception) {
                     call.respond(HttpStatusCode.BadRequest, "Error: ${e.localizedMessage}")
@@ -33,11 +35,13 @@ fun Application.messageRoutes() {
             post("/chat/{chatId}/message") {
                 try {
                     val principalId = call.principal<UserIdPrincipal>()?.name ?: throw Exception("Unauthorized")
+
                     val chatId = call.parameters["chatId"] ?: throw Exception("Missing chat ID")
                     val requestBody = call.receive<Map<String, String>>()
                     val messageBody = requestBody["message"] ?: throw Exception("Message is required")
 
                     val updatedChat = messageRepository.sendMessage(chatId, principalId, messageBody)
+
                     call.respond(HttpStatusCode.Created, updatedChat)
                 } catch (e: Exception) {
                     call.respond(HttpStatusCode.BadRequest, "Error: ${e.localizedMessage}")
@@ -51,6 +55,7 @@ fun Application.messageRoutes() {
                     val receiverId = call.request.queryParameters["receiverId"]
 
                     val result = messageRepository.getChat(principalId, receiverId)
+
                     call.respond(HttpStatusCode.OK, result)
                 } catch (e: Exception) {
                     call.respond(HttpStatusCode.BadRequest, "Error processing request: ${e.localizedMessage}")
@@ -64,6 +69,7 @@ fun Application.messageRoutes() {
                     val chatId = call.parameters["chatId"] ?: throw Exception("Missing chat ID")
 
                     val chat = messageRepository.getChatById(chatId, principalId)
+
                     call.respond(HttpStatusCode.OK, chat)
                 } catch (e: Exception) {
                     call.respond(HttpStatusCode.BadRequest, "Error processing request: ${e.localizedMessage}")
@@ -77,6 +83,7 @@ fun Application.messageRoutes() {
                     val chatId = call.parameters["chatId"] ?: throw Exception("Missing chat ID")
 
                     val messages = messageRepository.getChatMessages(chatId, principalId)
+
                     call.respond(HttpStatusCode.OK, messages)
                 } catch (e: Exception) {
                     call.respond(HttpStatusCode.BadRequest, "Error: ${e.localizedMessage}")
