@@ -1,12 +1,20 @@
 package cz.cvut.fit
 
+import com.kborowy.authprovider.firebase.firebase
 import io.ktor.server.application.*
-import io.ktor.server.plugins.swagger.*
-import io.ktor.server.response.*
-import io.ktor.server.routing.*
-import org.koin.dsl.module
-import org.koin.ktor.plugin.Koin
-import org.koin.logger.slf4jLogger
+import io.ktor.server.auth.*
+import java.io.File
 
 fun Application.configureSecurity() {
+    install(Authentication) {
+        firebase {
+            println("[SETUP] Initializing Firebase in Frameworks")
+            adminFile = File("fotofolio-3-firebase-key.json")
+            realm = "fotofolio"
+
+            validate { credential ->
+                UserIdPrincipal(credential.uid)
+            }
+        }
+    }
 }

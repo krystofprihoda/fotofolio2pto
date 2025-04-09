@@ -1,5 +1,6 @@
 package data.source
 
+import com.google.firebase.cloud.FirestoreClient
 import java.util.*
 import java.net.URLEncoder
 import com.google.firebase.cloud.StorageClient
@@ -10,7 +11,13 @@ interface StorageSource {
 }
 
 class FirebaseStorageSource : StorageSource {
-    private val bucket = StorageClient.getInstance().bucket("fotofolio-3.firebasestorage.app")
+    private val bucket by lazy {
+        try {
+            StorageClient.getInstance().bucket("fotofolio-3.firebasestorage.app")
+        } catch (e: Exception) {
+            throw IllegalStateException("Firebase has not been properly initialized. Make sure Firebase Auth is set up before using this. Error: ${e.message}", e)
+        }
+    }
 
     override suspend fun uploadFile(path: String, data: ByteArray, contentType: String): String {
         val blob = bucket.create(path, data, contentType)

@@ -11,6 +11,8 @@ fun main(args: Array<String>) {
 }
 
 fun Application.module() {
+    FirebaseInitializer.initialize()
+
     configureFrameworks()
     configureHTTP()
     configureSecurity()

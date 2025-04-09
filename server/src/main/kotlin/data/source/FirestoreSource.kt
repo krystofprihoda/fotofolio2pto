@@ -1,10 +1,17 @@
 package data.source
 
+import com.google.auth.oauth2.GoogleCredentials
 import com.google.cloud.firestore.Firestore
 import com.google.cloud.firestore.FieldPath
+import com.google.cloud.firestore.FirestoreOptions
 import com.google.cloud.firestore.Query
+import com.google.firebase.FirebaseApp
+import com.google.firebase.FirebaseOptions
 import com.google.firebase.cloud.FirestoreClient
 import com.kborowy.authprovider.firebase.await
+import cz.cvut.fit.FirebaseInitializer
+import java.io.File
+import java.io.FileInputStream
 
 interface FirestoreSource {
     suspend fun <T> getDocument(collection: String, documentId: String, clazz: Class<T>): T?
@@ -22,7 +29,36 @@ interface FirestoreSource {
 }
 
 class FirebaseFirestoreSource : FirestoreSource {
-    private val db: Firestore = FirestoreClient.getFirestore()
+    private val db: Firestore by lazy {
+        if (!FirebaseInitializer.isInitialized()) {
+            // For unauthenticated endpoints, we need to create a direct Firestore connection
+            println("[FIRESTORE] Firebase not initialized, creating direct Firestore connection")
+
+            // Create a direct connection to Firestore for unauthenticated endpoints only
+            val serviceAccountFile = File("fotofolio-3-firebase-key.json")
+            val options = FirebaseOptions.builder()
+                .setCredentials(GoogleCredentials.fromStream(FileInputStream(serviceAccountFile)))
+                .setProjectId("fotofolio-3")
+                .build()
+
+            // Use a different app name to avoid conflicts
+            val app = try {
+                FirebaseApp.getInstance("UNAUTHENTICATED")
+            } catch (e: Exception) {
+                FirebaseApp.initializeApp(options, "UNAUTHENTICATED")
+            }
+
+            FirestoreOptions.getDefaultInstance()
+                .toBuilder()
+                .setProjectId(app.options.projectId)
+                .build()
+                .service
+        } else {
+            // For authenticated endpoints, use the standard FirestoreClient
+            println("[FIRESTORE] Firebase initialized, using FirestoreClient")
+            FirestoreClient.getFirestore()
+        }
+    }
 
     override suspend fun <T> getDocument(collection: String, documentId: String, clazz: Class<T>): T? {
         return db.collection(collection)
