@@ -33,15 +33,12 @@ fun Application.portfolioRoutes() {
                 try {
                     val categoryParams = call.request.queryParameters["category"]
                     val sortByParam = call.request.queryParameters["sortBy"] // "timestamp" or "rating"
-                    val portfolioIdsParam = call.request.queryParameters["id"]
 
                     // Parse portfolio IDs from comma-separated string
-                    val portfolioIds = requestParser.parseCommaSeparatedList(portfolioIdsParam)
                     val categories = requestParser.parseCommaSeparatedList(categoryParams)
 
                     val portfolios = portfolioRepository.searchPortfolios(
                         categories = categories,
-                        portfolioIds = portfolioIds,
                         sortBy = sortByParam
                     )
 

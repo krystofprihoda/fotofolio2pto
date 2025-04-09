@@ -186,7 +186,7 @@ final class EditPortfolioViewModel: BaseViewModel, ViewModel, ObservableObject {
                 category: state.selectedCategories
             )
             
-            await flowController?.updateProfileFlowDelegate?.fetchProfileData()
+            await flowController?.updateProfileFlowDelegate?.fetchProfileData(refresh: true)
             dismissView()
         } catch {
             

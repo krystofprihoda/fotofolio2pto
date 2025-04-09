@@ -206,7 +206,7 @@ final class EditProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
             }
         }
         
-        await flowController?.updateProfileFlowDelegate?.fetchProfileData()
+        await flowController?.updateProfileFlowDelegate?.fetchProfileData(refresh: true)
         dismissView()
     }
     

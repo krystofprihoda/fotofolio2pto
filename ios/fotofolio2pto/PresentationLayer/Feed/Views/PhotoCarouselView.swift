@@ -37,9 +37,7 @@ struct PhotoCarouselView: View {
                                     .fill(.gray).brightness(Double.random(in: 0.15...0.4))
                                     .aspectRatio(1.0, contentMode: .fill)
                                     .frame(width: mediaWidth)
-
-                                ProgressView()
-                                    .progressViewStyle(CircularProgressViewStyle())
+                                    .skeleton(true)
                             }
                         }
                     }

@@ -100,9 +100,7 @@ struct EditPortfoliosView: View {
                                                         width: Constants.Dimens.frameSizeMediumLarge,
                                                         height: Constants.Dimens.frameSizeMediumLarge
                                                     )
-                                                
-                                                ProgressView()
-                                                    .progressViewStyle(.circular)
+                                                    .skeleton(true)
                                             }
                                         }
                                     } else if case MyImageEnum.local(let image) = img.src {

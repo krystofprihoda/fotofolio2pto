@@ -97,15 +97,8 @@ class PortfolioRepositoryImpl(
 
     override suspend fun searchPortfolios(
         categories: List<String>?,
-        portfolioIds: List<String>?,
         sortBy: String?
     ): List<Portfolio> {
-        // If portfolio IDs are provided, fetch by ID
-        if (!portfolioIds.isNullOrEmpty()) {
-            return firestoreSource.getDocumentsByIds("portfolio", portfolioIds, Portfolio::class.java)
-        }
-
-        // Otherwise, search by categories with optional sorting
         return firestoreSource.searchPortfoliosByCategories(categories, sortBy)
     }
 

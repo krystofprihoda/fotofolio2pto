@@ -31,7 +31,7 @@ struct ProfilePictureView: View {
                         .clipped()
                         .cornerRadius(Constants.Dimens.radiusMax)
                 } placeholder: {
-                    progressView
+                    placeholderView
                 }
             } else if case MyImageEnum.local(let image) = pic.src {
                 Image(uiImage: image)
@@ -52,16 +52,7 @@ struct ProfilePictureView: View {
             .brightness(Constants.Dimens.opacityLow)
             .aspectRatio(1.0, contentMode: .fit)
             .frame(width: width)
-    }
-    
-    private var progressView: some View {
-        ZStack {
-            placeholderView
-
-            ProgressView()
-                .progressViewStyle(CircularProgressViewStyle())
-        }
-        .frame(width: width)
+            .skeleton(true)
     }
 }
 

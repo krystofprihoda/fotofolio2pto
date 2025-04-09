@@ -10,7 +10,7 @@ import SwiftUI
 import Resolver
 
 public protocol UpdateProfileFlowDelegate: AnyObject {
-    func fetchProfileData() async
+    func fetchProfileData(refresh: Bool) async
 }
 
 final class ProfileViewModel: BaseViewModel, ViewModel, ObservableObject, UpdateProfileFlowDelegate {
@@ -55,6 +55,7 @@ final class ProfileViewModel: BaseViewModel, ViewModel, ObservableObject, Update
     
     struct State {
         var isLoading = false
+        var isRefreshing = false
         var signedInUserId = ""
         var displayedUserId = ""
         var isProfileOwner: Bool { signedInUserId == displayedUserId }
@@ -69,7 +70,7 @@ final class ProfileViewModel: BaseViewModel, ViewModel, ObservableObject, Update
     // MARK: Intent
     
     enum Intent {
-        case fetchProfileData
+        case fetchProfileData(isRefreshing: Bool)
         case sendMessage
         case showProfileSettings
         case createNewPortfolio
@@ -81,7 +82,7 @@ final class ProfileViewModel: BaseViewModel, ViewModel, ObservableObject, Update
     func onIntent(_ intent: Intent) -> Task<Void, Never> {
         executeTask(Task {
             switch intent {
-            case .fetchProfileData: await fetchProfileData()
+            case .fetchProfileData(let isRefreshing): await fetchProfileData(refresh: isRefreshing)
             case .sendMessage: sendMessage()
             case .showProfileSettings: showProfileSettings()
             case .createNewPortfolio: createNewPortfolio()
@@ -93,9 +94,20 @@ final class ProfileViewModel: BaseViewModel, ViewModel, ObservableObject, Update
     
     // MARK: Additional methods
     
-    func fetchProfileData() async {
-        state.isLoading = true
-        defer { state.isLoading = false }
+    func fetchProfileData(refresh: Bool = false) async {
+        if refresh {
+            state.isRefreshing = true
+        } else {
+            state.isLoading = true
+        }
+        
+        defer {
+            if refresh {
+                state.isRefreshing = false
+            } else {
+                state.isLoading = false
+            }
+        }
         
         do {
             state.userData = try await readUserByIdUseCase.execute(id: state.displayedUserId)

@@ -73,8 +73,13 @@ struct FeedView: View {
     
     private var sortButton: some View {
         Menu(L.Feed.sort) {
-            Button(L.Feed.sortByDate, action: { viewModel.onIntent(.sortByDate) })
-            Button(L.Feed.soryByRating, action: { viewModel.onIntent(.sortByRating) })
+            Button(action: { viewModel.onIntent(.sortByDate) }) {
+                Label(L.Feed.sortByDate, systemImage: viewModel.state.sortBy == .date ? "checkmark" : "")
+            }
+            
+            Button(action: { viewModel.onIntent(.sortByRating) }) {
+                Label(L.Feed.sortByRating, systemImage: viewModel.state.sortBy == .rating ? "checkmark" : "")
+            }
         }
     }
     

@@ -12,7 +12,6 @@ interface PortfolioRepository {
     suspend fun getPortfoliosByCreatorId(creatorId: String): List<Portfolio>
     suspend fun searchPortfolios(
         categories: List<String>? = null,
-        portfolioIds: List<String>? = null,
         sortBy: String? = null
     ): List<Portfolio>
     suspend fun updatePortfolio(

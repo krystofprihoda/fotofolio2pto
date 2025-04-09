@@ -162,9 +162,7 @@ struct EditPortfolioView: View {
                                             .brightness(Double.random(in: 0.15...0.4))
                                             .aspectRatio(1.0, contentMode: .fit)
                                             .frame(width: Constants.Dimens.frameSizeXXLarge, height: Constants.Dimens.frameSizeXXLarge)
-
-                                        ProgressView()
-                                            .progressViewStyle(CircularProgressViewStyle())
+                                            .skeleton(true)
                                     }
                                 }
                             }

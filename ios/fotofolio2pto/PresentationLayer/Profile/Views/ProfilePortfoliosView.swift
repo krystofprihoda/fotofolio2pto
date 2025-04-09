@@ -57,9 +57,7 @@ struct ProfilePortfoliosView: View {
                                                     .brightness(Double.random(in: Constants.Dimens.opacityLowLow...Constants.Dimens.opacityLow))
                                                     .aspectRatio(1.0, contentMode: .fit)
                                                     .frame(width: Constants.Dimens.frameSizeXLarge)
-
-                                                ProgressView()
-                                                    .progressViewStyle(CircularProgressViewStyle())
+                                                    .skeleton(true)
                                             }
                                         }
                                     }

@@ -38,8 +38,9 @@ struct ProfileView: View {
                         }
                     }
                 }
+                .skeleton(viewModel.state.isRefreshing)
             }
-            .refreshable { viewModel.onIntent(.fetchProfileData) }
+            .refreshable { viewModel.onIntent(.fetchProfileData(isRefreshing: true)) }
         }
         .navigationBarItems(leading: backButton, trailing: trailingButtons)
         .setupNavBarAndTitle(viewModel.state.userData?.username ?? "", hideBack: true)

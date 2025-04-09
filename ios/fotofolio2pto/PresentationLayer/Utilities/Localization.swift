@@ -44,7 +44,7 @@ public struct L {
         public static let noFilterResults = "Filtrování neodpovídá žádný výsledek."
         public static let sort = "Seřadit"
         public static let sortByDate = "Podle data"
-        public static let soryByRating = "Podle hodnocení"
+        public static let sortByRating = "Podle hodnocení"
         public static let filter = "Filtrovat"
         public static let filterPortfolios = "Filtrovat portfolia"
         public static let weddingExample = "např. svatba"
