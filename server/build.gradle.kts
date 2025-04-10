@@ -1,3 +1,6 @@
+val ktorVersion = "2.3.0"
+val koinVersion = "3.4.0"
+
 plugins {
     alias(libs.plugins.kotlin.jvm)
     alias(libs.plugins.ktor)
@@ -5,10 +8,10 @@ plugins {
 }
 
 group = "cz.cvut.fit"
-version = "0.0.1"
+version = "1.0.1"
 
 application {
-    mainClass = "io.ktor.server.netty.EngineMain"
+    mainClass.set("cz.cvut.fit.ApplicationKt")
 
     val isDevelopment = true
     applicationDefaultJvmArgs = listOf("-Dio.ktor.development=$isDevelopment")
@@ -17,9 +20,6 @@ application {
 repositories {
     mavenCentral()
 }
-
-val ktorVersion = "2.3.0"
-val koinVersion = "3.4.0"
 
 dependencies {
     implementation("io.ktor:ktor-server-core:$ktorVersion")
@@ -36,5 +36,18 @@ dependencies {
     implementation("io.ktor:ktor-server-content-negotiation:$ktorVersion")
     implementation("com.google.firebase:firebase-admin:9.2.0")
     implementation("com.kborowy:firebase-auth-provider:1.5.0")
+}
 
+tasks {
+    shadowJar {
+        archiveBaseName.set("fotofolio")
+        archiveClassifier.set("")
+        archiveVersion.set("")
+
+        manifest {
+            attributes["Main-Class"] = application.mainClass.get()
+        }
+
+        mergeServiceFiles() // Required for some Ktor modules (e.g. Netty)
+    }
 }

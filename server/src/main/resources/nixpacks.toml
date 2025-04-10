@@ -1,2 +1,5 @@
+[phases.build]
+cmds = ["./gradlew shadowJar"]
+
 [start]
-cmd = 'java $JAVA_OPTS -jar build/libs/*-all.jar'
+cmd = "java $JAVA_OPTS -Xmx256m -Xms128m -jar build/libs/fotofolio.jar"
