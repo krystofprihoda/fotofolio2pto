@@ -59,11 +59,11 @@ struct RegisterIsCreatorView: View {
             
             HStack {
                 Button(action: onBackTap, label: {
-                    Text(L.Onboarding.goBack)
+                    Text(L.General.back)
                         .font(.body)
                         .frame(height: Constants.Dimens.textFieldHeight)
                         .frame(maxWidth: .infinity)
-                        .padding()
+                        .padding(Constants.Dimens.spaceLarge)
                         .foregroundStyle(.white)
                         .background(.mainAccent)
                         .cornerRadius(Constants.Dimens.radiusXSmall)
@@ -74,7 +74,7 @@ struct RegisterIsCreatorView: View {
                         .font(.body)
                         .frame(height: Constants.Dimens.textFieldHeight)
                         .frame(maxWidth: .infinity)
-                        .padding()
+                        .padding(Constants.Dimens.spaceLarge)
                         .foregroundStyle(.white)
                         .background(.mainAccent)
                         .cornerRadius(Constants.Dimens.radiusXSmall)

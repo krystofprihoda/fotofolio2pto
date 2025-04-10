@@ -63,6 +63,7 @@ final class EditProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
         var rawUserData: User? = nil
         var isSaveButtonDisabled = true
         var alertData: AlertData? = nil
+        var toastData: ToastData? = nil
     }
 
     @Published private(set) var state = State()
@@ -75,6 +76,7 @@ final class EditProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
         case setYearsOfExperience(Int)
         case setProfileDescription(String)
         case onAlertDataChanged(AlertData?)
+        case setToastData(ToastData?)
         case saveChanges
         case cancel
     }
@@ -88,6 +90,7 @@ final class EditProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
             case .setYearsOfExperience(let yoe): setYearsOfExperience(yoe)
             case .setProfileDescription(let description): setProfileDescription(description)
             case .onAlertDataChanged(let alertData): setAlertData(alertData)
+            case .setToastData(let toast): setToastData(toast)
             case .saveChanges: await saveChanges()
             case .cancel: cancelEdit()
             }
@@ -107,7 +110,9 @@ final class EditProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
                 
                 state.yearsOfExperience = creatorData.yearsOfExperience
                 state.profileDescription = creatorData.description
-            } catch { }
+            } catch {
+                state.toastData = .init(message: L.Profile.profileLoadFailed, type: .error)
+            }
         })
     }
 
@@ -141,6 +146,10 @@ final class EditProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
         updateSaveButtonVisibility()
     }
     
+    private func setToastData(_ toast: ToastData?) {
+        state.toastData = toast
+    }
+    
     private func updateSaveButtonVisibility() {
         state.isSaveButtonDisabled = false
     }
@@ -155,7 +164,7 @@ final class EditProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
             title: L.Profile.goBack,
             message: nil,
             primaryAction: .init(
-                title: L.Profile.cancel,
+                title: L.General.cancel,
                 style: .cancel,
                 handler: { [weak self] in
                     self?.state.alertData = nil
@@ -180,7 +189,7 @@ final class EditProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
             do {
                 try await updateUserDataUseCase.execute(location: state.updatedLocation)
             } catch {
-                
+                state.toastData = .init(message: L.Profile.profileUpdateFailed, type: .error)
             }
         }
         
@@ -193,7 +202,7 @@ final class EditProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
                         profileDescription: state.profileDescription
                     )
             } catch {
-                
+                state.toastData = .init(message: L.Profile.profileUpdateFailed, type: .error)
             }
         }
         
@@ -202,7 +211,7 @@ final class EditProfileViewModel: BaseViewModel, ViewModel, ObservableObject {
             do {
                 try await saveUserProfilePictureUseCase.execute(image: image)
             } catch {
-                
+                state.toastData = .init(message: L.Profile.profilePicUpdateFailed, type: .error)
             }
         }
         

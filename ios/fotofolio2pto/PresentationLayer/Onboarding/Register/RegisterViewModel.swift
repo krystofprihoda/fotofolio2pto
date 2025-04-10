@@ -67,6 +67,7 @@ final class RegisterViewModel: BaseViewModel, ViewModel, ObservableObject {
     
     struct State: Equatable {
         var stage: RegisterStageEnum = .nameAndEmail
+        var toastData: ToastData? = nil
         var name = ""
         var email = ""
         var emailVerified = false
@@ -109,6 +110,7 @@ final class RegisterViewModel: BaseViewModel, ViewModel, ObservableObject {
         case setYearsOfExperience(to: Int)
         case onCreatorNextTap
         case onCreatorDetailsNextTap
+        case setToastData(ToastData?)
         case tryAgain
         case goBack(to: RegisterStageEnum)
         case dismissRegistration
@@ -133,6 +135,7 @@ final class RegisterViewModel: BaseViewModel, ViewModel, ObservableObject {
             case .setYearsOfExperience(let value): setYearsOfExperience(to: value)
             case .onCreatorNextTap: state.isCreator ? continueToCreatorDetails() : await registerUser(dismissScreen: true)
             case .onCreatorDetailsNextTap: await registerCreator()
+            case .setToastData(let toast): setToastData(toast)
             case .tryAgain: await tryAgain()
             case .goBack(let stage): setStageTo(stage)
             case .dismissRegistration: dismissRegistration()
@@ -156,7 +159,7 @@ final class RegisterViewModel: BaseViewModel, ViewModel, ObservableObject {
                 
                 state.emailError = ""
                 state.emailVerified = true
-            } catch { Logger.app.error("[FAIL] \(#file) • \(#line) • \(#function) | Task failed: \(error)") }
+            } catch { }
         })
     }
     
@@ -173,6 +176,10 @@ final class RegisterViewModel: BaseViewModel, ViewModel, ObservableObject {
         state.name = name
     }
     
+    private func setToastData(_ toast: ToastData?) {
+        state.toastData = toast
+    }
+    
     private func cancelTask() {
         currentTask?.cancel()
         currentTask = nil
@@ -187,7 +194,10 @@ final class RegisterViewModel: BaseViewModel, ViewModel, ObservableObject {
         } catch AuthError.emailAlreadyTaken {
             state.emailError = L.Onboarding.emailAddressTaken
             return
-        } catch { }
+        } catch {
+            state.toastData = .init(message: L.General.somethingWentWrongFull, type: .error)
+            return
+        }
         
         state.emailError = ""
         state.stage = .username
@@ -240,7 +250,7 @@ final class RegisterViewModel: BaseViewModel, ViewModel, ObservableObject {
                 
                 state.usernameError = ""
                 state.usernameVerified = true
-            } catch { Logger.app.error("[FAIL] \(#file) • \(#line) • \(#function) | Task failed: \(error)") }
+            } catch { }
         })
     }
     
@@ -258,7 +268,7 @@ final class RegisterViewModel: BaseViewModel, ViewModel, ObservableObject {
                 state.firstPasswordError = ""
                 
                 if !state.secondPassword.isEmpty { await verifySecondPassword() }
-            } catch { Logger.app.error("[FAIL] \(#file) • \(#line) • \(#function) | Task failed: \(error)") }
+            } catch { }
         })
     }
     
@@ -275,7 +285,7 @@ final class RegisterViewModel: BaseViewModel, ViewModel, ObservableObject {
                 
                 state.secondPasswordError = ""
                 state.passwordsVerified = true
-            } catch { Logger.app.error("[FAIL] \(#file) • \(#line) • \(#function) | Task failed: \(error)") }
+            } catch { }
         })
     }
     
@@ -385,6 +395,9 @@ final class RegisterViewModel: BaseViewModel, ViewModel, ObservableObject {
             
             state.stage = .creatingUser
             state.userCreated = true
+            
+            
+            
             dismissRegistration()
         } catch {
             state.stage = .failed(reason)

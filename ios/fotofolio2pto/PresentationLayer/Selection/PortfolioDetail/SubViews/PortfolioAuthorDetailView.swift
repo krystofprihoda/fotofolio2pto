@@ -71,7 +71,7 @@ struct PortfolioAuthorDetailView: View {
                                 .brightness(Constants.Dimens.opacityLow)
                         } else {
                             HStack(alignment: .center, spacing: Constants.Dimens.spaceXXSmall) {
-                                Text("📍 \(userData.location) • " + String(format: "%.1f", userData.averageRating) + L.Selection.outOf5)
+                                Text("📍 \(userData.location) • " + String(format: "%.1f", userData.averageRating) + L.Profile.outOf5)
                                     .font(.caption)
                                     .foregroundColor(.black)
                                     .brightness(Constants.Dimens.opacityLow)

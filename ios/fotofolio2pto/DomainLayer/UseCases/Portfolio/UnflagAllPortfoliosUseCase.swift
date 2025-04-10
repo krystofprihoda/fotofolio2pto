@@ -8,18 +8,18 @@
 import Foundation
 
 public protocol UnflagAllPortfoliosUseCase {
-    func execute() throws
+    func execute()
 }
 
 public struct UnflagAllPortfoliosUseCaseImpl: UnflagAllPortfoliosUseCase {
     
-    private let feedRepository: FeedRepository
+    private let portfolioRepository: PortfolioRepository
     
-    init(feedRepository: FeedRepository) {
-        self.feedRepository = feedRepository
+    init(portfolioRepository: PortfolioRepository) {
+        self.portfolioRepository = portfolioRepository
     }
     
-    public func execute() throws {
-        try feedRepository.removeAllFlagged()
+    public func execute() {
+        portfolioRepository.removeAllFlagged()
     }
 }

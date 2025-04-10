@@ -34,7 +34,7 @@ struct HorizontalWheelPicker: View {
                                 }
                             })
                             .id(idx)
-                            .padding(.horizontal)
+                            .padding(.horizontal, Constants.Dimens.spaceLarge)
                             .padding(.vertical, Constants.Dimens.spaceMedium)
                             .background(
                                 RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)

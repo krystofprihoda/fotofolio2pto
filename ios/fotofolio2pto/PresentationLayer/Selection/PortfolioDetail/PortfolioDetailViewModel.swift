@@ -52,6 +52,7 @@ final class PortfolioDetailViewModel: BaseViewModel, ViewModel, ObservableObject
 
     struct State {
         var isLoading: Bool = false
+        var toastData: ToastData? = nil
         var portfolio: Portfolio! = nil
         var userData: User? = nil
         var creatorData: Creator? = nil
@@ -65,6 +66,7 @@ final class PortfolioDetailViewModel: BaseViewModel, ViewModel, ObservableObject
         case showProfile
         case sendMessage
         case unflagPortfolio
+        case setToastData(ToastData?)
     }
 
     @discardableResult
@@ -74,12 +76,17 @@ final class PortfolioDetailViewModel: BaseViewModel, ViewModel, ObservableObject
             case .showProfile: await portfolioSelectionFlowDelegate?.showProfile(creatorId: state.portfolio.creatorId)
             case .sendMessage: await portfolioSelectionFlowDelegate?.sendMessage(toCreatorWithId: state.portfolio.creatorId)
             case .unflagPortfolio: portfolioSelectionFlowDelegate?.unflagPortfolio(state.portfolio.id)
+            case .setToastData(let toast): setToastData(toast)
             }
         })
     }
 
     // MARK: Additional methods
 
+    private func setToastData(_ toast: ToastData?) {
+        state.toastData = toast
+    }
+    
     private func fetchAuthorData() async {
         state.isLoading = true
         defer { state.isLoading = false }
@@ -87,8 +94,6 @@ final class PortfolioDetailViewModel: BaseViewModel, ViewModel, ObservableObject
         do {
             state.userData = try await readUserDataByCreatorIdUseCase.execute(creatorId: state.portfolio.creatorId)
             state.creatorData = try await readCreatorDataUseCase.execute(id: state.portfolio.creatorId)
-        } catch {
-            
-        }
+        } catch { }
     }
 }

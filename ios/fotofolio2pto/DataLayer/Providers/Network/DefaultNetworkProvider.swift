@@ -55,6 +55,8 @@ final class DefaultNetworkProvider: NetworkProvider {
             throw NetworkError.unauthorized
         case 404:
             throw NetworkError.notFound
+        case 409:
+            throw NetworkError.alreadyTaken
         case 500...599:
             throw NetworkError.serverError(statusCode: httpResponse.statusCode)
         default:

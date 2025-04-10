@@ -35,7 +35,7 @@ struct RegisterPasswordView: View {
             }
             .font(.body)
             .frame(height: Constants.Dimens.textFieldHeight)
-            .padding()
+            .padding(Constants.Dimens.spaceLarge)
             .background(.textFieldBackground)
             .cornerRadius(Constants.Dimens.radiusXSmall)
             .onChange(of: firstPassword.wrappedValue) { _ in
@@ -66,7 +66,7 @@ struct RegisterPasswordView: View {
             }
             .font(.body)
             .frame(height: Constants.Dimens.textFieldHeight)
-            .padding()
+            .padding(Constants.Dimens.spaceLarge)
             .background(.textFieldBackground)
             .cornerRadius(Constants.Dimens.radiusXSmall)
             .onChange(of: secondPassword.wrappedValue) { _ in
@@ -86,11 +86,11 @@ struct RegisterPasswordView: View {
             
             HStack {
                 Button(action: onBackTap, label: {
-                    Text(L.Onboarding.goBack)
+                    Text(L.General.back)
                         .font(.body)
                         .frame(height: Constants.Dimens.textFieldHeight)
                         .frame(maxWidth: .infinity)
-                        .padding()
+                        .padding(Constants.Dimens.spaceLarge)
                         .foregroundStyle(.white)
                         .background(.mainAccent)
                         .cornerRadius(Constants.Dimens.radiusXSmall)
@@ -101,7 +101,7 @@ struct RegisterPasswordView: View {
                         .font(.body)
                         .frame(height: Constants.Dimens.textFieldHeight)
                         .frame(maxWidth: .infinity)
-                        .padding()
+                        .padding(Constants.Dimens.spaceLarge)
                         .foregroundStyle(.white)
                         .background(.mainAccent)
                         .cornerRadius(Constants.Dimens.radiusXSmall)

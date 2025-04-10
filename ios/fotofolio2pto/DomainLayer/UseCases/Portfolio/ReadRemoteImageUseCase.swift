@@ -14,13 +14,13 @@ public protocol ReadRemoteImageUseCase {
 
 public class ReadRemoteImageUseCaseImpl: ReadRemoteImageUseCase {
     
-    private let feedRepository: FeedRepository
+    private let portfolioRepository: PortfolioRepository
     
-    public init(feedRepository: FeedRepository) {
-        self.feedRepository = feedRepository
+    public init(portfolioRepository: PortfolioRepository) {
+        self.portfolioRepository = portfolioRepository
     }
     
     public func execute(url: String) async throws -> UIImage {
-        return try await feedRepository.readImageFromURL(url: url)
+        return try await portfolioRepository.readImageFromURL(url: url)
     }
 }

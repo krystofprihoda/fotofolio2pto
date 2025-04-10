@@ -54,7 +54,7 @@ struct ChatView: View {
                 TextField(L.Onboarding.username, text: Binding(get: { viewModel.state.textInput }, set: { viewModel.onIntent(.setTextInput($0)) }))
                     .font(.body)
                     .frame(height: Constants.Dimens.textFieldHeight)
-                    .padding()
+                    .padding(Constants.Dimens.spaceLarge)
                     .background(.textFieldBackground)
                     .cornerRadius(Constants.Dimens.radiusXSmall)
                     .autocapitalization(.none)
@@ -77,7 +77,8 @@ struct ChatView: View {
                 }
             }
         }
-        .padding()
+        .padding(Constants.Dimens.spaceLarge)
+        .toast(toastData: Binding(get: { viewModel.state.toastData }, set: { viewModel.onIntent(.setToastData($0)) }))
         .navigationBarItems(leading: backButton)
         .setupNavBarAndTitle(viewModel.state.receiverData?.username ?? "", hideBack: true)
         .lifecycle(viewModel)
@@ -85,7 +86,7 @@ struct ChatView: View {
     
     private var backButton: some View {
         Button(action: { viewModel.onIntent(.goBack) }) {
-            Text(L.Profile.back)
+            Text(L.General.back)
                 .foregroundColor(.black)
         }
     }

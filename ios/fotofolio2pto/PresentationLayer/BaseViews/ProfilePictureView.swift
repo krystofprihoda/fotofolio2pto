@@ -32,6 +32,7 @@ struct ProfilePictureView: View {
                         .cornerRadius(Constants.Dimens.radiusMax)
                 } placeholder: {
                     placeholderView
+                        .skeleton(true)
                 }
             } else if case MyImageEnum.local(let image) = pic.src {
                 Image(uiImage: image)
@@ -52,7 +53,6 @@ struct ProfilePictureView: View {
             .brightness(Constants.Dimens.opacityLow)
             .aspectRatio(1.0, contentMode: .fit)
             .frame(width: width)
-            .skeleton(true)
     }
 }
 

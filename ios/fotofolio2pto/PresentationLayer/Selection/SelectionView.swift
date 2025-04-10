@@ -40,7 +40,7 @@ struct SelectionView: View {
                             .foregroundColor(.gray)
                     }
                 }
-                .padding(.top)
+                .padding(.top, Constants.Dimens.spaceLarge)
             }
         }
         .toast(toastData: Binding(get: { viewModel.state.toastData }, set: { viewModel.onIntent(.setToastData($0)) }))

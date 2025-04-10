@@ -79,9 +79,7 @@ final class FilterViewModel: BaseViewModel, ViewModel, ObservableObject {
             do {
                 try await Task.sleep(nanoseconds: 500_000_000)
                 await flowController?.filterFeedDelegate?.filterFeedPortfolios(state.selectedCategories)
-            } catch {
-                Logger.app.error("[FAIL] \(#file) • \(#line) • \(#function) | Task failed: \(error)")
-            }
+            } catch { }
         })
     }
     
@@ -92,9 +90,7 @@ final class FilterViewModel: BaseViewModel, ViewModel, ObservableObject {
                 try await Task.sleep(nanoseconds: 500_000_000)
                 state.selectedCategories.removeAll(where: { $0 == category })
                 await flowController?.filterFeedDelegate?.removeFilterCategory(category)
-            } catch {
-                Logger.app.error("[FAIL] \(#file) • \(#line) • \(#function) | Task failed: \(error)")
-            }
+            } catch { }
         })
     }
     

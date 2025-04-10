@@ -54,6 +54,7 @@ final class AllChatsViewViewModel: BaseViewModel, ViewModel, ObservableObject {
     
     struct State: Equatable {
         var isLoading: Bool = false
+        var toastData: ToastData? = nil
         var senderId = ""
         var chats: [Chat] = []
         var receivers: [String: String] = [:]
@@ -67,6 +68,7 @@ final class AllChatsViewViewModel: BaseViewModel, ViewModel, ObservableObject {
         case showChat(Chat)
         case showNewChat
         case refreshChats
+        case setToastData(ToastData?)
     }
     
     @discardableResult
@@ -76,11 +78,16 @@ final class AllChatsViewViewModel: BaseViewModel, ViewModel, ObservableObject {
             case .showChat(let chat): showChat(chat)
             case .showNewChat: showNewChat()
             case .refreshChats: await updateChats()
+            case .setToastData(let toast): setToastData(toast)
             }
         })
     }
     
     // MARK: Additional methods
+    
+    private func setToastData(_ toast: ToastData?) {
+        state.toastData = toast
+    }
     
     private func startFetchingChats() {
         chatUpdateTimer?.invalidate() // Prevent multiple timers
@@ -105,7 +112,9 @@ final class AllChatsViewViewModel: BaseViewModel, ViewModel, ObservableObject {
                 let receiverData = try await readUserByIdUseCase.execute(id: receiverId)
                 state.receivers[receiverId] = receiverData.username
             }
-        } catch { }
+        } catch {
+            state.toastData = .init(message: L.Messages.loadFailed, type: .error)
+        }
     }
     
     private func showChat(_ chat: Chat) {

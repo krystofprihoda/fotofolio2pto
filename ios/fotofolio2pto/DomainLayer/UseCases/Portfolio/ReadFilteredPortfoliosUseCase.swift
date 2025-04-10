@@ -13,13 +13,13 @@ public protocol ReadFilteredPortfoliosUseCase {
 
 public struct ReadFilteredPortfoliosUseCaseImpl: ReadFilteredPortfoliosUseCase {
     
-    private let feedRepository: FeedRepository
+    private let portfolioRepository: PortfolioRepository
     
-    init(feedRepository: FeedRepository) {
-        self.feedRepository = feedRepository
+    init(portfolioRepository: PortfolioRepository) {
+        self.portfolioRepository = portfolioRepository
     }
     
     public func execute(filter: [String]) async throws -> [Portfolio] {
-        try await feedRepository.readAll(categories: filter, sortBy: nil)
+        try await portfolioRepository.readAll(categories: filter, sortBy: nil)
     }
 }

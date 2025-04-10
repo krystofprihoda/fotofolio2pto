@@ -45,7 +45,7 @@ struct SettingsView: View {
     }
     
     var backButton: some View {
-        Button(L.Profile.back) {
+        Button(L.General.back) {
             viewModel.onIntent(.goBack)
         }
         .foregroundStyle(.black)

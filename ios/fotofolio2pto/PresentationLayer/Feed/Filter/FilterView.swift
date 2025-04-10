@@ -31,7 +31,7 @@ struct FilterView: View {
                                 .frame(width: Constants.Dimens.spaceLarge)
                                 .foregroundColor(.red).brightness(0.2)
                         }
-                        .padding()
+                        .padding(Constants.Dimens.spaceLarge)
                     }
                 }
                 .padding(Constants.Dimens.spaceMedium)
@@ -53,7 +53,7 @@ struct FilterView: View {
                 
                 Spacer()
             }
-            .padding([.leading, .top])
+            .padding([.leading, .top], Constants.Dimens.spaceLarge)
         }
     }
 }

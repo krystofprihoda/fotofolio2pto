@@ -157,7 +157,7 @@ struct Shimmer_Previews: PreviewProvider {
                 }.frame(maxWidth: 200)
             }
         }
-        .padding()
+        .padding(Constants.Dimens.spaceLarge)
         .shimmering()
         .previewLayout(.sizeThatFits)
 

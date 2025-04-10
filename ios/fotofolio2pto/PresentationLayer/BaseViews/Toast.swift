@@ -37,7 +37,7 @@ struct ToastView: View {
     var body: some View {
         Text(data.message)
             .foregroundColor(.white)
-            .padding()
+            .padding(Constants.Dimens.spaceLarge)
             .background(data.type.color.opacity(Constants.Dimens.opacityHigh))
             .cornerRadius(Constants.Dimens.radiusXSmall)
             .shadow(radius: Constants.Dimens.radiusXSmall)

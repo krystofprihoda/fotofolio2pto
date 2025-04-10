@@ -62,6 +62,7 @@ final class ChatViewModel: BaseViewModel, ViewModel, ObservableObject {
         var chat: Chat = .empty
         var messages: [Message] = []
         var textInput = ""
+        var toastData: ToastData? = nil
     }
 
     @Published private(set) var state = State()
@@ -71,6 +72,7 @@ final class ChatViewModel: BaseViewModel, ViewModel, ObservableObject {
     enum Intent {
         case setTextInput(String)
         case sendMessage
+        case setToastData(ToastData?)
         case goBack
     }
 
@@ -80,6 +82,7 @@ final class ChatViewModel: BaseViewModel, ViewModel, ObservableObject {
             switch intent {
             case .setTextInput(let input): setTextInput(input)
             case .sendMessage: await sendMessage()
+            case .setToastData(let toast): setToastData(toast)
             case .goBack: dismissView()
             }
         })
@@ -94,12 +97,13 @@ final class ChatViewModel: BaseViewModel, ViewModel, ObservableObject {
         do {
             state.receiverData = try await readUserByIdUseCase.execute(id: state.receiverId)
             
-            let chat = try await readChatUseCase.execute(receiverId: state.receiverId)
-            state.chat = chat
+            state.chat = try await readChatUseCase.execute(receiverId: state.receiverId)
             
-            state.messages = try await readMessagesFromChatUseCase.execute(chatId: chat.id)
+            guard state.chat != .empty else { return }
+            
+            state.messages = try await readMessagesFromChatUseCase.execute(chatId: state.chat.id)
         } catch {
-            print(error.localizedDescription)
+            state.toastData = .init(message: L.Messages.loadFailed, type: .error)
         }
     }
     
@@ -118,12 +122,16 @@ final class ChatViewModel: BaseViewModel, ViewModel, ObservableObject {
         do {
             state.messages = try await readMessagesFromChatUseCase.execute(chatId: state.chat.id)
         } catch {
-            // Log
+            state.toastData = .init(message: L.Messages.loadFailed, type: .error)
         }
     }
     
     private func setTextInput(_ input: String) {
         state.textInput = input
+    }
+    
+    private func setToastData(_ toast: ToastData?) {
+        state.toastData = toast
     }
     
     private func sendMessage() async {
@@ -140,7 +148,7 @@ final class ChatViewModel: BaseViewModel, ViewModel, ObservableObject {
             state.textInput = ""
             await fetchNewMessages()
         } catch {
-            // Log
+            state.toastData = .init(message: L.Messages.sendFailed, type: .error)
         }
     }
     

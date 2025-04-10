@@ -9,6 +9,7 @@ interface PortfolioRepository {
         createPortfolioDTO: CreatePortfolioDTO
     ): String
     suspend fun getPortfolioById(portfolioId: String): Portfolio
+    suspend fun getPortfoliosByIds(portfolioIds: List<String>): List<Portfolio>
     suspend fun getPortfoliosByCreatorId(creatorId: String): List<Portfolio>
     suspend fun searchPortfolios(
         categories: List<String>? = null,

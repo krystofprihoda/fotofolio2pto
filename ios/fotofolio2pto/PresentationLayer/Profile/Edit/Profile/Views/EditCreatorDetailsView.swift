@@ -60,7 +60,7 @@ struct EditCreatorDetailsView: View {
                 }
             }
         }
-        .padding(.horizontal)
+        .padding(.horizontal, Constants.Dimens.spaceLarge)
     }
 }
 

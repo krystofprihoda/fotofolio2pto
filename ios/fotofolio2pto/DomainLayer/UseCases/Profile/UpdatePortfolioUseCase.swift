@@ -13,14 +13,14 @@ public protocol UpdatePortfolioUseCase {
 
 public struct UpdatePortfolioUseCaseImpl: UpdatePortfolioUseCase {
     
-    private let feedRepository: FeedRepository
+    private let portfolioRepository: PortfolioRepository
     
-    init(feedRepository: FeedRepository) {
-        self.feedRepository = feedRepository
+    init(portfolioRepository: PortfolioRepository) {
+        self.portfolioRepository = portfolioRepository
     }
     
     public func execute(id: String, name: String, photos: [String], description: String, category: [String]) async throws -> Portfolio {
-        return try await feedRepository
+        return try await portfolioRepository
             .updatePortfolio(
                 id: id,
                 name: name,

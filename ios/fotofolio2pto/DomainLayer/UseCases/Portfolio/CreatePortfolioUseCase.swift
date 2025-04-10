@@ -13,13 +13,13 @@ public protocol CreatePortfolioUseCase {
 
 public struct CreatePortfolioUseCaseImpl: CreatePortfolioUseCase {
     
-    private let feedRepository: FeedRepository
+    private let portfolioRepository: PortfolioRepository
     
-    init(feedRepository: FeedRepository) {
-        self.feedRepository = feedRepository
+    init(portfolioRepository: PortfolioRepository) {
+        self.portfolioRepository = portfolioRepository
     }
     
     public func execute(creatorId: String, name: String, photos: [IImage], description: String, category: [String]) async throws {
-        try await feedRepository.createPortfolio(creatorId: creatorId, name: name, photos: photos, description: description, category: category)
+        try await portfolioRepository.createPortfolio(creatorId: creatorId, name: name, photos: photos, description: description, category: category)
     }
 }

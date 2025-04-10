@@ -21,7 +21,7 @@ struct EditPortfoliosView: View {
                 VStack(alignment: .leading, spacing: Constants.Dimens.spaceMedium) {
                     Text(portfolio.name)
                         .font(.headline)
-                        .padding(.leading)
+                        .padding(.leading, Constants.Dimens.spaceLarge)
                     
                     ScrollView(.horizontal, showsIndicators: false) {
                         LazyHStack {
@@ -71,7 +71,7 @@ struct EditPortfoliosView: View {
                                     }
                                 })
                             }
-                            .padding(.leading)
+                            .padding(.leading, Constants.Dimens.spaceLarge)
                             
                             ForEach(portfolio.photos, id: \.id) { img in
                                 ZStack {
@@ -130,6 +130,7 @@ struct EditPortfoliosView: View {
             Spacer()
         }
         .padding(.top, Constants.Dimens.spaceMedium)
+        .toast(toastData: Binding(get: { viewModel.state.toastData }, set: { viewModel.onIntent(.setToastData($0)) }))
         .alert(item: Binding<AlertData?>(
             get: { viewModel.state.alertData },
             set: { alertData in
@@ -143,7 +144,7 @@ struct EditPortfoliosView: View {
     
     private var cancelButton: some View {
         Button(action: { viewModel.onIntent(.cancel) }) {
-            Text(L.Profile.back)
+            Text(L.General.back)
                 .foregroundColor(.black)
         }
     }

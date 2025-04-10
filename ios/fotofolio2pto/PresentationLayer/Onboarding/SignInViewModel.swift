@@ -84,8 +84,11 @@ final class SignInViewModel: BaseViewModel, ViewModel, ObservableObject {
         do {
             let authDetails = try await loginWithCredentialsUseCase.execute(email: state.email, password: state.password)
             flowController?.signIn(uid: authDetails.uid)
-        } catch {
+        } catch AuthError.wrongCredentials {
             state.error = L.Onboarding.wrongCredentials
+            state.password = ""
+        } catch {
+            state.error = L.General.somethingWentWrong
             state.password = ""
         }
     }

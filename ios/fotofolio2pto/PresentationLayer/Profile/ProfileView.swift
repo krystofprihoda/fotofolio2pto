@@ -21,7 +21,7 @@ struct ProfileView: View {
                 VStack {
                     if viewModel.state.isLoading {
                         ProgressView()
-                            .padding()
+                            .padding(Constants.Dimens.spaceLarge)
                             .frame(width: geo.size.width, height: geo.size.height)
                     } else {
                         ProfileUserInfoView(
@@ -42,13 +42,14 @@ struct ProfileView: View {
             }
             .refreshable { viewModel.onIntent(.fetchProfileData(isRefreshing: true)) }
         }
+        .toast(toastData: Binding(get: { viewModel.state.toastData }, set: { viewModel.onIntent(.setToastData($0)) }))
         .navigationBarItems(leading: backButton, trailing: trailingButtons)
         .setupNavBarAndTitle(viewModel.state.userData?.username ?? "", hideBack: true)
         .lifecycle(viewModel)
     }
     
     var backButton: some View {
-        Button(L.Profile.back) {
+        Button(L.General.back) {
             viewModel.onIntent(.goBack)
         }
         .disabled(!viewModel.state.showDismiss)

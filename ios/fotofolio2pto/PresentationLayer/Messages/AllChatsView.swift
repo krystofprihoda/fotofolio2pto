@@ -55,15 +55,16 @@ struct AllChatsView: View {
                                     }
                                 }
                             }
-                            .padding(.bottom)
+                            .padding(.bottom, Constants.Dimens.spaceLarge)
                         }
-                        .padding()
+                        .padding(Constants.Dimens.spaceLarge)
                     }
                 }
             }
             .refreshable { viewModel.onIntent(.refreshChats) }
             .animation(.default, value: viewModel.state)
         }
+        .toast(toastData: Binding(get: { viewModel.state.toastData }, set: { viewModel.onIntent(.setToastData($0)) }))
         .lifecycle(viewModel)
         .navigationBarItems(trailing: newChatButton)
         .setupNavBarAndTitle(L.Messages.title)

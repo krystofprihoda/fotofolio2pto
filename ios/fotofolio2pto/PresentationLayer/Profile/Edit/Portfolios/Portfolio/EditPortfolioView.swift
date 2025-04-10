@@ -33,16 +33,16 @@ struct EditPortfolioView: View {
                     )
                     .font(.body)
                     .frame(height: Constants.Dimens.textFieldHeight)
-                    .padding()
+                    .padding(Constants.Dimens.spaceLarge)
                     .background(.textFieldBackground)
                     .cornerRadius(Constants.Dimens.radiusXSmall)
                 }
-                .padding(.horizontal)
+                .padding(.horizontal, Constants.Dimens.spaceLarge)
                 
                 Text(L.Profile.photography)
                     .font(.body)
                     .bold()
-                    .padding(.leading)
+                    .padding(.leading, Constants.Dimens.spaceLarge)
                 
                 // Photos
                 photosScrollView
@@ -71,7 +71,7 @@ struct EditPortfolioView: View {
                             )
                     }
                 }
-                .padding(.horizontal)
+                .padding(.horizontal, Constants.Dimens.spaceLarge)
                 
                 // Category
                 VStack(alignment: .leading, spacing: Constants.Dimens.spaceSmall) {
@@ -90,10 +90,11 @@ struct EditPortfolioView: View {
                         onRemoveFromSelectedCategories: { viewModel.onIntent(.removeCategory($0)) }
                     )
                 }
-                .padding(.leading)
+                .padding(.leading, Constants.Dimens.spaceLarge)
             }
             .padding(.top, Constants.Dimens.spaceSmall)
         }
+        .toast(toastData: Binding(get: { viewModel.state.toastData }, set: { viewModel.onIntent(.setToastData($0)) }))
         .alert(item: Binding<AlertData?>(
             get: { viewModel.state.alertData },
             set: { alertData in
@@ -217,9 +218,10 @@ struct EditPortfolioView: View {
         Button(action: {
             viewModel.onIntent(.close)
         }) {
-            Text(L.Profile.cancel)
+            Text(L.General.cancel)
         }
         .foregroundColor(.black)
+        .disabled(viewModel.state.isLoading)
     }
     
     var saveButton: some View {

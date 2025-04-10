@@ -53,5 +53,6 @@ struct PortfolioDetailView: View {
             .padding(.horizontal, Constants.Dimens.spaceSemiXLarge)
         }
         .padding(.bottom, Constants.Dimens.spaceSemiMedium)
+        .toast(toastData: Binding(get: { viewModel.state.toastData }, set: { viewModel.onIntent(.setToastData($0)) }))
     }
 }

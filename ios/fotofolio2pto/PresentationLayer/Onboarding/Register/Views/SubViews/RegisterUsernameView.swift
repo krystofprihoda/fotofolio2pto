@@ -21,7 +21,7 @@ struct RegisterUsernameView: View {
             TextField(L.Onboarding.usernameEng, text: username)
                 .font(.body)
                 .frame(height: Constants.Dimens.textFieldHeight)
-                .padding()
+                .padding(Constants.Dimens.spaceLarge)
                 .background(.textFieldBackground)
                 .cornerRadius(Constants.Dimens.radiusXSmall)
                 .disableAutocorrection(true)
@@ -42,11 +42,11 @@ struct RegisterUsernameView: View {
             
             HStack {
                 Button(action: onBackTap, label: {
-                    Text(L.Onboarding.goBack)
+                    Text(L.General.back)
                         .font(.body)
                         .frame(height: Constants.Dimens.textFieldHeight)
                         .frame(maxWidth: .infinity)
-                        .padding()
+                        .padding(Constants.Dimens.spaceLarge)
                         .foregroundStyle(.white)
                         .background(.mainAccent)
                         .cornerRadius(Constants.Dimens.radiusXSmall)
@@ -57,7 +57,7 @@ struct RegisterUsernameView: View {
                         .font(.body)
                         .frame(height: Constants.Dimens.textFieldHeight)
                         .frame(maxWidth: .infinity)
-                        .padding()
+                        .padding(Constants.Dimens.spaceLarge)
                         .foregroundStyle(.white)
                         .background(.mainAccent)
                         .cornerRadius(Constants.Dimens.radiusXSmall)

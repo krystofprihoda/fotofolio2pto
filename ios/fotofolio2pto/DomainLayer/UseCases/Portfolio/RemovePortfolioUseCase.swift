@@ -13,13 +13,13 @@ public protocol RemovePortfolioUseCase {
 
 public struct RemovePortfolioUseCaseImpl: RemovePortfolioUseCase {
     
-    private let feedRepository: FeedRepository
+    private let portfolioRepository: PortfolioRepository
     
-    init(feedRepository: FeedRepository) {
-        self.feedRepository = feedRepository
+    init(portfolioRepository: PortfolioRepository) {
+        self.portfolioRepository = portfolioRepository
     }
     
     public func execute(id: String) async throws {
-        try await feedRepository.removePortfolio(id: id)
+        try await portfolioRepository.removePortfolio(id: id)
     }
 }

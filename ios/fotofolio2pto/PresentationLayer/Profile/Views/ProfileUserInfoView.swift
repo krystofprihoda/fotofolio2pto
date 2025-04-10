@@ -111,7 +111,7 @@ struct ProfileUserInfoView: View {
             }
         } else {
             ProgressView()
-                .padding()
+                .padding(Constants.Dimens.spaceLarge)
         }
     }
     

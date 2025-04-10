@@ -89,15 +89,14 @@ final class SearchViewModel: BaseViewModel, ViewModel, ObservableObject {
     }
     
     private func search() {
-        searchTask?.cancel()
+        guard !state.textInput.isEmpty else { return }
         
+        searchTask?.cancel()
         searchTask = Task {
             do {
                 try await Task.sleep(for: .seconds(0.3))
                 state.searchResults = try await readUsersFromQueryUseCase.execute(query: state.textInput.lowercased())
-            } catch {
-                
-            }
+            } catch {}
         }
     }
     

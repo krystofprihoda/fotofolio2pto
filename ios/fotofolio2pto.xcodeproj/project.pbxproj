@@ -65,8 +65,8 @@
 		FEA53C9A2C29BFDF006F0116 /* UseCase+Injection.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53C992C29BFDF006F0116 /* UseCase+Injection.swift */; };
 		FEA53C9D2C29C1BA006F0116 /* Resolver in Frameworks */ = {isa = PBXBuildFile; productRef = FEA53C9C2C29C1BA006F0116 /* Resolver */; };
 		FEA53CA12C29C70B006F0116 /* ReadAllPortfoliosUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CA02C29C70B006F0116 /* ReadAllPortfoliosUseCase.swift */; };
-		FEA53CA32C29C76E006F0116 /* FeedRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CA22C29C76E006F0116 /* FeedRepository.swift */; };
-		FEA53CA52C29C792006F0116 /* FeedRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CA42C29C792006F0116 /* FeedRepositoryImpl.swift */; };
+		FEA53CA32C29C76E006F0116 /* PortfolioRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CA22C29C76E006F0116 /* PortfolioRepository.swift */; };
+		FEA53CA52C29C792006F0116 /* PortfolioRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CA42C29C792006F0116 /* PortfolioRepositoryImpl.swift */; };
 		FEA53CA72C29D667006F0116 /* FlagPortfolioUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CA62C29D667006F0116 /* FlagPortfolioUseCase.swift */; };
 		FEA53CA92C29D7E8006F0116 /* UnflagPortfolioUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CA82C29D7E8006F0116 /* UnflagPortfolioUseCase.swift */; };
 		FEA53CAB2C29DE1E006F0116 /* ReadFlaggedPortfoliosUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CAA2C29DE1E006F0116 /* ReadFlaggedPortfoliosUseCase.swift */; };
@@ -217,8 +217,8 @@
 		FEA53C972C29BF97006F0116 /* Repositories+Injection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Repositories+Injection.swift"; sourceTree = "<group>"; };
 		FEA53C992C29BFDF006F0116 /* UseCase+Injection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UseCase+Injection.swift"; sourceTree = "<group>"; };
 		FEA53CA02C29C70B006F0116 /* ReadAllPortfoliosUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadAllPortfoliosUseCase.swift; sourceTree = "<group>"; };
-		FEA53CA22C29C76E006F0116 /* FeedRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedRepository.swift; sourceTree = "<group>"; };
-		FEA53CA42C29C792006F0116 /* FeedRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedRepositoryImpl.swift; sourceTree = "<group>"; };
+		FEA53CA22C29C76E006F0116 /* PortfolioRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioRepository.swift; sourceTree = "<group>"; };
+		FEA53CA42C29C792006F0116 /* PortfolioRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioRepositoryImpl.swift; sourceTree = "<group>"; };
 		FEA53CA62C29D667006F0116 /* FlagPortfolioUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlagPortfolioUseCase.swift; sourceTree = "<group>"; };
 		FEA53CA82C29D7E8006F0116 /* UnflagPortfolioUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnflagPortfolioUseCase.swift; sourceTree = "<group>"; };
 		FEA53CAA2C29DE1E006F0116 /* ReadFlaggedPortfoliosUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadFlaggedPortfoliosUseCase.swift; sourceTree = "<group>"; };
@@ -427,7 +427,7 @@
 			children = (
 				FE1815682D95D9250090E440 /* CreatorRepository.swift */,
 				FE5F8A772C296D81001EE8AF /* AuthRepository.swift */,
-				FEA53CA22C29C76E006F0116 /* FeedRepository.swift */,
+				FEA53CA22C29C76E006F0116 /* PortfolioRepository.swift */,
 				FEA53CC32C2C12EE006F0116 /* MessageRepository.swift */,
 				FEA53CCB2C2C1752006F0116 /* UserRepository.swift */,
 			);
@@ -440,7 +440,7 @@
 				FE18156C2D95DCEA0090E440 /* Creator */,
 				FE9A30B72D8737930056CC0A /* Profile */,
 				FEA53CC02C2B6033006F0116 /* Messages */,
-				FEA53C9F2C29C6FE006F0116 /* Feed */,
+				FEA53C9F2C29C6FE006F0116 /* Portfolio */,
 				FE5F8A872C2975E9001EE8AF /* User */,
 				FE5F8A7A2C296EB7001EE8AF /* Auth */,
 			);
@@ -475,7 +475,7 @@
 			children = (
 				FE18156A2D95DAF50090E440 /* CreatorRepositoryImpl.swift */,
 				FE5F8A7F2C2971C7001EE8AF /* AuthRepositoryImpl.swift */,
-				FEA53CA42C29C792006F0116 /* FeedRepositoryImpl.swift */,
+				FEA53CA42C29C792006F0116 /* PortfolioRepositoryImpl.swift */,
 				FEA53CC52C2C136E006F0116 /* MessageRepositoryImpl.swift */,
 				FEA53CC92C2C174B006F0116 /* UserRepositoryImpl.swift */,
 			);
@@ -592,7 +592,7 @@
 			path = Filter;
 			sourceTree = "<group>";
 		};
-		FEA53C9F2C29C6FE006F0116 /* Feed */ = {
+		FEA53C9F2C29C6FE006F0116 /* Portfolio */ = {
 			isa = PBXGroup;
 			children = (
 				FE3827CD2DA2EB29007A933E /* RemovePortfolioUseCase.swift */,
@@ -605,7 +605,7 @@
 				FEA53CBB2C2B0B3D006F0116 /* ReadFilteredPortfoliosUseCase.swift */,
 				FEA53CF82C2D896F006F0116 /* CreatePortfolioUseCase.swift */,
 			);
-			path = Feed;
+			path = Portfolio;
 			sourceTree = "<group>";
 		};
 		FEA53CAC2C29E073006F0116 /* Extensions */ = {
@@ -1019,7 +1019,7 @@
 				FEC94E152C28521D00FFEB11 /* SignInView.swift in Sources */,
 				FEC94DC12C246D8600FFEB11 /* FeedView.swift in Sources */,
 				FE9777DB2D7EFB7E0027DA60 /* RegisterPasswordView.swift in Sources */,
-				FEA53CA32C29C76E006F0116 /* FeedRepository.swift in Sources */,
+				FEA53CA32C29C76E006F0116 /* PortfolioRepository.swift in Sources */,
 				FE5F8A782C296D81001EE8AF /* AuthRepository.swift in Sources */,
 				FE3D2B0D2D930EB800DA22DB /* NetworkProvider.swift in Sources */,
 				FE3FE2D92D9DE01000CD4B22 /* ReadChatsUseCase.swift in Sources */,
@@ -1077,7 +1077,7 @@
 				FEA53CD82C2C30BD006F0116 /* ChatViewModel.swift in Sources */,
 				FE34A64F2D78BCF200CB4CAE /* CheckEmailAddressAvailableUseCase.swift in Sources */,
 				FE3827DC2DA3C90E007A933E /* GiveRatingViewModel.swift in Sources */,
-				FEA53CA52C29C792006F0116 /* FeedRepositoryImpl.swift in Sources */,
+				FEA53CA52C29C792006F0116 /* PortfolioRepositoryImpl.swift in Sources */,
 				FEC94DC32C246DC000FFEB11 /* FeedViewModel.swift in Sources */,
 				FEE211B52DA42C3300A95907 /* KeychainProvider.swift in Sources */,
 				FEA53CF72C2D7960006F0116 /* EditPortfolioViewModel.swift in Sources */,

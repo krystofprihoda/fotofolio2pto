@@ -33,19 +33,20 @@ struct GiveRatingView: View {
                     .font(.body)
                     .frame(height: Constants.Dimens.textFieldHeight/2)
                     .frame(maxWidth: .infinity)
-                    .padding()
+                    .padding(Constants.Dimens.spaceLarge)
                     .foregroundStyle(.white)
                     .background(.mainAccent)
                     .cornerRadius(Constants.Dimens.radiusXSmall)
             })
             .padding(.horizontal, Constants.Dimens.spaceXLarge)
         }
+        .toast(toastData: Binding(get: { viewModel.state.toastData }, set: { viewModel.onIntent(.setToastData($0)) }))
         .navigationBarItems(leading: backButton)
         .setupNavBarAndTitle(L.Profile.rating, hideBack: true)
     }
     
     var backButton: some View {
-        Button(L.Profile.back) {
+        Button(L.General.back) {
             viewModel.onIntent(.goBack)
         }
         .foregroundStyle(.black)

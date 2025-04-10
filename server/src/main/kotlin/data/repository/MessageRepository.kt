@@ -86,14 +86,19 @@ class MessageRepositoryImpl(
             ?: throw Exception("Failed to fetch updated chat")
     }
 
-    override suspend fun getChat(userId: String, receiverId: String?): Any {
+    override suspend fun getChat(userId: String, receiverId: String): Chat {
         val chats = firestoreSource.getDocumentsWhereArrayContains("chat", "chatOwnerIds", userId, Chat::class.java)
+        val chat = chats.find { it.chatOwnerIds.sorted() == listOf(userId, receiverId).sorted() }
 
-        if (receiverId != null) {
-            val chat = chats.find { it.chatOwnerIds.sorted() == listOf(userId, receiverId).sorted() }
-            return chat ?: throw Exception("Chat not found")
+        if (chat == null) {
+            return Chat()
         }
 
+        return chat
+    }
+
+    override suspend fun getChats(userId: String): List<Chat> {
+        val chats = firestoreSource.getDocumentsWhereArrayContains("chat", "chatOwnerIds", userId, Chat::class.java)
         return chats.sortedByDescending { it.lastUpdated }
     }
 

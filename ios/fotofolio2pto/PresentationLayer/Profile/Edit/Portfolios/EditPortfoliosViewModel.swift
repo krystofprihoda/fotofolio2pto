@@ -46,6 +46,7 @@ final class EditPortfoliosViewModel: BaseViewModel, ViewModel, ObservableObject 
         var creatorId = ""
         var portfolios: [Portfolio] = []
         var alertData: AlertData? = nil
+        var toastData: ToastData? = nil
     }
 
     @Published private(set) var state = State()
@@ -56,6 +57,7 @@ final class EditPortfoliosViewModel: BaseViewModel, ViewModel, ObservableObject 
         case editPorfolio(Portfolio)
         case removePortfolio(String)
         case onAlertDataChanged(AlertData?)
+        case setToastData(ToastData?)
         case cancel
     }
 
@@ -66,6 +68,7 @@ final class EditPortfoliosViewModel: BaseViewModel, ViewModel, ObservableObject 
             case .editPorfolio(let portfolio): presentEditPortfolio(portfolio)
             case .removePortfolio(let id): tapRemovePortfolio(id: id)
             case .onAlertDataChanged(let alertData): setAlertData(alertData)
+            case .setToastData(let toast): setToastData(toast)
             case .cancel: cancelEdit()
             }
         })
@@ -83,7 +86,7 @@ final class EditPortfoliosViewModel: BaseViewModel, ViewModel, ObservableObject 
             title: L.Profile.deletePortfolio,
             message: nil,
             primaryAction: .init(
-                title: L.Profile.cancel,
+                title: L.General.cancel,
                 style: .cancel,
                 handler: { [weak self] in
                     self?.state.alertData = nil
@@ -106,13 +109,17 @@ final class EditPortfoliosViewModel: BaseViewModel, ViewModel, ObservableObject 
             do {
                 try await removePortfolioUseCase.execute(id: id)
             } catch {
-                
+                state.toastData = .init(message: L.Profile.portfolioDeleteFailed, type: .error)
             }
         })
     }
     
     private func setAlertData(_ alertData: AlertData?) {
         state.alertData = alertData
+    }
+    
+    private func setToastData(_ toast: ToastData?) {
+        state.toastData = toast
     }
     
     private func cancelEdit() {

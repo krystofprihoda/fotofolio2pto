@@ -54,17 +54,16 @@ struct RegisterWrapperView<Content: View>: View {
                         .foregroundStyle(.white)
                         .font(.title)
                         .bold()
-                        .padding(.leading)
-                        .padding(.leading)
+                        .padding(.leading, Constants.Dimens.spaceXXLarge)
                 }
                 
                 VStack {
                     content
-                        .padding()
+                        .padding(Constants.Dimens.spaceLarge)
                 }
                 .background(.white)
                 .cornerRadius(Constants.Dimens.radiusXSmall)
-                .padding()
+                .padding(Constants.Dimens.spaceLarge)
                 
                 if dismissRegistrationIsShowing {
                     Button(action: onDismissRegistrationTap, label: {
@@ -72,12 +71,11 @@ struct RegisterWrapperView<Content: View>: View {
                             .font(.body)
                             .frame(height: Constants.Dimens.textFieldHeight/2)
                             .frame(maxWidth: .infinity)
-                            .padding()
+                            .padding(Constants.Dimens.spaceLarge)
                             .foregroundStyle(.white)
                             .background(.mainAccent)
                             .cornerRadius(Constants.Dimens.radiusXSmall)
-                            .padding(.horizontal)
-                            .padding(.horizontal)
+                            .padding(.horizontal, Constants.Dimens.spaceXXLarge)
                     })
                 }
             }

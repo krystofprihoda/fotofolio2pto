@@ -83,7 +83,7 @@ final class SelectionViewModel: BaseViewModel, ViewModel, ObservableObject, Port
         do {
             state.portfolios = try await readFlaggedPortfoliosUseCase.execute()
         } catch {
-            
+            state.toastData = .init(message: L.Selection.profileLoadFailed, type: .error)
         }
     }
     
@@ -92,7 +92,7 @@ final class SelectionViewModel: BaseViewModel, ViewModel, ObservableObject, Port
             title: L.Selection.removeAllFromSelection,
             message: nil,
             primaryAction: .init(
-                title: L.Selection.cancel,
+                title: L.General.cancel,
                 style: .cancel,
                 handler: { [weak self] in
                     self?.dismissAlert()
@@ -109,16 +109,12 @@ final class SelectionViewModel: BaseViewModel, ViewModel, ObservableObject, Port
     }
     
     private func removeAllFlagged() {
-        do {
-            try unflagAllPortfoliosUseCase.execute()
-            state.portfolios = []
-            
-            state.toastData = .init(message: L.Selection.removedAll, type: .neutral)
-            
-            flowController?.feedTabBadgeFlowDelegate?.updateCount(to: 0, animated: false)
-        } catch {
-            
-        }
+        unflagAllPortfoliosUseCase.execute()
+        state.portfolios = []
+        
+        state.toastData = .init(message: L.Selection.removedAll, type: .neutral)
+        
+        flowController?.feedTabBadgeFlowDelegate?.updateCount(to: 0, animated: false)
     }
     
     private func tapRemoveFromFlagged(id: String) {
@@ -126,7 +122,7 @@ final class SelectionViewModel: BaseViewModel, ViewModel, ObservableObject, Port
             title: L.Selection.removePortfolioFromSelection,
             message: nil,
             primaryAction: .init(
-                title: L.Selection.cancel,
+                title: L.General.cancel,
                 style: .cancel,
                 handler: { [weak self] in
                     self?.dismissAlert()
@@ -151,28 +147,26 @@ final class SelectionViewModel: BaseViewModel, ViewModel, ObservableObject, Port
     }
     
     private func removeFromFlagged(id: String) {
-        do {
-            try unflagPortfolioUseCase.execute(id: id)
-            state.portfolios.removeAll(where: { $0.id == id })
-            
-            state.toastData = .init(message: L.Selection.portfolioRemoved, type: .neutral)
-            
-            flowController?.feedTabBadgeFlowDelegate?.updateCount(to: state.portfolios.count, animated: false)
-        } catch {
-            
-        }
+        unflagPortfolioUseCase.execute(id: id)
+        state.portfolios.removeAll(where: { $0.id == id })
+        
+        state.toastData = .init(message: L.Selection.portfolioRemoved, type: .neutral)
+        
+        flowController?.feedTabBadgeFlowDelegate?.updateCount(to: state.portfolios.count, animated: false)
     }
     
     private func setToastData(_ toast: ToastData?) {
         state.toastData = toast
     }
     
+    // MARK: Public delegate methods
+    
     func showProfile(creatorId: String) async {
         do {
             let user = try await readUserDataByCreatorIdUseCase.execute(creatorId: creatorId)
             flowController?.showProfile(user: user)
         } catch {
-            
+            state.toastData = .init(message: L.Selection.profileLoadFailed, type: .error)
         }
     }
     
@@ -181,7 +175,7 @@ final class SelectionViewModel: BaseViewModel, ViewModel, ObservableObject, Port
             let user = try await readUserDataByCreatorIdUseCase.execute(creatorId: creatorId)
             flowController?.sendMessage(to: user)
         } catch {
-            
+            state.toastData = .init(message: L.Selection.profileLoadFailed, type: .error)
         }
     }
     

@@ -14,17 +14,17 @@ public protocol ReadFlaggedPortfoliosUseCase {
 
 public struct ReadFlaggedPortfoliosUseCaseImpl: ReadFlaggedPortfoliosUseCase {
     
-    private let feedRepository: FeedRepository
+    private let portfolioRepository: PortfolioRepository
     
-    init(feedRepository: FeedRepository) {
-        self.feedRepository = feedRepository
+    init(portfolioRepository: PortfolioRepository) {
+        self.portfolioRepository = portfolioRepository
     }
     
     public func execute() async throws -> [Portfolio] {
-        try await feedRepository.readFlagged()
+        try await portfolioRepository.readFlagged()
     }
     
     public func execute(idOnly: Bool) -> [String] {
-        feedRepository.readFlaggedIds()
+        portfolioRepository.readFlaggedIds()
     }
 }

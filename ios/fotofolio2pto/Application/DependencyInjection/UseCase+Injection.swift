@@ -35,15 +35,15 @@ public extension Resolver {
         register { UpdateCreatorDataUseCaseImpl(creatorRepository: resolve()) as UpdateCreatorDataUseCase }
         
         /// Portfolios
-        register { ReadAllPortfoliosUseCaseImpl(feedRepository: resolve()) as ReadAllPortfoliosUseCase }
-        register { FlagPortfolioUseCaseImpl(feedRepository: resolve()) as FlagPortfolioUseCase }
-        register { UnflagPortfolioUseCaseImpl(feedRepository: resolve()) as UnflagPortfolioUseCase }
-        register { ReadFlaggedPortfoliosUseCaseImpl(feedRepository: resolve()) as ReadFlaggedPortfoliosUseCase }
-        register { UnflagAllPortfoliosUseCaseImpl(feedRepository: resolve()) as UnflagAllPortfoliosUseCase }
-        register { CreatePortfolioUseCaseImpl(feedRepository: resolve()) as CreatePortfolioUseCase }
-        register { UpdatePortfolioUseCaseImpl(feedRepository: resolve()) as UpdatePortfolioUseCase }
-        register { ReadRemoteImageUseCaseImpl(feedRepository: resolve()) as ReadRemoteImageUseCase }
-        register { RemovePortfolioUseCaseImpl(feedRepository: resolve()) as RemovePortfolioUseCase }
+        register { ReadAllPortfoliosUseCaseImpl(portfolioRepository: resolve()) as ReadAllPortfoliosUseCase }
+        register { FlagPortfolioUseCaseImpl(portfolioRepository: resolve()) as FlagPortfolioUseCase }
+        register { UnflagPortfolioUseCaseImpl(portfolioRepository: resolve()) as UnflagPortfolioUseCase }
+        register { ReadFlaggedPortfoliosUseCaseImpl(portfolioRepository: resolve()) as ReadFlaggedPortfoliosUseCase }
+        register { UnflagAllPortfoliosUseCaseImpl(portfolioRepository: resolve()) as UnflagAllPortfoliosUseCase }
+        register { CreatePortfolioUseCaseImpl(portfolioRepository: resolve()) as CreatePortfolioUseCase }
+        register { UpdatePortfolioUseCaseImpl(portfolioRepository: resolve()) as UpdatePortfolioUseCase }
+        register { ReadRemoteImageUseCaseImpl(portfolioRepository: resolve()) as ReadRemoteImageUseCase }
+        register { RemovePortfolioUseCaseImpl(portfolioRepository: resolve()) as RemovePortfolioUseCase }
         
         /// Messages
         register { CreateNewChatWithMessageUseCaseImpl(messageRepository: resolve()) as CreateNewChatWithMessageUseCase }

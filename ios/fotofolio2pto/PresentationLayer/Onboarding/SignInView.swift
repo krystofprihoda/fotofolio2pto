@@ -67,7 +67,7 @@ struct SignInView: View {
                                     .font(.body)
                                     .frame(height: Constants.Dimens.textFieldHeight)
                                     .frame(maxWidth: .infinity)
-                                    .padding()
+                                    .padding(Constants.Dimens.spaceLarge)
                                     .foregroundStyle(.white)
                                     .background(.mainAccent)
                                     .cornerRadius(Constants.Dimens.radiusXSmall)
@@ -76,11 +76,11 @@ struct SignInView: View {
                             .skeleton(viewModel.state.isSigningIn)
                         }
                     }
-                    .padding()
+                    .padding(Constants.Dimens.spaceLarge)
                 }
                 .background(.white)
                 .cornerRadius(Constants.Dimens.radiusXSmall)
-                .padding(.horizontal)
+                .padding(.horizontal, Constants.Dimens.spaceLarge)
                 
                 if !viewModel.state.isSigningIn {
                     Button(action: {
@@ -93,7 +93,7 @@ struct SignInView: View {
                     })
                 }
             }
-            .padding(.horizontal)
+            .padding(.horizontal, Constants.Dimens.spaceLarge)
         }
         .animation(.default, value: viewModel.state)
         .ignoresSafeArea(.all)

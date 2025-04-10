@@ -18,13 +18,13 @@ public protocol ReadAllPortfoliosUseCase {
 
 public struct ReadAllPortfoliosUseCaseImpl: ReadAllPortfoliosUseCase {
     
-    private let feedRepository: FeedRepository
+    private let portfolioRepository: PortfolioRepository
     
-    init(feedRepository: FeedRepository) {
-        self.feedRepository = feedRepository
+    init(portfolioRepository: PortfolioRepository) {
+        self.portfolioRepository = portfolioRepository
     }
     
     public func execute(categories: [String]?, sortBy: SortByEnum?) async throws -> [Portfolio] {
-        try await feedRepository.readAll(categories: categories, sortBy: sortBy)
+        try await portfolioRepository.readAll(categories: categories, sortBy: sortBy)
     }
 }

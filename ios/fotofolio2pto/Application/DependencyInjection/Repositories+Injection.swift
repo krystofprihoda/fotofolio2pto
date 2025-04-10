@@ -13,7 +13,7 @@ public extension Resolver {
         register { AuthRepositoryImpl(defaults: resolve(), encryptedStorage: resolve(), authProvider: resolve()) as AuthRepository }
         register { UserRepositoryImpl(encryptedStorage: resolve(), network: resolve()) as UserRepository }
         register { CreatorRepositoryImpl(encryptedStorage: resolve(), network: resolve()) as CreatorRepository }
-        register { FeedRepositoryImpl(defaults: resolve(), encryptedStorage: resolve(), network: resolve()) as FeedRepository }
+        register { PortfolioRepositoryImpl(defaults: resolve(), encryptedStorage: resolve(), network: resolve()) as PortfolioRepository }
         register { MessageRepositoryImpl(encryptedStorage: resolve(), network: resolve()) as MessageRepository }
     }
 }

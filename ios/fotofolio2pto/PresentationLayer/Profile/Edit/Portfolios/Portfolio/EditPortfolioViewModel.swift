@@ -76,6 +76,7 @@ final class EditPortfolioViewModel: BaseViewModel, ViewModel, ObservableObject {
         var searchInput = ""
         var isSaveButtonDisabled = true
         var alertData: AlertData? = nil
+        var toastData: ToastData? = nil
     }
 
     @Published private(set) var state = State()
@@ -94,6 +95,7 @@ final class EditPortfolioViewModel: BaseViewModel, ViewModel, ObservableObject {
         case setDescriptionInput(String)
         case saveChanges
         case onAlertDataChanged(AlertData?)
+        case setToastData(ToastData?)
     }
 
     @discardableResult
@@ -111,6 +113,7 @@ final class EditPortfolioViewModel: BaseViewModel, ViewModel, ObservableObject {
             case .removePic(let id): removePic(id)
             case .saveChanges: await saveChanges()
             case .onAlertDataChanged(let alertData): onAlertDataChanged(alertData: alertData)
+            case .setToastData(let toast): setToastData(toast)
             }
         })
     }
@@ -167,6 +170,10 @@ final class EditPortfolioViewModel: BaseViewModel, ViewModel, ObservableObject {
         updateSaveButtonVisibility()
     }
     
+    private func setToastData(_ toast: ToastData?) {
+        state.toastData = toast
+    }
+    
     private func dismissView() {
         flowController?.navigationController.popViewController(animated: true)
     }
@@ -189,7 +196,7 @@ final class EditPortfolioViewModel: BaseViewModel, ViewModel, ObservableObject {
             await flowController?.updateProfileFlowDelegate?.fetchProfileData(refresh: true)
             dismissView()
         } catch {
-            
+            state.toastData = .init(message: L.Profile.portfolioCreationFailed, type: .error)
         }
     }
     
@@ -238,7 +245,7 @@ final class EditPortfolioViewModel: BaseViewModel, ViewModel, ObservableObject {
             updatePortfolioProfileFlowDelegate?.updatePortfolios(with: updated)
             dismissView()
         } catch {
-            
+            state.toastData = .init(message: L.Profile.portfolioUpdateFailed, type: .error)
         }
     }
     
@@ -256,7 +263,7 @@ final class EditPortfolioViewModel: BaseViewModel, ViewModel, ObservableObject {
             title: L.Profile.goBack,
             message: nil,
             primaryAction: .init(
-                title: L.Profile.cancel,
+                title: L.General.cancel,
                 style: .cancel,
                 handler: { [weak self] in
                     self?.state.alertData = nil

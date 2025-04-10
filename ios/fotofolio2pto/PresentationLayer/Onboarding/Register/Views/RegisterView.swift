@@ -100,5 +100,6 @@ struct RegisterView: View {
             }
         }
         .animation(.default, value: viewModel.state)
+        .toast(toastData: Binding(get: { viewModel.state.toastData }, set: { viewModel.onIntent(.setToastData($0)) }))
     }
 }

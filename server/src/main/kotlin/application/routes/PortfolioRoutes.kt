@@ -31,16 +31,24 @@ fun Application.portfolioRoutes() {
 
             get("/portfolio") {
                 try {
+                    val idParams = call.request.queryParameters["id"]
                     val categoryParams = call.request.queryParameters["category"]
                     val sortByParam = call.request.queryParameters["sortBy"] // "timestamp" or "rating"
 
                     // Parse portfolio IDs from comma-separated string
-                    val categories = requestParser.parseCommaSeparatedList(categoryParams)
+                    val ids = requestParser.parseCommaSeparatedList(idParams)
 
-                    val portfolios = portfolioRepository.searchPortfolios(
-                        categories = categories,
-                        sortBy = sortByParam
-                    )
+                    val portfolios = if (!ids.isNullOrEmpty()) {
+                        // When IDs are provided, get portfolios by IDs
+                        portfolioRepository.getPortfoliosByIds(ids)
+                    } else {
+                        // Otherwise, search by categories and sort
+                        val categories = requestParser.parseCommaSeparatedList(categoryParams)
+                        portfolioRepository.searchPortfolios(
+                            categories = categories,
+                            sortBy = sortByParam
+                        )
+                    }
 
                     call.respond(HttpStatusCode.OK, portfolios)
                 } catch (e: Exception) {

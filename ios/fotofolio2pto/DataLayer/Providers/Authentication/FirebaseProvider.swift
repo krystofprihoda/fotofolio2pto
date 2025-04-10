@@ -37,7 +37,7 @@ class FirebaseProvider: AuthProvider {
                     if let error = error {
                         continuation.resume(throwing: error) // Forward Firebase error
                     } else if let token = token {
-                        continuation.resume(returning: RegisterData(uid: user.uid, token: token))
+                        continuation.resume(returning: RegisterData(uid: user.uid, token: token, email: user.email))
                     } else {
                         continuation.resume(throwing: AuthError.tokenRetrievalFailed)
                     }
@@ -47,10 +47,21 @@ class FirebaseProvider: AuthProvider {
     }
     
     func login(email: String, password: String) async throws -> AuthDataResult {
-        return try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<AuthDataResult, Error>) in
+        return try await withCheckedThrowingContinuation { continuation in
             auth.signIn(withEmail: email, password: password) { result, error in
-                if let _ = error {
-                    continuation.resume(throwing: AuthError.wrongCredentials)
+                if let error = error as NSError? {
+                    if error.domain == AuthErrorDomain,
+                       let code = AuthErrorCode(rawValue: error.code) {
+                        switch code {
+                        case .wrongPassword, .invalidEmail, .userNotFound, .invalidCredential:
+                            continuation.resume(throwing: AuthError.wrongCredentials)
+                        default:
+                            continuation.resume(throwing: error)
+                        }
+                        return
+                    }
+                    
+                    continuation.resume(throwing: error) // fallback
                     return
                 }
                 

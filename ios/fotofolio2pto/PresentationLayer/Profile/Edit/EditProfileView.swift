@@ -22,6 +22,7 @@ struct EditProfileView: View {
                 }
             }
         }
+        .toast(toastData: Binding(get: { viewModel.state.toastData }, set: { viewModel.onIntent(.setToastData($0)) }))
         .alert(item: Binding<AlertData?>(
             get: { viewModel.state.alertData },
             set: { alertData in
@@ -47,7 +48,7 @@ struct EditProfileView: View {
 
    private var cancelButton: some View {
        Button(action: { viewModel.onIntent(.cancel) }) {
-           Text(L.Profile.back)
+           Text(L.General.back)
                .foregroundColor(.black)
        }
    }

@@ -82,6 +82,14 @@ class PortfolioRepositoryImpl(
             ?: throw Exception("Portfolio not found")
     }
 
+    override suspend fun getPortfoliosByIds(portfolioIds: List<String>): List<Portfolio> {
+        if (portfolioIds.isEmpty()) {
+            return emptyList()
+        }
+
+        return firestoreSource.getDocumentsByIds("portfolio", portfolioIds, Portfolio::class.java)
+    }
+
     override suspend fun getPortfoliosByCreatorId(creatorId: String): List<Portfolio> {
         val creator = firestoreSource.getDocument("creator", creatorId, Creator::class.java)
             ?: throw Exception("Creator not found")

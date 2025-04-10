@@ -66,7 +66,6 @@ public class UserRepositoryImpl: UserRepository {
             "username": username,
             "email": email,
             "fullName": fullName,
-            "location": location,
             "profilePicture": profilePicture
         ]
         

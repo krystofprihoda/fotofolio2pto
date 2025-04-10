@@ -63,6 +63,7 @@ final class ProfileViewModel: BaseViewModel, ViewModel, ObservableObject, Update
         var creatorData: Creator? = nil
         var portfolios: [Portfolio] = []
         var showDismiss = false
+        var toastData: ToastData? = nil
     }
     
     @Published private(set) var state = State()
@@ -75,6 +76,7 @@ final class ProfileViewModel: BaseViewModel, ViewModel, ObservableObject, Update
         case showProfileSettings
         case createNewPortfolio
         case giveRating
+        case setToastData(ToastData?)
         case goBack
     }
     
@@ -87,12 +89,17 @@ final class ProfileViewModel: BaseViewModel, ViewModel, ObservableObject, Update
             case .showProfileSettings: showProfileSettings()
             case .createNewPortfolio: createNewPortfolio()
             case .giveRating: giveRating()
+            case .setToastData(let toast): setToastData(toast)
             case .goBack: goBack()
             }
         })
     }
     
     // MARK: Additional methods
+    
+    private func setToastData(_ toast: ToastData?) {
+        state.toastData = toast
+    }
     
     func fetchProfileData(refresh: Bool = false) async {
         if refresh {
@@ -114,7 +121,7 @@ final class ProfileViewModel: BaseViewModel, ViewModel, ObservableObject, Update
             
             try await fetchCreatorDataAndPortfolios()
         } catch {
-            
+            state.toastData = .init(message: L.Profile.profileLoadFailed, type: .error)
         }
     }
     

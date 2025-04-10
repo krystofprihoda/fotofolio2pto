@@ -28,8 +28,7 @@ public class CreatorRepositoryImpl: CreatorRepository {
         
         let body: [String: String] = [
             "userId": userId,
-            "yearsOfExperience": String(yearsOfExperience),
-            "description": ""
+            "yearsOfExperience": String(yearsOfExperience)
         ]
         
         _ = try await network.request(endpoint: .creator, method: .POST, body: body, headers: headers, queryParams: nil)

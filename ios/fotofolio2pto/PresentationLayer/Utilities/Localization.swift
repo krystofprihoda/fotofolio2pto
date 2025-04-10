@@ -6,6 +6,14 @@
 //
 
 public struct L {
+    public enum General {
+        public static let somethingWentWrong = "Něco se pokazilo."
+        public static let pleaseTryAgain = "Zkuste to prosím znovu."
+        public static let somethingWentWrongFull = "\(somethingWentWrong) + \(pleaseTryAgain)"
+        public static let back = "Zpět"
+        public static let cancel = "Zrušit"
+    }
+    
     public enum Onboarding {
         public static let username = "Uživatelské jméno"
         public static let usernameEng = "Username"
@@ -21,14 +29,12 @@ public struct L {
         public static let supportedUsernameChars = "Podporované znaky: a-z 0-9 _ ."
         public static let invalidPasswordFormat = "Neplatný formát hesla!"
         public static let passwordMismatch = "Zadaná hesla se neshodují."
-        public static let goBack = "Zpět"
         public static let goBackToSignIn = "Zpět na přihlášení"
         public static let next = "Další"
         public static let register = "Registrace."
         public static let finalizeRegistration = "Registrovat"
         public static let passwordRequirements = "Heslo musí mít více než 8 znaků, obsahovat aspoň 1 velké písmeno, 3 číslice a 1 speciální znak: !@#$%^&*_+:.?"
         public static let tryAgain = "Zkusit znovu"
-        public static let somethingWentWrong = "Něco se pokazilo."
         public static let profileType = "Typ profilu"
         public static let typeCreator = "Tvůrce 📸"
         public static let typeCustomer = "Zákazník"
@@ -51,6 +57,8 @@ public struct L {
         public static let add = "Přidat"
         public static let portfolioAdded = "Portfolio přidáno do výběru."
         public static let portfolioRemoved = "Portfolio odstraněno z výběru."
+        public static let portfolioLoadFailed = "Načítání portfolií selhalo, zkuste to prosím znovu."
+        public static let profileLoadFailed = "Načítání profilu selhalo, zkuste to prosím znovu."
     }
     
     public enum Selection {
@@ -59,18 +67,18 @@ public struct L {
         public static let removeAll = "Odstranit vše"
         public static let remove = "Odstranit"
         public static let typeMessage = "Napsat zprávu"
-        public static let outOf5 = " z 5"
         public static let noRating = "Bez hodnocení"
         public static let profileDescriptionError = "Profilový popis se nepodařilo nahrát, zkuste to znovu."
         public static let removeAllFromSelection = "Odstranit všechna portfolia z výběru?"
         public static let removePortfolioFromSelection = "Odstranit portfolio z výběru?"
-        public static let cancel = "Zrušit"
         public static let portfolioRemoved = "Portfolio odstraněno z výběru."
         public static let removedAll = "Všechna portfolia byla odstraněna z vašeho výběru."
         public static let username = "username"
         public static let fullName = "Jméno Příjmení"
         public static let location = "Lokace"
         public static let profileText = "Profilový popis"
+        public static let profileLoadFailed = "Načítání profilu selhalo, zkuste to prosím znovu."
+        public static let portfolioLoadFailed = "Načítání portfolií selhalo, zkuste to prosím znovu."
     }
     
     public enum Search {
@@ -89,6 +97,8 @@ public struct L {
         public static let chatTitle = "Chat"
         public static let sender = "Odesílatel"
         public static let someone = "Uživatel"
+        public static let loadFailed = "Načítání zpráv selhalo, zkuste to znovu."
+        public static let sendFailed = "Odeslání selhalo, zkuste to znovu."
     }
     
     public enum Profile {
@@ -101,8 +111,6 @@ public struct L {
         public static let signOut = "Odhlásit se"
         public static let editTitle = "Úprava profilu"
         public static let save = "Uložit"
-        public static let cancel = "Zrušit"
-        public static let back = "Zpět"
         public static let yesCancel = "Ano, zahodit změny"
         public static let yesRemove = "Ano, smazat"
         public static let weddingExample = "např. svatba"
@@ -132,5 +140,11 @@ public struct L {
         public static let lessThanFiveExperience = " roky fotografem"
         public static let moreThanFiveExperience = " let fotografem"
         public static let outOf5 = " z 5"
+        public static let portfolioCreationFailed = "Vytvoření nového portfolia selhalo, zkuste to prosím znovu."
+        public static let portfolioUpdateFailed = "Aktualizace portfolia selhala, zkuste to prosím znovu."
+        public static let portfolioDeleteFailed = "Aktualizace portfolia selhala, zkuste to prosím znovu."
+        public static let profileLoadFailed = "Načítání profilu selhalo, zkuste to prosím znovu."
+        public static let profileUpdateFailed = "Aktualizace profilu selhala, zkuste to prosím znovu."
+        public static let profilePicUpdateFailed = "Aktualizace profilové fotky selhala, zkuste to prosím znovu."
     }
 }

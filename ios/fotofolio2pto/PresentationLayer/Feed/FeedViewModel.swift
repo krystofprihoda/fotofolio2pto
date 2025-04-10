@@ -119,7 +119,7 @@ final class FeedViewModel: BaseViewModel, ViewModel, ObservableObject {
         do {
             state.portfolios = try await readAllPortfoliosUseCase.execute(categories: state.filter, sortBy: state.sortBy)
         } catch {
-            // handle error
+            state.toastData = .init(message: L.Selection.portfolioLoadFailed, type: .error)
         }
     }
     
@@ -133,7 +133,7 @@ final class FeedViewModel: BaseViewModel, ViewModel, ObservableObject {
         do {
             state.portfolios = try await readAllPortfoliosUseCase.execute(categories: state.filter, sortBy: state.sortBy)
         } catch {
-            // handle error
+            state.toastData = .init(message: L.Selection.portfolioLoadFailed, type: .error)
         }
     }
     
@@ -142,30 +142,22 @@ final class FeedViewModel: BaseViewModel, ViewModel, ObservableObject {
     }
     
     private func flagPortfolio(withId id: String) {
-        do {
-            try flagPortfolioUseCase.execute(id: id)
-            fetchFlaggedPortfolios()
-            
-            state.toastData = .init(message: L.Feed.portfolioAdded, type: .success)
-            
-            flowController?.feedTabBadgeFlowDelegate?.updateCount(to: state.flaggedPortfolioIds.count, animated: true)
-        } catch {
+        flagPortfolioUseCase.execute(id: id)
+        fetchFlaggedPortfolios()
         
-        }
+        state.toastData = .init(message: L.Feed.portfolioAdded, type: .success)
+        
+        flowController?.feedTabBadgeFlowDelegate?.updateCount(to: state.flaggedPortfolioIds.count, animated: true)
     }
     
     private func unflagPortfolio(withId id: String) {
-        do {
-            try unflagPortfolioUseCase.execute(id: id)
-            fetchFlaggedPortfolios()
-            
-            // Show a toast
-            state.toastData = .init(message: L.Feed.portfolioRemoved, type: .neutral)
-            
-            flowController?.feedTabBadgeFlowDelegate?.updateCount(to: state.flaggedPortfolioIds.count, animated: false)
-        } catch {
-            
-        }
+        unflagPortfolioUseCase.execute(id: id)
+        fetchFlaggedPortfolios()
+        
+        // Show a toast
+        state.toastData = .init(message: L.Feed.portfolioRemoved, type: .neutral)
+        
+        flowController?.feedTabBadgeFlowDelegate?.updateCount(to: state.flaggedPortfolioIds.count, animated: false)
     }
     
     private func fetchFlaggedPortfolios() {
@@ -177,7 +169,7 @@ final class FeedViewModel: BaseViewModel, ViewModel, ObservableObject {
             let user = try await readUserDataByCreatorIdUseCase.execute(creatorId: creatorId)
             flowController?.showProfile(user: user)
         } catch {
-            
+            state.toastData = .init(message: L.Feed.profileLoadFailed, type: .error)
         }
     }
     
@@ -196,7 +188,7 @@ extension FeedViewModel: FilterFeedDelegate {
         do {
             state.portfolios = try await readAllPortfoliosUseCase.execute(categories: state.filter, sortBy: state.sortBy)
         } catch {
-            
+            state.toastData = .init(message: L.Feed.portfolioLoadFailed, type: .error)
         }
     }
     

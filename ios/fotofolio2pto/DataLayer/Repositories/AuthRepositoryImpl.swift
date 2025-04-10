@@ -29,8 +29,6 @@ public class AuthRepositoryImpl: AuthRepository {
         
         encryptedStorage.delete(.token)
         encryptedStorage.delete(.userId)
-        
-        defaults.delete(.flagged)
     }
     
     public func loginWithCredentials(email: String, password: String) async throws -> UserAuthDetails {
@@ -57,6 +55,9 @@ public class AuthRepositoryImpl: AuthRepository {
         
         encryptedStorage.update(.userId, value: data.uid)
         encryptedStorage.update(.token, value: data.token)
+        
+        guard let email = data.email else { return }
+        defaults.update(.email, value: email)
     }
     
     public func readLastSignedInEmail() -> String {

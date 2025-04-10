@@ -65,12 +65,12 @@ struct EditPersonalDetailsView: View {
                 )
                     .font(.body)
                     .frame(height: Constants.Dimens.textFieldHeight)
-                    .padding()
+                    .padding(Constants.Dimens.spaceLarge)
                     .background(.textFieldBackground)
                     .cornerRadius(Constants.Dimens.radiusXSmall)
             }
         }
-        .padding([.horizontal, .top])
+        .padding([.horizontal, .top], Constants.Dimens.spaceLarge)
     }
 }
 

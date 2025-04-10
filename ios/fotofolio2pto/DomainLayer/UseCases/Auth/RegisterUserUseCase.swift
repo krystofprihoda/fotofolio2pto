@@ -8,6 +8,7 @@
 public struct RegisterData {
     let uid: String
     let token: String
+    let email: String?
 }
 
 public protocol RegisterUserUseCase {

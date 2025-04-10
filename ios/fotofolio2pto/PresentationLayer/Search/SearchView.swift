@@ -27,7 +27,7 @@ struct SearchView: View {
                     )
                 )
                     .font(.body)
-                    .padding()
+                    .padding(Constants.Dimens.spaceLarge)
                     .background(.textFieldBackground)
                     .frame(height: Constants.Dimens.textFieldHeight * Constants.Dimens.halfMultiplier)
                     .cornerRadius(Constants.Dimens.spaceSmall)
@@ -39,7 +39,7 @@ struct SearchView: View {
                 
                 Image(systemName: "magnifyingglass")
                     .foregroundStyle(.gray)
-                    .padding(.trailing)
+                    .padding(.trailing, Constants.Dimens.spaceLarge)
             }
             
             SearchResultsView(
@@ -47,13 +47,13 @@ struct SearchView: View {
                 onResultTap: { user in viewModel.onIntent(.onResultTap(of: user)) }
             )
         }
-        .padding([.horizontal, .top])
+        .padding([.horizontal, .top], Constants.Dimens.spaceLarge)
         .setupNavBarAndTitle(L.Search.title, hideBack: true)
         .navigationBarItems(leading: backButton)
     }
     
     var backButton: some View {
-        Button(L.Profile.back) {
+        Button(L.General.back) {
             viewModel.onIntent(.goBack)
         }
         .foregroundStyle(.black)

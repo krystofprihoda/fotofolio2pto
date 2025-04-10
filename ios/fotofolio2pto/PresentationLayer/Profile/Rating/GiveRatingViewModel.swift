@@ -38,6 +38,7 @@ final class GiveRatingViewModel: BaseViewModel, ViewModel, ObservableObject {
 
     struct State {
         var isLoading: Bool = false
+        var toastData: ToastData? = nil
         var receiverId: String = ""
         var rating: Int = 4
     }
@@ -50,6 +51,7 @@ final class GiveRatingViewModel: BaseViewModel, ViewModel, ObservableObject {
         case setRating(Int)
         case giveRating
         case goBack
+        case setToastData(ToastData?)
     }
 
     @discardableResult
@@ -59,6 +61,7 @@ final class GiveRatingViewModel: BaseViewModel, ViewModel, ObservableObject {
             case .setRating(let value): setRating(value)
             case .giveRating: await giveRating()
             case .goBack: goBack()
+            case .setToastData(let toast): setToastData(toast)
             }
         })
     }
@@ -67,6 +70,10 @@ final class GiveRatingViewModel: BaseViewModel, ViewModel, ObservableObject {
     
     private func setRating(_ value: Int) {
         state.rating = value
+    }
+    
+    private func setToastData(_ toast: ToastData?) {
+        state.toastData = toast
     }
     
     private func giveRating() async {
@@ -79,7 +86,7 @@ final class GiveRatingViewModel: BaseViewModel, ViewModel, ObservableObject {
             try await giveRatingUseCase.execute(receiverId: state.receiverId, rating: state.rating)
             goBack()
         } catch {
-            
+            state.toastData = .init(message: L.General.somethingWentWrong, type: .error)
         }
     }
 

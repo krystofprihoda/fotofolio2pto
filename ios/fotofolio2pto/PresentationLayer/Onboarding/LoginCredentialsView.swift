@@ -27,7 +27,7 @@ struct LoginCredentialsView: View {
                 TextField(L.Onboarding.email, text: $email)
                     .font(.body)
                     .frame(height: Constants.Dimens.textFieldHeight)
-                    .padding()
+                    .padding(Constants.Dimens.spaceLarge)
                     .background(.textFieldBackground)
                     .cornerRadius(Constants.Dimens.radiusXSmall)
                     .autocapitalization(.none)
@@ -36,7 +36,7 @@ struct LoginCredentialsView: View {
                 if !email.isEmpty {
                     Button(action: onClearEmailTap, label: {
                         Image(systemName: "xmark.circle.fill")
-                            .padding()
+                            .padding(Constants.Dimens.spaceLarge)
                             .foregroundColor(.gray)
                     })
                 }
@@ -47,7 +47,7 @@ struct LoginCredentialsView: View {
                     SecureField(L.Onboarding.password, text: $password)
                         .font(.body)
                         .frame(height: Constants.Dimens.textFieldHeight)
-                        .padding()
+                        .padding(Constants.Dimens.spaceLarge)
                         .background(.textFieldBackground)
                         .cornerRadius(Constants.Dimens.radiusXSmall)
                         .disableAutocorrection(true)
@@ -55,7 +55,7 @@ struct LoginCredentialsView: View {
                     TextField(L.Onboarding.password, text: $password)
                         .font(.body)
                         .frame(height: Constants.Dimens.textFieldHeight)
-                        .padding()
+                        .padding(Constants.Dimens.spaceLarge)
                         .background(.textFieldBackground)
                         .cornerRadius(Constants.Dimens.radiusXSmall)
                         .disableAutocorrection(true)
@@ -63,7 +63,7 @@ struct LoginCredentialsView: View {
                 
                 Button(action: { hiddenPassword.toggle() }, label: {
                     Image(systemName: hiddenPassword ? "eye" : "eye.slash")
-                        .padding()
+                        .padding(Constants.Dimens.spaceLarge)
                         .foregroundColor(.gray)
                 })
                 .animation(.default, value: hiddenPassword)

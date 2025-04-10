@@ -1,5 +1,5 @@
 //
-//  FeedRepositoryImpl.swift
+//  PortfolioRepositoryImpl.swift
 //  fotofolio2pto
 //
 //  Created by Kryštof Příhoda on 24.06.2024.
@@ -8,7 +8,7 @@
 import UIKit
 import Foundation
 
-public class FeedRepositoryImpl: FeedRepository {
+public class PortfolioRepositoryImpl: PortfolioRepository {
     
     private let defaults: LocalStorageProvider
     private let encryptedStorage: EncryptedLocalStorageProvider
@@ -108,27 +108,30 @@ public class FeedRepositoryImpl: FeedRepository {
         return image
     }
     
-    public func addToFlagged(portfolioId: String) throws {
+    public func addToFlagged(portfolioId: String) {
         var flagged = readFlaggedIds()
         guard !flagged.contains(where: { $0 == portfolioId }) else { return }
         flagged.append(portfolioId)
         defaults.update(.flagged, value: flagged)
     }
     
-    public func removeFromFlagged(portfolioId: String) throws {
+    public func removeFromFlagged(portfolioId: String) {
         var flagged = readFlaggedIds()
         flagged.removeAll(where: { $0 == portfolioId })
         defaults.update(.flagged, value: flagged)
     }
     
     public func readFlagged() async throws -> [Portfolio] {
+        let ids = readFlaggedIds()
+        
+        guard !ids.isEmpty else { return [] }
+        
         guard let token: String = encryptedStorage.read(.token) else { throw AuthError.tokenRetrievalFailed }
         let headers = [
             "Authorization": "Bearer \(token)",
             "Content-Type": "application/json"
         ]
         
-        let ids = readFlaggedIds()
         var queryParams: [String: String] = [:]
         
         if !ids.isEmpty {
@@ -154,7 +157,7 @@ public class FeedRepositoryImpl: FeedRepository {
         return defaults.read(.flagged) ?? []
     }
     
-    public func removeAllFlagged() throws {
+    public func removeAllFlagged() {
         defaults.delete(.flagged)
     }
     

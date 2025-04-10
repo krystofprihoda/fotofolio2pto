@@ -26,7 +26,7 @@ struct RegisterFailedView: View {
                         .frame(width: Constants.Dimens.frameSizeSmall, height: Constants.Dimens.frameSizeSmall)
                         .foregroundStyle(.white)
                     
-                    Text(L.Onboarding.somethingWentWrong)
+                    Text(L.General.somethingWentWrong)
                         .font(.body)
                         .bold()
                         .foregroundStyle(.white)
@@ -38,7 +38,7 @@ struct RegisterFailedView: View {
                     .font(.body)
                     .frame(height: Constants.Dimens.textFieldHeight)
                     .frame(maxWidth: .infinity)
-                    .padding()
+                    .padding(Constants.Dimens.spaceLarge)
                     .foregroundStyle(.white)
                     .background(.mainAccent)
                     .cornerRadius(Constants.Dimens.radiusXSmall)

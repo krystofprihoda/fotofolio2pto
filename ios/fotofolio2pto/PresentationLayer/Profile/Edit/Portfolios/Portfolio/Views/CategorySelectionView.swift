@@ -33,16 +33,16 @@ struct CategorySelectionView: View {
             ZStack(alignment: .trailing) {
                 TextField(L.Profile.portraitsExample, text: $searchText)
                     .font(.body)
-                    .padding()
+                    .padding(Constants.Dimens.spaceLarge)
                     .background(.textFieldBackground)
                     .frame(height: Constants.Dimens.textFieldHeight * Constants.Dimens.halfMultiplier)
                     .cornerRadius(Constants.Dimens.spaceSmall)
                 
                 Image(systemName: "magnifyingglass")
                     .foregroundStyle(.gray)
-                    .padding(.trailing)
+                    .padding(.trailing, Constants.Dimens.spaceLarge)
             }
-            .padding(.trailing)
+            .padding(.trailing, Constants.Dimens.spaceLarge)
 
             // Tags
             VStack {
@@ -66,7 +66,7 @@ struct CategorySelectionView: View {
                                                 .padding(.leading, Constants.Dimens.spaceXXSmall)
                                         }
                                     }
-                                    .padding()
+                                    .padding(Constants.Dimens.spaceLarge)
                                     .background(isSelected ? Color.mainAccent : Color.textFieldBackground)
                                     .clipShape(RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall))
                                 })
