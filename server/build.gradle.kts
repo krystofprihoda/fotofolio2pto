@@ -11,7 +11,7 @@ group = "cz.cvut.fit"
 version = "1.0.1"
 
 application {
-    mainClass.set("cz.cvut.fit.ApplicationKt")
+    mainClass = "cz.cvut.fit.ApplicationKt" // io.ktor.server.netty.EngineMain
 
     val isDevelopment = true
     applicationDefaultJvmArgs = listOf("-Dio.ktor.development=$isDevelopment")
@@ -36,18 +36,4 @@ dependencies {
     implementation("io.ktor:ktor-server-content-negotiation:$ktorVersion")
     implementation("com.google.firebase:firebase-admin:9.2.0")
     implementation("com.kborowy:firebase-auth-provider:1.5.0")
-}
-
-tasks {
-    shadowJar {
-        archiveBaseName.set("fotofolio")
-        archiveClassifier.set("")
-        archiveVersion.set("")
-
-        manifest {
-            attributes["Main-Class"] = application.mainClass.get()
-        }
-
-        mergeServiceFiles() // Required for some Ktor modules (e.g. Netty)
-    }
 }
