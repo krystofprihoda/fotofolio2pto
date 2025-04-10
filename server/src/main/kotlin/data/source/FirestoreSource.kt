@@ -12,7 +12,7 @@ import com.kborowy.authprovider.firebase.await
 import config.FirebaseInitializer
 import domain.model.Portfolio
 import java.io.File
-import java.io.FileInputStream
+import java.io.ByteArrayInputStream
 
 interface FirestoreSource {
     suspend fun <T> getDocument(
@@ -126,10 +126,17 @@ class FirebaseFirestoreSource : FirestoreSource {
             // For unauthenticated endpoints, we need to create a direct Firestore connection
             println("[FIRESTORE] Not yet initialized, creating for public endpoints")
 
+            // Read the key or env variable
+            val localFile = File("fotofolio-3-firebase-key.json")
+            val inputStream = if (localFile.exists()) {
+                localFile.inputStream()
+            } else {
+                ByteArrayInputStream(System.getenv("FIREBASE_KEY")?.toByteArray() ?: error("Firebase config not found"))
+            }
+
             // Create a direct connection to Firestore for unauthenticated endpoints only
-            val serviceAccountFile = File("fotofolio-3-firebase-key.json")
             val options = FirebaseOptions.builder()
-                .setCredentials(GoogleCredentials.fromStream(FileInputStream(serviceAccountFile)))
+                .setCredentials(GoogleCredentials.fromStream(inputStream))
                 .setProjectId("fotofolio-3")
                 .build()
 
