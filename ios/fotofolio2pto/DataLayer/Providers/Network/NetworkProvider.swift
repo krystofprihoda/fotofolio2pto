@@ -8,8 +8,8 @@
 import Foundation
 
 enum BaseURL: String {
-    case production = "https://api.yourdomain.com"
-    case test = "http://0.0.0.0:8080"
+    case alpha = "https://fotofolio2pto-alpha.up.railway.app"
+    case localhost = "http://0.0.0.0:8080"
 }
 
 enum HTTPMethod: String {

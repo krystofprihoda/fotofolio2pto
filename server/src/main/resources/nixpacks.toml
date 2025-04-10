@@ -1,0 +1,5 @@
+[phases.build]
+cmds = ["./gradlew buildFatJar"]
+
+[start]
+cmd = "./gradlew runFatJar"
