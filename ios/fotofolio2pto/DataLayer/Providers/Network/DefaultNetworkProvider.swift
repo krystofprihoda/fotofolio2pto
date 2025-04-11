@@ -38,11 +38,11 @@ final class DefaultNetworkProvider: NetworkProvider {
             request.httpBody = body
         }
         
-        if baseURL == .alpha { Logger.log(request: request) }
+        if baseURL != .prod { Logger.log(request: request) }
         
         let (data, response) = try await URLSession.shared.data(for: request)
         
-        if baseURL == .alpha { Logger.log(response: response, data: data) }
+        if baseURL != .prod { Logger.log(response: response, data: data) }
         
         guard let httpResponse = response as? HTTPURLResponse else {
             throw NetworkError.unknownError
@@ -99,11 +99,11 @@ final class DefaultNetworkProvider: NetworkProvider {
             request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         }
         
-        if baseURL == .alpha { Logger.log(request: request) }
+        if baseURL != .prod { Logger.log(request: request) }
         
         let (data, response) = try await URLSession.shared.data(for: request)
         
-        if baseURL == .alpha { Logger.log(response: response, data: data) }
+        if baseURL != .prod { Logger.log(response: response, data: data) }
         
         guard let httpResponse = response as? HTTPURLResponse else {
             throw NetworkError.unknownError
@@ -145,11 +145,11 @@ final class DefaultNetworkProvider: NetworkProvider {
         headers.forEach { request.setValue($0.value, forHTTPHeaderField: $0.key) }
         
         
-        if baseURL == .alpha { Logger.log(request: request) }
+        if baseURL != .prod { Logger.log(request: request) }
         
         let (data, response) = try await URLSession.shared.data(for: request)
         
-        if baseURL == .alpha { Logger.log(response: response, data: data) }
+        if baseURL != .prod { Logger.log(response: response, data: data) }
         
         guard let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) else {
             throw NetworkError.serverError(statusCode: (response as? HTTPURLResponse)?.statusCode ?? -1)
