@@ -2,4 +2,4 @@
 cmds = ["./gradlew buildFatJar"]
 
 [start]
-cmd = "java -Xmx384m -Xms256m -jar build/libs/*-all.jar"
+cmd = "./gradlew runFatJar"
