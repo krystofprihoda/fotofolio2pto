@@ -9,7 +9,7 @@ import Foundation
 
 enum BaseURL: String {
     case localhost = "http://0.0.0.0:8080"
-    case alpha = "https://fotofolio2pto-alpha.up.railway.app/"
+    case alpha = "https://fotofolio2pto-alpha.up.railway.app"
     case prod = ""
 }
 
