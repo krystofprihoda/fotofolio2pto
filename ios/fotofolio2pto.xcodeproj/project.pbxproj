@@ -109,7 +109,6 @@
 		FEC94DA12C24398400FFEB11 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FEC94DA02C24398400FFEB11 /* Assets.xcassets */; };
 		FEC94DA42C24398400FFEB11 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = FEC94DA32C24398400FFEB11 /* Base */; };
 		FEC94DAF2C243EC100FFEB11 /* BaseHostingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC94DAE2C243EC100FFEB11 /* BaseHostingController.swift */; };
-		FEC94DB12C243F6F00FFEB11 /* BasicView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC94DB02C243F6F00FFEB11 /* BasicView.swift */; };
 		FEC94DB32C24475100FFEB11 /* AppFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC94DB22C24475100FFEB11 /* AppFlowController.swift */; };
 		FEC94DB62C2447F000FFEB11 /* BaseFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC94DB52C2447F000FFEB11 /* BaseFlowController.swift */; };
 		FEC94DB82C244E9E00FFEB11 /* MainFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC94DB72C244E9E00FFEB11 /* MainFlowController.swift */; };
@@ -263,7 +262,6 @@
 		FEC94DA32C24398400FFEB11 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FEC94DA52C24398400FFEB11 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FEC94DAE2C243EC100FFEB11 /* BaseHostingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseHostingController.swift; sourceTree = "<group>"; };
-		FEC94DB02C243F6F00FFEB11 /* BasicView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicView.swift; sourceTree = "<group>"; };
 		FEC94DB22C24475100FFEB11 /* AppFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFlowController.swift; sourceTree = "<group>"; };
 		FEC94DB52C2447F000FFEB11 /* BaseFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseFlowController.swift; sourceTree = "<group>"; };
 		FEC94DB72C244E9E00FFEB11 /* MainFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFlowController.swift; sourceTree = "<group>"; };
@@ -751,7 +749,6 @@
 				FEC94DB92C246C3300FFEB11 /* Feed */,
 				FEC94DB42C2447AA00FFEB11 /* Utilities */,
 				FEC94DAC2C243EA400FFEB11 /* BaseViews */,
-				FEC94DB02C243F6F00FFEB11 /* BasicView.swift */,
 				FEC94DB72C244E9E00FFEB11 /* MainFlowController.swift */,
 			);
 			path = PresentationLayer;
@@ -1049,7 +1046,6 @@
 				FEC94DAF2C243EC100FFEB11 /* BaseHostingController.swift in Sources */,
 				FE5F8A892C2975FC001EE8AF /* LogoutUseCase.swift in Sources */,
 				FEC94E052C2701DF00FFEB11 /* Chat.swift in Sources */,
-				FEC94DB12C243F6F00FFEB11 /* BasicView.swift in Sources */,
 				FEC94DE52C2594E200FFEB11 /* PortfolioView.swift in Sources */,
 				FE3827D62DA30EDF007A933E /* SaveUserProfilePictureUseCase.swift in Sources */,
 				FEC94DDD2C247D7600FFEB11 /* ProfileViewModel.swift in Sources */,

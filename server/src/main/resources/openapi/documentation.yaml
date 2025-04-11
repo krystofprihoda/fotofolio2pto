@@ -1,23 +1,966 @@
-openapi: "3.0.3"
-info:
-  title: "Application API"
-  description: "Application API"
-  version: "1.0.0"
-servers:
-  - url: "http://0.0.0.0:8080"
-paths:
-  /:
-    get:
-      description: "Hello World!"
-      responses:
-        "200":
-          description: "OK"
+  openapi: 3.0.0
+  info:
+    title: Fotofolio API
+    description: Manage portfolios as a creator and find creators with ease as a user.
+    version: 1.0.0
+
+  components:
+    securitySchemes:
+      firebase:
+        type: http
+        scheme: bearer
+        bearerFormat: JWT
+        description: Firebase authentication token
+
+    schemas:
+      User:
+        type: object
+        properties:
+          id:
+            type: string
+            description: Unique identifier for the user
+          username:
+            type: string
+            description: Username
+          email:
+            type: string
+            format: email
+            description: User email address
+          fullName:
+            type: string
+            description: User's full name
+          location:
+            type: string
+            description: User's location
+          profilePicture:
+            type: string
+            description: URL to user's profile picture
+          rating:
+            type: object
+            additionalProperties:
+              type: integer
+            description: Map of user IDs to their rating values
+          creatorId:
+            type: string
+            description: Associated creator ID if user is a creator
+
+      Creator:
+        type: object
+        properties:
+          id:
+            type: string
+            description: Unique identifier for the creator
+          userId:
+            type: string
+            description: ID of the associated user
+          yearsOfExperience:
+            type: integer
+            description: Years of experience
+          description:
+            type: string
+            description: Creator's description
+          portfolioIds:
+            type: array
+            items:
+              type: string
+            description: List of portfolio IDs created by this creator
+
+      Portfolio:
+        type: object
+        properties:
+          id:
+            type: string
+            description: Unique identifier for the portfolio
+          creatorId:
+            type: string
+            description: Creator ID who owns this portfolio
+          authorUsername:
+            type: string
+            description: Username of the creator
+          name:
+            type: string
+            description: Portfolio name
+          description:
+            type: string
+            description: Portfolio description
+          photos:
+            type: array
+            items:
+              type: string
+            description: List of photo URLs
+          category:
+            type: array
+            items:
+              type: string
+            description: List of categories
+          timestamp:
+            type: integer
+            format: int64
+            description: Creation timestamp
+
+      Chat:
+        type: object
+        properties:
+          id:
+            type: string
+            description: Unique identifier for the chat
+          chatOwnerIds:
+            type: array
+            items:
+              type: string
+            description: IDs of the users in the chat
+          messageIds:
+            type: array
+            items:
+              type: string
+            description: IDs of messages in the chat
+          lastUpdated:
+            type: integer
+            format: int64
+            description: Last update timestamp
+          lastMessage:
+            type: string
+            description: Last message content
+          lastSenderId:
+            type: string
+            description: ID of the last message sender
+
+      Message:
+        type: object
+        properties:
+          id:
+            type: string
+            description: Unique identifier for the message
+          chatId:
+            type: string
+            description: ID of the chat this message belongs to
+          from:
+            type: string
+            description: Sender user ID
+          to:
+            type: string
+            description: Recipient user ID
+          body:
+            type: string
+            description: Message content
+          timestamp:
+            type: integer
+            format: int64
+            description: Message timestamp
+
+      CreatePortfolioDTO:
+        type: object
+        required:
+          - creatorId
+          - name
+          - description
+        properties:
+          creatorId:
+            type: string
+            description: ID of the creator
+          name:
+            type: string
+            description: Portfolio name
+          description:
+            type: string
+            description: Portfolio description
+          category:
+            type: array
+            items:
+              type: string
+            description: List of categories
+          photos:
+            type: array
+            items:
+              type: string
+              format: binary
+            description: Photo files to upload
+
+      UpdatePortfolioDTO:
+        type: object
+        required:
+          - name
+          - description
+          - category
+          - photoURLs
+        properties:
+          name:
+            type: string
+            description: Updated portfolio name
+          description:
+            type: string
+            description: Updated portfolio description
+          category:
+            type: string
+            description: Comma-separated list of categories
+          photoURLs:
+            type: string
+            description: Comma-separated list of photo URLs to keep
+
+      Error:
+        type: object
+        properties:
+          message:
+            type: string
+            description: Error message
+
+  paths:
+    # User Routes
+    /user/available:
+      get:
+        summary: Check username availability
+        description: Check if a username is available for registration
+        parameters:
+          - name: username
+            in: query
+            required: true
+            schema:
+              type: string
+        responses:
+          '204':
+            description: Username is available
+          '409':
+            description: Username is already taken
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'
+          '500':
+            description: Internal server error
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'
+
+    /user:
+      post:
+        summary: Create a new user
+        description: Register a new user in the system
+        security:
+          - firebase: []
+        requestBody:
+          required: true
           content:
-            text/plain:
+            application/json:
               schema:
-                type: "string"
-              examples:
-                Example#1:
-                  value: "Hello World!"
-components:
-  schemas: {}
+                $ref: '#/components/schemas/User'
+        responses:
+          '200':
+            description: User created successfully
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/User'
+          '400':
+            description: Bad request
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'
+
+      get:
+        summary: Search users
+        description: Search for users with optional query parameter
+        security:
+          - firebase: []
+        parameters:
+          - name: query
+            in: query
+            required: false
+            schema:
+              type: string
+            description: Search query string
+        responses:
+          '200':
+            description: List of users matching the search criteria
+            content:
+              application/json:
+                schema:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/User'
+          '400':
+            description: Bad request
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'
+
+    /user/{userId}:
+      get:
+        summary: Get user by ID
+        description: Retrieve a user by their ID
+        security:
+          - firebase: []
+        parameters:
+          - name: userId
+            in: path
+            required: true
+            schema:
+              type: string
+        responses:
+          '200':
+            description: User information
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/User'
+          '400':
+            description: Bad request
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'
+
+      patch:
+        summary: Update user fields
+        description: Update specific fields of a user
+        security:
+          - firebase: []
+        parameters:
+          - name: userId
+            in: path
+            required: true
+            schema:
+              type: string
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  location:
+                    type: string
+                    description: User's location
+        responses:
+          '200':
+            description: User updated successfully
+          '400':
+            description: Bad request
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'
+          '500':
+            description: Internal server error
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'
+
+    /user/{userId}/profilepicture:
+      post:
+        summary: Upload profile picture
+        description: Upload a profile picture for a user
+        security:
+          - firebase: []
+        parameters:
+          - name: userId
+            in: path
+            required: true
+            schema:
+              type: string
+        requestBody:
+          required: true
+          content:
+            multipart/form-data:
+              schema:
+                type: object
+                properties:
+                  profilepicture:
+                    type: string
+                    format: binary
+        responses:
+          '200':
+            description: Profile picture uploaded successfully
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    profilePictureUrl:
+                      type: string
+          '400':
+            description: Bad request
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'
+          '500':
+            description: Internal server error
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'
+
+    /user/{receiverId}/rating:
+      post:
+        summary: Rate a user
+        description: Submit a rating for another user
+        security:
+          - firebase: []
+        parameters:
+          - name: receiverId
+            in: path
+            required: true
+            schema:
+              type: string
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - rating
+                properties:
+                  rating:
+                    type: integer
+                    minimum: 1
+                    maximum: 5
+                    description: Rating value (1-5)
+        responses:
+          '200':
+            description: Rating saved successfully
+          '400':
+            description: Bad request
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'
+
+    # Creator Routes
+    /creator:
+      post:
+        summary: Create a creator profile
+        description: Create a new creator profile for a user
+        security:
+          - firebase: []
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Creator'
+        responses:
+          '200':
+            description: Creator profile created successfully
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    creatorId:
+                      type: string
+          '400':
+            description: Bad request
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'
+
+    /creator/{creatorId}:
+      get:
+        summary: Get creator by ID
+        description: Retrieve a creator profile by its ID
+        security:
+          - firebase: []
+        parameters:
+          - name: creatorId
+            in: path
+            required: true
+            schema:
+              type: string
+        responses:
+          '200':
+            description: Creator profile information
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Creator'
+          '400':
+            description: Bad request
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'
+
+      put:
+        summary: Update creator profile
+        description: Update a creator's entire profile
+        security:
+          - firebase: []
+        parameters:
+          - name: creatorId
+            in: path
+            required: true
+            schema:
+              type: string
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Creator'
+        responses:
+          '200':
+            description: Creator profile updated successfully
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    message:
+                      type: string
+                    creatorId:
+                      type: string
+          '400':
+            description: Bad request
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'
+          '500':
+            description: Internal server error
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'
+
+      patch:
+        summary: Update creator fields
+        description: Update specific fields of a creator profile
+        security:
+          - firebase: []
+        parameters:
+          - name: creatorId
+            in: path
+            required: true
+            schema:
+              type: string
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  yearsOfExperience:
+                    type: string
+                    description: Years of experience (as string that will be converted to int)
+                  description:
+                    type: string
+                    description: Creator's description
+        responses:
+          '200':
+            description: Creator profile updated successfully
+          '400':
+            description: Bad request
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'
+          '500':
+            description: Internal server error
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'
+
+    /creator/{creatorId}/user:
+      get:
+        summary: Get user by creator ID
+        description: Retrieve user information associated with a creator ID
+        security:
+          - firebase: []
+        parameters:
+          - name: creatorId
+            in: path
+            required: true
+            schema:
+              type: string
+        responses:
+          '200':
+            description: User information
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/User'
+          '400':
+            description: Bad request
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'
+
+    /creator/{creatorId}/portfolio:
+      get:
+        summary: Get portfolios by creator ID
+        description: Retrieve all portfolios created by a specific creator
+        security:
+          - firebase: []
+        parameters:
+          - name: creatorId
+            in: path
+            required: true
+            schema:
+              type: string
+        responses:
+          '200':
+            description: List of portfolios
+            content:
+              application/json:
+                schema:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Portfolio'
+          '400':
+            description: Bad request
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'
+
+    # Portfolio Routes
+    /portfolio:
+      post:
+        summary: Create a new portfolio
+        description: Create a new portfolio with photos
+        security:
+          - firebase: []
+        requestBody:
+          required: true
+          content:
+            multipart/form-data:
+              schema:
+                type: object
+                required:
+                  - creatorId
+                  - name
+                  - description
+                properties:
+                  creatorId:
+                    type: string
+                    description: ID of the creator
+                  name:
+                    type: string
+                    description: Portfolio name
+                  description:
+                    type: string
+                    description: Portfolio description
+                  category:
+                    type: string
+                    description: Comma-separated list of categories
+                  photos:
+                    type: array
+                    items:
+                      type: string
+                      format: binary
+                    description: Photo files to upload
+        responses:
+          '201':
+            description: Portfolio created successfully
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      description: ID of the created portfolio
+          '400':
+            description: Bad request
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'
+
+      get:
+        summary: Search or get portfolios by IDs
+        description: Search portfolios by categories or get portfolios by specific IDs
+        security:
+          - firebase: []
+        parameters:
+          - name: id
+            in: query
+            required: false
+            schema:
+              type: string
+            description: Comma-separated list of portfolio IDs
+          - name: category
+            in: query
+            required: false
+            schema:
+              type: string
+            description: Comma-separated list of categories to filter by
+          - name: sortBy
+            in: query
+            required: false
+            schema:
+              type: string
+              enum: [timestamp, rating]
+            description: Sort criterion (timestamp or rating)
+        responses:
+          '200':
+            description: List of portfolios
+            content:
+              application/json:
+                schema:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Portfolio'
+          '400':
+            description: Bad request
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'
+
+    /portfolio/{portfolioId}:
+      get:
+        summary: Get portfolio by ID
+        description: Retrieve a portfolio by its ID
+        security:
+          - firebase: []
+        parameters:
+          - name: portfolioId
+            in: path
+            required: true
+            schema:
+              type: string
+        responses:
+          '200':
+            description: Portfolio information
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Portfolio'
+          '400':
+            description: Bad request
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'
+
+      put:
+        summary: Update portfolio
+        description: Update a portfolio's information and photos
+        security:
+          - firebase: []
+        parameters:
+          - name: portfolioId
+            in: path
+            required: true
+            schema:
+              type: string
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdatePortfolioDTO'
+        responses:
+          '200':
+            description: Portfolio updated successfully
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Portfolio'
+          '400':
+            description: Bad request
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'
+          '500':
+            description: Internal server error
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'
+
+      delete:
+        summary: Delete portfolio
+        description: Delete a portfolio and all its photos
+        security:
+          - firebase: []
+        parameters:
+          - name: portfolioId
+            in: path
+            required: true
+            schema:
+              type: string
+        responses:
+          '200':
+            description: Portfolio deleted successfully
+          '400':
+            description: Bad request
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'
+          '500':
+            description: Internal server error
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'
+
+    # Message/Chat Routes
+    /chat:
+      post:
+        summary: Create a new chat
+        description: Create a new chat with another user and send the first message
+        security:
+          - firebase: []
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - receiverId
+                  - message
+                properties:
+                  receiverId:
+                    type: string
+                    description: ID of the receiver
+                  message:
+                    type: string
+                    description: First message content
+        responses:
+          '201':
+            description: Chat created successfully
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Chat'
+          '400':
+            description: Bad request
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'
+
+      get:
+        summary: Get chats or specific chat with a user
+        description: Get all chats or a specific chat with another user
+        security:
+          - firebase: []
+        parameters:
+          - name: receiverId
+            in: query
+            required: false
+            schema:
+              type: string
+            description: ID of the receiver to get a specific chat
+        responses:
+          '200':
+            description: Chat information or list of chats
+            content:
+              application/json:
+                schema:
+                  oneOf:
+                    - $ref: '#/components/schemas/Chat'
+                    - type: array
+                      items:
+                        $ref: '#/components/schemas/Chat'
+          '400':
+            description: Bad request
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'
+
+    /chat/{chatId}:
+      get:
+        summary: Get chat by ID
+        description: Retrieve a chat by its ID
+        security:
+          - firebase: []
+        parameters:
+          - name: chatId
+            in: path
+            required: true
+            schema:
+              type: string
+        responses:
+          '200':
+            description: Chat information
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Chat'
+          '400':
+            description: Bad request
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'
+
+    /chat/{chatId}/message:
+      post:
+        summary: Send a message
+        description: Send a message in an existing chat
+        security:
+          - firebase: []
+        parameters:
+          - name: chatId
+            in: path
+            required: true
+            schema:
+              type: string
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - message
+                properties:
+                  message:
+                    type: string
+                    description: Message content
+        responses:
+          '201':
+            description: Message sent successfully
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Chat'
+          '400':
+            description: Bad request
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'
+
+      get:
+        summary: Get messages in a chat
+        description: Retrieve all messages in a specific chat
+        security:
+          - firebase: []
+        parameters:
+          - name: chatId
+            in: path
+            required: true
+            schema:
+              type: string
+        responses:
+          '200':
+            description: List of messages
+            content:
+              application/json:
+                schema:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Message'
+          '400':
+            description: Bad request
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'
