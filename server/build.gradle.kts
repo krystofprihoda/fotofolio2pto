@@ -37,3 +37,17 @@ dependencies {
     implementation("com.google.firebase:firebase-admin:9.2.0")
     implementation("com.kborowy:firebase-auth-provider:1.5.0")
 }
+
+tasks {
+    shadowJar {
+        archiveBaseName.set("fotofolio")
+        archiveClassifier.set("")
+        archiveVersion.set("")
+
+        manifest {
+            attributes["Main-Class"] = application.mainClass.get()
+        }
+
+        mergeServiceFiles()
+    }
+}
