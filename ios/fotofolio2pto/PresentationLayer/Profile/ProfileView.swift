@@ -58,43 +58,38 @@ struct ProfileView: View {
     
     var trailingButtons: some View {
         HStack(spacing: Constants.Dimens.spaceXSmall) {
-            if viewModel.state.isLoading {
-                ProgressView()
-                    .progressViewStyle(.circular)
+            if viewModel.state.isProfileOwner, viewModel.state.creatorData != nil {
+                Button(action: {
+                    viewModel.onIntent(.createNewPortfolio)
+                }) {
+                    Image(systemName: "plus")
+                        .resizable()
+                        .aspectRatio(1, contentMode: .fit)
+                        .frame(height: Constants.Dimens.frameSizeXSmall)
+                        .foregroundColor(.gray)
+                }
+            }
+            
+            if viewModel.state.isProfileOwner {
+                Button(action: {
+                    viewModel.onIntent(.showProfileSettings)
+                }, label: {
+                    Image(systemName: "slider.horizontal.3")
+                        .resizable()
+                        .aspectRatio(1, contentMode: .fit)
+                        .frame(height: Constants.Dimens.frameSizeXSmall)
+                        .foregroundColor(.gray)
+                })
             } else {
-                if viewModel.state.isProfileOwner, viewModel.state.creatorData != nil {
-                    Button(action: {
-                        viewModel.onIntent(.createNewPortfolio)
-                    }) {
-                        Image(systemName: "plus")
-                            .resizable()
-                            .aspectRatio(1, contentMode: .fit)
-                            .frame(height: Constants.Dimens.frameSizeXSmall)
-                            .foregroundColor(.gray)
-                    }
-                }
-                
-                if viewModel.state.isProfileOwner {
-                    Button(action: {
-                        viewModel.onIntent(.showProfileSettings)
-                    }, label: {
-                        Image(systemName: "slider.horizontal.3")
-                            .resizable()
-                            .aspectRatio(1, contentMode: .fit)
-                            .frame(height: Constants.Dimens.frameSizeXSmall)
-                            .foregroundColor(.gray)
-                    })
-                } else {
-                    Button(action: {
-                        viewModel.onIntent(.sendMessage)
-                    }, label: {
-                        Image(systemName: "paperplane")
-                            .resizable()
-                            .aspectRatio(1, contentMode: .fit)
-                            .frame(height: Constants.Dimens.frameSizeXSmall)
-                            .foregroundColor(.gray)
-                    })
-                }
+                Button(action: {
+                    viewModel.onIntent(.sendMessage)
+                }, label: {
+                    Image(systemName: "paperplane")
+                        .resizable()
+                        .aspectRatio(1, contentMode: .fit)
+                        .frame(height: Constants.Dimens.frameSizeXSmall)
+                        .foregroundColor(.gray)
+                })
             }
         }
     }
