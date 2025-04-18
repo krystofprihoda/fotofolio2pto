@@ -29,19 +29,19 @@ enum NetworkError: Error {
     var localizedDescription: String {
         switch self {
         case .badURL:
-            return "Invalid URL."
+            return "Neplatná URL."
         case .unauthorized:
-            return "Unauthorized request."
+            return "Neoprávněný požadavek."
         case .notFound:
-            return "Requested resource was not found."
+            return "Zdroj požadavku nebyl nalezen."
         case .serverError(let statusCode):
-            return "Server error (status code: \(statusCode))."
+            return "Chyba serveru (status: \(statusCode))."
         case .decodingError:
-            return "Failed to decode response."
+            return "Chyba při zpracování odpovědi."
         case .unknownError:
-            return "An unknown error occurred."
+            return "Došlo k neznámé chybě."
         case .alreadyTaken:
-            return "Already taken."
+            return "Zdroj už existuje."
         }
     }
 }

@@ -49,8 +49,16 @@ final class EditPortfolioViewModel: BaseViewModel, ViewModel, ObservableObject {
         case .updateExisting(let portfolio):
             state.portfolioId = portfolio.id
             state.name = portfolio.name
-            state.description = portfolio.description
             state.media = portfolio.photos
+            
+            state.price = portfolio.price
+            if case .fixed(let priceValue) = portfolio.price {
+                state.priceInput = String(priceValue)
+            } else {
+                state.priceInput = "0"
+            }
+            
+            state.description = portfolio.description
             state.selectedCategories = portfolio.category
         }
     }
@@ -70,6 +78,8 @@ final class EditPortfolioViewModel: BaseViewModel, ViewModel, ObservableObject {
         var portfolioId: String? = nil
         var name = ""
         var description = ""
+        var price: Price = .priceOnRequest
+        var priceInput = "0"
         var media: [IImage] = []
         var selectedCategories: [String] = []
         var filteredCategories = photoCategories
@@ -96,6 +106,8 @@ final class EditPortfolioViewModel: BaseViewModel, ViewModel, ObservableObject {
         case saveChanges
         case onAlertDataChanged(AlertData?)
         case setToastData(ToastData?)
+        case setPriceOption(Price)
+        case setPriceInput(String)
     }
 
     @discardableResult
@@ -114,6 +126,8 @@ final class EditPortfolioViewModel: BaseViewModel, ViewModel, ObservableObject {
             case .saveChanges: await saveChanges()
             case .onAlertDataChanged(let alertData): onAlertDataChanged(alertData: alertData)
             case .setToastData(let toast): setToastData(toast)
+            case .setPriceOption(let priceOption): setPriceOption(priceOption)
+            case .setPriceInput(let input): setPriceInput(input)
             }
         })
     }
@@ -129,6 +143,25 @@ final class EditPortfolioViewModel: BaseViewModel, ViewModel, ObservableObject {
             self?.state.media = media
             self?.updateSaveButtonVisibility()
         }
+    }
+    
+    private func setPriceOption(_ priceOption: Price) {
+        state.price = priceOption
+    }
+    
+    private func setPriceInput(_ input: String) {
+        guard !input.isEmpty else { return }
+        
+        if let inputNumber = Int(input) {
+            state.priceInput = input
+            state.price = .fixed(inputNumber)
+            
+            updateSaveButtonVisibility()
+            return
+        }
+        
+        state.priceInput = ""
+        state.toastData = .init(message: L.Profile.notIntegerError, type: .error)
     }
     
     private func addCategory(_ category: String) {
@@ -189,6 +222,7 @@ final class EditPortfolioViewModel: BaseViewModel, ViewModel, ObservableObject {
                 creatorId: state.creatorId,
                 name: state.name,
                 photos: state.media,
+                price: state.price,
                 description: state.description,
                 category: state.selectedCategories
             )
@@ -201,7 +235,7 @@ final class EditPortfolioViewModel: BaseViewModel, ViewModel, ObservableObject {
     }
     
     private func updateSaveButtonVisibility() {
-        if !state.name.isEmpty, !state.description.isEmpty, !state.selectedCategories.isEmpty, !media.isEmpty {
+        if !state.name.isEmpty, !state.description.isEmpty, !state.selectedCategories.isEmpty, !media.isEmpty, let _ = Int(state.priceInput) {
             state.isSaveButtonDisabled = false
             return
         }
@@ -238,6 +272,7 @@ final class EditPortfolioViewModel: BaseViewModel, ViewModel, ObservableObject {
                         return nil
                     }
                 },
+                price: state.price,
                 description: state.description,
                 category: state.selectedCategories
             )

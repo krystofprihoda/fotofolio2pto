@@ -41,6 +41,28 @@ struct PortfolioDetailView: View {
             /// Carousel
             PhotoCarouselView(mediaWidth: mediaWidth, photos: viewModel.state.portfolio.photos)
             
+            /// Price
+            HStack(spacing: Constants.Dimens.spaceXSmall) {
+                if case .fixed(let price) = viewModel.state.portfolio.price {
+                    Text(String(price) + L.Selection.czk)
+                        .font(.footnote)
+                        .padding(Constants.Dimens.spaceSmall)
+                        .background(.orange)
+                        .foregroundColor(.white)
+                        .cornerRadius(Constants.Dimens.radiusXSmall)
+                } else {
+                    Text(L.Profile.priceOnRequest)
+                        .font(.footnote)
+                        .padding(Constants.Dimens.spaceSmall)
+                        .background(.orange)
+                        .foregroundColor(.white)
+                        .cornerRadius(Constants.Dimens.radiusXSmall)
+                }
+                
+                Spacer()
+            }
+            .padding(.horizontal, Constants.Dimens.spaceSemiXLarge)
+            
             /// Description
             HStack {
                 Text(viewModel.state.portfolio.description)
@@ -49,7 +71,6 @@ struct PortfolioDetailView: View {
                 
                 Spacer()
             }
-            .padding(.top, Constants.Dimens.spaceXSmall)
             .padding(.horizontal, Constants.Dimens.spaceSemiXLarge)
         }
         .padding(.bottom, Constants.Dimens.spaceSemiMedium)

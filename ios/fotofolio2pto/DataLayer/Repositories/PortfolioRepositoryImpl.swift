@@ -58,7 +58,7 @@ public class PortfolioRepositoryImpl: PortfolioRepository {
         return portfolios
     }
     
-    public func updatePortfolio(id: String, name: String, photos: [String], description: String, category: [String]) async throws -> Portfolio {
+    public func updatePortfolio(id: String, name: String, photos: [String], price: Price, description: String, category: [String]) async throws -> Portfolio {
         guard let token: String = encryptedStorage.read(.token) else { throw AuthError.tokenRetrievalFailed }
         
         let headers = [
@@ -70,6 +70,12 @@ public class PortfolioRepositoryImpl: PortfolioRepository {
             "name": name,
             "description": description
         ]
+        
+        if case .fixed(let value) = price {
+            body["price"] = String(value)
+        } else {
+            body["price"] = "0"
+        }
         
         if !category.isEmpty {
             var commaCategories = ""
@@ -161,16 +167,22 @@ public class PortfolioRepositoryImpl: PortfolioRepository {
         defaults.delete(.flagged)
     }
     
-    public func createPortfolio(creatorId: String, name: String, photos: [IImage], description: String, category: [String]) async throws {
+    public func createPortfolio(creatorId: String, name: String, photos: [IImage], price: Price, description: String, category: [String]) async throws {
         guard let token: String = encryptedStorage.read(.token) else { throw AuthError.tokenRetrievalFailed }
 
         let boundary = UUID().uuidString
         var body = Data()
+        
+        var priceValue = "0"
+        if case .fixed(let value) = price {
+            priceValue = String(value)
+        }
 
         // Append text fields
         body.appendFormField(name: "creatorId", value: creatorId, boundary: boundary)
         body.appendFormField(name: "name", value: name, boundary: boundary)
         body.appendFormField(name: "description", value: description, boundary: boundary)
+        body.appendFormField(name: "price", value: priceValue, boundary: boundary)
         body.appendFormField(name: "category", value: category.joined(separator: ","), boundary: boundary)
 
         // Append images

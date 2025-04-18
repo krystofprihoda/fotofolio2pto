@@ -79,6 +79,7 @@ public struct L {
         public static let profileText = "Profilový popis"
         public static let profileLoadFailed = "Načítání profilu selhalo, zkuste to prosím znovu."
         public static let portfolioLoadFailed = "Načítání portfolií selhalo, zkuste to prosím znovu."
+        public static let czk = " Kč"
     }
     
     public enum Search {
@@ -146,5 +147,10 @@ public struct L {
         public static let profileLoadFailed = "Načítání profilu selhalo, zkuste to prosím znovu."
         public static let profileUpdateFailed = "Aktualizace profilu selhala, zkuste to prosím znovu."
         public static let profilePicUpdateFailed = "Aktualizace profilové fotky selhala, zkuste to prosím znovu."
+        public static let price = "Cena"
+        public static let priceInCZK = "Cena (Kč)"
+        public static let priceOnRequest = "Cena dohodou"
+        public static let priceFixed = "Fixní"
+        public static let notIntegerError = "Špatný vstup, zadejte číselnou hodnotu bez mezer."
     }
 }

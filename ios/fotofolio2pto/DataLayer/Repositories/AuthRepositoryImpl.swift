@@ -42,7 +42,7 @@ public class AuthRepositoryImpl: AuthRepository {
         return UserAuthDetails(uid: result.user.uid, token: token)
     }
     
-    public func getLoggedInUser() -> String? {
+    public func readLoggedInUser() -> String? {
         return encryptedStorage.read(.userId)
     }
     

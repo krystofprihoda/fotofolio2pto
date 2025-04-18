@@ -1,5 +1,5 @@
 //
-//  GetLoggedInUserUseCase.swift
+//  ReadLoggedInUserUseCase.swift
 //  fotofolio2pto
 //
 //  Created by Kryštof Příhoda on 25.06.2024.
@@ -7,11 +7,11 @@
 
 import Foundation
 
-public protocol GetLoggedInUserUseCase {
+public protocol ReadLoggedInUserUseCase {
     func execute() -> String?
 }
 
-public struct GetLoggedInUserUseCaseImpl: GetLoggedInUserUseCase {
+public struct ReadLoggedInUserUseCaseImpl: ReadLoggedInUserUseCase {
     
     private let authRepository: AuthRepository
     
@@ -20,6 +20,6 @@ public struct GetLoggedInUserUseCaseImpl: GetLoggedInUserUseCase {
     }
     
     public func execute() -> String? {
-        authRepository.getLoggedInUser()
+        authRepository.readLoggedInUser()
     }
 }

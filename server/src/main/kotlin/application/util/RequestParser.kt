@@ -21,6 +21,7 @@ class DefaultRequestParser : RequestParser {
         var creatorId: String? = null
         var name: String? = null
         var description: String? = null
+        var price: String? = null
         var category: List<String> = emptyList()
         val photoBytesList = mutableListOf<Pair<String, ByteArray>>()
 
@@ -31,6 +32,7 @@ class DefaultRequestParser : RequestParser {
                         "creatorId" -> creatorId = part.value
                         "name" -> name = part.value
                         "description" -> description = part.value
+                        "price" -> price = part.value
                         "category" -> {
                             category = part.value.split(",").map { it.trim() }
                         }
@@ -62,11 +64,13 @@ class DefaultRequestParser : RequestParser {
         requireNotNull(creatorId) { "creatorId is required" }
         requireNotNull(name) { "name is required" }
         requireNotNull(description) { "description is required" }
+        requireNotNull(price) { "price is required" }
 
         return CreatePortfolioDTO(
             creatorId = creatorId!!,
             name = name!!,
             description = description!!,
+            price = price!!.toInt(),
             category = category,
             photos = photoBytesList
         )
@@ -75,6 +79,7 @@ class DefaultRequestParser : RequestParser {
     override suspend fun parseUpdatePortfolioDTO(portfolioId: String, requestBody: Map<String, String>): UpdatePortfolioDTO {
         val name = requestBody["name"]
         val description = requestBody["description"]
+        val price = requestBody["price"]
         val categoryRaw = requestBody["category"]
         val photoURLsRaw = requestBody["photoURLs"]
 
@@ -82,6 +87,7 @@ class DefaultRequestParser : RequestParser {
         requireNotNull(description) { "description is required" }
         requireNotNull(categoryRaw) { "category is required" }
         requireNotNull(photoURLsRaw) { "photoURLs is required" }
+        requireNotNull(price) { "price is required" }
 
         val category = parseCommaSeparatedList(categoryRaw) ?: emptyList()
         val photoURLs = parseCommaSeparatedList(photoURLsRaw) ?: emptyList()
@@ -90,6 +96,7 @@ class DefaultRequestParser : RequestParser {
             portfolioId = portfolioId,
             name = name,
             description = description,
+            price = price.toInt(),
             category = category,
             photoURLs = photoURLs
         )

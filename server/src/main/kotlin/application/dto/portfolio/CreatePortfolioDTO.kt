@@ -4,6 +4,7 @@ data class CreatePortfolioDTO(
     val creatorId: String,
     val name: String,
     val description: String,
+    val price: Int,
     val category: List<String>,
     val photos: List<Pair<String, ByteArray>>
 )

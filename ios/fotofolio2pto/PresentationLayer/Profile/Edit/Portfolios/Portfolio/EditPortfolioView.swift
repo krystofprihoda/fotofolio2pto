@@ -47,6 +47,35 @@ struct EditPortfolioView: View {
                 // Photos
                 photosScrollView
                 
+                // Price
+                Text(L.Profile.priceInCZK)
+                    .font(.body)
+                    .bold()
+                    .padding(.leading, Constants.Dimens.spaceLarge)
+                
+                Picker("", selection: Binding(get: { viewModel.state.price }, set: { viewModel.onIntent(.setPriceOption($0)) })) {
+                    Text(L.Profile.priceOnRequest).tag(Price.priceOnRequest)
+                    Text(L.Profile.priceFixed).tag(Price.fixed(0))
+                }
+                .pickerStyle(.segmented)
+                .padding(.horizontal, Constants.Dimens.spaceLarge)
+                
+                if (viewModel.state.price != .priceOnRequest) {
+                    TextField(
+                        L.Profile.price,
+                        text: Binding(
+                            get: { viewModel.state.priceInput },
+                            set: { viewModel.onIntent(.setPriceInput($0)) }
+                        )
+                    )
+                    .font(.body)
+                    .frame(height: Constants.Dimens.textFieldHeight)
+                    .padding(Constants.Dimens.spaceLarge)
+                    .background(.textFieldBackground)
+                    .cornerRadius(Constants.Dimens.radiusXSmall)
+                    .padding(.horizontal, Constants.Dimens.spaceLarge)
+                }
+                
                 // Description
                 VStack(alignment: .leading, spacing: Constants.Dimens.spaceSmall) {
                     Text(L.Profile.shortDescription)
@@ -220,7 +249,7 @@ struct EditPortfolioView: View {
         }) {
             Text(L.General.cancel)
         }
-        .foregroundColor(.black)
+        .foregroundColor(viewModel.state.isLoading ? .clear : .black)
         .disabled(viewModel.state.isLoading)
     }
     

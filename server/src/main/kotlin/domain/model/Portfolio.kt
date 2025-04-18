@@ -10,6 +10,7 @@ data class Portfolio(
     val authorUsername: String = "",
     val name: String = "",
     val description: String = "",
+    val price: Int = 0,
     val photos: List<String> = emptyList(),
     val category: List<String> = emptyList(),
     val timestamp: Long = System.currentTimeMillis()
@@ -22,6 +23,7 @@ fun Portfolio.toMap(): Map<String, Any> {
         "authorUsername" to authorUsername,
         "name" to name,
         "description" to description,
+        "price" to price,
         "photos" to photos,
         "category" to category,
         "timestamp" to timestamp

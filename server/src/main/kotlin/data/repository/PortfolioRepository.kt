@@ -38,6 +38,7 @@ class PortfolioRepositoryImpl(
             "creatorId" to createPortfolioDTO.creatorId,
             "name" to createPortfolioDTO.name,
             "description" to createPortfolioDTO.description,
+            "price" to createPortfolioDTO.price,
             "category" to createPortfolioDTO.category,
             "photos" to emptyList<String>(),
             "timestamp" to System.currentTimeMillis()
@@ -58,6 +59,7 @@ class PortfolioRepositoryImpl(
             authorUsername = authorUsername,
             name = createPortfolioDTO.name,
             description = createPortfolioDTO.description,
+            price = createPortfolioDTO.price,
             photos = photoUrls,
             category = createPortfolioDTO.category,
             timestamp = System.currentTimeMillis()
@@ -133,6 +135,7 @@ class PortfolioRepositoryImpl(
         val updates = mapOf(
             "name" to updatePortfolioDTO.name,
             "description" to updatePortfolioDTO.description,
+            "price" to updatePortfolioDTO.price,
             "category" to updatePortfolioDTO.category,
             "photos" to updatePortfolioDTO.photoURLs
         )

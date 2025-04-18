@@ -12,6 +12,6 @@ public protocol AuthRepository {
     func registerUser(email: String, password: String) async throws
     func logout() throws
     func loginWithCredentials(email: String, password: String) async throws -> UserAuthDetails
-    func getLoggedInUser() -> String?
+    func readLoggedInUser() -> String?
     func readLastSignedInEmail() -> String
 }

@@ -8,15 +8,13 @@
 import Foundation
 import SwiftUI
 
-// Move
-let LOREMFLICKR = "https://loremflickr.com/1000/1000/"
-
 public struct Portfolio: Identifiable, Equatable {
     public let id: String
     public let creatorId: String
     public let authorUsername: String
     public let name: String
     public let photos: [IImage]
+    public let price: Price
     public let description: String
     public let category: [String]
     public let timestamp: Date
@@ -27,6 +25,7 @@ public struct Portfolio: Identifiable, Equatable {
         authorUsername: String,
         name: String,
         photos: [IImage],
+        price: Price,
         description: String,
         category: [String],
         timestamp: Date
@@ -36,6 +35,7 @@ public struct Portfolio: Identifiable, Equatable {
         self.authorUsername = authorUsername
         self.name = name
         self.photos = photos
+        self.price = price
         self.description = description
         self.category = category
         self.timestamp = timestamp
@@ -48,7 +48,7 @@ public struct Portfolio: Identifiable, Equatable {
 
 extension Portfolio: Codable {
     enum CodingKeys: String, CodingKey {
-        case id, creatorId, authorUsername, name, photos, description, category, timestamp
+        case id, creatorId, authorUsername, name, photos, price, description, category, timestamp
     }
     
     public init(from decoder: Decoder) throws {
@@ -64,6 +64,12 @@ extension Portfolio: Codable {
                 return IImage(src: .remote(urlString))
             }
             
+            let priceDecoded = try container.decode(Int.self, forKey: .price)
+            if priceDecoded == 0 {
+                price = .priceOnRequest
+            } else {
+                price = .fixed(priceDecoded)
+            }
             description = try container.decode(String.self, forKey: .description)
             category = try container.decode([String].self, forKey: .category)
         
@@ -89,6 +95,12 @@ extension Portfolio: Codable {
         }
         try container.encode(photoURLs, forKey: .photos)
         
+        if case .priceOnRequest = price {
+            try container.encode(0, forKey: .price)
+        } else if case .fixed(let fixedPrice) = price {
+            try container.encode(fixedPrice, forKey: .price)
+        }
+        
         try container.encode(description, forKey: .description)
         try container.encode(category, forKey: .category)
         
@@ -96,153 +108,7 @@ extension Portfolio: Codable {
     }
 }
 
-//extension Portfolio {
-//    static let sampleData: [Portfolio] = [
-//        dummyPortfolio1,
-//        dummyPortfolio2,
-//        dummyPortfolio3,
-//        dummyPortfolio4,
-//        dummyPortfolio5,
-//        dummyPortfolio6,
-//        dummyPortfolio7,
-//        dummyPortfolio8
-//    ]
-//    
-//    static var dummyPortfolio1: Portfolio {
-//        Portfolio(
-//            id: 1,
-//            author: .dummy1,
-//            creator: .dummy1,
-//            name: "Portréty",
-//            photos: [
-//                IImage(src: .remote(URL(string: LOREMFLICKR + "/portrait")!)),
-//                IImage(src: .remote(URL(string: LOREMFLICKR + "/person")!)),
-//                IImage(src: .remote(URL(string: LOREMFLICKR + "/animal")!)),
-//                IImage(src: .remote(URL(string: LOREMFLICKR + "/portrait")!))
-//            ],
-//            description: "Baví mě zachycovat autentické okamžiky a pracovat s lidmi. Nafotím vám portréty, které dokonale zachytí vaši osobu a povahu!",
-//            category: ["Portrét", "Rodina"],
-//            timestamp: Calendar.current.date(byAdding: .day, value: -5, to: Date())!
-//        )
-//    }
-//
-//    static var dummyPortfolio2: Portfolio {
-//        Portfolio(
-//            id: 2,
-//            author: .dummy2,
-//            creator: .dummy2,
-//            name: "Lifestyle",
-//            photos: [
-//                IImage(src: .remote(URL(string: LOREMFLICKR + "/animal")!)),
-//                IImage(src: .remote(URL(string: LOREMFLICKR + "/person")!)),
-//                IImage(src: .remote(URL(string: LOREMFLICKR + "/animal")!))
-//            ],
-//            description: "I takovéhle lifestylové fotografie mohou být Vaše!",
-//            category: ["Portrét"],
-//            timestamp: Calendar.current.date(byAdding: .day, value: 3, to: Date())!
-//        )
-//    }
-//
-//    static var dummyPortfolio3: Portfolio {
-//        Portfolio(
-//            id: 3,
-//            author: .dummy1,
-//            creator: .dummy3,
-//            name: "Svatby",
-//            photos: [
-//                IImage(src: .remote(URL(string: LOREMFLICKR + "/wedding")!)),
-//                IImage(src: .remote(URL(string: LOREMFLICKR + "/wedding")!)),
-//                IImage(src: .remote(URL(string: LOREMFLICKR + "/wedding")!))
-//            ],
-//            description: "Dojedu kamkoliv po republice a zachytím Váš speciální den.",
-//            category: ["Svatba"],
-//            timestamp: Calendar.current.date(byAdding: .day, value: 1, to: Date())!
-//        )
-//    }
-//
-//    static var dummyPortfolio4: Portfolio {
-//        Portfolio(
-//            id: 4,
-//            author: .dummy3,
-//            creator: .dummy4,
-//            name: "karlova architektura",
-//            photos: [
-//                IImage(src: .remote(URL(string: LOREMFLICKR + "/architecture")!)),
-//                IImage(src: .remote(URL(string: LOREMFLICKR + "/dog")!)),
-//                IImage(src: .remote(URL(string: LOREMFLICKR + "/architecture")!))
-//            ],
-//            description: "fotim skvele a nafotim cokoliv.",
-//            category: ["Interiér", "Exteriér", "Architektura"],
-//            timestamp: Calendar.current.date(byAdding: .day, value: -6, to: Date())!
-//        )
-//    }
-//
-//    static var dummyPortfolio5: Portfolio {
-//        Portfolio(
-//            id: 5,
-//            author: .dummy5,
-//            creator: .dummy5,
-//            name: "Svatby",
-//            photos: [
-//                IImage(src: .remote(URL(string: LOREMFLICKR + "/wedding")!)),
-//                IImage(src: .remote(URL(string: LOREMFLICKR + "/wedding")!)),
-//                IImage(src: .remote(URL(string: LOREMFLICKR + "/wedding")!))
-//            ],
-//            description: "Svatby jsou moje srdcovka, svěřte se do rukou profesionála.",
-//            category: ["Svatba"],
-//            timestamp: Calendar.current.date(byAdding: .day, value: 10, to: Date())!
-//        )
-//    }
-//
-//    static var dummyPortfolio6: Portfolio {
-//        Portfolio(
-//            id: 6,
-//            author: .dummy2,
-//            creator: .dummy3,
-//            name: "Svatby",
-//            photos: [
-//                IImage(src: .remote(URL(string: LOREMFLICKR + "/wedding")!)),
-//                IImage(src: .remote(URL(string: LOREMFLICKR + "/wedding")!)),
-//                IImage(src: .remote(URL(string: LOREMFLICKR + "/wedding")!))
-//            ],
-//            description: "Svatbám se věnuji dlouhodobě a postarám se o to, abych zachytil každý okamžik Vašeho speciálního dne.",
-//            category: ["Svatba"],
-//            timestamp: Calendar.current.date(byAdding: .day, value: 11, to: Date())!
-//        )
-//    }
-//
-//    static var dummyPortfolio7: Portfolio {
-//        Portfolio(
-//            id: 7,
-//            author: .dummy1,
-//            creator: .dummy4,
-//            name: "Architektura",
-//            photos: [
-//                IImage(src: .remote(URL(string: LOREMFLICKR + "/architecture")!)),
-//                IImage(src: .remote(URL(string: LOREMFLICKR + "/architecture")!)),
-//                IImage(src: .remote(URL(string: LOREMFLICKR + "/architecture")!))
-//            ],
-//            description: "Dokonale zachytím interiér i exteriér Vaší lokace.",
-//            category: ["Reality"],
-//            timestamp: Calendar.current.date(byAdding: .day, value: -1, to: Date())!
-//        )
-//    }
-//    
-//    static var dummyPortfolio8: Portfolio {
-//        Portfolio(
-//            id: 8,
-//            author: .dummy6,
-//            creator: .dummy2,
-//            name: "Portréty",
-//            photos: [
-//                IImage(src: .remote(URL(string: LOREMFLICKR + "/portrait")!)),
-//                IImage(src: .remote(URL(string: LOREMFLICKR + "/person")!)),
-//                IImage(src: .remote(URL(string: LOREMFLICKR + "/animal")!))
-//            ],
-//            description: "I takovéhle portréty můžou být Vaše!",
-//            category: ["Portrét"],
-//            timestamp: Calendar.current.date(byAdding: .day, value: -3, to: Date())!
-//        )
-//    }
-//
-//}
+public enum Price: Equatable, Hashable {
+    case priceOnRequest
+    case fixed(Int)
+}

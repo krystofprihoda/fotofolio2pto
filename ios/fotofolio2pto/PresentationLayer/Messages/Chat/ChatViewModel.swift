@@ -109,7 +109,7 @@ final class ChatViewModel: BaseViewModel, ViewModel, ObservableObject {
     
     private func startFetchingNewMessages() {
         chatUpdateTimer?.invalidate() // Ensure no duplicate timers
-        chatUpdateTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
+        chatUpdateTimer = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: true) { [weak self] _ in
             Task {
                 await self?.fetchNewMessages()
             }

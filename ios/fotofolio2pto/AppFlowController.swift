@@ -11,7 +11,7 @@ import Resolver
 
 public class AppFlowController: BaseFlowController, OnboardingMainFlowDelegate {
     
-    @LazyInjected private var getLoggedInUserUseCase: GetLoggedInUserUseCase
+    @LazyInjected private var getLoggedInUserUseCase: ReadLoggedInUserUseCase
     
     public func start() {
         setupAppearance()
