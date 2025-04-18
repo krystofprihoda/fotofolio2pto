@@ -18,7 +18,7 @@ struct ProfilePortfoliosView: View {
     
     var body: some View {
         if portfolios.isEmpty {
-            Text("Uživatel zatím nenahrál žádná portfolia.")
+            Text(L.Profile.noPortfoliosUploaded)
                 .foregroundColor(.gray)
                 .font(.body)
         } else {
@@ -41,25 +41,7 @@ struct ProfilePortfoliosView: View {
                         ScrollView(.horizontal, showsIndicators: false) {
                             HStack(spacing: Constants.Dimens.spaceMedium) {
                                 ForEach(portfolio.photos) { photo in
-                                    if case MyImageEnum.remote(let url) = photo.src {
-                                        AsyncImage(url: URL(string: url)!) { image in
-                                            image
-                                                .resizable()
-                                                .aspectRatio(contentMode: .fill)
-                                                .frame(width: Constants.Dimens.frameSizeXLarge, height: Constants.Dimens.frameSizeXLarge)
-                                                .clipped()
-                                                .cornerRadius(Constants.Dimens.radiusXSmall)
-                                        } placeholder: {
-                                            ZStack {
-                                                RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
-                                                    .fill(.gray)
-                                                    .brightness(Double.random(in: Constants.Dimens.opacityLowLow...Constants.Dimens.opacityLow))
-                                                    .aspectRatio(1.0, contentMode: .fit)
-                                                    .frame(width: Constants.Dimens.frameSizeXLarge)
-                                                    .skeleton(true)
-                                            }
-                                        }
-                                    }
+                                    PhotoView(image: photo.src, size: Constants.Dimens.frameSizeXLarge)
                                 }
                             }
                             .padding([.leading, .trailing, .bottom], Constants.Dimens.spaceMedium)

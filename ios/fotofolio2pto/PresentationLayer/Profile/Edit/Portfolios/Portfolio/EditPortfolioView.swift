@@ -65,7 +65,7 @@ struct EditPortfolioView: View {
     }
     
     private var photosScrollView: some View {
-        VStack(spacing: Constants.Dimens.spaceSmall) {
+        VStack(alignment: .leading, spacing: Constants.Dimens.spaceSmall) {
             Text(L.Profile.photography)
                 .font(.body)
                 .bold()
@@ -101,34 +101,9 @@ struct EditPortfolioView: View {
                     } else {
                         ForEach(Array(zip(viewModel.state.media.indices, viewModel.state.media)), id: \.0) { idx, iimg in
                             ZStack(alignment: .topTrailing) {
-                                if case MyImageEnum.local(let image) = iimg.src {
-                                    Image(uiImage: image)
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fill)
-                                        .frame(width: Constants.Dimens.frameSizeXXLarge, height: Constants.Dimens.frameSizeXXLarge)
-                                        .clipped()
-                                        .cornerRadius(Constants.Dimens.radiusXSmall)
-                                } else if case MyImageEnum.remote(let url) = iimg.src {
-                                    AsyncImage(url: URL(string: url)!) { image in
-                                        image
-                                            .resizable()
-                                            .aspectRatio(contentMode: .fill)
-                                            .frame(width: Constants.Dimens.frameSizeXXLarge, height: Constants.Dimens.frameSizeXXLarge)
-                                            .clipped()
-                                            .cornerRadius(Constants.Dimens.radiusXSmall)
-                                    } placeholder: {
-                                        ZStack {
-                                            RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
-                                                .fill(.gray)
-                                                .brightness(Double.random(in: 0.15...0.4))
-                                                .aspectRatio(1.0, contentMode: .fit)
-                                                .frame(width: Constants.Dimens.frameSizeXXLarge, height: Constants.Dimens.frameSizeXXLarge)
-                                                .skeleton(true)
-                                        }
-                                    }
-                                }
+                                PhotoView(image: iimg.src, size: Constants.Dimens.frameSizeXXLarge)
                                 
-                                // Portfolio must have at least one photo,
+                                // Portfolio must have at least one photo, hide remove button if only 1 left
                                 if viewModel.state.media.count > 1 || viewModel.state.portfolioIntent == .createNew {
                                     Button(action: { viewModel.onIntent(.removePic(iimg.id)) }) {
                                         ZStack {
@@ -136,7 +111,7 @@ struct EditPortfolioView: View {
                                                 .fill(.white)
                                                 .aspectRatio(1.0, contentMode: .fit)
                                                 .frame(width: Constants.Dimens.frameSizeSmall, height: Constants.Dimens.frameSizeSmall)
-                                                .opacity(Constants.Dimens.opacityMid)
+                                                .opacity(Constants.Dimens.opacityHigh)
                                             
                                             Image(systemName: "xmark")
                                                 .resizable()
@@ -176,7 +151,7 @@ struct EditPortfolioView: View {
     }
     
     private var priceView: some View {
-        VStack(spacing: Constants.Dimens.spaceSmall) {
+        VStack(alignment: .leading, spacing: Constants.Dimens.spaceSmall) {
             Text(L.Profile.priceInCZK)
                 .font(.body)
                 .bold()

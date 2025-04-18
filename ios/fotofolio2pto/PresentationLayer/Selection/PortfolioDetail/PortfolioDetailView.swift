@@ -44,7 +44,7 @@ struct PortfolioDetailView: View {
             /// Price
             HStack(spacing: Constants.Dimens.spaceXSmall) {
                 if case .fixed(let price) = viewModel.state.portfolio.price {
-                    Text(String(price) + L.Selection.czk)
+                    Text(spaceSeparatedPrice: price)
                         .font(.footnote)
                         .padding(Constants.Dimens.spaceSmall)
                         .background(.orange)

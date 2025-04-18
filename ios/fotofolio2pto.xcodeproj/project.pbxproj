@@ -38,6 +38,8 @@
 		FE3FE2D92D9DE01000CD4B22 /* ReadChatsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE3FE2D82D9DE00800CD4B22 /* ReadChatsUseCase.swift */; };
 		FE4BBD372DB2ECC700B4619A /* SignInBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4BBD362DB2ECBF00B4619A /* SignInBackgroundView.swift */; };
 		FE4BBD392DB2ED3100B4619A /* FotofolioAnimatedLogoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4BBD382DB2ED3100B4619A /* FotofolioAnimatedLogoView.swift */; };
+		FE4BBD3B2DB2F68600B4619A /* PhotoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4BBD3A2DB2F68600B4619A /* PhotoView.swift */; };
+		FE4BBD3D2DB2FD3500B4619A /* Text+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4BBD3C2DB2FD2F00B4619A /* Text+Extensions.swift */; };
 		FE5F8A782C296D81001EE8AF /* AuthRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE5F8A772C296D81001EE8AF /* AuthRepository.swift */; };
 		FE5F8A7C2C296ECA001EE8AF /* LoginWithCredentialsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE5F8A7B2C296ECA001EE8AF /* LoginWithCredentialsUseCase.swift */; };
 		FE5F8A802C2971C7001EE8AF /* AuthRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE5F8A7F2C2971C7001EE8AF /* AuthRepositoryImpl.swift */; };
@@ -193,6 +195,8 @@
 		FE3FE2D82D9DE00800CD4B22 /* ReadChatsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadChatsUseCase.swift; sourceTree = "<group>"; };
 		FE4BBD362DB2ECBF00B4619A /* SignInBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInBackgroundView.swift; sourceTree = "<group>"; };
 		FE4BBD382DB2ED3100B4619A /* FotofolioAnimatedLogoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FotofolioAnimatedLogoView.swift; sourceTree = "<group>"; };
+		FE4BBD3A2DB2F68600B4619A /* PhotoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoView.swift; sourceTree = "<group>"; };
+		FE4BBD3C2DB2FD2F00B4619A /* Text+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Text+Extensions.swift"; sourceTree = "<group>"; };
 		FE5F8A772C296D81001EE8AF /* AuthRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRepository.swift; sourceTree = "<group>"; };
 		FE5F8A7B2C296ECA001EE8AF /* LoginWithCredentialsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginWithCredentialsUseCase.swift; sourceTree = "<group>"; };
 		FE5F8A7F2C2971C7001EE8AF /* AuthRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRepositoryImpl.swift; sourceTree = "<group>"; };
@@ -770,6 +774,7 @@
 		FEC94DAC2C243EA400FFEB11 /* BaseViews */ = {
 			isa = PBXGroup;
 			children = (
+				FE4BBD3A2DB2F68600B4619A /* PhotoView.swift */,
 				FE3827C72DA16104007A933E /* RemoteImage */,
 				FE9A30BA2D88473E0056CC0A /* Toast.swift */,
 				FE9777E02D7F695C0027DA60 /* PulsingCircleView.swift */,
@@ -882,6 +887,7 @@
 		FEC94DE82C25BF3D00FFEB11 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				FE4BBD3C2DB2FD2F00B4619A /* Text+Extensions.swift */,
 				FEC94DE92C25BF4B00FFEB11 /* View+Extensions.swift */,
 			);
 			path = Extensions;
@@ -1114,6 +1120,7 @@
 				FE4BBD372DB2ECC700B4619A /* SignInBackgroundView.swift in Sources */,
 				FEC94DB82C244E9E00FFEB11 /* MainFlowController.swift in Sources */,
 				FEA53CB82C2AE9B1006F0116 /* UnflagAllPortfoliosUseCase.swift in Sources */,
+				FE4BBD3D2DB2FD3500B4619A /* Text+Extensions.swift in Sources */,
 				FEA53CC42C2C12EE006F0116 /* MessageRepository.swift in Sources */,
 				FECADFDA2D804DE8004023F6 /* StringConstants.swift in Sources */,
 				FEC94E0B2C2840AA00FFEB11 /* ProfileUserInfoView.swift in Sources */,
@@ -1147,6 +1154,7 @@
 				FEA53CF12C2D6280006F0116 /* EditProfileViewModel.swift in Sources */,
 				FEA53CF42C2D791F006F0116 /* EditPortfolioView.swift in Sources */,
 				FEA64F6D2D7711D900B11530 /* RegisterFlowController.swift in Sources */,
+				FE4BBD3B2DB2F68600B4619A /* PhotoView.swift in Sources */,
 				FEA53CED2C2D5BAC006F0116 /* EditPortfoliosView.swift in Sources */,
 				FE0685662D84A2A90002B217 /* CategorySelectionView.swift in Sources */,
 				FEC94DF02C25ED5C00FFEB11 /* RoundedCorner.swift in Sources */,

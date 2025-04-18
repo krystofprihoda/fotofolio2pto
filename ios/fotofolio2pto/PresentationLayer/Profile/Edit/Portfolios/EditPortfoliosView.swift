@@ -74,52 +74,7 @@ struct EditPortfoliosView: View {
                             .padding(.leading, Constants.Dimens.spaceLarge)
                             
                             ForEach(portfolio.photos, id: \.id) { img in
-                                ZStack {
-                                    if case MyImageEnum.remote(let url) = img.src {
-                                        AsyncImage(url: URL(string: url)!) { image in
-                                            image
-                                                .resizable()
-                                                .aspectRatio(contentMode: .fill)
-                                                .frame(
-                                                    width: Constants.Dimens.frameSizeMediumLarge,
-                                                    height: Constants.Dimens.frameSizeMediumLarge
-                                                )
-                                                .clipped()
-                                                .cornerRadius(Constants.Dimens.radiusXSmall)
-                                                .clipShape(
-                                                    RoundedRectangle(
-                                                        cornerRadius: Constants.Dimens.radiusXSmall
-                                                    )
-                                                )
-                                        } placeholder: {
-                                            ZStack {
-                                                RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
-                                                    .fill(Color.gray).brightness(Constants.Dimens.opacityLow)
-                                                    .aspectRatio(1.0, contentMode: .fit)
-                                                    .frame(
-                                                        width: Constants.Dimens.frameSizeMediumLarge,
-                                                        height: Constants.Dimens.frameSizeMediumLarge
-                                                    )
-                                                    .skeleton(true)
-                                            }
-                                        }
-                                    } else if case MyImageEnum.local(let image) = img.src {
-                                        Image(uiImage: image)
-                                            .resizable()
-                                            .aspectRatio(contentMode: .fill)
-                                            .frame(
-                                                width: Constants.Dimens.frameSizeMediumLarge,
-                                                height: Constants.Dimens.frameSizeMediumLarge
-                                            )
-                                            .clipped()
-                                            .cornerRadius(Constants.Dimens.radiusXSmall)
-                                            .clipShape(
-                                                RoundedRectangle(
-                                                    cornerRadius: Constants.Dimens.radiusXSmall
-                                                )
-                                            )
-                                    }
-                                }
+                                PhotoView(image: img.src, size: Constants.Dimens.frameSizeMediumLarge)
                             }
                         }
                     }
