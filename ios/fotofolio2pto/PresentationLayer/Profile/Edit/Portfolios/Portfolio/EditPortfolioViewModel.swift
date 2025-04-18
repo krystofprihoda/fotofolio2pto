@@ -139,10 +139,8 @@ final class EditPortfolioViewModel: BaseViewModel, ViewModel, ObservableObject {
     }
     
     private func setMedia(_ media: [IImage]) {
-        DispatchQueue.main.async { [weak self] in
-            self?.state.media = media
-            self?.updateSaveButtonVisibility()
-        }
+        state.media.append(contentsOf: media)
+        updateSaveButtonVisibility()
     }
     
     private func setPriceOption(_ priceOption: Price) {

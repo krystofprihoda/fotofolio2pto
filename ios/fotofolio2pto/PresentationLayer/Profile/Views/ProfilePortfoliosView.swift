@@ -32,7 +32,6 @@ struct ProfilePortfoliosView: View {
                                     .padding(.bottom, Constants.Dimens.spaceSmall)
                                     .padding([.leading, .trailing], Constants.Dimens.spaceXLarge)
                                     .foregroundColor(.black)
-                                    .brightness(Constants.Dimens.opacityLow)
                                     .transition(.opacity)
 
                                 Spacer()
@@ -71,7 +70,7 @@ struct ProfilePortfoliosView: View {
                                 .font(.body)
                                 .padding([.leading, .trailing], Constants.Dimens.spaceXLarge)
                                 .padding(.bottom, Constants.Dimens.spaceXSmall)
-                                .foregroundColor(.gray).brightness(Constants.Dimens.opacityLowLow)
+                                .foregroundColor(.gray)
                                 .transition(.opacity)
                             
                             Divider()

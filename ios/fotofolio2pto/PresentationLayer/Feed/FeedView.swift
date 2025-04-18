@@ -18,7 +18,7 @@ struct FeedView: View {
     var body: some View {
         GeometryReader { geo in
             ZStack(alignment: .top) {
-                ScrollView(showsIndicators: false) {
+                ScrollView {
                     if viewModel.state.isLoading {
                         VStack(alignment: .center) {
                             ProgressView()
@@ -106,10 +106,8 @@ struct FeedView: View {
                         }
                         .padding(.horizontal, Constants.Dimens.spaceMedium)
                         .padding(.vertical, Constants.Dimens.spaceSemiMedium)
-                        .background(
-                            .black
-                                .opacity(Constants.Dimens.opacityMid)
-                        )
+                        .background(.black)
+                        .brightness(Constants.Dimens.opacityLow)
                         .clipShape(RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall))
                     })
                 }

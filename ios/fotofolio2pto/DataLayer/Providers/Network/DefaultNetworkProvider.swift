@@ -12,7 +12,7 @@ final class DefaultNetworkProvider: NetworkProvider {
     
     private let baseURL: BaseURL
     
-    init(baseURL: BaseURL = .localhost) {
+    init(baseURL: BaseURL = .alpha) {
         self.baseURL = baseURL
     }
     

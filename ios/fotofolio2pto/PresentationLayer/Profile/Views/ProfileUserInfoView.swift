@@ -32,13 +32,12 @@ struct ProfileUserInfoView: View {
                         Text(user.fullName)
                             .font(.headline)
                             .foregroundColor(.black)
-                            .brightness(Constants.Dimens.opacityLow)
                             .padding(.bottom, Constants.Dimens.spaceXSmall)
                         
                         Text(user.location)
                             .font(.subheadline)
                             .foregroundColor(.black)
-                            .brightness(Constants.Dimens.opacityLow)
+                            .opacity(Constants.Dimens.opacityHigh)
                             .padding(.bottom, Constants.Dimens.spaceXXSmall)
                         
                         if !user.rating.isEmpty {
@@ -49,13 +48,13 @@ struct ProfileUserInfoView: View {
                                 Image(systemName: "star.fill")
                                     .font(.caption2)
                             }
-                            .foregroundStyle(.black)
-                            .brightness(Constants.Dimens.opacityLow)
+                            .foregroundColor(.black)
+                            .opacity(Constants.Dimens.opacityHigh)
                         } else {
                             Text(L.Profile.noRating)
                                 .font(.footnote)
                                 .foregroundColor(.black)
-                                .brightness(Constants.Dimens.opacityLow)
+                                .opacity(Constants.Dimens.opacityHigh)
                         }
                         
                         if !profileOwner {
@@ -87,7 +86,6 @@ struct ProfileUserInfoView: View {
                                 .padding(.top, Constants.Dimens.spaceXSmall)
                                 .padding(.leading, Constants.Dimens.spaceSemiXLarge)
                                 .foregroundColor(.black)
-                                .brightness(Constants.Dimens.opacityLow)
 
                             
                             Spacer()
@@ -100,7 +98,6 @@ struct ProfileUserInfoView: View {
                             .padding(.leading, Constants.Dimens.spaceSemiXLarge)
                             .padding(.trailing, Constants.Dimens.spaceXXSmall)
                             .foregroundColor(.gray)
-                            .brightness(Constants.Dimens.opacityLowLow)
                     }
                     
                     Divider()

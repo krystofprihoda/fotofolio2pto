@@ -33,20 +33,7 @@ struct RegisterWrapperView<Content: View>: View {
     }
     var body: some View {
         ZStack(alignment: .center) {
-            Image("sydney_opera_house")
-                .resizable()
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .aspectRatio(contentMode: .fill)
-            
-            LinearGradient(colors: [.mainAccent, .gray], startPoint: .topLeading, endPoint: .bottomTrailing)
-                .hueRotation(.degrees(animateGradient ? gradientDegrees : 0))
-                .onAppear {
-                    withAnimation(.easeInOut(duration: duration).repeatForever(autoreverses: true)) {
-                        animateGradient.toggle()
-                    }
-                }
-                .opacity(0.9)
-                .frame(maxHeight: .infinity)
+            SignInBackgroundView()
             
             VStack(alignment: .leading, spacing: Constants.Dimens.spaceNone) {
                 if !hideTitle {
@@ -80,7 +67,6 @@ struct RegisterWrapperView<Content: View>: View {
                 }
             }
         }
-        .ignoresSafeArea(.all)
         .animation(.default, value: hideTitle)
         .animation(.default, value: dismissRegistrationIsShowing)
     }

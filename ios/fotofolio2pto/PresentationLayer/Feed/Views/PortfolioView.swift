@@ -70,15 +70,3 @@ struct PortfolioView: View {
         .transition(.opacity)
     }
 }
-
-//#Preview {
-//    PortfolioView(
-//        portfolio: .dummyPortfolio2,
-//        mediaWidth: 350,
-//        hideFlag: false,
-//        isFlagged: true,
-//        flagAction: {},
-//        unflagAction: {},
-//        openProfileAction: {}
-//    )
-//}

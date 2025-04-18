@@ -18,108 +18,11 @@ struct EditPortfolioView: View {
     var body: some View {
         ScrollView(showsIndicators: false) {
             VStack(alignment: .leading, spacing: Constants.Dimens.spaceSmall) {
-                // Name
-                VStack(alignment: .leading, spacing: Constants.Dimens.spaceSmall) {
-                    Text(L.Profile.titleName)
-                        .font(.body)
-                        .bold()
-                    
-                    TextField(
-                        L.Profile.portraitsExample,
-                        text: Binding(
-                            get: { viewModel.state.name },
-                            set: { input in viewModel.onIntent(.setName(input)) }
-                        )
-                    )
-                    .font(.body)
-                    .frame(height: Constants.Dimens.textFieldHeight)
-                    .padding(Constants.Dimens.spaceLarge)
-                    .background(.textFieldBackground)
-                    .cornerRadius(Constants.Dimens.radiusXSmall)
-                }
-                .padding(.horizontal, Constants.Dimens.spaceLarge)
-                
-                Text(L.Profile.photography)
-                    .font(.body)
-                    .bold()
-                    .padding(.leading, Constants.Dimens.spaceLarge)
-                
-                // Photos
+                nameView
                 photosScrollView
-                
-                // Price
-                Text(L.Profile.priceInCZK)
-                    .font(.body)
-                    .bold()
-                    .padding(.leading, Constants.Dimens.spaceLarge)
-                
-                Picker("", selection: Binding(get: { viewModel.state.price }, set: { viewModel.onIntent(.setPriceOption($0)) })) {
-                    Text(L.Profile.priceOnRequest).tag(Price.priceOnRequest)
-                    Text(L.Profile.priceFixed).tag(Price.fixed(0))
-                }
-                .pickerStyle(.segmented)
-                .padding(.horizontal, Constants.Dimens.spaceLarge)
-                
-                if (viewModel.state.price != .priceOnRequest) {
-                    TextField(
-                        L.Profile.price,
-                        text: Binding(
-                            get: { viewModel.state.priceInput },
-                            set: { viewModel.onIntent(.setPriceInput($0)) }
-                        )
-                    )
-                    .font(.body)
-                    .frame(height: Constants.Dimens.textFieldHeight)
-                    .padding(Constants.Dimens.spaceLarge)
-                    .background(.textFieldBackground)
-                    .cornerRadius(Constants.Dimens.radiusXSmall)
-                    .padding(.horizontal, Constants.Dimens.spaceLarge)
-                }
-                
-                // Description
-                VStack(alignment: .leading, spacing: Constants.Dimens.spaceSmall) {
-                    Text(L.Profile.shortDescription)
-                        .font(.body)
-                        .bold()
-                    
-                    ZStack {
-                        RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
-                            .fill(.textFieldBackground)
-                            .frame(height: Constants.Dimens.frameSizeLarge)
-                        
-                        TextEditor(text: Binding(get: { viewModel.state.description }, set: { viewModel.onIntent(.setDescriptionInput($0)) }))
-                            .font(.body)
-                            .frame(height: Constants.Dimens.frameSizeLarge)
-                            .lineSpacing(Constants.Dimens.spaceXSmall)
-                            .foregroundColor(.black)
-                            .scrollContentBackground(.hidden)
-                            .background(.clear)
-                            .offset(
-                                x: Constants.Dimens.spaceSmall,
-                                y: Constants.Dimens.spaceXSmall
-                            )
-                    }
-                }
-                .padding(.horizontal, Constants.Dimens.spaceLarge)
-                
-                // Category
-                VStack(alignment: .leading, spacing: Constants.Dimens.spaceSmall) {
-                    Text(L.Profile.maxNumberOfTags)
-                        .font(.body)
-                        .bold()
-                    
-                    CategorySelectionView(
-                        searchText: Binding(
-                            get: { viewModel.state.searchInput },
-                            set: { viewModel.onIntent(.setCategoryInput($0)) }
-                        ),
-                        selectedCategories: viewModel.state.selectedCategories,
-                        filteredCategories: viewModel.state.filteredCategories,
-                        onAddToSelectedCategories: { viewModel.onIntent(.addCategory($0)) },
-                        onRemoveFromSelectedCategories: { viewModel.onIntent(.removeCategory($0)) }
-                    )
-                }
-                .padding(.leading, Constants.Dimens.spaceLarge)
+                priceView
+                descriptionView
+                categoryView
             }
             .padding(.top, Constants.Dimens.spaceSmall)
         }
@@ -139,111 +42,217 @@ struct EditPortfolioView: View {
         )
     }
     
-    var photosScrollView: some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            LazyHStack(spacing: Constants.Dimens.spaceSemiMedium) {
-                if viewModel.state.media.isEmpty {
-                    if viewModel.state.portfolioIntent == .createNew {
-                        Button(action: { viewModel.onIntent(.pickMedia) }) {
-                            ZStack {
-                                RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
-                                    .fill(.textFieldBackground)
-                                    .aspectRatio(1.0, contentMode: .fill)
-                                    .frame(width: Constants.Dimens.frameSizeXXLarge, height: Constants.Dimens.frameSizeXXLarge)
-                                
-                                Image(systemName: "plus")
-                                    .resizable()
-                                    .frame(width: Constants.Dimens.frameSizeXSmall, height: Constants.Dimens.frameSizeXSmall)
-                                    .foregroundColor(.black)
-                                    .opacity(Constants.Dimens.opacityMid)
+    private var nameView: some View {
+        VStack(alignment: .leading, spacing: Constants.Dimens.spaceSmall) {
+            Text(L.Profile.titleName)
+                .font(.body)
+                .bold()
+            
+            TextField(
+                L.Profile.portraitsExample,
+                text: Binding(
+                    get: { viewModel.state.name },
+                    set: { input in viewModel.onIntent(.setName(input)) }
+                )
+            )
+            .font(.body)
+            .frame(height: Constants.Dimens.textFieldHeight)
+            .padding(Constants.Dimens.spaceLarge)
+            .background(.textFieldBackground)
+            .cornerRadius(Constants.Dimens.radiusXSmall)
+        }
+        .padding(.horizontal, Constants.Dimens.spaceLarge)
+    }
+    
+    private var photosScrollView: some View {
+        VStack(spacing: Constants.Dimens.spaceSmall) {
+            Text(L.Profile.photography)
+                .font(.body)
+                .bold()
+                .padding(.leading, Constants.Dimens.spaceLarge)
+            
+            ScrollView(.horizontal, showsIndicators: false) {
+                LazyHStack(spacing: Constants.Dimens.spaceSemiMedium) {
+                    if viewModel.state.media.isEmpty {
+                        if viewModel.state.portfolioIntent == .createNew {
+                            Button(action: { viewModel.onIntent(.pickMedia) }) {
+                                ZStack {
+                                    RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
+                                        .fill(.textFieldBackground)
+                                        .aspectRatio(1.0, contentMode: .fill)
+                                        .frame(width: Constants.Dimens.frameSizeXXLarge, height: Constants.Dimens.frameSizeXXLarge)
+                                    
+                                    Image(systemName: "plus")
+                                        .resizable()
+                                        .frame(width: Constants.Dimens.frameSizeXSmall, height: Constants.Dimens.frameSizeXSmall)
+                                        .foregroundColor(.black)
+                                        .opacity(Constants.Dimens.opacityMid)
+                                }
                             }
                         }
-                    }
-                    
-                    ForEach(0..<2) { i in
-                        RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
-                            .fill(.textFieldBackground)
-                            .aspectRatio(contentMode: .fill)
-                            .frame(width: Constants.Dimens.frameSizeXXLarge, height: Constants.Dimens.frameSizeXXLarge)
-                            .opacity(i == 0 ? Constants.Dimens.opacityMid : Constants.Dimens.opacityLow)
-                    }
-                } else {
-                    ForEach(Array(zip(viewModel.state.media.indices, viewModel.state.media)), id: \.0) { idx, iimg in
-                        ZStack(alignment: .topTrailing) {
-                            if case MyImageEnum.local(let image) = iimg.src {
-                                Image(uiImage: image)
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fill)
-                                    .frame(width: Constants.Dimens.frameSizeXXLarge, height: Constants.Dimens.frameSizeXXLarge)
-                                    .clipped()
-                                    .cornerRadius(Constants.Dimens.radiusXSmall)
-                            } else if case MyImageEnum.remote(let url) = iimg.src {
-                                AsyncImage(url: URL(string: url)!) { image in
-                                    image
+                        
+                        ForEach(0..<2) { i in
+                            RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
+                                .fill(.textFieldBackground)
+                                .aspectRatio(contentMode: .fill)
+                                .frame(width: Constants.Dimens.frameSizeXXLarge, height: Constants.Dimens.frameSizeXXLarge)
+                                .opacity(i == 0 ? Constants.Dimens.opacityMid : Constants.Dimens.opacityLow)
+                        }
+                    } else {
+                        ForEach(Array(zip(viewModel.state.media.indices, viewModel.state.media)), id: \.0) { idx, iimg in
+                            ZStack(alignment: .topTrailing) {
+                                if case MyImageEnum.local(let image) = iimg.src {
+                                    Image(uiImage: image)
                                         .resizable()
                                         .aspectRatio(contentMode: .fill)
                                         .frame(width: Constants.Dimens.frameSizeXXLarge, height: Constants.Dimens.frameSizeXXLarge)
                                         .clipped()
                                         .cornerRadius(Constants.Dimens.radiusXSmall)
-                                } placeholder: {
-                                    ZStack {
-                                        RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
-                                            .fill(.gray)
-                                            .brightness(Double.random(in: 0.15...0.4))
-                                            .aspectRatio(1.0, contentMode: .fit)
-                                            .frame(width: Constants.Dimens.frameSizeXXLarge, height: Constants.Dimens.frameSizeXXLarge)
-                                            .skeleton(true)
-                                    }
-                                }
-                            }
-                            
-                            // Portfolio must have at least one photo,
-                            if viewModel.state.media.count > 1 || viewModel.state.portfolioIntent == .createNew {
-                                Button(action: { viewModel.onIntent(.removePic(iimg.id)) }) {
-                                    ZStack {
-                                        RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
-                                            .fill(.white)
-                                            .aspectRatio(1.0, contentMode: .fit)
-                                            .frame(width: Constants.Dimens.frameSizeSmall, height: Constants.Dimens.frameSizeSmall)
-                                            .opacity(Constants.Dimens.opacityMid)
-                                        
-                                        Image(systemName: "xmark")
+                                } else if case MyImageEnum.remote(let url) = iimg.src {
+                                    AsyncImage(url: URL(string: url)!) { image in
+                                        image
                                             .resizable()
-                                            .frame(width: Constants.Dimens.spaceLarge, height: Constants.Dimens.spaceLarge)
-                                            .foregroundColor(.red)
-                                            .opacity(Constants.Dimens.opacityHigh)
-                                            .padding(Constants.Dimens.spaceXLarge)
+                                            .aspectRatio(contentMode: .fill)
+                                            .frame(width: Constants.Dimens.frameSizeXXLarge, height: Constants.Dimens.frameSizeXXLarge)
+                                            .clipped()
+                                            .cornerRadius(Constants.Dimens.radiusXSmall)
+                                    } placeholder: {
+                                        ZStack {
+                                            RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
+                                                .fill(.gray)
+                                                .brightness(Double.random(in: 0.15...0.4))
+                                                .aspectRatio(1.0, contentMode: .fit)
+                                                .frame(width: Constants.Dimens.frameSizeXXLarge, height: Constants.Dimens.frameSizeXXLarge)
+                                                .skeleton(true)
+                                        }
+                                    }
+                                }
+                                
+                                // Portfolio must have at least one photo,
+                                if viewModel.state.media.count > 1 || viewModel.state.portfolioIntent == .createNew {
+                                    Button(action: { viewModel.onIntent(.removePic(iimg.id)) }) {
+                                        ZStack {
+                                            RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
+                                                .fill(.white)
+                                                .aspectRatio(1.0, contentMode: .fit)
+                                                .frame(width: Constants.Dimens.frameSizeSmall, height: Constants.Dimens.frameSizeSmall)
+                                                .opacity(Constants.Dimens.opacityMid)
+                                            
+                                            Image(systemName: "xmark")
+                                                .resizable()
+                                                .frame(width: Constants.Dimens.spaceLarge, height: Constants.Dimens.spaceLarge)
+                                                .foregroundColor(.red)
+                                                .opacity(Constants.Dimens.opacityHigh)
+                                                .padding(Constants.Dimens.spaceXLarge)
+                                        }
                                     }
                                 }
                             }
                         }
-                    }
-                    
-                    if viewModel.state.portfolioIntent == .createNew, viewModel.state.media.count < 7 {
-                        Button(action: { viewModel.onIntent(.pickMedia) }) {
-                            ZStack {
-                                RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
-                                    .fill(.textFieldBackground)
-                                    .aspectRatio(1.0, contentMode: .fit)
-                                    .frame(width: Constants.Dimens.frameSizeXXLarge, height: Constants.Dimens.frameSizeXXLarge)
-                                
-                                Image(systemName: "plus")
-                                    .resizable()
-                                    .frame(width: Constants.Dimens.frameSizeXSmall, height: Constants.Dimens.frameSizeXSmall)
-                                    .foregroundColor(.black)
-                                    .opacity(Constants.Dimens.opacityMid)
+                        
+                        if viewModel.state.portfolioIntent == .createNew, viewModel.state.media.count < 7 {
+                            Button(action: { viewModel.onIntent(.pickMedia) }) {
+                                ZStack {
+                                    RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
+                                        .fill(.textFieldBackground)
+                                        .aspectRatio(1.0, contentMode: .fit)
+                                        .frame(width: Constants.Dimens.frameSizeXXLarge, height: Constants.Dimens.frameSizeXXLarge)
+                                    
+                                    Image(systemName: "plus")
+                                        .resizable()
+                                        .frame(width: Constants.Dimens.frameSizeXSmall, height: Constants.Dimens.frameSizeXSmall)
+                                        .foregroundColor(.black)
+                                        .opacity(Constants.Dimens.opacityMid)
+                                }
                             }
+                            .padding(.trailing, Constants.Dimens.spaceLarge)
                         }
-                        .padding(.trailing, Constants.Dimens.spaceLarge)
                     }
                 }
+                .padding(.horizontal, Constants.Dimens.spaceLarge)
             }
-            .padding(.horizontal, Constants.Dimens.spaceLarge)
+            .frame(height: Constants.Dimens.frameSizeXXLarge)
         }
-        .frame(height: Constants.Dimens.frameSizeXXLarge)
     }
     
-    var cancelButton: some View {
+    private var priceView: some View {
+        VStack(spacing: Constants.Dimens.spaceSmall) {
+            Text(L.Profile.priceInCZK)
+                .font(.body)
+                .bold()
+                .padding(.leading, Constants.Dimens.spaceLarge)
+            
+            Picker("", selection: Binding(get: { viewModel.state.price }, set: { viewModel.onIntent(.setPriceOption($0)) })) {
+                Text(L.Profile.priceOnRequest).tag(Price.priceOnRequest)
+                Text(L.Profile.priceFixed).tag(Price.fixed(0))
+            }
+            .pickerStyle(.segmented)
+            .padding(.horizontal, Constants.Dimens.spaceLarge)
+            
+            if (viewModel.state.price != .priceOnRequest) {
+                TextField(
+                    L.Profile.price,
+                    text: Binding(
+                        get: { viewModel.state.priceInput },
+                        set: { viewModel.onIntent(.setPriceInput($0)) }
+                    )
+                )
+                .font(.body)
+                .frame(height: Constants.Dimens.textFieldHeight)
+                .padding(Constants.Dimens.spaceLarge)
+                .background(.textFieldBackground)
+                .cornerRadius(Constants.Dimens.radiusXSmall)
+                .padding(.horizontal, Constants.Dimens.spaceLarge)
+            }
+        }
+    }
+    
+    private var descriptionView: some View {
+        VStack(alignment: .leading, spacing: Constants.Dimens.spaceSmall) {
+            Text(L.Profile.shortDescription)
+                .font(.body)
+                .bold()
+            
+            ZStack {
+                RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
+                    .fill(.textFieldBackground)
+                    .frame(height: Constants.Dimens.frameSizeLarge)
+                
+                TextEditor(text: Binding(get: { viewModel.state.description }, set: { viewModel.onIntent(.setDescriptionInput($0)) }))
+                    .font(.body)
+                    .frame(height: Constants.Dimens.frameSizeLarge)
+                    .lineSpacing(Constants.Dimens.spaceXSmall)
+                    .foregroundColor(.black)
+                    .scrollContentBackground(.hidden)
+                    .background(.clear)
+                    .padding(.top, Constants.Dimens.spaceLarge)
+                    .padding(.horizontal, Constants.Dimens.spaceSmall)
+            }
+        }
+        .padding(.horizontal, Constants.Dimens.spaceLarge)
+    }
+    
+    private var categoryView: some View {
+        VStack(alignment: .leading, spacing: Constants.Dimens.spaceSmall) {
+            Text(L.Profile.maxNumberOfTags)
+                .font(.body)
+                .bold()
+            
+            CategorySelectionView(
+                searchText: Binding(
+                    get: { viewModel.state.searchInput },
+                    set: { viewModel.onIntent(.setCategoryInput($0)) }
+                ),
+                selectedCategories: viewModel.state.selectedCategories,
+                filteredCategories: viewModel.state.filteredCategories,
+                onAddToSelectedCategories: { viewModel.onIntent(.addCategory($0)) },
+                onRemoveFromSelectedCategories: { viewModel.onIntent(.removeCategory($0)) }
+            )
+        }
+        .padding([.leading, .bottom], Constants.Dimens.spaceLarge)
+    }
+    
+    private var cancelButton: some View {
         Button(action: {
             viewModel.onIntent(.close)
         }) {
@@ -253,7 +262,7 @@ struct EditPortfolioView: View {
         .disabled(viewModel.state.isLoading)
     }
     
-    var saveButton: some View {
+    private var saveButton: some View {
         Button(action: {
             viewModel.onIntent(.saveChanges)
         }) {

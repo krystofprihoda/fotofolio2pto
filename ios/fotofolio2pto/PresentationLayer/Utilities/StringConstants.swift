@@ -8,8 +8,8 @@
 let photoCategories = [
     "Portrét", "Svatba", "Rodina", "Miminka & těhotenství", "Móda", "Street",
     "Dokumentární", "Lifestyle", "Glamour", "Boudoir", "Akt",
-    "Produkt", "Reklamní", "Jídlo", "Interiér", "Architektura", "Firemní",
-    "Event", "Koncertní", "Editorial", "E-commerce",
+    "Produkt", "Reklamní", "Jídlo", "Interiér", "Architektura", "Exteriér",
+    "Event", "Koncertní", "Editorial", "E-commerce", "Firemní",
     "Krajina", "Cestování", "Příroda", "Makro", "Astrofotografie", "Podvodní",
     "Drone", "Ekologická", "Geografická",
     "Sport", "Akční", "Extrémní sporty", "Motorsport", "Zvířata v pohybu",

@@ -50,13 +50,11 @@ struct EditCreatorDetailsView: View {
                         .font(.body)
                         .frame(height: Constants.Dimens.frameSizeXXLarge)
                         .lineSpacing(Constants.Dimens.spaceXSmall)
-                        .foregroundColor(.gray)
+                        .foregroundColor(.black)
                         .scrollContentBackground(.hidden)
                         .background(.clear)
-                        .offset(
-                            x: Constants.Dimens.spaceSmall,
-                            y: Constants.Dimens.spaceXSmall
-                        )
+                        .padding(.top, Constants.Dimens.spaceLarge)
+                        .padding(.horizontal, Constants.Dimens.spaceSmall)
                 }
             }
         }
