@@ -27,7 +27,7 @@ struct EditPersonalDetailsView: View {
                     Button(action: { viewModel.onIntent(.pickProfilePicture) }) {
                         ZStack {
                             Circle()
-                                .fill(.gray)
+                                .fill(.mainText)
                                 .frame(
                                     width: Constants.Dimens.frameSizeSmallMedium,
                                     height: Constants.Dimens.frameSizeSmallMedium
@@ -41,9 +41,9 @@ struct EditPersonalDetailsView: View {
                 }
                 
                 VStack(alignment: .leading, spacing: Constants.Dimens.spaceXXSmall) {
-                    Text("@\(viewModel.state.username)")
+                    Text(viewModel.state.username)
                         .font(.body)
-                        .foregroundColor(.mainAccent)
+                        .foregroundColor(.mainLight)
                     
                     Text(viewModel.state.fullName)
                         .font(.body)

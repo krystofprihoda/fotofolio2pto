@@ -30,7 +30,7 @@ struct RegisterPasswordView: View {
                 }
                 Button(action: onToggleFirstPasswordVisibility) {
                     Image(systemName: isFirstPasswordHidden ? "eye.slash" : "eye")
-                        .foregroundColor(.gray)
+                        .foregroundColor(.mainText)
                 }
             }
             .font(.body)
@@ -61,7 +61,7 @@ struct RegisterPasswordView: View {
                 }
                 Button(action: onToggleSecondPasswordVisibility) {
                     Image(systemName: isSecondPasswordHidden ? "eye.slash" : "eye")
-                        .foregroundColor(.gray)
+                        .foregroundColor(.mainText)
                 }
             }
             .font(.body)
@@ -92,7 +92,7 @@ struct RegisterPasswordView: View {
                         .frame(maxWidth: .infinity)
                         .padding(Constants.Dimens.spaceLarge)
                         .foregroundStyle(.white)
-                        .background(.mainAccent)
+                        .background(.mainLight)
                         .cornerRadius(Constants.Dimens.radiusXSmall)
                 })
                 
@@ -103,7 +103,7 @@ struct RegisterPasswordView: View {
                         .frame(maxWidth: .infinity)
                         .padding(Constants.Dimens.spaceLarge)
                         .foregroundStyle(.white)
-                        .background(.mainAccent)
+                        .background(.mainLight)
                         .cornerRadius(Constants.Dimens.radiusXSmall)
                 })
                 .disabledOverlay(!passwordsVerified)

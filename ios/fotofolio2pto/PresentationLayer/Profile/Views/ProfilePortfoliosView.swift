@@ -19,7 +19,7 @@ struct ProfilePortfoliosView: View {
     var body: some View {
         if portfolios.isEmpty {
             Text(L.Profile.noPortfoliosUploaded)
-                .foregroundColor(.gray)
+                .foregroundColor(.mainText)
                 .font(.body)
         } else {
             VStack(spacing: Constants.Dimens.spaceNone) {
@@ -31,7 +31,7 @@ struct ProfilePortfoliosView: View {
                                     .font(.headline)
                                     .padding(.bottom, Constants.Dimens.spaceSmall)
                                     .padding([.leading, .trailing], Constants.Dimens.spaceXLarge)
-                                    .foregroundColor(.black)
+                                    .foregroundColor(.main)
                                     .transition(.opacity)
 
                                 Spacer()
@@ -52,7 +52,7 @@ struct ProfilePortfoliosView: View {
                                 .font(.body)
                                 .padding([.leading, .trailing], Constants.Dimens.spaceXLarge)
                                 .padding(.bottom, Constants.Dimens.spaceXSmall)
-                                .foregroundColor(.gray)
+                                .foregroundColor(.mainLight)
                                 .transition(.opacity)
                             
                             Divider()

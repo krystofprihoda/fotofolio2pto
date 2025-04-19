@@ -255,7 +255,7 @@ extension MainFlowController: TabBadgeFlowDelegate {
         guard let index = getViewControllerTabIndex(for: tab) else { return }
         let tabBarItem = tabBarController.tabBar.items?[index]
         
-        tabBarItem?.badgeColor = .mainAccent
+        tabBarItem?.badgeColor = tab == .selection ? .mainLight : .mainContrast
         tabBarItem?.badgeValue = count > 0 ? "\(count)" : nil
         if animated { animateTabBarBadge(tabBarItem: tabBarItem) }
     }

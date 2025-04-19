@@ -34,7 +34,7 @@ struct PhotoView: View {
                             .aspectRatio(contentMode: .fill)
                     } placeholder: {
                         RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
-                            .fill(.gray)
+                            .fill(.mainText)
                             .brightness(Double.random(in: 0.15...0.4))
                             .skeleton(true)
                     }

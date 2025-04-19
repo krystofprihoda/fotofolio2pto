@@ -53,12 +53,11 @@ struct EditPortfoliosView: View {
                                 }, label: {
                                     ZStack {
                                         RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
-                                            .fill(.pink)
+                                            .fill(.mainContrast)
                                             .frame(
                                                 width: Constants.Dimens.frameSizeSmall,
                                                 height: Constants.Dimens.frameSizeSmall
                                             )
-                                            .opacity(Constants.Dimens.opacityLow)
                                         
                                         Image(systemName: "trash")
                                             .resizable()

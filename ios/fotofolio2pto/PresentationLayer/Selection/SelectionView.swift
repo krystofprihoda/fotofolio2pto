@@ -37,7 +37,7 @@ struct SelectionView: View {
                         Text(L.Selection.emptySelection)
                             .frame(width: geo.size.width, height: geo.size.height)
                             .font(.system(size: 15))
-                            .foregroundColor(.gray)
+                            .foregroundColor(.mainText)
                     }
                 }
                 .padding(.top, Constants.Dimens.spaceLarge)

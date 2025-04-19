@@ -116,7 +116,7 @@ struct EditPortfolioView: View {
                                             Image(systemName: "xmark")
                                                 .resizable()
                                                 .frame(width: Constants.Dimens.spaceLarge, height: Constants.Dimens.spaceLarge)
-                                                .foregroundColor(.red)
+                                                .foregroundColor(.mainContrast)
                                                 .opacity(Constants.Dimens.opacityHigh)
                                                 .padding(Constants.Dimens.spaceXLarge)
                                         }

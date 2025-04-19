@@ -60,7 +60,7 @@ struct RegisterWrapperView<Content: View>: View {
                             .frame(maxWidth: .infinity)
                             .padding(Constants.Dimens.spaceLarge)
                             .foregroundStyle(.white)
-                            .background(.mainAccent)
+                            .background(.mainLight)
                             .cornerRadius(Constants.Dimens.radiusXSmall)
                             .padding(.horizontal, Constants.Dimens.spaceXXLarge)
                     })

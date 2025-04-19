@@ -49,7 +49,7 @@ struct ProfilePictureView: View {
     
     private var placeholderView: some View {
         Circle()
-            .foregroundColor(.gray)
+            .foregroundColor(.mainText)
             .brightness(Constants.Dimens.opacityLow)
             .aspectRatio(1.0, contentMode: .fit)
             .frame(width: width)

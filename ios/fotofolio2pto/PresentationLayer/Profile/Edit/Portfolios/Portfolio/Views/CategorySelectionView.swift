@@ -39,7 +39,7 @@ struct CategorySelectionView: View {
                     .cornerRadius(Constants.Dimens.spaceSmall)
                 
                 Image(systemName: "magnifyingglass")
-                    .foregroundStyle(.gray)
+                    .foregroundStyle(.mainText)
                     .padding(.trailing, Constants.Dimens.spaceLarge)
             }
             .padding(.trailing, Constants.Dimens.spaceLarge)
@@ -67,7 +67,7 @@ struct CategorySelectionView: View {
                                         }
                                     }
                                     .padding(Constants.Dimens.spaceLarge)
-                                    .background(isSelected ? Color.mainAccent : Color.textFieldBackground)
+                                    .background(isSelected ? .mainLight : .textFieldBackground)
                                     .clipShape(RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall))
                                 })
                             }

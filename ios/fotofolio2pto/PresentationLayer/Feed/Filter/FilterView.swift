@@ -29,7 +29,7 @@ struct FilterView: View {
                                 .resizable()
                                 .aspectRatio(1, contentMode: .fit)
                                 .frame(width: Constants.Dimens.spaceLarge)
-                                .foregroundColor(.red).brightness(0.2)
+                                .foregroundColor(.mainContrast)
                         }
                         .padding(Constants.Dimens.spaceLarge)
                     }

@@ -40,19 +40,19 @@ struct PortfolioAuthorDetailView: View {
                     Text("@\(userData?.username ?? L.Selection.username)")
                         .font(.title3)
                         .padding(.leading, Constants.Dimens.spaceSemiXLarge)
-                        .foregroundColor(.mainAccent)
+                        .foregroundColor(.black)
                 }
                 
                 Spacer()
                 
                 Button(action: sendMessage) {
                     Text(L.Selection.typeMessage)
-                        .foregroundColor(.gray)
+                        .foregroundColor(.main)
                 }
                 
                 Button(action: unflagPortfolio) {
                     Image(systemName: "bookmark.slash")
-                        .foregroundColor(.black)
+                        .foregroundColor(.mainLight)
                 }
                 .padding(.trailing, Constants.Dimens.spaceSemiXLarge)
             }
@@ -67,23 +67,20 @@ struct PortfolioAuthorDetailView: View {
                         if userData.rating.isEmpty {
                             Text("📍 \(userData.location) • \(L.Selection.noRating)")
                                 .font(.caption)
-                                .foregroundColor(.black)
-                                .brightness(Constants.Dimens.opacityLow)
+                                .foregroundColor(.mainText)
                         } else {
                             HStack(alignment: .center, spacing: Constants.Dimens.spaceXXSmall) {
                                 Text("📍 \(userData.location) • " + String(format: "%.1f", userData.averageRating) + L.Profile.outOf5)
                                     .font(.caption)
-                                    .foregroundColor(.black)
-                                    .brightness(Constants.Dimens.opacityLow)
                                 
                                 Image(systemName: "star.fill")
                                     .font(.caption2)
-                                    .foregroundColor(.black)
-                                    .brightness(Constants.Dimens.opacityLow)
                             }
+                            .foregroundColor(.mainText)
                         }
                     }
                 }
+                .padding(.top, Constants.Dimens.spaceXXSmall)
                 .padding(.leading, Constants.Dimens.spaceXLarge)
                 
                 Spacer()
@@ -92,7 +89,7 @@ struct PortfolioAuthorDetailView: View {
             HStack {
                 Text(creatorData?.description ?? L.Selection.profileText)
                     .font(.body)
-                    .foregroundColor(Color(uiColor: UIColor.systemGray))
+                    .foregroundColor(.secondaryText)
                 
                 Spacer()
             }

@@ -66,7 +66,7 @@ struct ProfileView: View {
                         .resizable()
                         .aspectRatio(1, contentMode: .fit)
                         .frame(height: Constants.Dimens.frameSizeXSmall)
-                        .foregroundColor(.gray)
+                        .foregroundColor(.mainText)
                 }
             }
             
@@ -78,7 +78,7 @@ struct ProfileView: View {
                         .resizable()
                         .aspectRatio(1, contentMode: .fit)
                         .frame(height: Constants.Dimens.frameSizeXSmall)
-                        .foregroundColor(.gray)
+                        .foregroundColor(.mainText)
                 })
             } else {
                 Button(action: {
@@ -88,7 +88,7 @@ struct ProfileView: View {
                         .resizable()
                         .aspectRatio(1, contentMode: .fit)
                         .frame(height: Constants.Dimens.frameSizeXSmall)
-                        .foregroundColor(.gray)
+                        .foregroundColor(.mainText)
                 })
             }
         }

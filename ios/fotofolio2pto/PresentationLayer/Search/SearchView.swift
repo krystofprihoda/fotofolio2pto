@@ -38,7 +38,7 @@ struct SearchView: View {
                     }
                 
                 Image(systemName: "magnifyingglass")
-                    .foregroundStyle(.gray)
+                    .foregroundStyle(.mainText)
                     .padding(.trailing, Constants.Dimens.spaceLarge)
             }
             

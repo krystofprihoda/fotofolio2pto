@@ -9,7 +9,7 @@ import SwiftUI
 
 struct PulsingCircleView: View {
     @State private var scale: CGFloat = 1.0
-    @State private var color: Color = .mainAccent
+    @State private var color: Color = .mainLight
     
     private let duration = 1.0
 

@@ -47,27 +47,24 @@ struct PortfolioDetailView: View {
                     Text(spaceSeparatedPrice: price)
                         .font(.footnote)
                         .padding(Constants.Dimens.spaceSmall)
-                        .background(.orange)
-                        .foregroundColor(.white)
-                        .cornerRadius(Constants.Dimens.radiusXSmall)
                 } else {
                     Text(L.Profile.priceOnRequest)
                         .font(.footnote)
                         .padding(Constants.Dimens.spaceSmall)
-                        .background(.orange)
-                        .foregroundColor(.white)
-                        .cornerRadius(Constants.Dimens.radiusXSmall)
                 }
                 
                 Spacer()
             }
+            .background(.mainContrast)
+            .foregroundColor(.white)
+            .cornerRadius(Constants.Dimens.radiusXSmall)
             .padding(.horizontal, Constants.Dimens.spaceSemiXLarge)
             
             /// Description
             HStack {
                 Text(viewModel.state.portfolio.description)
                     .font(.body)
-                    .foregroundColor(Color(uiColor: UIColor.systemGray))
+                    .foregroundColor(.secondaryText)
                 
                 Spacer()
             }

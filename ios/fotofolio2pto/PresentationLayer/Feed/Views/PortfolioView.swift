@@ -37,9 +37,9 @@ struct PortfolioView: View {
             /// Top bar
             HStack {
                 Button(action: openProfileAction, label: {
-                    Text("@" + portfolio.authorUsername)
+                    Text("@\(portfolio.authorUsername)")
                         .font(.title2)
-                        .foregroundColor(.mainAccent)
+                        .foregroundColor(.mainLight)
                 })
                 
                 Spacer()
@@ -47,7 +47,7 @@ struct PortfolioView: View {
                 Button(action: isFlagged ? unflagAction : flagAction) {
                     Image(systemName: isFlagged ? "bookmark.fill" : "bookmark")
                         .font(.title3)
-                        .foregroundColor(isFlagged ? .mainAccent : .gray)
+                        .foregroundColor(isFlagged ? .mainContrast : .mainText)
                         .transition(.opacity)
                 }
             }
@@ -60,7 +60,7 @@ struct PortfolioView: View {
             /// Description
             HStack {
                 Text(portfolio.description)
-                    .foregroundColor(.gray)
+                    .foregroundColor(.mainText)
                 
                 Spacer()
             }

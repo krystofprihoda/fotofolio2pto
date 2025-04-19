@@ -35,7 +35,7 @@ struct ChatView: View {
                                         .font(.callout)
                                         .multilineTextAlignment(.leading)
                                         .padding(Constants.Dimens.spaceSemiMedium)
-                                        .background(isSender ? .mainAccent : .gray)
+                                        .background(isSender ? .mainLight : .gray)
                                         .cornerRadius(Constants.Dimens.radiusXSmall)
                                         .foregroundStyle(.white)
 
@@ -44,7 +44,7 @@ struct ChatView: View {
                             }
                         } else {
                             Text(L.Messages.noMessages)
-                                .foregroundColor(.gray)
+                                .foregroundColor(.mainText)
                         }
                     }
                 }
@@ -67,7 +67,7 @@ struct ChatView: View {
                     Button(action: { viewModel.onIntent(.sendMessage) }) {
                         Text(L.Messages.send)
                             .padding(Constants.Dimens.textFieldButtonSpace)
-                            .background(.mainAccent)
+                            .background(.mainLight)
                             .cornerRadius(Constants.Dimens.radiusXSmall)
                             .foregroundColor(viewModel.state.isSendingMessage ? .clear : .white)
                             .disabledOverlay(viewModel.state.textInput.isEmpty)

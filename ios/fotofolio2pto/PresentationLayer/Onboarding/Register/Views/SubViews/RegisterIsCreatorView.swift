@@ -65,7 +65,7 @@ struct RegisterIsCreatorView: View {
                         .frame(maxWidth: .infinity)
                         .padding(Constants.Dimens.spaceLarge)
                         .foregroundStyle(.white)
-                        .background(.mainAccent)
+                        .background(.mainLight)
                         .cornerRadius(Constants.Dimens.radiusXSmall)
                 })
                 
@@ -76,7 +76,7 @@ struct RegisterIsCreatorView: View {
                         .frame(maxWidth: .infinity)
                         .padding(Constants.Dimens.spaceLarge)
                         .foregroundStyle(.white)
-                        .background(.mainAccent)
+                        .background(.mainLight)
                         .cornerRadius(Constants.Dimens.radiusXSmall)
                 })
             }

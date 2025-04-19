@@ -26,7 +26,7 @@ struct AllChatsView: View {
                         Text(L.Messages.noMessages)
                             .frame(width: geo.size.width, height: geo.size.height)
                             .font(.body)
-                            .foregroundColor(.gray)
+                            .foregroundColor(.mainText)
                     } else {
                         VStack(spacing: Constants.Dimens.spaceNone) {
                             ForEach(viewModel.state.chats) { (chat: Chat) in
@@ -42,7 +42,7 @@ struct AllChatsView: View {
                                                 Text(receiver)
                                                     .font(.headline)
                                                     .fontWeight(.medium)
-                                                    .foregroundColor(.mainAccent)
+                                                    .foregroundColor(.main)
                                             }
                                             
                                             let read = chat.readByIds.contains(where: { $0 == viewModel.state.senderId })
@@ -50,7 +50,7 @@ struct AllChatsView: View {
                                             Text(formatMessage(fromId: chat.lastSenderId, chat.lastMessage))
                                                 .lineLimit(1)
                                                 .truncationMode(.tail)
-                                                .foregroundColor(.black)
+                                                .foregroundColor(.mainLight)
                                                 .font(.body)
                                                 .fontWeight(read ? .regular : .semibold)
                                         }
@@ -81,7 +81,7 @@ struct AllChatsView: View {
                 .resizable()
                 .aspectRatio(1, contentMode: .fit)
                 .frame(height: Constants.Dimens.frameSizeXSmall)
-                .foregroundColor(.gray)
+                .foregroundColor(.mainText)
         }
     }
     

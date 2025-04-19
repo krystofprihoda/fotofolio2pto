@@ -52,7 +52,7 @@ struct SignInView: View {
                                     .frame(maxWidth: .infinity)
                                     .padding(Constants.Dimens.spaceLarge)
                                     .foregroundStyle(.white)
-                                    .background(.mainAccent)
+                                    .background(.mainLight)
                                     .cornerRadius(Constants.Dimens.radiusXSmall)
                             })
                             .disabledOverlay(!viewModel.state.isValidEmail || viewModel.state.password.isEmpty)

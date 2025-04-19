@@ -42,7 +42,7 @@ struct EditProfileView: View {
                 Text(L.Profile.save)
             }
         }
-        .foregroundColor(viewModel.state.isSaveButtonDisabled ? .gray : .black)
+        .foregroundColor(viewModel.state.isSaveButtonDisabled ? .mainText : .black)
         .disabled(viewModel.state.isSaveButtonDisabled)
     }
 

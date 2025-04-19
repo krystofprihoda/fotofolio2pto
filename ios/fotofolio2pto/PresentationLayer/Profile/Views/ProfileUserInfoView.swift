@@ -36,7 +36,7 @@ struct ProfileUserInfoView: View {
                         
                         Text(user.location)
                             .font(.subheadline)
-                            .foregroundColor(.black)
+                            .foregroundColor(.main)
                             .opacity(Constants.Dimens.opacityHigh)
                             .padding(.bottom, Constants.Dimens.spaceXXSmall)
                         
@@ -48,7 +48,7 @@ struct ProfileUserInfoView: View {
                                 Image(systemName: "star.fill")
                                     .font(.caption2)
                             }
-                            .foregroundColor(.black)
+                            .foregroundColor(.main)
                             .opacity(Constants.Dimens.opacityHigh)
                         } else {
                             Text(L.Profile.noRating)
@@ -61,9 +61,10 @@ struct ProfileUserInfoView: View {
                             Button(action: onGiveRatingTap, label: {
                                 Text(L.Profile.giveRating)
                                     .font(.footnote)
-                                    .underline()
-                                    .foregroundColor(.red).brightness(Constants.Dimens.opacityLow)
-                                    .padding(.top, Constants.Dimens.spaceXXSmall)
+                                    .padding(Constants.Dimens.spaceSmall)
+                                    .background(.mainContrast)
+                                    .foregroundColor(.white)
+                                    .cornerRadius(Constants.Dimens.radiusXSmall)
                                     .padding(.top, Constants.Dimens.spaceSmall)
                             })
                         }
@@ -85,7 +86,8 @@ struct ProfileUserInfoView: View {
                                 .font(.subheadline)
                                 .padding(.top, Constants.Dimens.spaceXSmall)
                                 .padding(.leading, Constants.Dimens.spaceSemiXLarge)
-                                .foregroundColor(.black)
+                                .foregroundColor(.mainContrast)
+                                .fontWeight(.medium)
 
                             
                             Spacer()
@@ -93,11 +95,11 @@ struct ProfileUserInfoView: View {
                         
                         Text(creator.description)
                             .lineSpacing(Constants.Dimens.spaceXXSmall)
-                            .font(.body)
+                            .font(.subheadline)
                             .padding(.top, Constants.Dimens.spaceXSmall)
                             .padding(.leading, Constants.Dimens.spaceSemiXLarge)
                             .padding(.trailing, Constants.Dimens.spaceXXSmall)
-                            .foregroundColor(.gray)
+                            .foregroundColor(.main)
                     }
                     
                     Divider()

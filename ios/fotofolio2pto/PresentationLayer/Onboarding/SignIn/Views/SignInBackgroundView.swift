@@ -20,7 +20,7 @@ struct SignInBackgroundView: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .aspectRatio(contentMode: .fill)
         
-        LinearGradient(colors: [.white, .mainAccent], startPoint: .topLeading, endPoint: .bottomTrailing)
+        LinearGradient(colors: [.white, .mainLight], startPoint: .topLeading, endPoint: .bottomTrailing)
             .edgesIgnoringSafeArea(.all)
             .hueRotation(.degrees(animateGradient ? gradientDegrees : 0))
             .onAppear {
