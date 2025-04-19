@@ -18,7 +18,7 @@ struct ChatView: View {
     var body: some View {
         VStack {
             ScrollView {
-                VStack(spacing: Constants.Dimens.spaceXSmall) {
+                VStack(spacing: Constants.Dimens.spaceSmall) {
                     if viewModel.state.isLoading {
                         ProgressView()
                             .progressViewStyle(.circular)
@@ -48,36 +48,42 @@ struct ChatView: View {
                         }
                     }
                 }
+                .padding(.top, Constants.Dimens.spaceLarge)
             }
             
-            ZStack(alignment: .trailing) {
-                TextField(L.Onboarding.username, text: Binding(get: { viewModel.state.textInput }, set: { viewModel.onIntent(.setTextInput($0)) }))
+            ZStack {
+                RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
+                    .fill(Color.textFieldBackground)
+                
+                HStack(spacing: Constants.Dimens.spaceNone) {
+                    TextField(L.Messages.prefill, text: Binding(
+                        get: { viewModel.state.textInput },
+                        set: { viewModel.onIntent(.setTextInput($0)) }
+                    ))
                     .font(.body)
                     .frame(height: Constants.Dimens.textFieldHeight)
-                    .padding(Constants.Dimens.spaceLarge)
-                    .background(.textFieldBackground)
-                    .cornerRadius(Constants.Dimens.radiusXSmall)
-                    .autocapitalization(.none)
-                    .disableAutocorrection(true)
-                
-                Button(action: { viewModel.onIntent(.sendMessage) }, label: {
-                    Text(L.Messages.send)
-                        .padding(Constants.Dimens.textFieldButtonSpace)
-                        .background(.mainAccent)
-                        .cornerRadius(Constants.Dimens.radiusXSmall)
-                        .foregroundColor(viewModel.state.isSendingMessage ? .clear : .white)
-                        .disabledOverlay(viewModel.state.textInput.isEmpty)
-                        .padding(.trailing, Constants.Dimens.spaceXSmall)
-                })
-                .overlay {
-                    if viewModel.state.isSendingMessage {
-                        ProgressView()
-                            .progressViewStyle(.circular)
+                    .padding(.leading, Constants.Dimens.spaceLarge)
+
+                    Button(action: { viewModel.onIntent(.sendMessage) }) {
+                        Text(L.Messages.send)
+                            .padding(Constants.Dimens.textFieldButtonSpace)
+                            .background(.mainAccent)
+                            .cornerRadius(Constants.Dimens.radiusXSmall)
+                            .foregroundColor(viewModel.state.isSendingMessage ? .clear : .white)
+                            .disabledOverlay(viewModel.state.textInput.isEmpty)
                     }
+                    .overlay {
+                        if viewModel.state.isSendingMessage {
+                            ProgressView()
+                                .progressViewStyle(.circular)
+                        }
+                    }
+                    .padding(Constants.Dimens.spaceXSmall)
                 }
             }
+            .frame(height: Constants.Dimens.textFieldHeight)
         }
-        .padding(Constants.Dimens.spaceLarge)
+        .padding([.horizontal, .bottom], Constants.Dimens.spaceLarge)
         .toast(toastData: Binding(get: { viewModel.state.toastData }, set: { viewModel.onIntent(.setToastData($0)) }))
         .navigationBarItems(leading: backButton)
         .setupNavBarAndTitle(viewModel.state.receiverData?.username ?? "", hideBack: true)

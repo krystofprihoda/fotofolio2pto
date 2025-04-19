@@ -100,10 +100,10 @@ extension User: Codable {
     }
 }
 
-let PROFILE_PIC = "https://loremflickr.com/320/320/person"
-
 extension User {
-    static let sampleData: [User] = [dummy1, dummy2, dummy3, dummy4, dummy5, dummy6]
+    static let PROFILE_PIC = "https://loremflickr.com/320/320/person"
+    
+    static let sampleData: [User] = [dummy1, dummy2]
     
     static var dummy1: User {
         User(id: "0", username: "vojtafoti", fullName: "Vojta Votruba", email: "vojtano@mail.com", location: "Praha",
@@ -113,30 +113,5 @@ extension User {
     static var dummy2: User {
         User(id: "1", username: "ad.fotograf", fullName: "Adam Lupínek", email: "adam@mail.cz", location: "Kladno",
              profilePicture: IImage(src: .remote(PROFILE_PIC)), rating: ["eatinkriss": 5], creatorId: "1")
-    }
-    
-    static var dummy3: User {
-        User(id: "2", username: "karel__foti", fullName: "Karel Kovář", email: "karel@mail.com", location: "Buštěhrad",
-             profilePicture: IImage(src: .remote(PROFILE_PIC)), rating: ["milos": 2], creatorId: "2")
-    }
-    
-    static var dummy4: User {
-        User(id: "3", username: "majkl_98", fullName: "Michal Filip", email: "mike@mail.cz", location: "Kolín",
-             profilePicture: IImage(src: .remote(PROFILE_PIC)), rating: [:])
-    }
-    
-    static var dummy5: User {
-        User(id: "4", username: "nejfotograf", fullName: "Miroslav Koch", email: "mira@mail.cz", location: "Velké Karlovice",
-             profilePicture: IImage(src: .remote(PROFILE_PIC)), rating: [:], creatorId: "3")
-    }
-    
-    static var dummy6: User {
-        User(id: "5", username: "portretyodmilana", fullName: "Milan Drát", email: "milan@mail.cz", location: "Velvary",
-             profilePicture: IImage(src: .remote(PROFILE_PIC)), rating: ["majkl_98": 5], creatorId: "4")
-    }
-    
-    static var dummy7: User {
-        User(id: "6", username: "fotimcvakam", fullName: "Radek Kříž", email: "fotcvakam@mail.cz", location: "Praha",
-             profilePicture: IImage(src: .remote(PROFILE_PIC)), rating: [:])
     }
 }

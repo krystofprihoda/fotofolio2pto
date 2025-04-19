@@ -51,5 +51,6 @@ public extension Resolver {
         register { ReadChatUseCaseImpl(messageRepository: resolve()) as ReadChatUseCase }
         register { ReadChatsUseCaseImpl(messageRepository: resolve()) as ReadChatsUseCase }
         register { ReadMessagesFromChatUseCaseImpl(messageRepository: resolve()) as ReadMessagesFromChatUseCase }
+        register { UpdateChatReadUseCaseImpl(messageRepository: resolve()) as UpdateChatReadUseCase }
     }
 }

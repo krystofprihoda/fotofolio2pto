@@ -13,13 +13,17 @@ class MessagesFlowController: BaseFlowController {
     private let senderId: String
     private let receiverId: String?
     
+    weak var tabBadgeFlowDelegate: TabBadgeFlowDelegate?
+    
     init(
         navigationController: UINavigationController,
         senderId: String,
-        receiverId: String? = nil
+        receiverId: String? = nil,
+        tabBadgeFlowDelegate: TabBadgeFlowDelegate? = nil
     ) {
         self.senderId = senderId
         self.receiverId = receiverId
+        self.tabBadgeFlowDelegate = tabBadgeFlowDelegate
         super.init(navigationController: navigationController)
     }
     
@@ -30,7 +34,7 @@ class MessagesFlowController: BaseFlowController {
             let vc = BaseHostingController(rootView: view)
             return vc
         } else {
-            let vm = AllChatsViewViewModel(flowController: self, senderId: senderId)
+            let vm = AllChatsViewModel(flowController: self, senderId: senderId)
             let view = AllChatsView(viewModel: vm)
             let vc = BaseHostingController(rootView: view)
             return vc

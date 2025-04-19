@@ -10,4 +10,5 @@ interface MessageRepository {
     suspend fun getChats(userId: String): List<Chat>
     suspend fun getChatById(chatId: String, userId: String): Chat
     suspend fun getChatMessages(chatId: String, userId: String): List<Message>
+    suspend fun updateChatRead(chatId: String, userId: String)
 }

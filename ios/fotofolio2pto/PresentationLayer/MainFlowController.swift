@@ -79,7 +79,7 @@ public class MainFlowController: BaseFlowController {
             image: UIImage(systemName: "square.text.square"),
             tag: MainTab.feed.rawValue
         )
-        let feedFlowController = FeedFlowController(navigationController: feedNavController, signedInUserId: userId, feedTabBadgeFlowDelegate: self)
+        let feedFlowController = FeedFlowController(navigationController: feedNavController, signedInUserId: userId, tabBadgeFlowDelegate: self)
         let feedRootVC = startChildFlow(feedFlowController)
         feedNavController.viewControllers = [feedRootVC]
         
@@ -93,7 +93,7 @@ public class MainFlowController: BaseFlowController {
             image: UIImage(systemName: "star.square"),
             tag: MainTab.selection.rawValue
         )
-        let selectionFlowController = SelectionFlowController(navigationController: selectionNavController, signedInUserId: userId, feedTabBadgeFlowDelegate: self)
+        let selectionFlowController = SelectionFlowController(navigationController: selectionNavController, signedInUserId: userId, tabBadgeFlowDelegate: self)
         let selectionRootVC = startChildFlow(selectionFlowController)
         selectionNavController.viewControllers = [selectionRootVC]
         
@@ -121,7 +121,7 @@ public class MainFlowController: BaseFlowController {
             image: UIImage(systemName: "message"),
             tag: MainTab.messages.rawValue
         )
-        let messagesFlowController = MessagesFlowController(navigationController: messagesNavController, senderId: userId)
+        let messagesFlowController = MessagesFlowController(navigationController: messagesNavController, senderId: userId, tabBadgeFlowDelegate: self)
         let messagesRootVC = startChildFlow(messagesFlowController)
         messagesNavController.viewControllers = [messagesRootVC]
         
@@ -249,10 +249,10 @@ extension MainFlowController: ProfileSignOutDelegate {
     }
 }
 
-extension MainFlowController: FeedTabBadgeFlowDelegate {
-    public func updateCount(to count: Int, animated: Bool) {
+extension MainFlowController: TabBadgeFlowDelegate {
+    public func updateCount(of tab: MainTab, to count: Int, animated: Bool) {
         guard let tabBarController = rootViewController as? UITabBarController else { return }
-        guard let index = getViewControllerTabIndex(for: .selection) else { return }
+        guard let index = getViewControllerTabIndex(for: tab) else { return }
         let tabBarItem = tabBarController.tabBar.items?[index]
         
         tabBarItem?.badgeColor = .mainAccent

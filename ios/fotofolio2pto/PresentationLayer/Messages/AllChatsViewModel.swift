@@ -1,5 +1,5 @@
 //
-//  AllChatsViewViewModel.swift
+//  AllChatsViewModel.swift
 //  fotofolio2pto
 //
 //  Created by Kryštof Příhoda on 20.06.2024.
@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 import Resolver
 
-final class AllChatsViewViewModel: BaseViewModel, ViewModel, ObservableObject {
+final class AllChatsViewModel: BaseViewModel, ViewModel, ObservableObject {
     // MARK: Stored properties
     
     private var chatUpdateTimer: Timer?
@@ -18,6 +18,7 @@ final class AllChatsViewViewModel: BaseViewModel, ViewModel, ObservableObject {
     
     @LazyInjected private var readChatsUseCase: ReadChatsUseCase
     @LazyInjected private var readUserByIdUseCase: ReadUserByIdUseCase
+    @LazyInjected private var updateChatReadUseCase: UpdateChatReadUseCase
     
     private weak var flowController: MessagesFlowController?
     
@@ -42,7 +43,7 @@ final class AllChatsViewViewModel: BaseViewModel, ViewModel, ObservableObject {
         executeTask(Task { await updateChats() })
         
         // Update every 5 seconds
-        // startFetchingChats()
+         startFetchingChats()
     }
     
     override func onDisappear() {
@@ -58,6 +59,7 @@ final class AllChatsViewViewModel: BaseViewModel, ViewModel, ObservableObject {
         var senderId = ""
         var chats: [Chat] = []
         var receivers: [String: String] = [:]
+        var unreadChatsCount = 0
     }
     
     @Published private(set) var state = State()
@@ -75,7 +77,7 @@ final class AllChatsViewViewModel: BaseViewModel, ViewModel, ObservableObject {
     func onIntent(_ intent: Intent) -> Task<Void, Never> {
         executeTask(Task {
             switch intent {
-            case .showChat(let chat): showChat(chat)
+            case .showChat(let chat): await showChat(chat)
             case .showNewChat: showNewChat()
             case .refreshChats: await updateChats()
             case .setToastData(let toast): setToastData(toast)
@@ -115,10 +117,38 @@ final class AllChatsViewViewModel: BaseViewModel, ViewModel, ObservableObject {
         } catch {
             state.toastData = .init(message: L.Messages.loadFailed, type: .error)
         }
+        
+        updateNumberOfReadChats()
     }
     
-    private func showChat(_ chat: Chat) {
+    private func updateNumberOfReadChats() {
+        var count = 0
+        for chat in state.chats {
+            if !chat.readByIds.contains(where: { $0 == state.senderId }) {
+                count += 1
+            }
+        }
+        
+        guard count > 0 else { return }
+        
+        state.unreadChatsCount = count
+        flowController?.tabBadgeFlowDelegate?.updateCount(of: .messages, to: count, animated: true)
+    }
+    
+    private func showChat(_ chat: Chat) async {
         guard let receiverId = chat.getReceiverId(senderId: state.senderId) else { return }
+        
+        if !chat.id.isEmpty {
+            do {
+                try await updateChatReadUseCase.execute(chatId: chat.id)
+            } catch {
+                state.toastData = .init(message: L.General.somethingWentWrong, type: .error)
+            }
+        }
+        
+        state.unreadChatsCount -= 1
+        flowController?.tabBadgeFlowDelegate?.updateCount(of: .messages, to: state.unreadChatsCount, animated: false)
+        
         flowController?.showChat(senderId: state.senderId, receiverId: receiverId)
     }
     

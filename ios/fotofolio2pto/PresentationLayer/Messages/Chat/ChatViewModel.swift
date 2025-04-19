@@ -42,8 +42,8 @@ final class ChatViewModel: BaseViewModel, ViewModel, ObservableObject {
         super.onAppear()
         executeTask(Task { await fetchReceiverAndChatData() })
         
-        // Fetch messages every second
-        // startFetchingNewMessages()
+        // Fetch messages every 5 seconds
+         startFetchingNewMessages()
     }
     
     override func onDisappear() {

@@ -40,6 +40,7 @@
 		FE4BBD392DB2ED3100B4619A /* FotofolioAnimatedLogoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4BBD382DB2ED3100B4619A /* FotofolioAnimatedLogoView.swift */; };
 		FE4BBD3B2DB2F68600B4619A /* PhotoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4BBD3A2DB2F68600B4619A /* PhotoView.swift */; };
 		FE4BBD3D2DB2FD3500B4619A /* Text+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4BBD3C2DB2FD2F00B4619A /* Text+Extensions.swift */; };
+		FE4BBD3F2DB3B32900B4619A /* UpdateChatReadUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4BBD3E2DB3B32300B4619A /* UpdateChatReadUseCase.swift */; };
 		FE5F8A782C296D81001EE8AF /* AuthRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE5F8A772C296D81001EE8AF /* AuthRepository.swift */; };
 		FE5F8A7C2C296ECA001EE8AF /* LoginWithCredentialsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE5F8A7B2C296ECA001EE8AF /* LoginWithCredentialsUseCase.swift */; };
 		FE5F8A802C2971C7001EE8AF /* AuthRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE5F8A7F2C2971C7001EE8AF /* AuthRepositoryImpl.swift */; };
@@ -126,7 +127,7 @@
 		FEC94DCF2C247C4C00FFEB11 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC94DCE2C247C4C00FFEB11 /* SearchViewModel.swift */; };
 		FEC94DD12C247C5500FFEB11 /* SearchFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC94DD02C247C5500FFEB11 /* SearchFlowController.swift */; };
 		FEC94DD32C247C6100FFEB11 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC94DD22C247C6100FFEB11 /* SearchView.swift */; };
-		FEC94DD52C247C9500FFEB11 /* AllChatsViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC94DD42C247C9500FFEB11 /* AllChatsViewViewModel.swift */; };
+		FEC94DD52C247C9500FFEB11 /* AllChatsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC94DD42C247C9500FFEB11 /* AllChatsViewModel.swift */; };
 		FEC94DD72C247CB200FFEB11 /* AllChatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC94DD62C247CB200FFEB11 /* AllChatsView.swift */; };
 		FEC94DD92C247CCA00FFEB11 /* MessagesFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC94DD82C247CCA00FFEB11 /* MessagesFlowController.swift */; };
 		FEC94DDB2C247D4B00FFEB11 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC94DDA2C247D4B00FFEB11 /* ProfileView.swift */; };
@@ -197,6 +198,7 @@
 		FE4BBD382DB2ED3100B4619A /* FotofolioAnimatedLogoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FotofolioAnimatedLogoView.swift; sourceTree = "<group>"; };
 		FE4BBD3A2DB2F68600B4619A /* PhotoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoView.swift; sourceTree = "<group>"; };
 		FE4BBD3C2DB2FD2F00B4619A /* Text+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Text+Extensions.swift"; sourceTree = "<group>"; };
+		FE4BBD3E2DB3B32300B4619A /* UpdateChatReadUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateChatReadUseCase.swift; sourceTree = "<group>"; };
 		FE5F8A772C296D81001EE8AF /* AuthRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRepository.swift; sourceTree = "<group>"; };
 		FE5F8A7B2C296ECA001EE8AF /* LoginWithCredentialsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginWithCredentialsUseCase.swift; sourceTree = "<group>"; };
 		FE5F8A7F2C2971C7001EE8AF /* AuthRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRepositoryImpl.swift; sourceTree = "<group>"; };
@@ -282,7 +284,7 @@
 		FEC94DCE2C247C4C00FFEB11 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		FEC94DD02C247C5500FFEB11 /* SearchFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFlowController.swift; sourceTree = "<group>"; };
 		FEC94DD22C247C6100FFEB11 /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
-		FEC94DD42C247C9500FFEB11 /* AllChatsViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllChatsViewViewModel.swift; sourceTree = "<group>"; };
+		FEC94DD42C247C9500FFEB11 /* AllChatsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllChatsViewModel.swift; sourceTree = "<group>"; };
 		FEC94DD62C247CB200FFEB11 /* AllChatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllChatsView.swift; sourceTree = "<group>"; };
 		FEC94DD82C247CCA00FFEB11 /* MessagesFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesFlowController.swift; sourceTree = "<group>"; };
 		FEC94DDA2C247D4B00FFEB11 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
@@ -651,6 +653,7 @@
 		FEA53CC02C2B6033006F0116 /* Messages */ = {
 			isa = PBXGroup;
 			children = (
+				FE4BBD3E2DB3B32300B4619A /* UpdateChatReadUseCase.swift */,
 				FE3FE2D82D9DE00800CD4B22 /* ReadChatsUseCase.swift */,
 				FE3FE2D62D9DAD1E00CD4B22 /* ReadMessagesFromChatUseCase.swift */,
 				FEA53CD52C2C2CEC006F0116 /* CreateNewChatWithMessageUseCase.swift */,
@@ -839,7 +842,7 @@
 			isa = PBXGroup;
 			children = (
 				FEA53CD22C2C2718006F0116 /* Chat */,
-				FEC94DD42C247C9500FFEB11 /* AllChatsViewViewModel.swift */,
+				FEC94DD42C247C9500FFEB11 /* AllChatsViewModel.swift */,
 				FEC94DD62C247CB200FFEB11 /* AllChatsView.swift */,
 				FEC94DD82C247CCA00FFEB11 /* MessagesFlowController.swift */,
 			);
@@ -1042,7 +1045,8 @@
 				FEC94DD32C247C6100FFEB11 /* SearchView.swift in Sources */,
 				FE3827C92DA1610E007A933E /* RemoteImageViewModel.swift in Sources */,
 				FEA53CA92C29D7E8006F0116 /* UnflagPortfolioUseCase.swift in Sources */,
-				FEC94DD52C247C9500FFEB11 /* AllChatsViewViewModel.swift in Sources */,
+				FEC94DD52C247C9500FFEB11 /* AllChatsViewModel.swift in Sources */,
+				FE4BBD3F2DB3B32900B4619A /* UpdateChatReadUseCase.swift in Sources */,
 				FEC94E012C26DD2F00FFEB11 /* SearchResultsView.swift in Sources */,
 				FEC8A8C02D75C5D5000181B8 /* Localization.swift in Sources */,
 				FEC94D9F2C24398200FFEB11 /* fotofolio2pto.xcdatamodeld in Sources */,

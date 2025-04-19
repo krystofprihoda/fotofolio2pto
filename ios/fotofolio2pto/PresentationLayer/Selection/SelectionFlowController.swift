@@ -12,15 +12,15 @@ class SelectionFlowController: BaseFlowController {
     
     private let signedInUserId: String
     
-    weak var feedTabBadgeFlowDelegate: FeedTabBadgeFlowDelegate?
+    weak var tabBadgeFlowDelegate: TabBadgeFlowDelegate?
     
     init(
         navigationController: UINavigationController,
         signedInUserId: String,
-        feedTabBadgeFlowDelegate: FeedTabBadgeFlowDelegate? = nil
+        tabBadgeFlowDelegate: TabBadgeFlowDelegate? = nil
     ) {
         self.signedInUserId = signedInUserId
-        self.feedTabBadgeFlowDelegate = feedTabBadgeFlowDelegate
+        self.tabBadgeFlowDelegate = tabBadgeFlowDelegate
         super.init(navigationController: navigationController)
     }
     
@@ -49,8 +49,8 @@ class SelectionFlowController: BaseFlowController {
     }
 }
 
-extension SelectionFlowController: FeedTabBadgeFlowDelegate {
-    func updateCount(to count: Int, animated: Bool) {
-        feedTabBadgeFlowDelegate?.updateCount(to: count, animated: animated)
+extension SelectionFlowController: TabBadgeFlowDelegate {
+    func updateCount(of tab: MainTab, to count: Int, animated: Bool) {
+        tabBadgeFlowDelegate?.updateCount(of: tab, to: count, animated: animated)
     }
 }

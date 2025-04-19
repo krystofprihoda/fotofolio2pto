@@ -114,7 +114,7 @@ final class SelectionViewModel: BaseViewModel, ViewModel, ObservableObject, Port
         
         state.toastData = .init(message: L.Selection.removedAll, type: .neutral)
         
-        flowController?.feedTabBadgeFlowDelegate?.updateCount(to: 0, animated: false)
+        flowController?.tabBadgeFlowDelegate?.updateCount(of: .selection, to: 0, animated: false)
     }
     
     private func tapRemoveFromFlagged(id: String) {
@@ -152,7 +152,7 @@ final class SelectionViewModel: BaseViewModel, ViewModel, ObservableObject, Port
         
         state.toastData = .init(message: L.Selection.portfolioRemoved, type: .neutral)
         
-        flowController?.feedTabBadgeFlowDelegate?.updateCount(to: state.portfolios.count, animated: false)
+        flowController?.tabBadgeFlowDelegate?.updateCount(of: .selection, to: state.portfolios.count, animated: false)
     }
     
     private func setToastData(_ toast: ToastData?) {

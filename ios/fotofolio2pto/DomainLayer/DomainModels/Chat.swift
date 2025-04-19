@@ -14,6 +14,7 @@ public struct Chat: Identifiable, Equatable {
     public let lastUpdated: Date
     public let lastMessage: String
     public let lastSenderId: String
+    public let readByIds: [String]
     
     public init(
         id: String,
@@ -21,7 +22,8 @@ public struct Chat: Identifiable, Equatable {
         messageIds: [String],
         lastUpdated: Date,
         lastMessage: String,
-        lastSenderId: String
+        lastSenderId: String,
+        readByIds: [String]
     ) {
         self.id = id
         self.chatOwnerIds = chatOwnerIds
@@ -29,6 +31,7 @@ public struct Chat: Identifiable, Equatable {
         self.lastUpdated = lastUpdated
         self.lastMessage = lastMessage
         self.lastSenderId = lastSenderId
+        self.readByIds = readByIds
     }
     
     public static func == (lhs: Chat, rhs: Chat) -> Bool {
@@ -42,7 +45,7 @@ public struct Chat: Identifiable, Equatable {
 
 extension Chat: Codable {
     enum CodingKeys: String, CodingKey {
-        case id, chatOwnerIds, messageIds, lastUpdated, lastMessage, lastSenderId
+        case id, chatOwnerIds, messageIds, lastUpdated, lastMessage, lastSenderId, readByIds
     }
     
     public init(from decoder: Decoder) throws {
@@ -56,6 +59,8 @@ extension Chat: Codable {
         
             let lastUpdatedInt = try container.decode(Int.self, forKey: .lastUpdated)
             lastUpdated = Date(timeIntervalSince1970: Double(lastUpdatedInt))
+        
+            readByIds = try container.decode([String].self, forKey: .readByIds)
         }
         
     public func encode(to encoder: Encoder) throws {
@@ -66,11 +71,12 @@ extension Chat: Codable {
         try container.encode(lastUpdated.timeIntervalSince1970, forKey: .lastUpdated)
         try container.encode(lastMessage, forKey: .lastMessage)
         try container.encode(lastSenderId, forKey: .lastSenderId)
+        try container.encode(readByIds, forKey: .readByIds)
     }
 }
 
 extension Chat {
     public static var empty: Chat {
-        Chat(id: "", chatOwnerIds: [], messageIds: [], lastUpdated: .now, lastMessage: "", lastSenderId: "")
+        Chat(id: "", chatOwnerIds: [], messageIds: [], lastUpdated: .now, lastMessage: "", lastSenderId: "", readByIds: [])
     }
 }

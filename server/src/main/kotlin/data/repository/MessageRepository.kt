@@ -48,7 +48,8 @@ class MessageRepositoryImpl(
             "messageIds" to listOf(messageId),
             "lastUpdated" to messageObj.timestamp,
             "lastMessage" to messageObj.body,
-            "lastSenderId" to senderId
+            "lastSenderId" to senderId,
+            "readByIds" to listOf(senderId)
         ))
 
         // Get updated chat
@@ -79,7 +80,8 @@ class MessageRepositoryImpl(
             "messageIds" to updatedMessageIds,
             "lastUpdated" to messageObj.timestamp,
             "lastMessage" to messageObj.body,
-            "lastSenderId" to senderId
+            "lastSenderId" to senderId,
+            "readByIds" to listOf(senderId)
         ))
 
         return firestoreSource.getDocument("chat", chatId, Chat::class.java)
@@ -114,7 +116,7 @@ class MessageRepositoryImpl(
     }
 
     override suspend fun getChatMessages(chatId: String, userId: String): List<Message> {
-        return firestoreSource.getDocumentsWhereOrdered(
+        val messages =  firestoreSource.getDocumentsWhereOrdered(
             collection = "message",
             field = "chatId",
             value = chatId,
@@ -122,5 +124,24 @@ class MessageRepositoryImpl(
             direction = Query.Direction.ASCENDING,
             clazz = Message::class.java
         )
+
+        updateChatRead(chatId = chatId, userId)
+        return messages
+    }
+
+    override suspend fun updateChatRead(chatId: String, userId: String) {
+        val chat = firestoreSource.getDocument("chat", chatId, Chat::class.java)
+            ?: throw Exception("Chat not found")
+
+        if (!chat.chatOwnerIds.contains(userId)) {
+            throw Exception("Unauthorized")
+        }
+
+        if (chat.readByIds.contains(userId)) { return }
+        val updatedIds = chat.readByIds + userId
+
+        firestoreSource.updateDocument("chat", chatId, mapOf(
+            "readByIds" to updatedIds
+        ))
     }
 }

@@ -135,4 +135,14 @@ public class MessageRepositoryImpl: MessageRepository {
         )
         return chat
     }
+    
+    public func updateChatRead(chatId: String) async throws {
+        guard let token: String = encryptedStorage.read(.token) else { throw AuthError.tokenRetrievalFailed }
+        let headers = [
+            "Authorization": "Bearer \(token)",
+            "Content-Type": "application/json"
+        ]
+        
+        let _ = try await network.request(endpoint: .chatRead(chatId), method: .POST, body: nil, headers: headers, queryParams: nil)
+    }
 }

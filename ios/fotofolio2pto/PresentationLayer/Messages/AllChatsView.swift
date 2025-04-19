@@ -9,9 +9,9 @@ import SwiftUI
 
 struct AllChatsView: View {
     
-    @ObservedObject private var viewModel: AllChatsViewViewModel
+    @ObservedObject private var viewModel: AllChatsViewModel
     
-    init(viewModel: AllChatsViewViewModel) {
+    init(viewModel: AllChatsViewModel) {
         self.viewModel = viewModel
     }
     
@@ -45,9 +45,14 @@ struct AllChatsView: View {
                                                     .foregroundColor(.mainAccent)
                                             }
                                             
+                                            let read = chat.readByIds.contains(where: { $0 == viewModel.state.senderId })
+                                            
                                             Text(formatMessage(fromId: chat.lastSenderId, chat.lastMessage))
-                                                .foregroundColor(.gray)
+                                                .lineLimit(1)
+                                                .truncationMode(.tail)
+                                                .foregroundColor(.black)
                                                 .font(.body)
+                                                .fontWeight(read ? .regular : .semibold)
                                         }
                                         .padding(.leading, Constants.Dimens.spaceSmall)
                                         

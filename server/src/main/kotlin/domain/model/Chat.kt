@@ -9,7 +9,8 @@ data class Chat(
     val messageIds: List<String> = emptyList(),
     val lastUpdated: Long = System.currentTimeMillis(),
     val lastMessage: String = "",
-    val lastSenderId: String = ""
+    val lastSenderId: String = "",
+    val readByIds: List<String> = emptyList()
 )
 
 fun Chat.toMap(): Map<String, Any> {
@@ -19,6 +20,7 @@ fun Chat.toMap(): Map<String, Any> {
         "messageIds" to messageIds,
         "lastUpdated" to lastUpdated,
         "lastMessage" to lastMessage,
-        "lastSenderId" to lastSenderId
+        "lastSenderId" to lastSenderId,
+        "readByIds" to readByIds
     )
 }

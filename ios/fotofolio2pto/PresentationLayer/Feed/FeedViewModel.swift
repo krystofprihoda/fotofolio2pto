@@ -9,8 +9,8 @@ import Foundation
 import SwiftUI
 import Resolver
 
-public protocol FeedTabBadgeFlowDelegate: AnyObject {
-    func updateCount(to: Int, animated: Bool)
+public protocol TabBadgeFlowDelegate: AnyObject {
+    func updateCount(of: MainTab, to: Int, animated: Bool)
 }
 
 final class FeedViewModel: BaseViewModel, ViewModel, ObservableObject {
@@ -50,7 +50,7 @@ final class FeedViewModel: BaseViewModel, ViewModel, ObservableObject {
             executeTask(Task { await fetchPortfolios(isRefreshing: false) })
         }
         
-        flowController?.feedTabBadgeFlowDelegate?.updateCount(to: state.flaggedPortfolioIds.count, animated: false)
+        flowController?.tabBadgeFlowDelegate?.updateCount(of: .selection, to: state.flaggedPortfolioIds.count, animated: false)
     }
     
     // MARK: State
@@ -147,7 +147,7 @@ final class FeedViewModel: BaseViewModel, ViewModel, ObservableObject {
         
         state.toastData = .init(message: L.Feed.portfolioAdded, type: .success)
         
-        flowController?.feedTabBadgeFlowDelegate?.updateCount(to: state.flaggedPortfolioIds.count, animated: true)
+        flowController?.tabBadgeFlowDelegate?.updateCount(of: .selection, to: state.flaggedPortfolioIds.count, animated: true)
     }
     
     private func unflagPortfolio(withId id: String) {
@@ -157,7 +157,7 @@ final class FeedViewModel: BaseViewModel, ViewModel, ObservableObject {
         // Show a toast
         state.toastData = .init(message: L.Feed.portfolioRemoved, type: .neutral)
         
-        flowController?.feedTabBadgeFlowDelegate?.updateCount(to: state.flaggedPortfolioIds.count, animated: false)
+        flowController?.tabBadgeFlowDelegate?.updateCount(of: .selection, to: state.flaggedPortfolioIds.count, animated: false)
     }
     
     private func fetchFlaggedPortfolios() {

@@ -14,4 +14,5 @@ public protocol MessageRepository {
     func readChat(receiverId: String) async throws -> Chat
     func readUserChats() async throws -> [Chat]
     func readMessages(chatId: String) async throws -> [Message]
+    func updateChatRead(chatId: String) async throws
 }

@@ -31,6 +31,19 @@ fun Application.messageRoutes() {
                 }
             }
 
+            post("/chat/{chatId}/read") {
+                try {
+                    val principalId = call.principal<UserIdPrincipal>()?.name ?: throw Exception("Unauthorized")
+                    val chatId = call.parameters["chatId"] ?: throw Exception("Missing chat ID")
+
+                    messageRepository.updateChatRead(chatId = chatId, principalId)
+
+                    call.respond(HttpStatusCode.OK)
+                } catch (e: Exception) {
+                    call.respond(HttpStatusCode.BadRequest, "Error: ${e.localizedMessage}")
+                }
+            }
+
             // Send a message in an existing chat
             post("/chat/{chatId}/message") {
                 try {

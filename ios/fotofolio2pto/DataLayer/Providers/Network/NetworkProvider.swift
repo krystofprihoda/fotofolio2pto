@@ -59,6 +59,7 @@ enum Endpoint {
     case portfolio
     case portfolioById(String)
     case chat
+    case chatRead(String)
     case messageByChatId(String)
     
     var path: String {
@@ -87,6 +88,8 @@ enum Endpoint {
             return "/portfolio/\(id)"
         case .chat:
             return "/chat"
+        case .chatRead(let chatId):
+            return "/chat/\(chatId)/read"
         case .messageByChatId(let chatId):
             return "/chat/\(chatId)/message"
         }
