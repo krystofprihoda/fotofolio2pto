@@ -18,20 +18,10 @@ struct RegisterNameAndEmailView: View {
     
     var body: some View {
         VStack {
-            TextField(L.Onboarding.name, text: name)
-                .font(.body)
-                .frame(height: Constants.Dimens.textFieldHeight)
-                .padding(Constants.Dimens.spaceLarge)
-                .background(.textFieldBackground)
-                .cornerRadius(Constants.Dimens.radiusXSmall)
+            TextFieldView(title: L.Onboarding.name, text: name)
                 .disableAutocorrection(true)
             
-            TextField(L.Onboarding.email, text: email)
-                .font(.body)
-                .frame(height: Constants.Dimens.textFieldHeight)
-                .padding(Constants.Dimens.spaceLarge)
-                .background(.textFieldBackground)
-                .cornerRadius(Constants.Dimens.radiusXSmall)
+            TextFieldView(title: L.Onboarding.email, text: email)
                 .autocapitalization(.none)
                 .disableAutocorrection(true)
                 .onChange(of: email.wrappedValue) { _ in

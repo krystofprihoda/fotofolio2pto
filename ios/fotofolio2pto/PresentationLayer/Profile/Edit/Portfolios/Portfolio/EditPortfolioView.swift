@@ -165,18 +165,13 @@ struct EditPortfolioView: View {
             .padding(.horizontal, Constants.Dimens.spaceLarge)
             
             if (viewModel.state.price != .priceOnRequest) {
-                TextField(
-                    L.Profile.price,
+                TextFieldView(
+                    title: L.Profile.price,
                     text: Binding(
                         get: { viewModel.state.priceInput },
                         set: { viewModel.onIntent(.setPriceInput($0)) }
                     )
                 )
-                .font(.body)
-                .frame(height: Constants.Dimens.textFieldHeight)
-                .padding(Constants.Dimens.spaceLarge)
-                .background(.textFieldBackground)
-                .cornerRadius(Constants.Dimens.radiusXSmall)
                 .padding(.horizontal, Constants.Dimens.spaceLarge)
             }
         }
@@ -188,21 +183,8 @@ struct EditPortfolioView: View {
                 .font(.body)
                 .bold()
             
-            ZStack {
-                RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
-                    .fill(.textFieldBackground)
-                    .frame(height: Constants.Dimens.frameSizeLarge)
-                
-                TextEditor(text: Binding(get: { viewModel.state.description }, set: { viewModel.onIntent(.setDescriptionInput($0)) }))
-                    .font(.body)
-                    .frame(height: Constants.Dimens.frameSizeLarge)
-                    .lineSpacing(Constants.Dimens.spaceXSmall)
-                    .foregroundColor(.black)
-                    .scrollContentBackground(.hidden)
-                    .background(.clear)
-                    .padding(.top, Constants.Dimens.spaceLarge)
-                    .padding(.horizontal, Constants.Dimens.spaceSmall)
-            }
+            BaseTextEditor(text: Binding(get: { viewModel.state.description }, set: { viewModel.onIntent(.setDescriptionInput($0)) }))
+                .frame(height: Constants.Dimens.frameSizeXLarge)
         }
         .padding(.horizontal, Constants.Dimens.spaceLarge)
     }

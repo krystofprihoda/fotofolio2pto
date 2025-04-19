@@ -35,27 +35,13 @@ struct EditCreatorDetailsView: View {
                     .font(.footnote)
                     .foregroundColor(.black)
                 
-                // description
-                ZStack(alignment: .leading) {
-                    RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
-                        .fill(.textFieldBackground)
-                        .frame(height: Constants.Dimens.frameSizeXXLarge)
-                        
-                    TextEditor(
-                        text: Binding(
-                            get: { viewModel.state.profileDescription },
-                            set: { viewModel.onIntent(.setProfileDescription($0)) }
-                        )
+                BaseTextEditor(
+                    text: Binding(
+                        get: { viewModel.state.profileDescription },
+                        set: { viewModel.onIntent(.setProfileDescription($0)) }
                     )
-                        .font(.body)
-                        .frame(height: Constants.Dimens.frameSizeXXLarge)
-                        .lineSpacing(Constants.Dimens.spaceXSmall)
-                        .foregroundColor(.black)
-                        .scrollContentBackground(.hidden)
-                        .background(.clear)
-                        .padding(.top, Constants.Dimens.spaceLarge)
-                        .padding(.horizontal, Constants.Dimens.spaceSmall)
-                }
+                )
+                .frame(height: Constants.Dimens.frameSizeXLarge)
             }
         }
         .padding(.horizontal, Constants.Dimens.spaceLarge)

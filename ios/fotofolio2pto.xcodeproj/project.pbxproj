@@ -106,6 +106,8 @@
 		FEA64F6F2D7712C700B11530 /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA64F6E2D7712C200B11530 /* RegisterView.swift */; };
 		FEA64F712D77135E00B11530 /* RegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA64F702D77135B00B11530 /* RegisterViewModel.swift */; };
 		FEA64F792D7757B100B11530 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FEA64F782D7757B100B11530 /* Colors.xcassets */; };
+		FEA971E02DB3E0F3008112B7 /* TextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA971DF2DB3E0E9008112B7 /* TextFieldView.swift */; };
+		FEA971E22DB3E5DC008112B7 /* BaseTextEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA971E12DB3E5DC008112B7 /* BaseTextEditor.swift */; };
 		FEB945432D79F2BE00002A9B /* RegisterWrapperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEB945422D79F2BE00002A9B /* RegisterWrapperView.swift */; };
 		FEC8A8C02D75C5D5000181B8 /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC8A8BF2D75C5CE000181B8 /* Localization.swift */; };
 		FEC94D952C24398200FFEB11 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC94D942C24398200FFEB11 /* AppDelegate.swift */; };
@@ -261,6 +263,8 @@
 		FEA64F6E2D7712C200B11530 /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
 		FEA64F702D77135B00B11530 /* RegisterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewModel.swift; sourceTree = "<group>"; };
 		FEA64F782D7757B100B11530 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
+		FEA971DF2DB3E0E9008112B7 /* TextFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldView.swift; sourceTree = "<group>"; };
+		FEA971E12DB3E5DC008112B7 /* BaseTextEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTextEditor.swift; sourceTree = "<group>"; };
 		FEB945422D79F2BE00002A9B /* RegisterWrapperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterWrapperView.swift; sourceTree = "<group>"; };
 		FEC8A8BF2D75C5CE000181B8 /* Localization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localization.swift; sourceTree = "<group>"; };
 		FEC94D912C24398200FFEB11 /* fotofolio2pto.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = fotofolio2pto.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -777,6 +781,8 @@
 		FEC94DAC2C243EA400FFEB11 /* BaseViews */ = {
 			isa = PBXGroup;
 			children = (
+				FEA971E12DB3E5DC008112B7 /* BaseTextEditor.swift */,
+				FEA971DF2DB3E0E9008112B7 /* TextFieldView.swift */,
 				FE4BBD3A2DB2F68600B4619A /* PhotoView.swift */,
 				FE3827C72DA16104007A933E /* RemoteImage */,
 				FE9A30BA2D88473E0056CC0A /* Toast.swift */,
@@ -1084,6 +1090,7 @@
 				FEC94DCD2C2479CD00FFEB11 /* SelectionViewModel.swift in Sources */,
 				FE3827DE2DA3CA8E007A933E /* GiveRatingUseCase.swift in Sources */,
 				FEA53CA72C29D667006F0116 /* FlagPortfolioUseCase.swift in Sources */,
+				FEA971E22DB3E5DC008112B7 /* BaseTextEditor.swift in Sources */,
 				FE3D2B0F2D930EFF00DA22DB /* DefaultNetworkProvider.swift in Sources */,
 				FEC94DC52C246DF400FFEB11 /* BaseViewModel.swift in Sources */,
 				FEC94E092C283D4C00FFEB11 /* NotCreatorView.swift in Sources */,
@@ -1127,6 +1134,7 @@
 				FE4BBD3D2DB2FD3500B4619A /* Text+Extensions.swift in Sources */,
 				FEA53CC42C2C12EE006F0116 /* MessageRepository.swift in Sources */,
 				FECADFDA2D804DE8004023F6 /* StringConstants.swift in Sources */,
+				FEA971E02DB3E0F3008112B7 /* TextFieldView.swift in Sources */,
 				FEC94E0B2C2840AA00FFEB11 /* ProfileUserInfoView.swift in Sources */,
 				FE5F8A842C297338001EE8AF /* LocalStorageProvider.swift in Sources */,
 				FEA53CCA2C2C174B006F0116 /* UserRepositoryImpl.swift in Sources */,

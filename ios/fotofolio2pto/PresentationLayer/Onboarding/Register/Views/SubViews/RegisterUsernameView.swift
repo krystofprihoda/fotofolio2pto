@@ -18,12 +18,7 @@ struct RegisterUsernameView: View {
     
     var body: some View {
         VStack {
-            TextField(L.Onboarding.usernameEng, text: username)
-                .font(.body)
-                .frame(height: Constants.Dimens.textFieldHeight)
-                .padding(Constants.Dimens.spaceLarge)
-                .background(.textFieldBackground)
-                .cornerRadius(Constants.Dimens.radiusXSmall)
+            TextFieldView(title: L.Onboarding.usernameEng, text: username)
                 .disableAutocorrection(true)
                 .onChange(of: username.wrappedValue) { _ in
                     onUsernameChanged()
