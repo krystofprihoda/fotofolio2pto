@@ -15,19 +15,20 @@ struct SignInBackgroundView: View {
     @State private var animateGradient: Bool = false
     
     var body: some View {
-        Image("sydney_opera_house")
-            .resizable()
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .aspectRatio(contentMode: .fill)
-        
-        LinearGradient(colors: [.white, .main], startPoint: .topLeading, endPoint: .bottomTrailing)
-            .edgesIgnoringSafeArea(.all)
-            .hueRotation(.degrees(animateGradient ? gradientDegrees : 0))
-            .onAppear {
-                withAnimation(.easeInOut(duration: duration).repeatForever(autoreverses: true)) {
-                    animateGradient.toggle()
+        ZStack {
+            Image("sydney_opera_house")
+                .resizable()
+                .scaledToFill()
+            
+            LinearGradient(colors: [.white, .main], startPoint: .topLeading, endPoint: .bottomTrailing)
+                .hueRotation(.degrees(animateGradient ? gradientDegrees : 0))
+                .onAppear {
+                    withAnimation(.easeInOut(duration: duration).repeatForever(autoreverses: true)) {
+                        animateGradient.toggle()
+                    }
                 }
-            }
-            .opacity(0.9)
+                .opacity(0.9)
+        }
+            .edgesIgnoringSafeArea(.all)
     }
 }
