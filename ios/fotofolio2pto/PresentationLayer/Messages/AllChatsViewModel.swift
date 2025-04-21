@@ -32,15 +32,13 @@ final class AllChatsViewModel: BaseViewModel, ViewModel, ObservableObject {
         super.init()
         state.senderId = senderId
         
-        executeTask(Task { await updateChats() })
+        executeTask(Task { await updateChats(animateCount: true) })
     }
     
     // MARK: Lifecycle
     
     override func onAppear() {
         super.onAppear()
-        
-        executeTask(Task { await updateChats() })
         
         // Update every 5 seconds
          startFetchingChats()
@@ -100,7 +98,7 @@ final class AllChatsViewModel: BaseViewModel, ViewModel, ObservableObject {
         }
     }
     
-    private func updateChats() async {
+    private func updateChats(animateCount: Bool = false) async {
         do {
             state.chats = try await readChatsUseCase.execute()
             
@@ -118,10 +116,10 @@ final class AllChatsViewModel: BaseViewModel, ViewModel, ObservableObject {
             state.toastData = .init(message: L.Messages.loadFailed, type: .error)
         }
         
-        updateNumberOfReadChats()
+        updateNumberOfReadChats(animateCount: animateCount)
     }
     
-    private func updateNumberOfReadChats() {
+    private func updateNumberOfReadChats(animateCount: Bool) {
         var count = 0
         for chat in state.chats {
             if !chat.readByIds.contains(where: { $0 == state.senderId }) {
@@ -132,7 +130,7 @@ final class AllChatsViewModel: BaseViewModel, ViewModel, ObservableObject {
         guard count > 0 else { return }
         
         state.unreadChatsCount = count
-        flowController?.tabBadgeFlowDelegate?.updateCount(of: .messages, to: count, animated: true)
+        flowController?.tabBadgeFlowDelegate?.updateCount(of: .messages, to: count, animated: animateCount)
     }
     
     private func showChat(_ chat: Chat) async {

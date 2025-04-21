@@ -42,7 +42,7 @@ struct AllChatsView: View {
                                                 Text(receiver)
                                                     .font(.headline)
                                                     .fontWeight(.medium)
-                                                    .foregroundColor(.main)
+                                                    .foregroundColor(.accent)
                                             }
                                             
                                             let read = chat.readByIds.contains(where: { $0 == viewModel.state.senderId })
@@ -50,7 +50,7 @@ struct AllChatsView: View {
                                             Text(formatMessage(fromId: chat.lastSenderId, chat.lastMessage))
                                                 .lineLimit(1)
                                                 .truncationMode(.tail)
-                                                .foregroundColor(.mainLight)
+                                                .foregroundColor(.main)
                                                 .font(.body)
                                                 .fontWeight(read ? .regular : .semibold)
                                         }

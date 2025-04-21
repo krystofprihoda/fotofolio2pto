@@ -39,7 +39,7 @@ struct PortfolioView: View {
                 Button(action: openProfileAction, label: {
                     Text("@\(portfolio.authorUsername)")
                         .font(.title2)
-                        .foregroundColor(.mainLight)
+                        .foregroundColor(.main)
                 })
                 
                 Spacer()

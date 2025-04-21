@@ -36,7 +36,7 @@ struct ProfileUserInfoView: View {
                         
                         Text(user.location)
                             .font(.subheadline)
-                            .foregroundColor(.main)
+                            .foregroundColor(.accent)
                             .opacity(Constants.Dimens.opacityHigh)
                             .padding(.bottom, Constants.Dimens.spaceXXSmall)
                         
@@ -48,7 +48,7 @@ struct ProfileUserInfoView: View {
                                 Image(systemName: "star.fill")
                                     .font(.caption2)
                             }
-                            .foregroundColor(.main)
+                            .foregroundColor(.accent)
                             .opacity(Constants.Dimens.opacityHigh)
                         } else {
                             Text(L.Profile.noRating)
@@ -61,8 +61,9 @@ struct ProfileUserInfoView: View {
                             Button(action: onGiveRatingTap, label: {
                                 Text(L.Profile.giveRating)
                                     .font(.footnote)
-                                    .padding(Constants.Dimens.spaceSmall)
-                                    .background(.mainContrast)
+                                    .padding(.horizontal, Constants.Dimens.spaceSmall)
+                                    .padding(.vertical, Constants.Dimens.spaceXSmall)
+                                    .background(.subsequent)
                                     .foregroundColor(.white)
                                     .cornerRadius(Constants.Dimens.radiusXSmall)
                                     .padding(.top, Constants.Dimens.spaceSmall)
@@ -99,7 +100,7 @@ struct ProfileUserInfoView: View {
                             .padding(.top, Constants.Dimens.spaceXSmall)
                             .padding(.leading, Constants.Dimens.spaceSemiXLarge)
                             .padding(.trailing, Constants.Dimens.spaceXXSmall)
-                            .foregroundColor(.main)
+                            .foregroundColor(.accent)
                     }
                     
                     Divider()

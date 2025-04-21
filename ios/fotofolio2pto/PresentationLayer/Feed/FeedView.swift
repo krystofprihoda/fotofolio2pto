@@ -90,7 +90,7 @@ struct FeedView: View {
     private var categoryBar: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: Constants.Dimens.spaceSmall) {
-                ForEach(Array(zip(viewModel.state.filter.indices, viewModel.state.filter)), id: \.0) { idx, category in
+                ForEach(viewModel.state.filter, id: \.self) { category in
                     Button(action: { viewModel.onIntent(.removeCategory(category)) }, label: {
                         HStack {
                             Text(category)

@@ -52,7 +52,7 @@ struct PortfolioAuthorDetailView: View {
                 
                 Button(action: unflagPortfolio) {
                     Image(systemName: "bookmark.slash")
-                        .foregroundColor(.mainLight)
+                        .foregroundColor(.accent)
                 }
                 .padding(.trailing, Constants.Dimens.spaceSemiXLarge)
             }
@@ -89,7 +89,7 @@ struct PortfolioAuthorDetailView: View {
             HStack {
                 Text(creatorData?.description ?? L.Selection.profileText)
                     .font(.body)
-                    .foregroundColor(.secondaryText)
+                    .foregroundColor(.subsequentText)
                 
                 Spacer()
             }

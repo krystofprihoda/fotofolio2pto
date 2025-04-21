@@ -37,6 +37,7 @@ public struct MediaPickerView: UIViewControllerRepresentable {
         var configuration = PHPickerConfiguration()
         configuration.filter = self.filter
         configuration.selectionLimit = self.selectionLimit
+        configuration.selection = .ordered
         
         let picker = PHPickerViewController(configuration: configuration)
         picker.delegate = context.coordinator

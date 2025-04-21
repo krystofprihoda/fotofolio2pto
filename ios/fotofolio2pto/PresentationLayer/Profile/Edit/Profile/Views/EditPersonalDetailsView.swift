@@ -43,7 +43,7 @@ struct EditPersonalDetailsView: View {
                 VStack(alignment: .leading, spacing: Constants.Dimens.spaceXXSmall) {
                     Text(viewModel.state.username)
                         .font(.body)
-                        .foregroundColor(.mainLight)
+                        .foregroundColor(.main)
                     
                     Text(viewModel.state.fullName)
                         .font(.body)

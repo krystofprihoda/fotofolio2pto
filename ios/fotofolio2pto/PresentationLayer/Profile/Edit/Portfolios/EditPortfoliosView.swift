@@ -54,6 +54,7 @@ struct EditPortfoliosView: View {
                                     ZStack {
                                         RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
                                             .fill(.mainContrast)
+                                            .opacity(Constants.Dimens.opacityMid)
                                             .frame(
                                                 width: Constants.Dimens.frameSizeSmall,
                                                 height: Constants.Dimens.frameSizeSmall

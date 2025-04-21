@@ -50,6 +50,7 @@ struct ChatView: View {
                 }
                 .padding(.top, Constants.Dimens.spaceLarge)
             }
+            .padding(.horizontal, Constants.Dimens.spaceLarge)
             
             ZStack {
                 RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
@@ -82,8 +83,9 @@ struct ChatView: View {
                 }
             }
             .frame(height: Constants.Dimens.textFieldHeight)
+            .padding(.horizontal, Constants.Dimens.spaceSmall)
         }
-        .padding([.horizontal, .bottom], Constants.Dimens.spaceLarge)
+        .padding(.bottom, Constants.Dimens.spaceLarge)
         .toast(toastData: Binding(get: { viewModel.state.toastData }, set: { viewModel.onIntent(.setToastData($0)) }))
         .navigationBarItems(leading: backButton)
         .setupNavBarAndTitle(viewModel.state.receiverData?.username ?? "", hideBack: true)

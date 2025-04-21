@@ -64,7 +64,7 @@ struct PortfolioDetailView: View {
             HStack {
                 Text(viewModel.state.portfolio.description)
                     .font(.body)
-                    .foregroundColor(.secondaryText)
+                    .foregroundColor(.subsequentText)
                 
                 Spacer()
             }

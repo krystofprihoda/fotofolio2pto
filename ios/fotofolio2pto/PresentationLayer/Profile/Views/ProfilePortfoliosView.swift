@@ -52,7 +52,7 @@ struct ProfilePortfoliosView: View {
                                 .font(.body)
                                 .padding([.leading, .trailing], Constants.Dimens.spaceXLarge)
                                 .padding(.bottom, Constants.Dimens.spaceXSmall)
-                                .foregroundColor(.mainLight)
+                                .foregroundColor(.main)
                                 .transition(.opacity)
                             
                             Divider()

@@ -99,7 +99,7 @@ struct EditPortfolioView: View {
                                 .opacity(i == 0 ? Constants.Dimens.opacityMid : Constants.Dimens.opacityLow)
                         }
                     } else {
-                        ForEach(Array(zip(viewModel.state.media.indices, viewModel.state.media)), id: \.0) { idx, iimg in
+                        ForEach(viewModel.state.media) { iimg in
                             ZStack(alignment: .topTrailing) {
                                 PhotoView(image: iimg.src, size: Constants.Dimens.frameSizeXXLarge)
                                 
