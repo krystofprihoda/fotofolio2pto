@@ -38,7 +38,7 @@ struct HorizontalWheelPicker: View {
                             .padding(.vertical, Constants.Dimens.spaceMedium)
                             .background(
                                 RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
-                                    .fill(idx == selectedValue ? Color.blue : Color.clear)
+                                    .fill(idx == selectedValue ? .mainLight : Color.clear)
                             )
                     }
                 }

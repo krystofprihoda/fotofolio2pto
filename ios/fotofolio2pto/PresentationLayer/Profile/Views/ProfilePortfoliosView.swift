@@ -10,7 +10,7 @@ import SwiftUI
 struct ProfilePortfoliosView: View {
     private let portfolios: [Portfolio]
     
-    @State private var showText: Bool = false
+    @State private var showText: Bool = true
     
     init(portfolios: [Portfolio]) {
         self.portfolios = portfolios

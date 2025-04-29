@@ -90,7 +90,7 @@ public class MainFlowController: BaseFlowController {
         let selectionNavController = UINavigationController()
         selectionNavController.tabBarItem = UITabBarItem(
             title: L.Selection.title,
-            image: UIImage(systemName: "star.square"),
+            image: UIImage(systemName: "bookmark.square"),
             tag: MainTab.selection.rawValue
         )
         let selectionFlowController = SelectionFlowController(navigationController: selectionNavController, signedInUserId: userId, tabBadgeFlowDelegate: self)
@@ -103,7 +103,7 @@ public class MainFlowController: BaseFlowController {
     private func getSearchNavigationController() -> UINavigationController {
         let searchNavController = UINavigationController()
         searchNavController.tabBarItem = UITabBarItem(
-            title: L.Search.title,
+            title: L.Search.tabTitle,
             image: UIImage(systemName: "magnifyingglass"),
             tag: MainTab.search.rawValue
         )

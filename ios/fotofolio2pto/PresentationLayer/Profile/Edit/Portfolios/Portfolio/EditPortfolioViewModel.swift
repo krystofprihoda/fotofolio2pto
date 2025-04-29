@@ -163,7 +163,10 @@ final class EditPortfolioViewModel: BaseViewModel, ViewModel, ObservableObject {
     }
     
     private func addCategory(_ category: String) {
-        guard !state.selectedCategories.contains(category), state.selectedCategories.count < 5 else { return }
+        guard !state.selectedCategories.contains(category), state.selectedCategories.count < 5 else {
+            state.toastData = .init(message: L.Profile.maxCategoriesWarning, type: .neutral)
+            return
+        }
         state.selectedCategories.append(category)
         state.searchInput = ""
         updateSaveButtonVisibility()

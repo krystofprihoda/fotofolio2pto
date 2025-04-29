@@ -62,7 +62,7 @@ struct LoginCredentialsView: View {
                 }
                 
                 Button(action: { hiddenPassword.toggle() }, label: {
-                    Image(systemName: hiddenPassword ? "eye" : "eye.slash")
+                    Image(systemName: hiddenPassword ? "eye.slash" : "eye")
                         .padding(Constants.Dimens.spaceLarge)
                         .foregroundColor(.gray)
                 })

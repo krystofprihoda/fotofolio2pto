@@ -41,6 +41,7 @@ struct PortfolioAuthorDetailView: View {
                         .font(.title3)
                         .padding(.leading, Constants.Dimens.spaceSemiXLarge)
                         .foregroundColor(.black)
+                        .fontWeight(.semibold)
                 }
                 
                 Spacer()

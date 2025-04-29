@@ -17,7 +17,7 @@ public struct L {
     public enum Onboarding {
         public static let username = "Uživatelské jméno"
         public static let usernameEng = "Username"
-        public static let name = "Jméno"
+        public static let name = "Jméno a příjmení"
         public static let email = "Email"
         public static let password = "Heslo"
         public static let confirmPassword = "Potvrzení hesla"
@@ -83,7 +83,8 @@ public struct L {
     }
     
     public enum Search {
-        public static let title = "Vyhledávání"
+        public static let title = "Vyhledávání uživatelů"
+        public static let tabTitle = "Vyhledávání"
         public static let search = "Hledat"
     }
     
@@ -126,7 +127,7 @@ public struct L {
         public static let titleName = "Název"
         public static let photography = "Fotografie"
         public static let shortDescription = "Popis"
-        public static let maxNumberOfTags = "Tagy (1 až 5)"
+        public static let maxNumberOfTags = "Kategorie (1 až 5)"
         public static let createNew = "Vytvořit"
         public static let newPortfolioTitle = "Nové portfolio"
         public static let portfolios = "Portfolia"
@@ -153,5 +154,6 @@ public struct L {
         public static let priceOnRequest = "Cena dohodou"
         public static let priceFixed = "Fixní"
         public static let notIntegerError = "Špatný vstup, zadejte číselnou hodnotu bez mezer."
+        public static let maxCategoriesWarning = "Vybral/a jste maximální počet kategorií."
     }
 }

@@ -12,7 +12,7 @@ enum ToastType: Equatable {
 
     var color: Color {
         switch self {
-        case .neutral: return .black
+        case .neutral: return .accent
         case .success: return .green
         case .error: return .red
         }
@@ -37,8 +37,8 @@ struct ToastView: View {
     var body: some View {
         Text(data.message)
             .foregroundColor(.white)
-            .padding(Constants.Dimens.spaceLarge)
-            .background(data.type.color.opacity(Constants.Dimens.opacityHigh))
+            .padding(Constants.Dimens.spaceXLarge)
+            .background(data.type.color)
             .cornerRadius(Constants.Dimens.radiusXSmall)
             .shadow(radius: Constants.Dimens.radiusXSmall)
             .transition(.opacity)
@@ -58,7 +58,7 @@ struct ToastModifier: ViewModifier {
                     Spacer()
                     
                     ToastView(data: toast)
-                        .padding(.bottom, Constants.Dimens.spaceXXLarge)
+                        .padding(.bottom, Constants.Dimens.spaceXXXLarge)
                 }
                 .transition(.opacity)
                 .onAppear {

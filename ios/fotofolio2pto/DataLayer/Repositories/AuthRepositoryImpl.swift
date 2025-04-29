@@ -29,6 +29,8 @@ public class AuthRepositoryImpl: AuthRepository {
         
         encryptedStorage.delete(.token)
         encryptedStorage.delete(.userId)
+        
+        defaults.delete(.flagged)
     }
     
     public func loginWithCredentials(email: String, password: String) async throws -> UserAuthDetails {

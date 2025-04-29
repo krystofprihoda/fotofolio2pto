@@ -173,7 +173,7 @@ final class RegisterViewModel: BaseViewModel, ViewModel, ObservableObject {
     }
     
     private func setName(to name: String) {
-        state.name = name
+        state.name = name.capitalized
     }
     
     private func setToastData(_ toast: ToastData?) {
@@ -261,6 +261,7 @@ final class RegisterViewModel: BaseViewModel, ViewModel, ObservableObject {
                 try await Task.sleep(nanoseconds: 600_000_000)
                 
                 guard isValidPassword(state.firstPassword) else {
+                    state.passwordsVerified = false
                     state.firstPasswordError = L.Onboarding.invalidPasswordFormat
                     return
                 }
@@ -279,7 +280,14 @@ final class RegisterViewModel: BaseViewModel, ViewModel, ObservableObject {
                 try await Task.sleep(nanoseconds: 600_000_000)
                 
                 guard state.firstPassword == state.secondPassword else {
+                    state.passwordsVerified = false
                     state.secondPasswordError = L.Onboarding.passwordMismatch
+                    return
+                }
+                
+                guard isValidPassword(state.firstPassword) else {
+                    state.passwordsVerified = false
+                    state.firstPasswordError = L.Onboarding.invalidPasswordFormat
                     return
                 }
                 
