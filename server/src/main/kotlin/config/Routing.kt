@@ -1,5 +1,6 @@
 package cz.cvut.fit.config
 
+import config.openAPIRoutes
 import application.routes.creatorRoutes
 import application.routes.messageRoutes
 import application.routes.portfolioRoutes
@@ -9,6 +10,7 @@ import io.ktor.server.routing.*
 
 fun Application.configureRouting() {
     routing {
+        openAPIRoutes()
         userRoutes()
         creatorRoutes()
         portfolioRoutes()

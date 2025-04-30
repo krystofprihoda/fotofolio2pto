@@ -25,6 +25,8 @@ dependencies {
     implementation("io.ktor:ktor-server-core:$ktorVersion")
     implementation("io.ktor:ktor-server-netty:$ktorVersion")
     implementation("io.ktor:ktor-server-swagger:$ktorVersion")
+    implementation("io.swagger.core.v3:swagger-core:2.2.8")
+    implementation("io.swagger.core.v3:swagger-jaxrs2:2.2.8")
     implementation("io.insert-koin:koin-ktor:$koinVersion")
     implementation("io.insert-koin:koin-logger-slf4j:$koinVersion")
     implementation(libs.ktor.server.auth)
