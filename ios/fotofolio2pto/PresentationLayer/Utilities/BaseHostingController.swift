@@ -17,7 +17,8 @@ class BaseHostingController<Content>: UIHostingController<AnyView>, UIGestureRec
     /// Initializer to explicitly set the navigation bar visibility during presentation.
     /// - parameter rootView: The SwiftUI view
     /// - parameter showsNavigationBar: Whether the navigation bar should be shown during presentation.
-    /// - note: `UIHostingController` sometimes ignores the navigation controller's property to hide navigation bar: https://stackoverflow.com/questions/63652728/swift-ui-hostingcontroller-adds-unwanted-navigation-bar
+    /// - parameter navigationBarTransparent: Whether the navigation bar should be transparent.
+    /// - parameter hideBackButton: Hides back button in the navigation bar.
     init(
         rootView: Content,
         showsNavigationBar: Bool = true,
@@ -33,7 +34,6 @@ class BaseHostingController<Content>: UIHostingController<AnyView>, UIGestureRec
     override func viewDidLoad() {
         super.viewDidLoad()
         setupSwipeBackGesture()
-        // navigationController?.navigationBar.setTransparency(navigationBarTransparent)
         UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: UIColor.black]
     }
     

@@ -3,6 +3,7 @@
 //  fotofolio2pto
 //
 //  Created by Kryštof Příhoda on 20.06.2024.
+//  Reused from https://github.com/MateeDevs/devstack-native-app/tree/develop
 //
 
 import Foundation
@@ -25,12 +26,12 @@ public class BaseViewModel {
         Logger.lifecycle.info("💀 | \(type(of: self)) deinitialized 👀🛩️")
     }
     
-    /// Override this method in a subclass for custom behavior when a view appears
+    /// Override for custom appear behavior
     public func onAppear() {}
     
-    /// Override this method in a subclass for custom behavior when a view disappears
+    /// Override for custom disappear behavior
     public func onDisappear() {
-        // Cancel all tasks when we are going away
+        /// Cancel all tasks on exit
         tasks.forEach { $0.cancel() }
     }
     
@@ -40,7 +41,6 @@ public class BaseViewModel {
         Task {
             await task.value
             
-            // Remove task when done
             objc_sync_enter(tasks)
             tasks = tasks.filter { $0 != task }
             objc_sync_exit(tasks)

@@ -3,6 +3,7 @@
 //  fotofolio2pto
 //
 //  Created by Kryštof Příhoda on 20.06.2024.
+//  Reused from https://github.com/MateeDevs/devstack-native-app/tree/develop
 //
 
 import Foundation
