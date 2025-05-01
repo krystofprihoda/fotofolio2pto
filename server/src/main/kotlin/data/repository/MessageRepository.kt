@@ -6,8 +6,7 @@ import domain.model.Message
 import domain.model.toMap
 import domain.repository.MessageRepository
 import com.google.cloud.firestore.Query
-import com.google.firebase.cloud.FirestoreClient
-import com.kborowy.authprovider.firebase.await
+import cz.cvut.fit.config.*
 
 class MessageRepositoryImpl(
     private val firestoreSource: FirestoreSource
@@ -44,25 +43,27 @@ class MessageRepositoryImpl(
         val messageId = firestoreSource.createDocument("message", messageObj.toMap())
 
         // Update chat with message info
-        firestoreSource.updateDocument("chat", chatId, mapOf(
-            "messageIds" to listOf(messageId),
-            "lastUpdated" to messageObj.timestamp,
-            "lastMessage" to messageObj.body,
-            "lastSenderId" to senderId,
-            "readByIds" to listOf(senderId)
-        ))
+        if (!firestoreSource.updateDocument("chat", chatId, mapOf(
+                "messageIds" to listOf(messageId),
+                "lastUpdated" to messageObj.timestamp,
+                "lastMessage" to messageObj.body,
+                "lastSenderId" to senderId,
+                "readByIds" to listOf(senderId)
+            ))) {
+            throw InternalServerException("Failed to update chat with message info")
+        }
 
         // Get updated chat
         return firestoreSource.getDocument("chat", chatId, Chat::class.java)
-            ?: throw Exception("Failed to fetch updated chat")
+            ?: throw InternalServerException("Failed to fetch updated chat")
     }
 
     override suspend fun sendMessage(chatId: String, senderId: String, message: String): Chat {
         val chat = firestoreSource.getDocument("chat", chatId, Chat::class.java)
-            ?: throw Exception("Chat not found")
+            ?: throw NotFoundException("Chat not found")
 
         if (!chat.chatOwnerIds.contains(senderId)) {
-            throw Exception("Unauthorized")
+            throw UnauthorizedException("You are not authorized to send messages in this chat")
         }
 
         val messageObj = Message(
@@ -76,16 +77,18 @@ class MessageRepositoryImpl(
         val messageId = firestoreSource.createDocument("message", messageObj.toMap())
 
         val updatedMessageIds = chat.messageIds + messageId
-        firestoreSource.updateDocument("chat", chatId, mapOf(
-            "messageIds" to updatedMessageIds,
-            "lastUpdated" to messageObj.timestamp,
-            "lastMessage" to messageObj.body,
-            "lastSenderId" to senderId,
-            "readByIds" to listOf(senderId)
-        ))
+        if (!firestoreSource.updateDocument("chat", chatId, mapOf(
+                "messageIds" to updatedMessageIds,
+                "lastUpdated" to messageObj.timestamp,
+                "lastMessage" to messageObj.body,
+                "lastSenderId" to senderId,
+                "readByIds" to listOf(senderId)
+            ))) {
+            throw InternalServerException("Failed to update chat with new message")
+        }
 
         return firestoreSource.getDocument("chat", chatId, Chat::class.java)
-            ?: throw Exception("Failed to fetch updated chat")
+            ?: throw InternalServerException("Failed to fetch updated chat")
     }
 
     override suspend fun getChat(userId: String, receiverId: String): Chat {
@@ -106,17 +109,19 @@ class MessageRepositoryImpl(
 
     override suspend fun getChatById(chatId: String, userId: String): Chat {
         val chat = firestoreSource.getDocument("chat", chatId, Chat::class.java)
-            ?: throw Exception("Chat not found")
+            ?: throw NotFoundException("Chat not found")
 
         if (!chat.chatOwnerIds.contains(userId)) {
-            throw Exception("Unauthorized access")
+            throw UnauthorizedException("You are not authorized to access this chat")
         }
 
         return chat
     }
 
     override suspend fun getChatMessages(chatId: String, userId: String): List<Message> {
-        val messages =  firestoreSource.getDocumentsWhereOrdered(
+        val chat = getChatById(chatId, userId)
+
+        val messages = firestoreSource.getDocumentsWhereOrdered(
             collection = "message",
             field = "chatId",
             value = chatId,
@@ -131,17 +136,19 @@ class MessageRepositoryImpl(
 
     override suspend fun updateChatRead(chatId: String, userId: String) {
         val chat = firestoreSource.getDocument("chat", chatId, Chat::class.java)
-            ?: throw Exception("Chat not found")
+            ?: throw NotFoundException("Chat not found")
 
         if (!chat.chatOwnerIds.contains(userId)) {
-            throw Exception("Unauthorized")
+            throw UnauthorizedException("You are not authorized to access this chat")
         }
 
         if (chat.readByIds.contains(userId)) { return }
         val updatedIds = chat.readByIds + userId
 
-        firestoreSource.updateDocument("chat", chatId, mapOf(
-            "readByIds" to updatedIds
-        ))
+        if (!firestoreSource.updateDocument("chat", chatId, mapOf(
+                "readByIds" to updatedIds
+            ))) {
+            throw InternalServerException("Failed to update chat read status")
+        }
     }
 }

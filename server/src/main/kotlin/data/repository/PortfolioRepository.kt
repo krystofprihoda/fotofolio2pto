@@ -1,9 +1,5 @@
 package data.repository
 
-import com.google.cloud.firestore.FieldPath
-import com.google.cloud.firestore.Query
-import com.google.firebase.cloud.FirestoreClient
-import com.kborowy.authprovider.firebase.await
 import cz.cvut.fit.application.dto.portfolio.CreatePortfolioDTO
 import cz.cvut.fit.application.dto.portfolio.UpdatePortfolioDTO
 import data.source.FirestoreSource
@@ -14,6 +10,7 @@ import domain.model.User
 import domain.model.toMap
 import domain.repository.PortfolioRepository
 import java.net.URLDecoder
+import cz.cvut.fit.config.*
 
 class PortfolioRepositoryImpl(
     private val firestoreSource: FirestoreSource,
@@ -26,7 +23,7 @@ class PortfolioRepositoryImpl(
         // Get user info for author username
         val usersWithCreatorId = firestoreSource.getDocumentsWhere("user", "creatorId", createPortfolioDTO.creatorId, User::class.java)
         if (usersWithCreatorId.isEmpty()) {
-            throw Exception("Creator's username not found")
+            throw NotFoundException("Creator's user not found")
         }
 
         val user = usersWithCreatorId.first()
@@ -46,10 +43,14 @@ class PortfolioRepositoryImpl(
 
         // Upload photos
         val photoUrls = mutableListOf<String>()
-        for ((fileName, fileBytes) in createPortfolioDTO.photos) {
-            val path = "user/$userId/creator/portfolio/$portfolioId/$fileName"
-            val url = storageSource.uploadFile(path, fileBytes, "image/jpeg")
-            photoUrls.add(url)
+        try {
+            for ((fileName, fileBytes) in createPortfolioDTO.photos) {
+                val path = "user/$userId/creator/portfolio/$portfolioId/$fileName"
+                val url = storageSource.uploadFile(path, fileBytes, "image/jpeg")
+                photoUrls.add(url)
+            }
+        } catch (e: Exception) {
+            throw InternalServerException("Failed to upload portfolio photos: ${e.message}")
         }
 
         // Update portfolio with photo URLs
@@ -65,15 +66,17 @@ class PortfolioRepositoryImpl(
             timestamp = System.currentTimeMillis()
         )
 
-        firestoreSource.setDocument("portfolio", portfolioId, portfolio.toMap())
+        if (!firestoreSource.setDocument("portfolio", portfolioId, portfolio.toMap())) {
+            throw InternalServerException("Failed to update portfolio with photo URLs")
+        }
 
         // Update creator's portfolio list
         val creator = firestoreSource.getDocument("creator", createPortfolioDTO.creatorId, Creator::class.java)
-        if (creator != null) {
-            val updatedPortfolioIds = creator.portfolioIds.toMutableList().apply { add(portfolioId) }
-            firestoreSource.updateDocument("creator", createPortfolioDTO.creatorId, mapOf("portfolioIds" to updatedPortfolioIds))
-        } else {
-            throw Exception("Creator not found")
+            ?: throw NotFoundException("Creator not found")
+
+        val updatedPortfolioIds = creator.portfolioIds.toMutableList().apply { add(portfolioId) }
+        if (!firestoreSource.updateDocument("creator", createPortfolioDTO.creatorId, mapOf("portfolioIds" to updatedPortfolioIds))) {
+            throw InternalServerException("Failed to update creator's portfolio list")
         }
 
         return portfolioId
@@ -81,7 +84,7 @@ class PortfolioRepositoryImpl(
 
     override suspend fun getPortfolioById(portfolioId: String): Portfolio {
         return firestoreSource.getDocument("portfolio", portfolioId, Portfolio::class.java)
-            ?: throw Exception("Portfolio not found")
+            ?: throw NotFoundException("Portfolio not found")
     }
 
     override suspend fun getPortfoliosByIds(portfolioIds: List<String>): List<Portfolio> {
@@ -94,7 +97,7 @@ class PortfolioRepositoryImpl(
 
     override suspend fun getPortfoliosByCreatorId(creatorId: String): List<Portfolio> {
         val creator = firestoreSource.getDocument("creator", creatorId, Creator::class.java)
-            ?: throw Exception("Creator not found")
+            ?: throw NotFoundException("Creator not found")
 
         if (creator.portfolioIds.isEmpty()) {
             return emptyList()
@@ -109,7 +112,11 @@ class PortfolioRepositoryImpl(
         categories: List<String>?,
         sortBy: String?
     ): List<Portfolio> {
-        return firestoreSource.searchPortfoliosByCategories(categories, sortBy)
+        try {
+            return firestoreSource.searchPortfoliosByCategories(categories, sortBy)
+        } catch (e: Exception) {
+            throw InternalServerException("Failed to search portfolios: ${e.message}")
+        }
     }
 
     override suspend fun updatePortfolio(
@@ -122,13 +129,17 @@ class PortfolioRepositoryImpl(
         val photosToDelete = existingPhotoUrls.filterNot { updatePortfolioDTO.photoURLs.contains(it) }
 
         // Delete unused photos
-        for (url in photosToDelete) {
-            val path = url
-                .substringAfter("/o/")
-                .substringBefore("?")
-                .let { URLDecoder.decode(it, "UTF-8") }
+        try {
+            for (url in photosToDelete) {
+                val path = url
+                    .substringAfter("/o/")
+                    .substringBefore("?")
+                    .let { URLDecoder.decode(it, "UTF-8") }
 
-            storageSource.deleteFile(path)
+                storageSource.deleteFile(path)
+            }
+        } catch (e: Exception) {
+            throw InternalServerException("Failed to delete unused photos: ${e.message}")
         }
 
         // Update portfolio in Firestore
@@ -140,7 +151,9 @@ class PortfolioRepositoryImpl(
             "photos" to updatePortfolioDTO.photoURLs
         )
 
-        firestoreSource.updateDocument("portfolio", updatePortfolioDTO.portfolioId, updates)
+        if (!firestoreSource.updateDocument("portfolio", updatePortfolioDTO.portfolioId, updates)) {
+            throw InternalServerException("Failed to update portfolio")
+        }
 
         return getPortfolioById(updatePortfolioDTO.portfolioId)
     }
@@ -149,17 +162,23 @@ class PortfolioRepositoryImpl(
         val portfolio = getPortfolioById(portfolioId)
 
         // Delete photos from storage
-        for (url in portfolio.photos) {
-            val path = url
-                .substringAfter("/o/")
-                .substringBefore("?")
-                .let { URLDecoder.decode(it, "UTF-8") }
+        try {
+            for (url in portfolio.photos) {
+                val path = url
+                    .substringAfter("/o/")
+                    .substringBefore("?")
+                    .let { URLDecoder.decode(it, "UTF-8") }
 
-            storageSource.deleteFile(path)
+                storageSource.deleteFile(path)
+            }
+        } catch (e: Exception) {
+            throw InternalServerException("Failed to delete portfolio photos: ${e.message}")
         }
 
         // Delete portfolio document
-        firestoreSource.deleteDocument("portfolio", portfolioId)
+        if (!firestoreSource.deleteDocument("portfolio", portfolioId)) {
+            throw InternalServerException("Failed to delete portfolio document")
+        }
 
         // Update creator's portfolio list
         val creatorId = portfolio.creatorId
@@ -167,7 +186,9 @@ class PortfolioRepositoryImpl(
 
         if (creator != null) {
             val updatedPortfolioIds = creator.portfolioIds.toMutableList().apply { remove(portfolioId) }
-            firestoreSource.updateDocument("creator", creatorId, mapOf("portfolioIds" to updatedPortfolioIds))
+            if (!firestoreSource.updateDocument("creator", creatorId, mapOf("portfolioIds" to updatedPortfolioIds))) {
+                throw InternalServerException("Failed to update creator's portfolio list")
+            }
         }
 
         return true

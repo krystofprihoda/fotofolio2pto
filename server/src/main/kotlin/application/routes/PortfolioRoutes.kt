@@ -1,6 +1,7 @@
 package application.routes
 
 import cz.cvut.fit.application.mapper.RequestParser
+import cz.cvut.fit.config.*
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
@@ -17,20 +18,18 @@ fun Application.portfolioRoutes() {
     routing {
         authenticate {
             post("/portfolio") {
-                try {
+                tryOrThrow {
                     val multipart = call.receiveMultipart()
                     val portfolioDto = requestParser.parseCreatePortfolioDTO(multipart)
 
                     val portfolioId = portfolioRepository.createPortfolio(portfolioDto)
 
                     call.respond(HttpStatusCode.Created, mapOf("id" to portfolioId))
-                } catch (e: Exception) {
-                    call.respond(HttpStatusCode.BadRequest, "Error: ${e.localizedMessage}")
                 }
             }
 
             get("/portfolio") {
-                try {
+                tryOrThrow {
                     val idParams = call.request.queryParameters["id"]
                     val categoryParams = call.request.queryParameters["category"]
                     val sortByParam = call.request.queryParameters["sortBy"] // "timestamp" or "rating"
@@ -51,24 +50,20 @@ fun Application.portfolioRoutes() {
                     }
 
                     call.respond(HttpStatusCode.OK, portfolios)
-                } catch (e: Exception) {
-                    call.respond(HttpStatusCode.BadRequest, "Error processing request: ${e.localizedMessage}")
                 }
             }
 
             get("/portfolio/{portfolioId}") {
-                try {
-                    val id = call.parameters["portfolioId"] as String
+                tryOrThrow {
+                    val id = call.parameters["portfolioId"] ?: throw BadRequestException("Missing portfolioId")
                     val portfolio = portfolioRepository.getPortfolioById(id)
                     call.respond(HttpStatusCode.OK, portfolio)
-                } catch (e: Exception) {
-                    call.respond(HttpStatusCode.BadRequest, "Error processing request: ${e.localizedMessage}")
                 }
             }
 
             put("/portfolio/{portfolioId}") {
-                try {
-                    val portfolioId = call.parameters["portfolioId"] as String
+                tryOrThrow {
+                    val portfolioId = call.parameters["portfolioId"] ?: throw BadRequestException("Missing portfolioId")
                     val requestBody = call.receive<Map<String, String>>()
 
                     val updateDTO = requestParser.parseUpdatePortfolioDTO(portfolioId, requestBody)
@@ -76,23 +71,19 @@ fun Application.portfolioRoutes() {
                     val updatedPortfolio = portfolioRepository.updatePortfolio(updateDTO)
 
                     call.respond(HttpStatusCode.OK, updatedPortfolio)
-                } catch (e: Exception) {
-                    call.respond(HttpStatusCode.InternalServerError, "Error: ${e.localizedMessage}")
                 }
             }
 
             delete("/portfolio/{portfolioId}") {
-                try {
-                    val portfolioId = call.parameters["portfolioId"] as String
+                tryOrThrow {
+                    val portfolioId = call.parameters["portfolioId"] ?: throw BadRequestException("Missing portfolioId")
                     val success = portfolioRepository.deletePortfolio(portfolioId)
 
                     if (success) {
                         call.respond(HttpStatusCode.OK, "Portfolio deleted successfully")
                     } else {
-                        call.respond(HttpStatusCode.InternalServerError, "Error deleting portfolio")
+                        throw InternalServerException("Error deleting portfolio")
                     }
-                } catch (e: Exception) {
-                    call.respond(HttpStatusCode.InternalServerError, "Error: ${e.localizedMessage}")
                 }
             }
         }

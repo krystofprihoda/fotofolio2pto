@@ -8,6 +8,7 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import domain.repository.MessageRepository
 import org.koin.ktor.ext.inject
+import cz.cvut.fit.config.*
 
 fun Application.messageRoutes() {
     val messageRepository by inject<MessageRepository>()
@@ -16,55 +17,49 @@ fun Application.messageRoutes() {
         authenticate {
             // Create chat with a message
             post("/chat") {
-                try {
-                    val principalId = call.principal<UserIdPrincipal>()?.name ?: throw Exception("Unauthorized")
+                tryOrThrow {
+                    val principalId = call.principal<UserIdPrincipal>()?.name ?: throw UnauthorizedException("Unauthorized")
                     val requestBody = call.receive<Map<String, String>>()
 
-                    val messageBody = requestBody["message"] ?: throw Exception("Message is required")
-                    val receiverId = requestBody["receiverId"] ?: throw Exception("Receiver ID is required")
+                    val messageBody = requestBody["message"] ?: throw BadRequestException("Message is required")
+                    val receiverId = requestBody["receiverId"] ?: throw BadRequestException("Receiver ID is required")
 
                     val chat = messageRepository.createChat(principalId, receiverId, messageBody)
 
                     call.respond(HttpStatusCode.Created, chat)
-                } catch (e: Exception) {
-                    call.respond(HttpStatusCode.BadRequest, "Error: ${e.localizedMessage}")
                 }
             }
 
             post("/chat/{chatId}/read") {
-                try {
-                    val principalId = call.principal<UserIdPrincipal>()?.name ?: throw Exception("Unauthorized")
-                    val chatId = call.parameters["chatId"] ?: throw Exception("Missing chat ID")
+                tryOrThrow {
+                    val principalId = call.principal<UserIdPrincipal>()?.name ?: throw UnauthorizedException("Unauthorized")
+                    val chatId = call.parameters["chatId"] ?: throw BadRequestException("Missing chat ID")
 
                     messageRepository.updateChatRead(chatId = chatId, principalId)
 
                     call.respond(HttpStatusCode.OK)
-                } catch (e: Exception) {
-                    call.respond(HttpStatusCode.BadRequest, "Error: ${e.localizedMessage}")
                 }
             }
 
             // Send a message in an existing chat
             post("/chat/{chatId}/message") {
-                try {
-                    val principalId = call.principal<UserIdPrincipal>()?.name ?: throw Exception("Unauthorized")
+                tryOrThrow {
+                    val principalId = call.principal<UserIdPrincipal>()?.name ?: throw UnauthorizedException("Unauthorized")
 
-                    val chatId = call.parameters["chatId"] ?: throw Exception("Missing chat ID")
+                    val chatId = call.parameters["chatId"] ?: throw BadRequestException("Missing chat ID")
                     val requestBody = call.receive<Map<String, String>>()
-                    val messageBody = requestBody["message"] ?: throw Exception("Message is required")
+                    val messageBody = requestBody["message"] ?: throw BadRequestException("Message is required")
 
                     val updatedChat = messageRepository.sendMessage(chatId, principalId, messageBody)
 
                     call.respond(HttpStatusCode.Created, updatedChat)
-                } catch (e: Exception) {
-                    call.respond(HttpStatusCode.BadRequest, "Error: ${e.localizedMessage}")
                 }
             }
 
             // Get a chat between two users
             get("/chat") {
-                try {
-                    val principalId = call.principal<UserIdPrincipal>()?.name ?: throw Exception("Unauthorized")
+                tryOrThrow {
+                    val principalId = call.principal<UserIdPrincipal>()?.name ?: throw UnauthorizedException("Unauthorized")
                     val receiverId = call.request.queryParameters["receiverId"]
 
                     if (receiverId != null) {
@@ -75,36 +70,30 @@ fun Application.messageRoutes() {
 
                     val chats = messageRepository.getChats(principalId)
                     call.respond(HttpStatusCode.OK, chats)
-                } catch (e: Exception) {
-                    call.respond(HttpStatusCode.BadRequest, "Error processing request: ${e.localizedMessage}")
                 }
             }
 
             // Get chat by ID
             get("/chat/{chatId}") {
-                try {
-                    val principalId = call.principal<UserIdPrincipal>()?.name ?: throw Exception("Unauthorized")
-                    val chatId = call.parameters["chatId"] ?: throw Exception("Missing chat ID")
+                tryOrThrow {
+                    val principalId = call.principal<UserIdPrincipal>()?.name ?: throw UnauthorizedException("Unauthorized")
+                    val chatId = call.parameters["chatId"] ?: throw BadRequestException("Missing chat ID")
 
                     val chat = messageRepository.getChatById(chatId, principalId)
 
                     call.respond(HttpStatusCode.OK, chat)
-                } catch (e: Exception) {
-                    call.respond(HttpStatusCode.BadRequest, "Error processing request: ${e.localizedMessage}")
                 }
             }
 
             // Get all messages for a chat
             get("/chat/{chatId}/message") {
-                try {
-                    val principalId = call.principal<UserIdPrincipal>()?.name ?: throw Exception("Unauthorized")
-                    val chatId = call.parameters["chatId"] ?: throw Exception("Missing chat ID")
+                tryOrThrow {
+                    val principalId = call.principal<UserIdPrincipal>()?.name ?: throw UnauthorizedException("Unauthorized")
+                    val chatId = call.parameters["chatId"] ?: throw BadRequestException("Missing chat ID")
 
                     val messages = messageRepository.getChatMessages(chatId, principalId)
 
                     call.respond(HttpStatusCode.OK, messages)
-                } catch (e: Exception) {
-                    call.respond(HttpStatusCode.BadRequest, "Error: ${e.localizedMessage}")
                 }
             }
         }

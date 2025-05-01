@@ -10,6 +10,7 @@ import domain.model.Creator
 import domain.repository.CreatorRepository
 import domain.repository.PortfolioRepository
 import org.koin.ktor.ext.inject
+import cz.cvut.fit.config.*
 
 fun Application.creatorRoutes() {
 
@@ -19,52 +20,44 @@ fun Application.creatorRoutes() {
     routing {
         authenticate {
             post("/creator") {
-                try {
+                tryOrThrow {
                     val creatorData = call.receive<Creator>()
                     val creatorId = creatorRepository.createCreator(creatorData)
 
                     call.respond(HttpStatusCode.OK, mapOf("creatorId" to creatorId))
-                } catch (e: Exception) {
-                    call.respond(HttpStatusCode.BadRequest, "Error processing request: ${e.localizedMessage}")
                 }
             }
 
             get("/creator/{creatorId}") {
-                try {
-                    val id = call.parameters["creatorId"] as String
+                tryOrThrow {
+                    val id = call.parameters["creatorId"] ?: throw BadRequestException("Missing creatorId")
                     val creator = creatorRepository.getCreatorById(id)
 
                     call.respond(HttpStatusCode.OK, creator)
-                } catch (e: Exception) {
-                    call.respond(HttpStatusCode.BadRequest, "Error processing request: ${e.localizedMessage}")
                 }
             }
 
             get("/creator/{creatorId}/user") {
-                try {
-                    val id = call.parameters["creatorId"] as String
+                tryOrThrow {
+                    val id = call.parameters["creatorId"] ?: throw BadRequestException("Missing creatorId")
                     val user = creatorRepository.getUserByCreatorId(id)
 
                     call.respond(HttpStatusCode.OK, user)
-                } catch (e: Exception) {
-                    call.respond(HttpStatusCode.BadRequest, "Error processing request: ${e.localizedMessage}")
                 }
             }
 
             get("/creator/{creatorId}/portfolio") {
-                try {
-                    val creatorId = call.parameters["creatorId"] as String
+                tryOrThrow {
+                    val creatorId = call.parameters["creatorId"] ?: throw BadRequestException("Missing creatorId")
                     val portfolios = portfolioRepository.getPortfoliosByCreatorId(creatorId)
 
                     call.respond(HttpStatusCode.OK, portfolios)
-                } catch (e: Exception) {
-                    call.respond(HttpStatusCode.BadRequest, "Error retrieving portfolios: ${e.localizedMessage}")
                 }
             }
 
             put("/creator/{creatorId}") {
-                try {
-                    val creatorId = call.parameters["creatorId"] as String
+                tryOrThrow {
+                    val creatorId = call.parameters["creatorId"] ?: throw BadRequestException("Missing creatorId")
                     val updatedCreatorData = call.receive<Creator>()
 
                     val success = creatorRepository.updateCreator(creatorId, updatedCreatorData)
@@ -74,18 +67,14 @@ fun Application.creatorRoutes() {
                             "creatorId" to creatorId
                         ))
                     } else {
-                        call.respond(HttpStatusCode.InternalServerError, "Failed to update creator")
+                        throw InternalServerException("Failed to update creator")
                     }
-                } catch (e: Exception) {
-                    call.respond(HttpStatusCode.BadRequest, "Error updating creator: ${e.localizedMessage}")
                 }
             }
 
             patch("/creator/{creatorId}") {
-                try {
-                    val creatorId = call.parameters["creatorId"] ?: return@patch call.respond(
-                        HttpStatusCode.BadRequest, "Missing creatorId"
-                    )
+                tryOrThrow {
+                    val creatorId = call.parameters["creatorId"] ?: throw BadRequestException("Missing creatorId")
 
                     val body = call.receive<Map<String, String>>()
 
@@ -93,7 +82,7 @@ fun Application.creatorRoutes() {
                     val updates = mutableMapOf<String, Any>()
 
                     body["yearsOfExperience"]?.let {
-                        updates["yearsOfExperience"] = it.toIntOrNull() ?: throw Exception("Invalid yearsOfExperience value")
+                        updates["yearsOfExperience"] = it.toIntOrNull() ?: throw BadRequestException("Invalid yearsOfExperience value")
                     }
 
                     body["description"]?.let {
@@ -101,18 +90,15 @@ fun Application.creatorRoutes() {
                     }
 
                     if (updates.isEmpty()) {
-                        call.respond(HttpStatusCode.BadRequest, "No valid fields to update")
-                        return@patch
+                        throw BadRequestException("No valid fields to update")
                     }
 
                     val success = creatorRepository.updateCreatorFields(creatorId, updates)
                     if (success) {
                         call.respond(HttpStatusCode.OK, "Creator updated successfully")
                     } else {
-                        call.respond(HttpStatusCode.InternalServerError, "Failed to update creator")
+                        throw InternalServerException("Failed to update creator")
                     }
-                } catch (e: Exception) {
-                    call.respond(HttpStatusCode.BadRequest, "Error updating creator: ${e.localizedMessage}")
                 }
             }
         }
