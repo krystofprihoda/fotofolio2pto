@@ -118,12 +118,15 @@ internal class UserRepositoryImpl(
             User::class.java
         )
 
-        // Combine results and convert to User objects
-        val combinedResults = mutableSetOf<User>()
-        combinedResults.addAll(usernameResults)
-        combinedResults.addAll(fullNameResults)
-        combinedResults.addAll(locationResults)
+        // Create a map to deduplicate by ID
+        val uniqueUsers = mutableMapOf<String, User>()
 
-        return combinedResults.toList()
+        // Add all users to the map with ID as key to deduplicate
+        usernameResults.forEach { uniqueUsers[it.id] = it }
+        fullNameResults.forEach { uniqueUsers[it.id] = it }
+        locationResults.forEach { uniqueUsers[it.id] = it }
+
+        // Return only the unique values
+        return uniqueUsers.values.toList()
     }
 }

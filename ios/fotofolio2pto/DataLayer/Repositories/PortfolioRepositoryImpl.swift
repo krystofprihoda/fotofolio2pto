@@ -95,7 +95,7 @@ public class PortfolioRepositoryImpl: PortfolioRepository {
             }
             
             commaPhotos.removeLast()
-            body["photoURLs"] = commaPhotos
+            body["photos"] = commaPhotos
         }
         
         let netPortfolio: NETPortfolio = try await network.fetch(endpoint: .portfolioById(id), method: .PUT, body: body, headers: headers, queryParams: nil)

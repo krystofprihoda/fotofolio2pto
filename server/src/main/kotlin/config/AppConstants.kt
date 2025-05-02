@@ -106,7 +106,7 @@ object AppConstants {
         const val CREATOR_ID_REQUIRED = "'creatorId' is required"
         const val PRICE_REQUIRED = "'price' is required"
         const val CATEGORY_REQUIRED = "'category' is required"
-        const val PHOTO_URLS_REQUIRED = "'photoURLs' is required"
+        const val PHOTO_URLS_REQUIRED = "'photos' is required"
         const val MESSAGE_REQUIRED = "Message is required"
         const val RECEIVER_ID_REQUIRED = "Receiver ID is required"
         const val RATING_REQUIRED = "Valid rating value is required"
