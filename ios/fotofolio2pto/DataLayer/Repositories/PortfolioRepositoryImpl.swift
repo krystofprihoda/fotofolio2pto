@@ -48,14 +48,15 @@ public class PortfolioRepositoryImpl: PortfolioRepository {
             "Content-Type": "application/json"
         ]
         
-        let portfolios: [Portfolio] = try await network.fetch(
+        let netPortfolios: [NETPortfolio] = try await network.fetch(
             endpoint: .portfolio,
             method: .GET,
             body: nil,
             headers: headers,
             queryParams: queryParams
         )
-        return portfolios
+        
+        return try netPortfolios.map { try $0.domainModel }
     }
     
     public func updatePortfolio(id: String, name: String, photos: [String], price: Price, description: String, category: [String]) async throws -> Portfolio {
@@ -86,6 +87,7 @@ public class PortfolioRepositoryImpl: PortfolioRepository {
             commaCategories.removeLast()
             body["category"] = commaCategories
         }
+        
         if !photos.isEmpty {
             var commaPhotos = ""
             for photo in photos {
@@ -96,9 +98,8 @@ public class PortfolioRepositoryImpl: PortfolioRepository {
             body["photoURLs"] = commaPhotos
         }
         
-        
-        let updated: Portfolio = try await network.fetch(endpoint: .portfolioById(id), method: .PUT, body: body, headers: headers, queryParams: nil)
-        return updated
+        let netPortfolio: NETPortfolio = try await network.fetch(endpoint: .portfolioById(id), method: .PUT, body: body, headers: headers, queryParams: nil)
+        return try netPortfolio.domainModel
     }
     
     public func readImageFromURL(url: String) async throws -> UIImage {
@@ -149,14 +150,14 @@ public class PortfolioRepositoryImpl: PortfolioRepository {
             queryParams["id"] = commaIds
         }
         
-        let portfolios: [Portfolio] = try await network.fetch(
+        let netPortfolios: [NETPortfolio] = try await network.fetch(
             endpoint: .portfolio,
             method: .GET,
             body: nil,
             headers: headers,
             queryParams: queryParams
         )
-        return portfolios
+        return try netPortfolios.map { try $0.domainModel }
     }
         
     public func readFlaggedIds() -> [String] {

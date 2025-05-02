@@ -28,14 +28,14 @@ public class MessageRepositoryImpl: MessageRepository {
             "message": message
         ]
         
-        let chat: Chat = try await network.fetch(
+        let netChat: NETChat = try await network.fetch(
             endpoint: .chat,
             method: .POST,
             body: body,
             headers: headers,
             queryParams: nil
         )
-        return chat
+        return try netChat.domainModel
     }
     
     public func readUserChats() async throws -> [Chat] {
@@ -45,14 +45,14 @@ public class MessageRepositoryImpl: MessageRepository {
             "Content-Type": "application/json"
         ]
         
-        let chats: [Chat] = try await network.fetch(
+        let netChats: [NETChat] = try await network.fetch(
             endpoint: .chat,
             method: .GET,
             body: nil,
             headers: headers,
             queryParams: nil
         )
-        return chats
+        return try netChats.map { try $0.domainModel }
     }
     
     public func readChat(receiverId: String) async throws -> Chat {
@@ -66,14 +66,14 @@ public class MessageRepositoryImpl: MessageRepository {
             "receiverId": receiverId
         ]
         
-        let chat: Chat = try await network.fetch(
+        let netChat: NETChat = try await network.fetch(
             endpoint: .chat,
             method: .GET,
             body: nil,
             headers: headers,
             queryParams: queryParams
         )
-        return chat
+        return try netChat.domainModel
     }
     
     public func readMessages(chatId: String) async throws -> [Message] {
@@ -83,14 +83,14 @@ public class MessageRepositoryImpl: MessageRepository {
             "Content-Type": "application/json"
         ]
         
-        let messages: [Message] = try await network.fetch(
+        let netMessages: [NETMessage] = try await network.fetch(
             endpoint: .messageByChatId(chatId),
             method: .GET,
             body: nil,
             headers: headers,
             queryParams: nil
         )
-        return messages
+        return try netMessages.map { try $0.domainModel }
     }
     
     public func sendMessage(chatId: String, message: String) async throws -> Chat {
@@ -104,14 +104,14 @@ public class MessageRepositoryImpl: MessageRepository {
             "message": message
         ]
         
-        let chat: Chat = try await network.fetch(
+        let netChat: NETChat = try await network.fetch(
             endpoint: .messageByChatId(chatId),
             method: .POST,
             body: body,
             headers: headers,
             queryParams: nil
         )
-        return chat
+        return try netChat.domainModel
     }
     
     public func sendMessage(receiverId: String, message: String) async throws -> Chat {
@@ -126,14 +126,14 @@ public class MessageRepositoryImpl: MessageRepository {
             "receiverId": receiverId
         ]
         
-        let chat: Chat = try await network.fetch(
+        let netChat: NETChat = try await network.fetch(
             endpoint: .chat,
             method: .POST,
             body: body,
             headers: headers,
             queryParams: nil
         )
-        return chat
+        return try netChat.domainModel
     }
     
     public func updateChatRead(chatId: String) async throws {

@@ -28,14 +28,14 @@ public class UserRepositoryImpl: UserRepository {
         
         let queryParams = query.isEmpty ? nil : ["query": query]
         
-        let users: [User] = try await network.fetch(
+        let netUsers: [NETUser] = try await network.fetch(
             endpoint: .user,
             method: .GET,
             body: nil,
             headers: headers,
             queryParams: queryParams
         )
-        return users
+        return try netUsers.map { try $0.domainModel }
     }
     
     public func isUsernameTaken(_ username: String) async throws {
@@ -86,14 +86,14 @@ public class UserRepositoryImpl: UserRepository {
             "Content-Type": "application/json"
         ]
         
-        let user: User = try await network.fetch(
+        let netUser: NETUser = try await network.fetch(
             endpoint: .userById(id),
             method: .GET,
             body: [:],
             headers: headers,
             queryParams: nil
         )
-        return user
+        return try netUser.domainModel
     }
     
     public func updateUserData(location: String) async throws {

@@ -42,8 +42,8 @@ public class CreatorRepositoryImpl: CreatorRepository {
             "Content-Type": "application/json"
         ]
         
-        let creator: Creator = try await network.fetch(endpoint: .creatorById(id), method: .GET, body: nil, headers: headers, queryParams: nil)
-        return creator
+        let netCreator: NETCreator = try await network.fetch(endpoint: .creatorById(id), method: .GET, body: nil, headers: headers, queryParams: nil)
+        return try netCreator.domainModel
     }
     
     public func readUserByCreatorId(creatorId: String) async throws -> User {
@@ -54,8 +54,8 @@ public class CreatorRepositoryImpl: CreatorRepository {
             "Content-Type": "application/json"
         ]
         
-        let user: User = try await network.fetch(endpoint: .userByCreatorId(creatorId), method: .GET, body: [:], headers: headers, queryParams: nil)
-        return user
+        let netUser: NETUser = try await network.fetch(endpoint: .userByCreatorId(creatorId), method: .GET, body: [:], headers: headers, queryParams: nil)
+        return try netUser.domainModel
     }
     
     public func readAllCreatorPortfolios(creatorId: String) async throws -> [Portfolio] {
@@ -66,14 +66,14 @@ public class CreatorRepositoryImpl: CreatorRepository {
             "Content-Type": "application/json"
         ]
         
-        let portfolios: [Portfolio] = try await network.fetch(
+        let netPortfolios: [NETPortfolio] = try await network.fetch(
             endpoint: .creatorPortfolio(creatorId: creatorId),
             method: .GET,
             body: [:],
             headers: headers,
             queryParams: nil
         )
-        return portfolios
+        return try netPortfolios.map { try $0.domainModel }
     }
     
     public func updateCreatorData(creatorId: String, yearsOfExperience: Int, profileDescription: String) async throws {

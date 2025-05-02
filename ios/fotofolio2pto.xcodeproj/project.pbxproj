@@ -158,6 +158,14 @@
 		FECADFDA2D804DE8004023F6 /* StringConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = FECADFD92D804DDE004023F6 /* StringConstants.swift */; };
 		FECADFDC2D80534B004023F6 /* RegisterCreatingUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FECADFDB2D80534B004023F6 /* RegisterCreatingUserView.swift */; };
 		FECADFDE2D805356004023F6 /* RegisterFailedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FECADFDD2D805356004023F6 /* RegisterFailedView.swift */; };
+		FECC22D22DC4BFBE00568783 /* IImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FECC22D12DC4BFBE00568783 /* IImage.swift */; };
+		FECC2AB82DC4C59400568783 /* NetworkRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = FECC2AB72DC4C58D00568783 /* NetworkRepresentable.swift */; };
+		FECC2ABA2DC4C5AA00568783 /* DomainRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = FECC2AB92DC4C5A400568783 /* DomainRepresentable.swift */; };
+		FECC2ABC2DC4C5BC00568783 /* NETPortfolio.swift in Sources */ = {isa = PBXBuildFile; fileRef = FECC2ABB2DC4C5BC00568783 /* NETPortfolio.swift */; };
+		FECC2ABE2DC4C5F300568783 /* NETUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = FECC2ABD2DC4C5F300568783 /* NETUser.swift */; };
+		FECC2AC02DC4C65200568783 /* NETCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FECC2ABF2DC4C65200568783 /* NETCreator.swift */; };
+		FECC2AC22DC4C68300568783 /* NETChat.swift in Sources */ = {isa = PBXBuildFile; fileRef = FECC2AC12DC4C68300568783 /* NETChat.swift */; };
+		FECC2AC42DC4C69300568783 /* NETMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FECC2AC32DC4C69300568783 /* NETMessage.swift */; };
 		FEE211AF2DA4298D00A95907 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = FEE211AE2DA4298D00A95907 /* KeychainAccess */; };
 		FEE211B22DA42B6D00A95907 /* EncryptedLocalStorageProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEE211B12DA42B6D00A95907 /* EncryptedLocalStorageProvider.swift */; };
 		FEE211B52DA42C3300A95907 /* KeychainProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEE211B42DA42C3300A95907 /* KeychainProvider.swift */; };
@@ -314,6 +322,14 @@
 		FECADFD92D804DDE004023F6 /* StringConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringConstants.swift; sourceTree = "<group>"; };
 		FECADFDB2D80534B004023F6 /* RegisterCreatingUserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterCreatingUserView.swift; sourceTree = "<group>"; };
 		FECADFDD2D805356004023F6 /* RegisterFailedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterFailedView.swift; sourceTree = "<group>"; };
+		FECC22D12DC4BFBE00568783 /* IImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IImage.swift; sourceTree = "<group>"; };
+		FECC2AB72DC4C58D00568783 /* NetworkRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkRepresentable.swift; sourceTree = "<group>"; };
+		FECC2AB92DC4C5A400568783 /* DomainRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomainRepresentable.swift; sourceTree = "<group>"; };
+		FECC2ABB2DC4C5BC00568783 /* NETPortfolio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NETPortfolio.swift; sourceTree = "<group>"; };
+		FECC2ABD2DC4C5F300568783 /* NETUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NETUser.swift; sourceTree = "<group>"; };
+		FECC2ABF2DC4C65200568783 /* NETCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NETCreator.swift; sourceTree = "<group>"; };
+		FECC2AC12DC4C68300568783 /* NETChat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NETChat.swift; sourceTree = "<group>"; };
+		FECC2AC32DC4C69300568783 /* NETMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NETMessage.swift; sourceTree = "<group>"; };
 		FEE211B12DA42B6D00A95907 /* EncryptedLocalStorageProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncryptedLocalStorageProvider.swift; sourceTree = "<group>"; };
 		FEE211B42DA42C3300A95907 /* KeychainProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainProvider.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -477,6 +493,7 @@
 		FE5F8A7D2C297186001EE8AF /* DataLayer */ = {
 			isa = PBXGroup;
 			children = (
+				FECC2AB62DC4C56300568783 /* Models */,
 				FE3D2B102D93129E00DA22DB /* Extensions */,
 				FE5F8A812C29731A001EE8AF /* Providers */,
 				FE5F8A7E2C2971B7001EE8AF /* Repositories */,
@@ -867,6 +884,8 @@
 		FEC94DE12C25916600FFEB11 /* DomainModels */ = {
 			isa = PBXGroup;
 			children = (
+				FECC2AB92DC4C5A400568783 /* DomainRepresentable.swift */,
+				FECC22D12DC4BFBE00568783 /* IImage.swift */,
 				FEC94DE22C25917200FFEB11 /* Portfolio.swift */,
 				FEC94DFC2C262E4000FFEB11 /* User.swift */,
 				FEC94DFE2C262E8F00FFEB11 /* Creator.swift */,
@@ -920,6 +939,19 @@
 				FEC94E162C2857D100FFEB11 /* OnboardingFlowController.swift */,
 			);
 			path = Onboarding;
+			sourceTree = "<group>";
+		};
+		FECC2AB62DC4C56300568783 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				FECC2AC32DC4C69300568783 /* NETMessage.swift */,
+				FECC2AC12DC4C68300568783 /* NETChat.swift */,
+				FECC2ABF2DC4C65200568783 /* NETCreator.swift */,
+				FECC2ABD2DC4C5F300568783 /* NETUser.swift */,
+				FECC2ABB2DC4C5BC00568783 /* NETPortfolio.swift */,
+				FECC2AB72DC4C58D00568783 /* NetworkRepresentable.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		FEE211B02DA42B4D00A95907 /* EncryptedLocalStorage */ = {
@@ -1032,6 +1064,7 @@
 				FEA53C982C29BF97006F0116 /* Repositories+Injection.swift in Sources */,
 				FE9A30BD2D88B2000056CC0A /* SettingsView.swift in Sources */,
 				FEC94DD32C247C6100FFEB11 /* SearchView.swift in Sources */,
+				FECC2AC02DC4C65200568783 /* NETCreator.swift in Sources */,
 				FEA53CA92C29D7E8006F0116 /* UnflagPortfolioUseCase.swift in Sources */,
 				FEC94DD52C247C9500FFEB11 /* AllChatsViewModel.swift in Sources */,
 				FE4BBD3F2DB3B32900B4619A /* UpdateChatReadUseCase.swift in Sources */,
@@ -1042,6 +1075,7 @@
 				FE9A30BB2D88473E0056CC0A /* Toast.swift in Sources */,
 				FE4BBD392DB2ED3100B4619A /* FotofolioAnimatedLogoView.swift in Sources */,
 				FE5F8A862C29737F001EE8AF /* UserDefaultsProvider.swift in Sources */,
+				FECC2ABE2DC4C5F300568783 /* NETUser.swift in Sources */,
 				FE3D23272D92FD0D00DA22DB /* SaveUserDataUseCase.swift in Sources */,
 				FE3D2B122D9312B300DA22DB /* Logger+Extensions.swift in Sources */,
 				FEC94DEC2C25DC1600FFEB11 /* Constants.swift in Sources */,
@@ -1049,6 +1083,7 @@
 				FEE211B22DA42B6D00A95907 /* EncryptedLocalStorageProvider.swift in Sources */,
 				FE3D23252D91A41400DA22DB /* RegisterUserUseCase.swift in Sources */,
 				FEC94E132C28504900FFEB11 /* LoginCredentialsView.swift in Sources */,
+				FECC2AC22DC4C68300568783 /* NETChat.swift in Sources */,
 				FE7FB1102D7B1D3900428A17 /* RegisterNameAndEmailView.swift in Sources */,
 				FE18156B2D95DAFB0090E440 /* CreatorRepositoryImpl.swift in Sources */,
 				FE1815742D986A420090E440 /* ReadUserDataByCreatorIdUseCase.swift in Sources */,
@@ -1083,6 +1118,7 @@
 				FE34A64F2D78BCF200CB4CAE /* CheckEmailAddressAvailableUseCase.swift in Sources */,
 				FE3827DC2DA3C90E007A933E /* GiveRatingViewModel.swift in Sources */,
 				FEA53CA52C29C792006F0116 /* PortfolioRepositoryImpl.swift in Sources */,
+				FECC2ABA2DC4C5AA00568783 /* DomainRepresentable.swift in Sources */,
 				FEC94DC32C246DC000FFEB11 /* FeedViewModel.swift in Sources */,
 				FEE211B52DA42C3300A95907 /* KeychainProvider.swift in Sources */,
 				FEA53CF72C2D7960006F0116 /* EditPortfolioViewModel.swift in Sources */,
@@ -1102,6 +1138,7 @@
 				FEA53CEF2C2D6123006F0116 /* MediaPickerView.swift in Sources */,
 				FEC94DFF2C262E8F00FFEB11 /* Creator.swift in Sources */,
 				FEC94DF72C26283400FFEB11 /* PortfolioDetailView.swift in Sources */,
+				FECC22D22DC4BFBE00568783 /* IImage.swift in Sources */,
 				FE1815632D954E920090E440 /* ReadCreatorDataUseCase.swift in Sources */,
 				FE5F8A7C2C296ECA001EE8AF /* LoginWithCredentialsUseCase.swift in Sources */,
 				FE8D56152D918A6500A8BF4E /* AuthProvider.swift in Sources */,
@@ -1114,6 +1151,7 @@
 				FEA53CB82C2AE9B1006F0116 /* UnflagAllPortfoliosUseCase.swift in Sources */,
 				FE4BBD3D2DB2FD3500B4619A /* Text+Extensions.swift in Sources */,
 				FEA53CC42C2C12EE006F0116 /* MessageRepository.swift in Sources */,
+				FECC2ABC2DC4C5BC00568783 /* NETPortfolio.swift in Sources */,
 				FECADFDA2D804DE8004023F6 /* StringConstants.swift in Sources */,
 				FEA971E02DB3E0F3008112B7 /* TextFieldView.swift in Sources */,
 				FEC94E0B2C2840AA00FFEB11 /* ProfileUserInfoView.swift in Sources */,
@@ -1133,9 +1171,11 @@
 				FEA53CB62C2AE84F006F0116 /* AlertData+SwiftUI.swift in Sources */,
 				FEC94DB32C24475100FFEB11 /* AppFlowController.swift in Sources */,
 				FE3827CE2DA2EB29007A933E /* RemovePortfolioUseCase.swift in Sources */,
+				FECC2AC42DC4C69300568783 /* NETMessage.swift in Sources */,
 				FEC94DF92C26291E00FFEB11 /* PhotoCarouselView.swift in Sources */,
 				FECADFDE2D805356004023F6 /* RegisterFailedView.swift in Sources */,
 				FEC94DBF2C246C5C00FFEB11 /* FeedFlowController.swift in Sources */,
+				FECC2AB82DC4C59400568783 /* NetworkRepresentable.swift in Sources */,
 				FE3827C62DA147D4007A933E /* ReadRemoteImageUseCase.swift in Sources */,
 				FEA53CE42C2D5A46006F0116 /* EditProfileView.swift in Sources */,
 				FE9777E32D7F6D940027DA60 /* RegisterCreatorDetailsView.swift in Sources */,

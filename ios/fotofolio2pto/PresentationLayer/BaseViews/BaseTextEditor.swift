@@ -5,16 +5,16 @@
 //  Created by Kryštof Příhoda on 19.04.2025.
 //
 
-
 import SwiftUI
 
 struct BaseTextEditor: View {
     @Binding private var text: String
     
-    @State private var internalText: String = ""
+    @State private var internalText: String
     
     init(text: Binding<String>) {
         self._text = text
+        self._internalText = State(initialValue: text.wrappedValue)
     }
     
     var body: some View {
@@ -33,8 +33,10 @@ struct BaseTextEditor: View {
                 .onChange(of: internalText) { newValue in
                     text = newValue
                 }
-                .onAppear {
-                    internalText = text
+                .onChange(of: text) { newValue in
+                    if newValue != internalText {
+                        internalText = newValue
+                    }
                 }
         }
     }
