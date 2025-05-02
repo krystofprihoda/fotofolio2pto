@@ -2,6 +2,9 @@ package application.routes
 
 import cz.cvut.fit.application.mapper.RequestParser
 import cz.cvut.fit.config.*
+import cz.cvut.fit.config.AppConstants.Messages
+import cz.cvut.fit.config.AppConstants.Params
+import cz.cvut.fit.config.AppConstants.ResponseKeys
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
@@ -24,15 +27,15 @@ fun Application.portfolioRoutes() {
 
                     val portfolioId = portfolioRepository.createPortfolio(portfolioDto)
 
-                    call.respond(HttpStatusCode.Created, mapOf("id" to portfolioId))
+                    call.respond(HttpStatusCode.Created, mapOf(ResponseKeys.ID to portfolioId))
                 }
             }
 
             get("/portfolio") {
                 tryOrThrow {
-                    val idParams = call.request.queryParameters["id"]
-                    val categoryParams = call.request.queryParameters["category"]
-                    val sortByParam = call.request.queryParameters["sortBy"] // "timestamp" or "rating"
+                    val idParams = call.request.queryParameters[Params.ID]
+                    val categoryParams = call.request.queryParameters[Params.CATEGORY]
+                    val sortByParam = call.request.queryParameters[Params.SORT_BY]
 
                     // Parse portfolio IDs from comma-separated string
                     val ids = requestParser.parseCommaSeparatedList(idParams)
@@ -55,7 +58,7 @@ fun Application.portfolioRoutes() {
 
             get("/portfolio/{portfolioId}") {
                 tryOrThrow {
-                    val id = call.parameters["portfolioId"] ?: throw BadRequestException("Missing portfolioId")
+                    val id = call.parameters["portfolioId"] ?: throw BadRequestException(Messages.MISSING_PORTFOLIO_ID)
                     val portfolio = portfolioRepository.getPortfolioById(id)
                     call.respond(HttpStatusCode.OK, portfolio)
                 }
@@ -63,7 +66,7 @@ fun Application.portfolioRoutes() {
 
             put("/portfolio/{portfolioId}") {
                 tryOrThrow {
-                    val portfolioId = call.parameters["portfolioId"] ?: throw BadRequestException("Missing portfolioId")
+                    val portfolioId = call.parameters["portfolioId"] ?: throw BadRequestException(Messages.MISSING_PORTFOLIO_ID)
                     val requestBody = call.receive<Map<String, String>>()
 
                     val updateDTO = requestParser.parseUpdatePortfolioDTO(portfolioId, requestBody)
@@ -76,13 +79,13 @@ fun Application.portfolioRoutes() {
 
             delete("/portfolio/{portfolioId}") {
                 tryOrThrow {
-                    val portfolioId = call.parameters["portfolioId"] ?: throw BadRequestException("Missing portfolioId")
+                    val portfolioId = call.parameters["portfolioId"] ?: throw BadRequestException(Messages.MISSING_PORTFOLIO_ID)
                     val success = portfolioRepository.deletePortfolio(portfolioId)
 
                     if (success) {
-                        call.respond(HttpStatusCode.OK, "Portfolio deleted successfully")
+                        call.respond(HttpStatusCode.OK, Messages.PORTFOLIO_DELETED)
                     } else {
-                        throw InternalServerException("Error deleting portfolio")
+                        throw InternalServerException(Messages.FAILED_DELETE_PORTFOLIO)
                     }
                 }
             }

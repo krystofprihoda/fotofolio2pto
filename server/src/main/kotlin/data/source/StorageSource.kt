@@ -1,9 +1,9 @@
 package data.source
 
-import com.google.firebase.cloud.FirestoreClient
 import java.util.*
 import java.net.URLEncoder
 import com.google.firebase.cloud.StorageClient
+import cz.cvut.fit.config.AppConstants.Config
 
 interface StorageSource {
     suspend fun uploadFile(path: String, data: ByteArray, contentType: String): String
@@ -13,9 +13,9 @@ interface StorageSource {
 class FirebaseStorageSource : StorageSource {
     private val bucket by lazy {
         try {
-            StorageClient.getInstance().bucket("fotofolio-3.firebasestorage.app")
+            StorageClient.getInstance().bucket(Config.FIREBASE_BUCKET_NAME)
         } catch (e: Exception) {
-            throw IllegalStateException("Firebase has not been properly initialized. Make sure Firebase Auth is set up before using this. Error: ${e.message}", e)
+            throw IllegalStateException(e.message)
         }
     }
 
@@ -24,14 +24,14 @@ class FirebaseStorageSource : StorageSource {
 
         val accessToken = UUID.randomUUID().toString()
         val metadata = blob.toBuilder()
-            .setMetadata(mapOf("firebaseStorageDownloadTokens" to accessToken))
+            .setMetadata(mapOf(Config.FIREBASE_DOWNLOAD_TOKENS to accessToken))
             .build()
             .update()
 
-        val token = metadata.metadata?.get("firebaseStorageDownloadTokens")
+        val token = metadata.metadata?.get(Config.FIREBASE_DOWNLOAD_TOKENS)
         val encodedPath = URLEncoder.encode(path, "UTF-8")
 
-        return "https://firebasestorage.googleapis.com/v0/b/${bucket.name}/o/$encodedPath?alt=media&token=$token"
+        return String.format(Config.STORAGE_DOWNLOAD_URL, encodedPath, token)
     }
 
     override suspend fun deleteFile(path: String): Boolean {

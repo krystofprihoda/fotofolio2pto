@@ -13,6 +13,12 @@ import config.FirebaseInitializer
 import domain.model.Portfolio
 import java.io.File
 import java.io.ByteArrayInputStream
+import cz.cvut.fit.config.BadRequestException
+import cz.cvut.fit.config.AppConstants.Collections
+import cz.cvut.fit.config.AppConstants.Config
+import cz.cvut.fit.config.AppConstants.Fields
+import cz.cvut.fit.config.AppConstants.Params
+import cz.cvut.fit.config.AppConstants.Messages
 
 interface FirestoreSource {
     suspend fun <T> getDocument(
@@ -124,27 +130,28 @@ class FirebaseFirestoreSource : FirestoreSource {
     private val db: Firestore by lazy {
         if (!FirebaseInitializer.isInitialized()) {
             // For unauthenticated endpoints, we need to create a direct Firestore connection
-            println("[FIRESTORE] Not yet initialized, creating for public endpoints")
+            println(Messages.PUBLIC_INIT)
 
             // Read the key or env variable
-            val localFile = File("fotofolio-3-firebase-key.json")
+            val localFile = File(Config.FIREBASE_KEY_PATH)
             val inputStream = if (localFile.exists()) {
                 localFile.inputStream()
             } else {
-                ByteArrayInputStream(System.getenv("FIREBASE_KEY")?.toByteArray() ?: error("Firebase config not found"))
+                ByteArrayInputStream(System.getenv(Config.FIREBASE_ENV_KEY)?.toByteArray()
+                    ?: error(Messages.CONFIG_NOT_FOUND))
             }
 
             // Create a direct connection to Firestore for unauthenticated endpoints only
             val options = FirebaseOptions.builder()
                 .setCredentials(GoogleCredentials.fromStream(inputStream))
-                .setProjectId("fotofolio-3")
+                .setProjectId(Config.FIREBASE_PROJECT_ID)
                 .build()
 
             // Use a different app name to avoid conflicts
             val app = try {
-                FirebaseApp.getInstance("UNAUTHENTICATED")
+                FirebaseApp.getInstance(Config.FIREBASE_APP_UNAUTHENTICATED)
             } catch (e: Exception) {
-                FirebaseApp.initializeApp(options, "UNAUTHENTICATED")
+                FirebaseApp.initializeApp(options, Config.FIREBASE_APP_UNAUTHENTICATED)
             }
 
             FirestoreOptions.getDefaultInstance()
@@ -154,7 +161,7 @@ class FirebaseFirestoreSource : FirestoreSource {
                 .service
         } else {
             // For authenticated endpoints, use the standard FirestoreClient
-            println("[FIRESTORE] Firebase initialized, using FirestoreClient")
+            println(Messages.INITIALIZED_ALREADY)
             FirestoreClient.getFirestore()
         }
     }
@@ -257,7 +264,7 @@ class FirebaseFirestoreSource : FirestoreSource {
     override suspend fun createDocument(collection: String, data: Map<String, Any>): String {
         val docRef = db.collection(collection).document()
         val id = docRef.id
-        val dataWithId = data + ("id" to id)
+        val dataWithId = data + (Fields.ID to id)
 
         docRef.set(dataWithId).await()
         return id
@@ -314,27 +321,27 @@ class FirebaseFirestoreSource : FirestoreSource {
         // Get portfolios by categories if available
         if (!categories.isNullOrEmpty()) {
             portfolios = getDocumentsWhereArrayContainsAny(
-                collection = "portfolio",
-                field = "category",
+                collection = Collections.PORTFOLIOS,
+                field = Fields.CATEGORY,
                 values = categories,
                 clazz = Portfolio::class.java
             )
         } else {
             // Otherwise, get all portfolios
-            portfolios = getDocuments("portfolio", Portfolio::class.java)
+            portfolios = getDocuments(Collections.PORTFOLIOS, Portfolio::class.java)
         }
 
         // Apply sorting if needed
         return when (sortBy) {
-            "timestamp" -> portfolios.sortedByDescending { it.timestamp }
-            "rating" -> {
+            Params.SORT_BY_TIMESTAMP -> portfolios.sortedByDescending { it.timestamp }
+            Params.SORT_BY_RATING -> {
                 // Complex sorting by creator's ratings
                 val portfoliosWithRatings = portfolios.map { portfolio ->
-                    val creator = getDocument("creator", portfolio.creatorId, domain.model.Creator::class.java)
-                        ?: throw Exception("Portfolio creator not found")
+                    val creator = getDocument(Collections.CREATORS, portfolio.creatorId, domain.model.Creator::class.java)
+                        ?: throw BadRequestException(Messages.PORTFOLIO_CREATOR_NOT_FOUND)
 
-                    val user = getDocument("user", creator.userId, domain.model.User::class.java)
-                        ?: throw Exception("Portfolio user/author not found")
+                    val user = getDocument(Collections.USERS, creator.userId, domain.model.User::class.java)
+                        ?: throw BadRequestException(Messages.PORTFOLIO_USER_NOT_FOUND)
 
                     val avgRating = if (user.rating.isEmpty()) 0.0 else user.rating.values.average()
                     portfolio to avgRating
@@ -351,10 +358,10 @@ class FirebaseFirestoreSource : FirestoreSource {
             return emptyList()
         }
 
-        if (portfolioIds.size > 10) {
-            throw Exception("Cannot query more than 10 portfolio IDs at a time")
+        if (portfolioIds.size > Config.MAX_PORTFOLIO_IDS_PER_QUERY) {
+            throw BadRequestException(Messages.QUERY_SIZE)
         }
 
-        return getDocumentsByIds("portfolio", portfolioIds, Portfolio::class.java)
+        return getDocumentsByIds(Collections.PORTFOLIOS, portfolioIds, Portfolio::class.java)
     }
 }

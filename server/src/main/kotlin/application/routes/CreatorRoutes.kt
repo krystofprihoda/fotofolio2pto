@@ -11,6 +11,9 @@ import domain.repository.CreatorRepository
 import domain.repository.PortfolioRepository
 import org.koin.ktor.ext.inject
 import cz.cvut.fit.config.*
+import cz.cvut.fit.config.AppConstants.Messages
+import cz.cvut.fit.config.AppConstants.ResponseKeys
+import cz.cvut.fit.config.AppConstants.Fields
 
 fun Application.creatorRoutes() {
 
@@ -24,13 +27,13 @@ fun Application.creatorRoutes() {
                     val creatorData = call.receive<Creator>()
                     val creatorId = creatorRepository.createCreator(creatorData)
 
-                    call.respond(HttpStatusCode.OK, mapOf("creatorId" to creatorId))
+                    call.respond(HttpStatusCode.OK, mapOf(ResponseKeys.CREATOR_ID to creatorId))
                 }
             }
 
             get("/creator/{creatorId}") {
                 tryOrThrow {
-                    val id = call.parameters["creatorId"] ?: throw BadRequestException("Missing creatorId")
+                    val id = call.parameters["creatorId"] ?: throw BadRequestException(Messages.MISSING_CREATOR_ID)
                     val creator = creatorRepository.getCreatorById(id)
 
                     call.respond(HttpStatusCode.OK, creator)
@@ -39,7 +42,7 @@ fun Application.creatorRoutes() {
 
             get("/creator/{creatorId}/user") {
                 tryOrThrow {
-                    val id = call.parameters["creatorId"] ?: throw BadRequestException("Missing creatorId")
+                    val id = call.parameters["creatorId"] ?: throw BadRequestException(Messages.MISSING_CREATOR_ID)
                     val user = creatorRepository.getUserByCreatorId(id)
 
                     call.respond(HttpStatusCode.OK, user)
@@ -48,56 +51,57 @@ fun Application.creatorRoutes() {
 
             get("/creator/{creatorId}/portfolio") {
                 tryOrThrow {
-                    val creatorId = call.parameters["creatorId"] ?: throw BadRequestException("Missing creatorId")
+                    val creatorId = call.parameters["creatorId"] ?: throw BadRequestException(Messages.MISSING_CREATOR_ID)
                     val portfolios = portfolioRepository.getPortfoliosByCreatorId(creatorId)
 
                     call.respond(HttpStatusCode.OK, portfolios)
                 }
             }
 
-            put("/creator/{creatorId}") {
+            put("/creator/{creatorId}}") {
                 tryOrThrow {
-                    val creatorId = call.parameters["creatorId"] ?: throw BadRequestException("Missing creatorId")
+                    val creatorId = call.parameters["creatorId"] ?: throw BadRequestException(Messages.MISSING_CREATOR_ID)
                     val updatedCreatorData = call.receive<Creator>()
 
                     val success = creatorRepository.updateCreator(creatorId, updatedCreatorData)
                     if (success) {
                         call.respond(HttpStatusCode.OK, mapOf(
-                            "message" to "Creator updated successfully",
-                            "creatorId" to creatorId
+                            ResponseKeys.MESSAGE to Messages.CREATOR_UPDATED,
+                            ResponseKeys.CREATOR_ID to creatorId
                         ))
                     } else {
-                        throw InternalServerException("Failed to update creator")
+                        throw InternalServerException(Messages.FAILED_UPDATE_CREATOR)
                     }
                 }
             }
 
             patch("/creator/{creatorId}") {
                 tryOrThrow {
-                    val creatorId = call.parameters["creatorId"] ?: throw BadRequestException("Missing creatorId")
+                    val creatorId = call.parameters["creatorId"] ?: throw BadRequestException(Messages.MISSING_CREATOR_ID)
 
                     val body = call.receive<Map<String, String>>()
 
                     // Prepare updates map with appropriate types
                     val updates = mutableMapOf<String, Any>()
 
-                    body["yearsOfExperience"]?.let {
-                        updates["yearsOfExperience"] = it.toIntOrNull() ?: throw BadRequestException("Invalid yearsOfExperience value")
+                    body[Fields.YEARS_EXPERIENCE]?.let {
+                        updates[Fields.YEARS_EXPERIENCE] = it.toIntOrNull()
+                            ?: throw BadRequestException(Messages.INVALID_YOE)
                     }
 
-                    body["description"]?.let {
-                        updates["description"] = it
+                    body[Fields.DESCRIPTION]?.let {
+                        updates[Fields.DESCRIPTION] = it
                     }
 
                     if (updates.isEmpty()) {
-                        throw BadRequestException("No valid fields to update")
+                        throw BadRequestException(Messages.NO_FIELDS_TO_UPDATE)
                     }
 
                     val success = creatorRepository.updateCreatorFields(creatorId, updates)
                     if (success) {
-                        call.respond(HttpStatusCode.OK, "Creator updated successfully")
+                        call.respond(HttpStatusCode.OK, Messages.CREATOR_UPDATED)
                     } else {
-                        throw InternalServerException("Failed to update creator")
+                        throw InternalServerException(Messages.FAILED_UPDATE_CREATOR)
                     }
                 }
             }

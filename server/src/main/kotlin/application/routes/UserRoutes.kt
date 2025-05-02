@@ -13,6 +13,10 @@ import io.ktor.http.content.*
 import java.io.ByteArrayOutputStream
 import domain.model.User
 import cz.cvut.fit.config.*
+import cz.cvut.fit.config.AppConstants.Messages
+import cz.cvut.fit.config.AppConstants.Params
+import cz.cvut.fit.config.AppConstants.FormFields
+import cz.cvut.fit.config.AppConstants.ResponseKeys
 
 fun Application.userRoutes() {
     val userRepository by inject<UserRepository>()
@@ -20,17 +24,17 @@ fun Application.userRoutes() {
     routing {
         get("/user/available") {
             tryOrThrow {
-                val username = call.request.queryParameters["username"]
-                    ?: throw BadRequestException("Missing or empty 'username' query parameter")
+                val username = call.request.queryParameters[Params.USERNAME]
+                    ?: throw BadRequestException(Messages.MISSING_USERNAME)
 
                 if (username.isBlank()) {
-                    throw BadRequestException("Missing or empty 'username' query parameter")
+                    throw BadRequestException(Messages.EMPTY_USERNAME)
                 }
 
                 if (userRepository.isUsernameAvailable(username)) {
-                    call.respond(HttpStatusCode.NoContent) // username available
+                    call.respond(HttpStatusCode.NoContent) // Username available
                 } else {
-                    throw ConflictException("Username is already taken")
+                    throw ConflictException(Messages.USERNAME_TAKEN)
                 }
             }
         }
@@ -46,13 +50,13 @@ fun Application.userRoutes() {
 
             post("/user/{userId}/profilepicture") {
                 tryOrThrow {
-                    val userId = call.parameters["userId"] ?: throw BadRequestException("Missing userId")
+                    val userId = call.parameters["userId"] ?: throw BadRequestException(Messages.MISSING_USER_ID)
 
                     val multipart = call.receiveMultipart()
                     var profilePicBytes: ByteArray? = null
 
                     multipart.forEachPart { part ->
-                        if (part is PartData.FileItem && part.name == "profilepicture") {
+                        if (part is PartData.FileItem && part.name == FormFields.PROFILE_PICTURE) {
                             val byteChannel = part.provider()
                             val inputStream = byteChannel.toInputStream()
                             val outputStream = ByteArrayOutputStream()
@@ -63,29 +67,29 @@ fun Application.userRoutes() {
                     }
 
                     if (profilePicBytes == null) {
-                        throw BadRequestException("Missing image data")
+                        throw BadRequestException(Messages.MISSING_IMAGE_DATA)
                     }
 
                     val downloadUrl = userRepository.uploadProfilePicture(userId, profilePicBytes!!)
-                    call.respond(HttpStatusCode.OK, mapOf("profilePictureUrl" to downloadUrl))
+                    call.respond(HttpStatusCode.OK, mapOf(ResponseKeys.PROFILE_PICTURE_URL to downloadUrl))
                 }
             }
 
             post("/user/{receiverId}/rating") {
                 tryOrThrow {
-                    val receiverId = call.parameters["receiverId"] ?: throw BadRequestException("Missing receiverId")
-                    val principalId = call.principal<UserIdPrincipal>()?.name ?: throw UnauthorizedException("Unauthorized")
+                    val receiverId = call.parameters["receiverId"] ?: throw BadRequestException(Messages.MISSING_RECEIVER_ID)
+                    val principalId = call.principal<UserIdPrincipal>()?.name ?: throw UnauthorizedException(Messages.UNAUTHORIZED)
                     val requestBody = call.receive<Map<String, String>>()
-                    val rating = requestBody["rating"]?.toIntOrNull() ?: throw BadRequestException("Valid rating value is required")
+                    val rating = requestBody[Params.SORT_BY_RATING]?.toIntOrNull() ?: throw BadRequestException(Messages.RATING_REQUIRED)
 
                     userRepository.rateUser(receiverId, principalId, rating)
-                    call.respond(HttpStatusCode.OK, "Rating saved")
+                    call.respond(HttpStatusCode.OK, Messages.RATING_SAVED)
                 }
             }
 
             get("/user") {
                 tryOrThrow {
-                    val searchQuery = call.request.queryParameters["query"]
+                    val searchQuery = call.request.queryParameters[Params.QUERY]
                     val users = userRepository.searchUsers(searchQuery)
                     call.respond(HttpStatusCode.OK, users)
                 }
@@ -93,7 +97,7 @@ fun Application.userRoutes() {
 
             get("/user/{userId}") {
                 tryOrThrow {
-                    val id = call.parameters["userId"] ?: throw BadRequestException("Missing userId")
+                    val id = call.parameters["userId"] ?: throw BadRequestException(Messages.MISSING_USER_ID)
                     val user = userRepository.getUserById(id)
                     call.respond(HttpStatusCode.OK, user)
                 }
@@ -101,19 +105,19 @@ fun Application.userRoutes() {
 
             patch("/user/{userId}") {
                 tryOrThrow {
-                    val userId = call.parameters["userId"] ?: throw BadRequestException("Missing userId")
+                    val userId = call.parameters["userId"] ?: throw BadRequestException(Messages.MISSING_USER_ID)
 
                     val updateData = call.receive<Map<String, String>>()
 
                     if (updateData.isEmpty()) {
-                        throw BadRequestException("No fields to update")
+                        throw BadRequestException(Messages.NO_FIELDS_TO_UPDATE)
                     }
 
                     val success = userRepository.updateUserFields(userId, updateData)
                     if (success) {
-                        call.respond(HttpStatusCode.OK, "User updated successfully")
+                        call.respond(HttpStatusCode.OK, Messages.USER_UPDATED)
                     } else {
-                        throw BadRequestException("No valid fields to update")
+                        throw BadRequestException(Messages.NO_FIELDS_TO_UPDATE)
                     }
                 }
             }

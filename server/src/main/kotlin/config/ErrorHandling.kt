@@ -52,7 +52,7 @@ fun Application.configureErrorHandling() {
     }
 }
 
-// 4. Extension function to handle try/catch in routes more elegantly
+// Extension function to handle try/catch in routes more elegantly
 inline fun <T> tryOrThrow(block: () -> T): T {
     return try {
         block()

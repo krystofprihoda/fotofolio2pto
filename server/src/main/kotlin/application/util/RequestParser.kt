@@ -3,6 +3,9 @@ package cz.cvut.fit.application.mapper
 import cz.cvut.fit.application.dto.portfolio.CreatePortfolioDTO
 import cz.cvut.fit.application.dto.portfolio.UpdatePortfolioDTO
 import cz.cvut.fit.config.BadRequestException
+import cz.cvut.fit.config.AppConstants.Fields
+import cz.cvut.fit.config.AppConstants.Messages
+import cz.cvut.fit.config.AppConstants.Storage
 import io.ktor.http.content.*
 import io.ktor.utils.io.jvm.javaio.*
 import java.io.ByteArrayOutputStream
@@ -30,11 +33,11 @@ class DefaultRequestParser : RequestParser {
             when (part) {
                 is PartData.FormItem -> {
                     when (part.name) {
-                        "creatorId" -> creatorId = part.value
-                        "name" -> name = part.value
-                        "description" -> description = part.value
-                        "price" -> price = part.value
-                        "category" -> {
+                        Fields.CREATOR_ID -> creatorId = part.value
+                        Fields.NAME -> name = part.value
+                        Fields.DESCRIPTION -> description = part.value
+                        Fields.PRICE -> price = part.value
+                        Fields.CATEGORY -> {
                             category = part.value.split(",").map { it.trim() }
                         }
                     }
@@ -52,7 +55,7 @@ class DefaultRequestParser : RequestParser {
                     }
 
                     val fileBytes = outputStream.toByteArray()
-                    val fileName = part.originalFileName ?: "image_${System.currentTimeMillis()}.jpg"
+                    val fileName = part.originalFileName ?: String.format(Storage.DEFAULT_FILE_NAME_FORMAT, System.currentTimeMillis())
                     photoBytesList.add(fileName to fileBytes)
                 }
 
@@ -63,16 +66,16 @@ class DefaultRequestParser : RequestParser {
 
         // Validate required fields
         if (creatorId == null) {
-            throw BadRequestException("creatorId is required")
+            throw BadRequestException(Messages.CREATOR_ID_REQUIRED)
         }
         if (name == null) {
-            throw BadRequestException("name is required")
+            throw BadRequestException(Messages.NAME_REQUIRED)
         }
         if (description == null) {
-            throw BadRequestException("description is required")
+            throw BadRequestException(Messages.DESCRIPTION_REQUIRED)
         }
         if (price == null) {
-            throw BadRequestException("price is required")
+            throw BadRequestException(Messages.PRICE_REQUIRED)
         }
 
         return CreatePortfolioDTO(
@@ -86,11 +89,11 @@ class DefaultRequestParser : RequestParser {
     }
 
     override suspend fun parseUpdatePortfolioDTO(portfolioId: String, requestBody: Map<String, String>): UpdatePortfolioDTO {
-        val name = requestBody["name"] ?: throw BadRequestException("name is required")
-        val description = requestBody["description"] ?: throw BadRequestException("description is required")
-        val price = requestBody["price"] ?: throw BadRequestException("price is required")
-        val categoryRaw = requestBody["category"] ?: throw BadRequestException("category is required")
-        val photoURLsRaw = requestBody["photoURLs"] ?: throw BadRequestException("photoURLs is required")
+        val name = requestBody[Fields.NAME] ?: throw BadRequestException(Messages.NAME_REQUIRED)
+        val description = requestBody[Fields.DESCRIPTION] ?: throw BadRequestException(Messages.DESCRIPTION_REQUIRED)
+        val price = requestBody[Fields.PRICE] ?: throw BadRequestException(Messages.PRICE_REQUIRED)
+        val categoryRaw = requestBody[Fields.CATEGORY] ?: throw BadRequestException(Messages.CATEGORY_REQUIRED)
+        val photoURLsRaw = requestBody[Fields.PHOTOS] ?: throw BadRequestException(Messages.PHOTO_URLS_REQUIRED)
 
         val category = parseCommaSeparatedList(categoryRaw) ?: emptyList()
         val photoURLs = parseCommaSeparatedList(photoURLsRaw) ?: emptyList()
@@ -106,7 +109,7 @@ class DefaultRequestParser : RequestParser {
                 photoURLs = photoURLs
             )
         } catch (e: NumberFormatException) {
-            throw BadRequestException("price must be a valid integer")
+            throw BadRequestException(Messages.INVALID_PRICE)
         }
     }
 }
