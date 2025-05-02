@@ -19,21 +19,15 @@ public class UserRepositoryImpl: UserRepository {
     }
     
     public func getUsersFromQuery(query: String) async throws -> [User] {
-        guard let token: String = encryptedStorage.read(.token) else { throw AuthError.tokenRetrievalFailed }
-        
-        let headers = [
-            "Authorization": "Bearer \(token)",
-            "Content-Type": "application/json"
-        ]
-        
         let queryParams = query.isEmpty ? nil : ["query": query]
         
         let netUsers: [NETUser] = try await network.fetch(
             endpoint: .user,
             method: .GET,
             body: nil,
-            headers: headers,
-            queryParams: queryParams
+            headers: nil,
+            queryParams: queryParams,
+            auth: true
         )
         return try netUsers.map { try $0.domainModel }
     }
@@ -48,18 +42,13 @@ public class UserRepositoryImpl: UserRepository {
             method: .GET,
             body: nil,
             headers: nil,
-            queryParams: queryParams
+            queryParams: queryParams,
+            auth: false // This endpoint doesn't require authentication
         )
     }
     
     public func createUser(username: String, email: String, fullName: String, location: String, profilePicture: String) async throws {
-        guard let token: String = encryptedStorage.read(.token) else { throw AuthError.tokenRetrievalFailed }
         guard let userId: String = encryptedStorage.read(.userId) else { throw AuthError.missingUserId }
-        
-        let headers = [
-            "Authorization": "Bearer \(token)",
-            "Content-Type": "application/json"
-        ]
         
         let body: [String: String] = [
             "id": userId,
@@ -73,47 +62,35 @@ public class UserRepositoryImpl: UserRepository {
             endpoint: .user,
             method: .POST,
             body: body,
-            headers: headers,
-            queryParams: nil
+            headers: nil,
+            queryParams: nil,
+            auth: true
         )
     }
     
     public func getUser(id: String) async throws -> User {
-        guard let token: String = encryptedStorage.read(.token) else { throw AuthError.tokenRetrievalFailed }
-        
-        let headers = [
-            "Authorization": "Bearer \(token)",
-            "Content-Type": "application/json"
-        ]
-        
         let netUser: NETUser = try await network.fetch(
             endpoint: .userById(id),
             method: .GET,
             body: [:],
-            headers: headers,
-            queryParams: nil
+            headers: nil,
+            queryParams: nil,
+            auth: true
         )
         return try netUser.domainModel
     }
     
     public func updateUserData(location: String) async throws {
-        guard let token: String = encryptedStorage.read(.token) else { throw AuthError.tokenRetrievalFailed }
         guard let userId: String = encryptedStorage.read(.userId) else { throw AuthError.missingUserId }
-        
-        let headers = [
-            "Authorization": "Bearer \(token)",
-            "Content-Type": "application/json"
-        ]
         
         let body: [String:String] = [
             "location": location
         ]
         
-        let _ = try await network.request(endpoint: .userById(userId), method: .PATCH, body: body, headers: headers, queryParams: nil)
+        let _ = try await network.request(endpoint: .userById(userId), method: .PATCH, body: body, headers: nil, queryParams: nil, auth: true)
     }
     
     public func saveUserProfilePicture(image: UIImage) async throws {
-        guard let token: String = encryptedStorage.read(.token) else { throw AuthError.tokenRetrievalFailed }
         guard let userId: String = encryptedStorage.read(.userId) else { throw AuthError.missingUserId }
         
         let boundary = UUID().uuidString
@@ -130,7 +107,6 @@ public class UserRepositoryImpl: UserRepository {
         body.append(Data("--\(boundary)--\r\n".utf8))
 
         let headers = [
-            "Authorization": "Bearer \(token)",
             "Content-Type": "multipart/form-data; boundary=\(boundary)"
         ]
         
@@ -139,22 +115,16 @@ public class UserRepositoryImpl: UserRepository {
             method: .POST,
             rawBody: body,
             headers: headers,
-            queryParams: nil
+            queryParams: nil,
+            auth: true
         )
     }
     
     public func giveRatingToUser(receiverId: String, rating: Int) async throws {
-        guard let token: String = encryptedStorage.read(.token) else { throw AuthError.tokenRetrievalFailed }
-        
-        let headers = [
-            "Authorization": "Bearer \(token)",
-            "Content-Type": "application/json"
-        ]
-        
         let body: [String:String] = [
             "rating": String(rating)
         ]
         
-        let _ = try await network.request(endpoint: .userRating(receiverId), method: .POST, body: body, headers: headers, queryParams: nil)
+        let _ = try await network.request(endpoint: .userRating(receiverId), method: .POST, body: body, headers: nil, queryParams: nil, auth: true)
     }
 }

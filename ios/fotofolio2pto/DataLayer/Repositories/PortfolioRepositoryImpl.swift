@@ -21,8 +21,6 @@ public class PortfolioRepositoryImpl: PortfolioRepository {
     }
     
     public func readAll(categories: [String]? = nil, sortBy: SortByEnum? = nil) async throws -> [Portfolio] {
-        guard let token: String = encryptedStorage.read(.token) else { throw AuthError.tokenRetrievalFailed }
-        
         var queryParams: [String: String] = [:]
         
         if let categories = categories, !categories.isEmpty {
@@ -43,30 +41,19 @@ public class PortfolioRepositoryImpl: PortfolioRepository {
             }
         }
         
-        let headers = [
-            "Authorization": "Bearer \(token)",
-            "Content-Type": "application/json"
-        ]
-        
         let netPortfolios: [NETPortfolio] = try await network.fetch(
             endpoint: .portfolio,
             method: .GET,
             body: nil,
-            headers: headers,
-            queryParams: queryParams
+            headers: nil,
+            queryParams: queryParams,
+            auth: true
         )
         
         return try netPortfolios.map { try $0.domainModel }
     }
     
     public func updatePortfolio(id: String, name: String, photos: [String], price: Price, description: String, category: [String]) async throws -> Portfolio {
-        guard let token: String = encryptedStorage.read(.token) else { throw AuthError.tokenRetrievalFailed }
-        
-        let headers = [
-            "Authorization": "Bearer \(token)",
-            "Content-Type": "application/json"
-        ]
-        
         var body: [String:String] = [
             "name": name,
             "description": description
@@ -98,19 +85,12 @@ public class PortfolioRepositoryImpl: PortfolioRepository {
             body["photos"] = commaPhotos
         }
         
-        let netPortfolio: NETPortfolio = try await network.fetch(endpoint: .portfolioById(id), method: .PUT, body: body, headers: headers, queryParams: nil)
+        let netPortfolio: NETPortfolio = try await network.fetch(endpoint: .portfolioById(id), method: .PUT, body: body, headers: nil, queryParams: nil, auth: true)
         return try netPortfolio.domainModel
     }
     
     public func readImageFromURL(url: String) async throws -> UIImage {
-        guard let token: String = encryptedStorage.read(.token) else { throw AuthError.tokenRetrievalFailed }
-        
-        let headers = [
-            "Authorization": "Bearer \(token)",
-            "Content-Type": "application/json"
-        ]
-        
-        let imageData = try await network.fetchImageData(url: url, headers: headers)
+        let imageData = try await network.fetchImageData(url: url, headers: nil, auth: true)
         guard let image = UIImage(data: imageData) else { throw NetworkError.decodingError }
         return image
     }
@@ -133,12 +113,6 @@ public class PortfolioRepositoryImpl: PortfolioRepository {
         
         guard !ids.isEmpty else { return [] }
         
-        guard let token: String = encryptedStorage.read(.token) else { throw AuthError.tokenRetrievalFailed }
-        let headers = [
-            "Authorization": "Bearer \(token)",
-            "Content-Type": "application/json"
-        ]
-        
         var queryParams: [String: String] = [:]
         
         if !ids.isEmpty {
@@ -154,8 +128,9 @@ public class PortfolioRepositoryImpl: PortfolioRepository {
             endpoint: .portfolio,
             method: .GET,
             body: nil,
-            headers: headers,
-            queryParams: queryParams
+            headers: nil,
+            queryParams: queryParams,
+            auth: true
         )
         return try netPortfolios.map { try $0.domainModel }
     }
@@ -169,8 +144,6 @@ public class PortfolioRepositoryImpl: PortfolioRepository {
     }
     
     public func createPortfolio(creatorId: String, name: String, photos: [IImage], price: Price, description: String, category: [String]) async throws {
-        guard let token: String = encryptedStorage.read(.token) else { throw AuthError.tokenRetrievalFailed }
-
         let boundary = UUID().uuidString
         var body = Data()
         
@@ -205,7 +178,6 @@ public class PortfolioRepositoryImpl: PortfolioRepository {
         body.append(Data("--\(boundary)--\r\n".utf8))
 
         let headers = [
-            "Authorization": "Bearer \(token)",
             "Content-Type": "multipart/form-data; boundary=\(boundary)"
         ]
         
@@ -214,16 +186,12 @@ public class PortfolioRepositoryImpl: PortfolioRepository {
             method: .POST,
             rawBody: body,
             headers: headers,
-            queryParams: nil
+            queryParams: nil,
+            auth: true
         )
     }
     
     public func removePortfolio(id: String) async throws {
-        guard let token: String = encryptedStorage.read(.token) else { throw AuthError.tokenRetrievalFailed }
-        let headers = [
-            "Authorization": "Bearer \(token)"
-        ]
-        
-        let _ = try await network.request(endpoint: .portfolioById(id), method: .DELETE, body: nil, headers: headers, queryParams: nil)
+        let _ = try await network.request(endpoint: .portfolioById(id), method: .DELETE, body: nil, headers: nil, queryParams: nil, auth: true)
     }
 }

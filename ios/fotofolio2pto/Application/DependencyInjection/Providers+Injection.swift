@@ -13,6 +13,6 @@ public extension Resolver {
         register { UserDefaultsProvider() as LocalStorageProvider }
         register { KeychainProvider() as EncryptedLocalStorageProvider }
         register { FirebaseProvider() as AuthProvider }
-        register { DefaultNetworkProvider() as NetworkProvider }
+        register { DefaultNetworkProvider(encryptedStorage: resolve()) as NetworkProvider }
     }
 }

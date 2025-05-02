@@ -11,12 +11,16 @@ import OSLog
 final class DefaultNetworkProvider: NetworkProvider {
     
     private let baseURL: BaseURL
+    private let encryptedStorage: EncryptedLocalStorageProvider
     
-    init(baseURL: BaseURL = .localhost) {
+    init(baseURL: BaseURL = .localhost, encryptedStorage: EncryptedLocalStorageProvider) {
         self.baseURL = baseURL
+        self.encryptedStorage = encryptedStorage
     }
     
-    func request(endpoint: Endpoint, method: HTTPMethod, rawBody: Data?, headers: [String: String]?, queryParams: [String: String]? = nil) async throws -> Data {
+    func request(endpoint: Endpoint, method: HTTPMethod, rawBody: Data?, headers: [String: String]?, queryParams: [String: String]? = nil, auth: Bool = true) async throws -> Data {
+        let authenticatedHeaders = auth ? try addAuthHeader(headers) : headers
+        
         guard var urlComponents = URLComponents(string: "\(baseURL.rawValue)\(endpoint.path)") else {
             throw NetworkError.badURL
         }
@@ -32,7 +36,7 @@ final class DefaultNetworkProvider: NetworkProvider {
         var request = URLRequest(url: url)
         request.httpMethod = method.rawValue
         
-        headers?.forEach { request.setValue($0.value, forHTTPHeaderField: $0.key) }
+        authenticatedHeaders?.forEach { request.setValue($0.value, forHTTPHeaderField: $0.key) }
         
         if let body = rawBody, method != .GET {
             request.httpBody = body
@@ -64,19 +68,22 @@ final class DefaultNetworkProvider: NetworkProvider {
         }
     }
     
-    func fetch<T: Decodable>(endpoint: Endpoint, method: HTTPMethod = .GET, rawBody: Data? = nil, headers: [String: String]? = nil, queryParams: [String: String]? = nil) async throws -> T {
+    func fetch<T: Decodable>(endpoint: Endpoint, method: HTTPMethod = .GET, rawBody: Data? = nil, headers: [String: String]? = nil, queryParams: [String: String]? = nil, auth: Bool = true) async throws -> T {
         let data = try await request(
             endpoint: endpoint,
             method: method,
             rawBody: rawBody,
             headers: headers,
-            queryParams: queryParams
+            queryParams: queryParams,
+            auth: auth
         )
         let decoder = JSONDecoder()
         return try decoder.decode(T.self, from: data)
     }
     
-    func request(endpoint: Endpoint, method: HTTPMethod, body: [String: Any]? = nil, headers: [String: String]?, queryParams: [String: String]? = nil) async throws -> Data {
+    func request(endpoint: Endpoint, method: HTTPMethod, body: [String: Any]? = nil, headers: [String: String]?, queryParams: [String: String]? = nil, auth: Bool = true) async throws -> Data {
+        let authenticatedHeaders = auth ? try addAuthHeader(headers) : headers
+        
         guard var urlComponents = URLComponents(string: "\(baseURL.rawValue)\(endpoint.path)") else {
             throw NetworkError.badURL
         }
@@ -92,7 +99,7 @@ final class DefaultNetworkProvider: NetworkProvider {
         var request = URLRequest(url: url)
         request.httpMethod = method.rawValue
         
-        headers?.forEach { request.setValue($0.value, forHTTPHeaderField: $0.key) }
+        authenticatedHeaders?.forEach { request.setValue($0.value, forHTTPHeaderField: $0.key) }
         
         if let body = body, method != .GET {
             request.httpBody = try JSONSerialization.data(withJSONObject: body, options: [])
@@ -125,25 +132,27 @@ final class DefaultNetworkProvider: NetworkProvider {
         }
     }
         
-    func fetch<T: Decodable>(endpoint: Endpoint, method: HTTPMethod = .GET, body: [String: Any]? = nil, headers: [String: String]? = nil, queryParams: [String: String]? = nil) async throws -> T {
+    func fetch<T: Decodable>(endpoint: Endpoint, method: HTTPMethod = .GET, body: [String: Any]? = nil, headers: [String: String]? = nil, queryParams: [String: String]? = nil, auth: Bool = true) async throws -> T {
         let data = try await request(
             endpoint: endpoint,
             method: method,
             body: body,
             headers: headers,
-            queryParams: queryParams
+            queryParams: queryParams,
+            auth: auth
         )
         let decoder = JSONDecoder()
         return try decoder.decode(T.self, from: data)
     }
     
-    func fetchImageData(url: String, headers: [String: String]) async throws -> Data {
+    func fetchImageData(url: String, headers: [String: String]? = nil, auth: Bool = true) async throws -> Data {
+        let authenticatedHeaders = auth ? try addAuthHeader(headers) : headers
+        
         guard let url = URL(string: url) else { throw NetworkError.badURL }
         
         var request = URLRequest(url: url)
         
-        headers.forEach { request.setValue($0.value, forHTTPHeaderField: $0.key) }
-        
+        authenticatedHeaders?.forEach { request.setValue($0.value, forHTTPHeaderField: $0.key) }
         
         if baseURL != .prod { Logger.log(request: request) }
         
@@ -156,5 +165,20 @@ final class DefaultNetworkProvider: NetworkProvider {
         }
         
         return data
+    }
+    
+    private func addAuthHeader(_ headers: [String: String]?) throws -> [String: String] {
+        var newHeaders = headers ?? [:]
+        
+        guard let token: String = encryptedStorage.read(.token) else {
+            throw AuthError.tokenRetrievalFailed
+        }
+        
+        newHeaders["Authorization"] = "Bearer \(token)"
+        if newHeaders["Content-Type"] == nil {
+            newHeaders["Content-Type"] = "application/json"
+        }
+        
+        return newHeaders
     }
 }
