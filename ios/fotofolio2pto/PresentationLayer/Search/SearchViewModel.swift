@@ -95,7 +95,7 @@ final class SearchViewModel: BaseViewModel, ViewModel, ObservableObject {
         searchTask = Task {
             do {
                 try await Task.sleep(for: .seconds(0.3))
-                state.searchResults = try await readUsersFromQueryUseCase.execute(query: state.textInput.lowercased())
+                state.searchResults = try await readUsersFromQueryUseCase.execute(query: state.textInput)
             } catch {}
         }
     }

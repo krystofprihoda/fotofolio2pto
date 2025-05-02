@@ -98,23 +98,22 @@ internal class UserRepositoryImpl(
             return firestoreSource.getDocuments(Collections.USERS, User::class.java)
         }
 
-        val queryLower = query.lowercase()
         val usernameResults = firestoreSource.queryDocumentsByPrefix(
             Collections.USERS,
             Fields.USERNAME,
-            queryLower,
+            query,
             User::class.java
         )
         val fullNameResults = firestoreSource.queryDocumentsByPrefix(
             Collections.USERS,
             Fields.FULL_NAME,
-            queryLower,
+            query,
             User::class.java
         )
         val locationResults = firestoreSource.queryDocumentsByPrefix(
             Collections.USERS,
             Fields.LOCATION,
-            queryLower,
+            query,
             User::class.java
         )
 
