@@ -7,14 +7,6 @@
 
 import FirebaseAuth
 
-enum AuthError: Error {
-    case emailAlreadyTaken
-    case registrationFailed
-    case tokenRetrievalFailed
-    case wrongCredentials
-    case missingUserId
-}
-
 class FirebaseProvider: AuthProvider {
     
     private let auth: Auth = .auth()
@@ -74,7 +66,7 @@ class FirebaseProvider: AuthProvider {
         }
     }
     
-    func logout() throws {
+    func signOut() throws {
         try auth.signOut()
     }
     

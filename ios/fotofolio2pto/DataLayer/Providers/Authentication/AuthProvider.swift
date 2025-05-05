@@ -11,5 +11,5 @@ protocol AuthProvider {
     func checkEmailAvailable(_ email: String) async throws
     func registerUser(email: String, password: String) async throws -> RegisterData
     func signIn(email: String, password: String) async throws -> AuthDataResult
-    func logout() throws
+    func signOut() throws
 }

@@ -74,12 +74,11 @@
 		FEA53CA92C29D7E8006F0116 /* UnflagPortfolioUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CA82C29D7E8006F0116 /* UnflagPortfolioUseCase.swift */; };
 		FEA53CAB2C29DE1E006F0116 /* ReadFlaggedPortfoliosUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CAA2C29DE1E006F0116 /* ReadFlaggedPortfoliosUseCase.swift */; };
 		FEA53CAE2C29E08D006F0116 /* Sequence+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CAD2C29E08D006F0116 /* Sequence+Extensions.swift */; };
-		FEA53CB12C29E57A006F0116 /* ObjectError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CB02C29E57A006F0116 /* ObjectError.swift */; };
 		FEA53CB42C2AE81C006F0116 /* AlertData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CB32C2AE81C006F0116 /* AlertData.swift */; };
 		FEA53CB62C2AE84F006F0116 /* AlertData+SwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CB52C2AE84F006F0116 /* AlertData+SwiftUI.swift */; };
 		FEA53CB82C2AE9B1006F0116 /* UnflagAllPortfoliosUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CB72C2AE9B1006F0116 /* UnflagAllPortfoliosUseCase.swift */; };
 		FEA53CBC2C2B0B3D006F0116 /* ReadFilteredPortfoliosUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CBB2C2B0B3D006F0116 /* ReadFilteredPortfoliosUseCase.swift */; };
-		FEA53CBE2C2B2D3D006F0116 /* ReadLoggedInUserUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CBD2C2B2D3C006F0116 /* ReadLoggedInUserUseCase.swift */; };
+		FEA53CBE2C2B2D3D006F0116 /* ReadSignedInUserUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CBD2C2B2D3C006F0116 /* ReadSignedInUserUseCase.swift */; };
 		FEA53CC42C2C12EE006F0116 /* MessageRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CC32C2C12EE006F0116 /* MessageRepository.swift */; };
 		FEA53CC62C2C136E006F0116 /* MessageRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CC52C2C136E006F0116 /* MessageRepositoryImpl.swift */; };
 		FEA53CCA2C2C174B006F0116 /* UserRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CC92C2C174B006F0116 /* UserRepositoryImpl.swift */; };
@@ -106,6 +105,11 @@
 		FEA64F792D7757B100B11530 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FEA64F782D7757B100B11530 /* Colors.xcassets */; };
 		FEA971E02DB3E0F3008112B7 /* TextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA971DF2DB3E0E9008112B7 /* TextFieldView.swift */; };
 		FEA971E22DB3E5DC008112B7 /* BaseTextEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA971E12DB3E5DC008112B7 /* BaseTextEditor.swift */; };
+		FEACEB3A2DC92B370061B786 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEACEB392DC92B370061B786 /* NetworkError.swift */; };
+		FEACEB3C2DC92B510061B786 /* ObjectError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEACEB3B2DC92B510061B786 /* ObjectError.swift */; };
+		FEACEB3E2DC930A20061B786 /* UserAuthDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEACEB3D2DC930A20061B786 /* UserAuthDetails.swift */; };
+		FEACFB072DC9342A0061B786 /* RegisterData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEACFB062DC9342A0061B786 /* RegisterData.swift */; };
+		FEACFB092DC934400061B786 /* AuthError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEACFB082DC934400061B786 /* AuthError.swift */; };
 		FEB945432D79F2BE00002A9B /* RegisterWrapperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEB945422D79F2BE00002A9B /* RegisterWrapperView.swift */; };
 		FEC8A8C02D75C5D5000181B8 /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC8A8BF2D75C5CE000181B8 /* Localization.swift */; };
 		FEC94D952C24398200FFEB11 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC94D942C24398200FFEB11 /* AppDelegate.swift */; };
@@ -236,12 +240,11 @@
 		FEA53CA82C29D7E8006F0116 /* UnflagPortfolioUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnflagPortfolioUseCase.swift; sourceTree = "<group>"; };
 		FEA53CAA2C29DE1E006F0116 /* ReadFlaggedPortfoliosUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadFlaggedPortfoliosUseCase.swift; sourceTree = "<group>"; };
 		FEA53CAD2C29E08D006F0116 /* Sequence+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sequence+Extensions.swift"; sourceTree = "<group>"; };
-		FEA53CB02C29E57A006F0116 /* ObjectError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectError.swift; sourceTree = "<group>"; };
 		FEA53CB32C2AE81C006F0116 /* AlertData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertData.swift; sourceTree = "<group>"; };
 		FEA53CB52C2AE84F006F0116 /* AlertData+SwiftUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AlertData+SwiftUI.swift"; sourceTree = "<group>"; };
 		FEA53CB72C2AE9B1006F0116 /* UnflagAllPortfoliosUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnflagAllPortfoliosUseCase.swift; sourceTree = "<group>"; };
 		FEA53CBB2C2B0B3D006F0116 /* ReadFilteredPortfoliosUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadFilteredPortfoliosUseCase.swift; sourceTree = "<group>"; };
-		FEA53CBD2C2B2D3C006F0116 /* ReadLoggedInUserUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadLoggedInUserUseCase.swift; sourceTree = "<group>"; };
+		FEA53CBD2C2B2D3C006F0116 /* ReadSignedInUserUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadSignedInUserUseCase.swift; sourceTree = "<group>"; };
 		FEA53CC32C2C12EE006F0116 /* MessageRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageRepository.swift; sourceTree = "<group>"; };
 		FEA53CC52C2C136E006F0116 /* MessageRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageRepositoryImpl.swift; sourceTree = "<group>"; };
 		FEA53CC92C2C174B006F0116 /* UserRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRepositoryImpl.swift; sourceTree = "<group>"; };
@@ -268,6 +271,11 @@
 		FEA64F782D7757B100B11530 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		FEA971DF2DB3E0E9008112B7 /* TextFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldView.swift; sourceTree = "<group>"; };
 		FEA971E12DB3E5DC008112B7 /* BaseTextEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTextEditor.swift; sourceTree = "<group>"; };
+		FEACEB392DC92B370061B786 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
+		FEACEB3B2DC92B510061B786 /* ObjectError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectError.swift; sourceTree = "<group>"; };
+		FEACEB3D2DC930A20061B786 /* UserAuthDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAuthDetails.swift; sourceTree = "<group>"; };
+		FEACFB062DC9342A0061B786 /* RegisterData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterData.swift; sourceTree = "<group>"; };
+		FEACFB082DC934400061B786 /* AuthError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthError.swift; sourceTree = "<group>"; };
 		FEB945422D79F2BE00002A9B /* RegisterWrapperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterWrapperView.swift; sourceTree = "<group>"; };
 		FEC8A8BF2D75C5CE000181B8 /* Localization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localization.swift; sourceTree = "<group>"; };
 		FEC94D912C24398200FFEB11 /* fotofolio2pto.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = fotofolio2pto.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -485,7 +493,7 @@
 				FE5F8A882C2975FC001EE8AF /* SignOutUseCase.swift */,
 				FE34A64E2D78BCF200CB4CAE /* CheckEmailAddressAvailableUseCase.swift */,
 				FE5F8A7B2C296ECA001EE8AF /* SignInWithCredentialsUseCase.swift */,
-				FEA53CBD2C2B2D3C006F0116 /* ReadLoggedInUserUseCase.swift */,
+				FEA53CBD2C2B2D3C006F0116 /* ReadSignedInUserUseCase.swift */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
@@ -493,6 +501,7 @@
 		FE5F8A7D2C297186001EE8AF /* DataLayer */ = {
 			isa = PBXGroup;
 			children = (
+				FEACEB382DC92B290061B786 /* Errors */,
 				FECC2AB62DC4C56300568783 /* Models */,
 				FE3D2B102D93129E00DA22DB /* Extensions */,
 				FE5F8A812C29731A001EE8AF /* Providers */,
@@ -639,14 +648,6 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
-		FEA53CAF2C29E4DC006F0116 /* Error */ = {
-			isa = PBXGroup;
-			children = (
-				FEA53CB02C29E57A006F0116 /* ObjectError.swift */,
-			);
-			path = Error;
-			sourceTree = "<group>";
-		};
 		FEA53CB22C2AE812006F0116 /* Alerts */ = {
 			isa = PBXGroup;
 			children = (
@@ -715,6 +716,25 @@
 				FEA64F6C2D7711D900B11530 /* RegisterFlowController.swift */,
 			);
 			path = Register;
+			sourceTree = "<group>";
+		};
+		FEACEB382DC92B290061B786 /* Errors */ = {
+			isa = PBXGroup;
+			children = (
+				FEACFB082DC934400061B786 /* AuthError.swift */,
+				FEACEB3B2DC92B510061B786 /* ObjectError.swift */,
+				FEACEB392DC92B370061B786 /* NetworkError.swift */,
+			);
+			path = Errors;
+			sourceTree = "<group>";
+		};
+		FEACFB0A2DC9346E0061B786 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				FEACFB062DC9342A0061B786 /* RegisterData.swift */,
+				FEACEB3D2DC930A20061B786 /* UserAuthDetails.swift */,
+			);
+			path = Auth;
 			sourceTree = "<group>";
 		};
 		FEB945412D79F2AC00002A9B /* Views */ = {
@@ -872,16 +892,15 @@
 		FEC94DE02C25914F00FFEB11 /* DomainLayer */ = {
 			isa = PBXGroup;
 			children = (
-				FEA53CAF2C29E4DC006F0116 /* Error */,
 				FEA53CAC2C29E073006F0116 /* Extensions */,
 				FE5F8A792C296EAC001EE8AF /* UseCases */,
 				FE5F8A762C296D6C001EE8AF /* Repositories */,
-				FEC94DE12C25916600FFEB11 /* DomainModels */,
+				FEC94DE12C25916600FFEB11 /* Models */,
 			);
 			path = DomainLayer;
 			sourceTree = "<group>";
 		};
-		FEC94DE12C25916600FFEB11 /* DomainModels */ = {
+		FEC94DE12C25916600FFEB11 /* Models */ = {
 			isa = PBXGroup;
 			children = (
 				FECC2AB92DC4C5A400568783 /* DomainRepresentable.swift */,
@@ -892,7 +911,7 @@
 				FEC94E042C2701DF00FFEB11 /* Chat.swift */,
 				FEC94E062C2701F500FFEB11 /* Message.swift */,
 			);
-			path = DomainModels;
+			path = Models;
 			sourceTree = "<group>";
 		};
 		FEC94DE82C25BF3D00FFEB11 /* Extensions */ = {
@@ -944,6 +963,7 @@
 		FECC2AB62DC4C56300568783 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				FEACFB0A2DC9346E0061B786 /* Auth */,
 				FECC2AC32DC4C69300568783 /* NETMessage.swift */,
 				FECC2AC12DC4C68300568783 /* NETChat.swift */,
 				FECC2ABF2DC4C65200568783 /* NETCreator.swift */,
@@ -1115,6 +1135,7 @@
 				FEA53C962C29BF2F006F0116 /* Providers+Injection.swift in Sources */,
 				FEC94DC72C24712400FFEB11 /* ViewModel.swift in Sources */,
 				FEA53CD82C2C30BD006F0116 /* ChatViewModel.swift in Sources */,
+				FEACEB3C2DC92B510061B786 /* ObjectError.swift in Sources */,
 				FE34A64F2D78BCF200CB4CAE /* CheckEmailAddressAvailableUseCase.swift in Sources */,
 				FE3827DC2DA3C90E007A933E /* GiveRatingViewModel.swift in Sources */,
 				FEA53CA52C29C792006F0116 /* PortfolioRepositoryImpl.swift in Sources */,
@@ -1124,6 +1145,7 @@
 				FEA53CF72C2D7960006F0116 /* EditPortfolioViewModel.swift in Sources */,
 				FEA53CD42C2C2722006F0116 /* ChatView.swift in Sources */,
 				FEA53CAB2C29DE1E006F0116 /* ReadFlaggedPortfoliosUseCase.swift in Sources */,
+				FEACFB072DC9342A0061B786 /* RegisterData.swift in Sources */,
 				FEA53CA12C29C70B006F0116 /* ReadAllPortfoliosUseCase.swift in Sources */,
 				FEC94E0D2C2842F500FFEB11 /* ProfilePortfoliosView.swift in Sources */,
 				FE3827D02DA2FC1A007A933E /* UpdateUserDataUseCase.swift in Sources */,
@@ -1161,7 +1183,6 @@
 				FEA53CC62C2C136E006F0116 /* MessageRepositoryImpl.swift in Sources */,
 				FEC94E072C2701F500FFEB11 /* Message.swift in Sources */,
 				FEC94DFD2C262E4000FFEB11 /* User.swift in Sources */,
-				FEA53CB12C29E57A006F0116 /* ObjectError.swift in Sources */,
 				FEC94DD92C247CCA00FFEB11 /* MessagesFlowController.swift in Sources */,
 				FEC94E192C28661100FFEB11 /* SignInViewModel.swift in Sources */,
 				FE3827DA2DA3C8FE007A933E /* GiveRatingView.swift in Sources */,
@@ -1175,15 +1196,18 @@
 				FEC94DF92C26291E00FFEB11 /* PhotoCarouselView.swift in Sources */,
 				FECADFDE2D805356004023F6 /* RegisterFailedView.swift in Sources */,
 				FEC94DBF2C246C5C00FFEB11 /* FeedFlowController.swift in Sources */,
+				FEACEB3A2DC92B370061B786 /* NetworkError.swift in Sources */,
 				FECC2AB82DC4C59400568783 /* NetworkRepresentable.swift in Sources */,
+				FEACEB3E2DC930A20061B786 /* UserAuthDetails.swift in Sources */,
 				FE3827C62DA147D4007A933E /* ReadRemoteImageUseCase.swift in Sources */,
 				FEA53CE42C2D5A46006F0116 /* EditProfileView.swift in Sources */,
 				FE9777E32D7F6D940027DA60 /* RegisterCreatorDetailsView.swift in Sources */,
 				FEC94DDF2C247D9800FFEB11 /* ProfileFlowController.swift in Sources */,
 				FEC94DDB2C247D4B00FFEB11 /* ProfileView.swift in Sources */,
+				FEACFB092DC934400061B786 /* AuthError.swift in Sources */,
 				FEC94DC92C2479B300FFEB11 /* SelectionFlowController.swift in Sources */,
 				FEB945432D79F2BE00002A9B /* RegisterWrapperView.swift in Sources */,
-				FEA53CBE2C2B2D3D006F0116 /* ReadLoggedInUserUseCase.swift in Sources */,
+				FEA53CBE2C2B2D3D006F0116 /* ReadSignedInUserUseCase.swift in Sources */,
 				FEA53CF12C2D6280006F0116 /* EditProfileViewModel.swift in Sources */,
 				FEA53CF42C2D791F006F0116 /* EditPortfolioView.swift in Sources */,
 				FEA64F6D2D7711D900B11530 /* RegisterFlowController.swift in Sources */,

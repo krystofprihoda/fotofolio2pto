@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct NETUser: Codable {
+public struct NETUser: Codable {
     let id: String
     let username: String
     let fullName: String
@@ -32,7 +32,7 @@ struct NETUser: Codable {
         self.creatorId = creatorId
     }
     
-    init(from decoder: Decoder) throws {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         id = try container.decode(String.self, forKey: .id)
         username = try container.decode(String.self, forKey: .username)
@@ -55,7 +55,7 @@ struct NETUser: Codable {
         }
     }
     
-    func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(id, forKey: .id)
         try container.encode(username, forKey: .username)
@@ -70,9 +70,9 @@ struct NETUser: Codable {
 
 // Conversion from NetworkModel to DomainModel
 extension NETUser: DomainRepresentable {
-    typealias DomainModel = User
+    public typealias DomainModel = User
     
-    var domainModel: DomainModel {
+    public var domainModel: DomainModel {
         get throws {
             let profilePic: IImage? = self.profilePicture != nil && !self.profilePicture!.isEmpty ? 
                                       IImage(src: .remote(self.profilePicture!)) :
@@ -94,9 +94,9 @@ extension NETUser: DomainRepresentable {
 
 // Conversion from DomainModel to NetworkModel
 extension User: NetworkRepresentable {
-    typealias NetworkModel = NETUser
+    public typealias NetworkModel = NETUser
     
-    var networkModel: NetworkModel {
+    public var networkModel: NetworkModel {
         var profilePictureURL: String? = nil
         if let profilePic = profilePicture {
             if case .remote(let url) = profilePic.src {

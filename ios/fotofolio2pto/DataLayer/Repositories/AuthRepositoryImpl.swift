@@ -7,11 +7,6 @@
 
 import Foundation
 
-public struct UserAuthDetails {
-    let uid: String
-    let token: String
-}
-
 public class AuthRepositoryImpl: AuthRepository {
     
     private let defaults: LocalStorageProvider
@@ -24,8 +19,8 @@ public class AuthRepositoryImpl: AuthRepository {
         self.authProvider = authProvider
     }
     
-    public func logout() throws {
-        try authProvider.logout()
+    public func signOut() throws {
+        try authProvider.signOut()
         
         encryptedStorage.delete(.token)
         encryptedStorage.delete(.userId)
@@ -44,7 +39,7 @@ public class AuthRepositoryImpl: AuthRepository {
         return UserAuthDetails(uid: result.user.uid, token: token)
     }
     
-    public func readLoggedInUser() -> String? {
+    public func readSignedInUser() -> String? {
         return encryptedStorage.read(.userId)
     }
     

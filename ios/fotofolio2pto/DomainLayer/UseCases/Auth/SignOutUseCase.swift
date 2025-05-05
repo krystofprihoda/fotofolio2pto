@@ -20,6 +20,6 @@ public struct SignOutUseCaseImpl: SignOutUseCase {
     }
     
     public func execute() throws {
-        try authRepository.logout()
+        try authRepository.signOut()
     }
 }

@@ -24,6 +24,13 @@ public struct SaveUserDataUseCaseImpl: SaveUserDataUseCase {
     }
     
     public func execute(username: String, email: String, fullName: String, location: String, profilePicture: String) async throws {
-        return try await userRepository.createUser(username: username, email: email, fullName: fullName, location: location, profilePicture: profilePicture)
+        return try await userRepository
+            .createUser(
+                username: username,
+                email: email,
+                fullName: fullName,
+                location: location,
+                profilePicture: profilePicture
+            )
     }
 }

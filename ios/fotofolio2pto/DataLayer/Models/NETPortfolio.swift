@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-struct NETPortfolio: Codable {
+public struct NETPortfolio: Codable {
     let id: String
     let creatorId: String
     let authorUsername: String
@@ -35,7 +35,7 @@ struct NETPortfolio: Codable {
         self.timestamp = timestamp
     }
     
-    init(from decoder: Decoder) throws {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         id = try container.decode(String.self, forKey: .id)
         creatorId = try container.decode(String.self, forKey: .creatorId)
@@ -48,7 +48,7 @@ struct NETPortfolio: Codable {
         timestamp = try container.decode(Double.self, forKey: .timestamp)
     }
     
-    func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(id, forKey: .id)
         try container.encode(creatorId, forKey: .creatorId)
@@ -64,9 +64,9 @@ struct NETPortfolio: Codable {
 
 // Conversion from NetworkModel to DomainModel
 extension NETPortfolio: DomainRepresentable {
-    typealias DomainModel = Portfolio
+    public typealias DomainModel = Portfolio
     
-    var domainModel: DomainModel {
+    public var domainModel: DomainModel {
         get throws {
             let domainPhotos = photos.map { IImage(src: .remote($0)) }
             
@@ -89,9 +89,9 @@ extension NETPortfolio: DomainRepresentable {
 
 // Conversion from DomainModel to NetworkModel
 extension Portfolio: NetworkRepresentable {
-    typealias NetworkModel = NETPortfolio
+    public typealias NetworkModel = NETPortfolio
     
-    var networkModel: NetworkModel {
+    public var networkModel: NetworkModel {
         let netPhotos = photos.compactMap { image in
             switch image.src {
             case .remote(let url):

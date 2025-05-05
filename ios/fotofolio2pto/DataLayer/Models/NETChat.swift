@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct NETChat: Codable {
+public struct NETChat: Codable {
     let id: String
     let chatOwnerIds: [String]
     let messageIds: [String]
@@ -30,7 +30,7 @@ struct NETChat: Codable {
         self.readByIds = readByIds
     }
     
-    init(from decoder: Decoder) throws {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
         id = try container.decode(String.self, forKey: .id)
@@ -43,7 +43,7 @@ struct NETChat: Codable {
         readByIds = try container.decode([String].self, forKey: .readByIds)
     }
     
-    func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(id, forKey: .id)
         try container.encode(chatOwnerIds, forKey: .chatOwnerIds)
@@ -57,9 +57,9 @@ struct NETChat: Codable {
 
 // Conversion from NetworkModel to DomainModel
 extension NETChat: DomainRepresentable {
-    typealias DomainModel = Chat
+    public typealias DomainModel = Chat
     
-    var domainModel: DomainModel {
+    public var domainModel: DomainModel {
         get throws {
             return Chat(
                 id: id,
@@ -76,9 +76,9 @@ extension NETChat: DomainRepresentable {
 
 // Conversion from DomainModel to NetworkModel
 extension Chat: NetworkRepresentable {
-    typealias NetworkModel = NETChat
+    public typealias NetworkModel = NETChat
     
-    var networkModel: NetworkModel {
+    public var networkModel: NetworkModel {
         return NETChat(
             id: id,
             chatOwnerIds: chatOwnerIds,

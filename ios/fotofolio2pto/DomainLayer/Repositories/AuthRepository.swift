@@ -10,8 +10,8 @@ import Foundation
 public protocol AuthRepository {
     func checkEmailAvailable(email: String) async throws
     func registerUser(email: String, password: String) async throws
-    func logout() throws
+    func signOut() throws
     func signInWithCredentials(email: String, password: String) async throws -> UserAuthDetails
-    func readLoggedInUser() -> String?
+    func readSignedInUser() -> String?
     func readLastSignedInEmail() -> String
 }

@@ -8,7 +8,14 @@
 import Foundation
 
 public protocol UpdatePortfolioUseCase {
-    func execute(id: String, name: String, photos: [String], price: Price, description: String, category: [String]) async throws -> Portfolio
+    func execute(
+        id: String,
+        name: String,
+        photos: [String],
+        price: Price,
+        description: String,
+        category: [String]
+    ) async throws -> Portfolio
 }
 
 public struct UpdatePortfolioUseCaseImpl: UpdatePortfolioUseCase {
@@ -19,7 +26,14 @@ public struct UpdatePortfolioUseCaseImpl: UpdatePortfolioUseCase {
         self.portfolioRepository = portfolioRepository
     }
     
-    public func execute(id: String, name: String, photos: [String], price: Price, description: String, category: [String]) async throws -> Portfolio {
+    public func execute(
+        id: String,
+        name: String,
+        photos: [String],
+        price: Price,
+        description: String,
+        category: [String]
+    ) async throws -> Portfolio {
         return try await portfolioRepository
             .updatePortfolio(
                 id: id,

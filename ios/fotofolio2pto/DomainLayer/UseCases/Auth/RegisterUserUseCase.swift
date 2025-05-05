@@ -5,12 +5,6 @@
 //  Created by Kryštof Příhoda on 24.03.2025.
 //
 
-public struct RegisterData {
-    let uid: String
-    let token: String
-    let email: String?
-}
-
 public protocol RegisterUserUseCase {
     func execute(email: String, password: String) async throws
 }

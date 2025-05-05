@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct NETMessage: Codable {
+public struct NETMessage: Codable {
     let id: String
     let chatId: String
     let from: String
@@ -28,7 +28,7 @@ struct NETMessage: Codable {
         self.timestamp = timestamp
     }
     
-    init(from decoder: Decoder) throws {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
     
         id = try container.decode(String.self, forKey: .id)
@@ -40,7 +40,7 @@ struct NETMessage: Codable {
         timestamp = try container.decode(Double.self, forKey: .timestamp)
     }
     
-    func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         
         try container.encode(id, forKey: .id)
@@ -54,9 +54,9 @@ struct NETMessage: Codable {
 
 // Conversion from NetworkModel to DomainModel
 extension NETMessage: DomainRepresentable {
-    typealias DomainModel = Message
+    public typealias DomainModel = Message
     
-    var domainModel: DomainModel {
+    public var domainModel: DomainModel {
         get throws {
             return Message(
                 id: id,
@@ -72,9 +72,9 @@ extension NETMessage: DomainRepresentable {
 
 // Conversion from DomainModel to NetworkModel
 extension Message: NetworkRepresentable {
-    typealias NetworkModel = NETMessage
+    public typealias NetworkModel = NETMessage
     
-    var networkModel: NetworkModel {
+    public var networkModel: NetworkModel {
         return NETMessage(
             id: id,
             chatId: chatId,

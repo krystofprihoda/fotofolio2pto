@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct NETCreator: Codable {
+public struct NETCreator: Codable {
     let id: String
     let userId: String
     let description: String
@@ -25,9 +25,9 @@ struct NETCreator: Codable {
 
 // Conversion from NetworkModel to DomainModel
 extension NETCreator: DomainRepresentable {
-    typealias DomainModel = Creator
+    public typealias DomainModel = Creator
     
-    var domainModel: DomainModel {
+    public var domainModel: DomainModel {
         get throws {
             return Creator(
                 id: id,
@@ -42,9 +42,9 @@ extension NETCreator: DomainRepresentable {
 
 // Conversion from DomainModel to NetworkModel
 extension Creator: NetworkRepresentable {
-    typealias NetworkModel = NETCreator
+    public typealias NetworkModel = NETCreator
     
-    var networkModel: NetworkModel {
+    public var networkModel: NetworkModel {
         return NETCreator(
             id: id,
             userId: userId,
