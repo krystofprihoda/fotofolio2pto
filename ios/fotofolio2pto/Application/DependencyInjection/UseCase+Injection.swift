@@ -11,11 +11,11 @@ import Resolver
 public extension Resolver {
     static func registerUseCases() {
         /// Auth
-        register { LogoutUseCaseImpl(authRepository: resolve()) as LogoutUseCase }
-        register { LoginWithCredentialsUseCaseImpl(authRepository: resolve(), userRepository: resolve()) as LoginWithCredentialsUseCase }
-        register { ReadLoggedInUserUseCaseImpl(authRepository: resolve()) as ReadLoggedInUserUseCase }
         register { RegisterUserUseCaseImpl(authRepository: resolve()) as RegisterUserUseCase }
+        register { SignInWithCredentialsUseCaseImpl(authRepository: resolve(), userRepository: resolve()) as SignInWithCredentialsUseCase }
+        register { ReadLoggedInUserUseCaseImpl(authRepository: resolve()) as ReadLoggedInUserUseCase }
         register { ReadLastSignedInEmailUseCaseImpl(authRepository: resolve()) as ReadLastSignedInEmailUseCase }
+        register { SignOutUseCaseImpl(authRepository: resolve()) as SignOutUseCase }
         
         /// User
         register { ReadCreatorPortfoliosUseCaseImpl(creatorRepository: resolve()) as ReadCreatorPortfoliosUseCase }

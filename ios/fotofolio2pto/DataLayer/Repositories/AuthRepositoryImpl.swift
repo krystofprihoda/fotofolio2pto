@@ -33,8 +33,8 @@ public class AuthRepositoryImpl: AuthRepository {
         defaults.delete(.flagged)
     }
     
-    public func loginWithCredentials(email: String, password: String) async throws -> UserAuthDetails {
-        let result = try await authProvider.login(email: email, password: password)
+    public func signInWithCredentials(email: String, password: String) async throws -> UserAuthDetails {
+        let result = try await authProvider.signIn(email: email, password: password)
         let token = try await result.user.getIDToken()
         
         encryptedStorage.update(.token, value: token)

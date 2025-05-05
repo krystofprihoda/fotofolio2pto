@@ -1,5 +1,5 @@
 //
-//  LoginCredentialsView.swift
+//  SignInCredentialsView.swift
 //  fotofolio2pto
 //
 //  Created by Kryštof Příhoda on 23.06.2024.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct LoginCredentialsView: View {
+struct SignInCredentialsView: View {
     @Binding private var email: String
     @Binding private var password: String
     
@@ -73,5 +73,5 @@ struct LoginCredentialsView: View {
 }
 
 #Preview {
-    LoginCredentialsView(email: .constant(""), password: .constant(""), onClearEmailTap: {})
+    SignInCredentialsView(email: .constant(""), password: .constant(""), onClearEmailTap: {})
 }

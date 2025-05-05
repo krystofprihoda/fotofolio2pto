@@ -13,7 +13,7 @@ final class SettingsViewModel: BaseViewModel, ViewModel, ObservableObject {
     
     // MARK: Dependencies
     
-    @LazyInjected private var logOutUseCase: LogoutUseCase
+    @LazyInjected private var signOutUseCase: SignOutUseCase
     
     private weak var flowController: ProfileFlowController?
     
@@ -74,7 +74,7 @@ final class SettingsViewModel: BaseViewModel, ViewModel, ObservableObject {
     
     private func signOut() {
         do {
-            try logOutUseCase.execute()
+            try signOutUseCase.execute()
             flowController?.profileSignOutDelegate?.signOut()
         } catch {}
     }

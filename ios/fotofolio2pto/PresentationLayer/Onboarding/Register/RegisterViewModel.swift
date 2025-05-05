@@ -30,12 +30,6 @@ final class RegisterViewModel: BaseViewModel, ViewModel, ObservableObject {
     
     // MARK: Stored properties
     
-    @LazyInjected private var checkEmailAddressAvailableUseCase: CheckEmailAddressAvailableUseCase
-    @LazyInjected private var checkUsernameAvailableUseCase: CheckUsernameAvailableUseCase
-    @LazyInjected private var registerUserUseCase: RegisterUserUseCase
-    @LazyInjected private var saveUserDataUseCase: SaveUserDataUseCase
-    @LazyInjected private var saveCreatorDataUseCase: CreateCreatorDataUseCase
-    
     private var currentTask: Task<(), Never>?
     
     private let emailRegex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
@@ -44,6 +38,12 @@ final class RegisterViewModel: BaseViewModel, ViewModel, ObservableObject {
 
     
     // MARK: Dependencies
+    
+    @LazyInjected private var checkEmailAddressAvailableUseCase: CheckEmailAddressAvailableUseCase
+    @LazyInjected private var checkUsernameAvailableUseCase: CheckUsernameAvailableUseCase
+    @LazyInjected private var registerUserUseCase: RegisterUserUseCase
+    @LazyInjected private var saveUserDataUseCase: SaveUserDataUseCase
+    @LazyInjected private var saveCreatorDataUseCase: CreateCreatorDataUseCase
     
     private weak var flowController: RegisterFlowController?
     
@@ -57,11 +57,6 @@ final class RegisterViewModel: BaseViewModel, ViewModel, ObservableObject {
     }
     
     // MARK: Lifecycle
-    
-    override func onAppear() {
-        super.onAppear()
-        
-    }
     
     // MARK: State
     

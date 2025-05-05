@@ -44,10 +44,6 @@ final class PortfolioDetailViewModel: BaseViewModel, ViewModel, ObservableObject
 
     // MARK: Lifecycle
 
-    override func onAppear() {
-        super.onAppear()
-    }
-
     // MARK: State
 
     struct State {

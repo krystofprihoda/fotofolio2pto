@@ -118,5 +118,5 @@ struct FeedView: View {
 }
 
 #Preview {
-    FeedView(viewModel: .init(flowController: nil, signedInUserId: ""))
+    FeedView(viewModel: .init(flowController: nil))
 }

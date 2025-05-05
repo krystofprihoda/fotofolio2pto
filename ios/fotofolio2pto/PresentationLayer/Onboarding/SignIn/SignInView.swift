@@ -39,7 +39,7 @@ struct SignInView: View {
                                     .font(.footnote)
                             }
                             
-                            LoginCredentialsView(
+                            SignInCredentialsView(
                                 email: Binding(get: { viewModel.state.email }, set: { viewModel.onIntent(.setEmail($0)) }),
                                 password: Binding(get: { viewModel.state.password }, set: { viewModel.onIntent(.setPassword($0)) }),
                                 onClearEmailTap: { viewModel.onIntent(.setEmail("")) }

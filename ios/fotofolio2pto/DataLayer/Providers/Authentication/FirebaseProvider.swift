@@ -46,7 +46,7 @@ class FirebaseProvider: AuthProvider {
         }
     }
     
-    func login(email: String, password: String) async throws -> AuthDataResult {
+    func signIn(email: String, password: String) async throws -> AuthDataResult {
         return try await withCheckedThrowingContinuation { continuation in
             auth.signIn(withEmail: email, password: password) { result, error in
                 if let error = error as NSError? {

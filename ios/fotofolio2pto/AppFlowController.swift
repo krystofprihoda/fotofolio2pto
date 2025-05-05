@@ -25,8 +25,8 @@ public class AppFlowController: BaseFlowController, OnboardingMainFlowDelegate {
             userId: userId
         )
         let rootVc = startChildFlow(flowController)
-        navigationController.navigationBar.isHidden = true
         navigationController.viewControllers = [rootVc]
+        navigationController.navigationBar.isHidden = true
         navigationController.overrideUserInterfaceStyle = .light
     }
     

@@ -14,8 +14,6 @@ final class FilterViewModel: BaseViewModel, ViewModel, ObservableObject {
 
     // MARK: Dependencies
 
-    // UCs
-
     private weak var flowController: FeedFlowController?
     private var currentTask: Task<(), Never>?
 
@@ -31,10 +29,6 @@ final class FilterViewModel: BaseViewModel, ViewModel, ObservableObject {
     }
 
     // MARK: Lifecycle
-
-    override func onAppear() {
-        super.onAppear()
-    }
 
     // MARK: State
 

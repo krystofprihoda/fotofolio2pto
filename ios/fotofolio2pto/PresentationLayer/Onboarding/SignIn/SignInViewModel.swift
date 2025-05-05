@@ -15,7 +15,7 @@ final class SignInViewModel: BaseViewModel, ViewModel, ObservableObject {
 
     // MARK: Dependencies
 
-    @LazyInjected private var loginWithCredentialsUseCase: LoginWithCredentialsUseCase
+    @LazyInjected private var signInWithCredentialsUseCase: SignInWithCredentialsUseCase
     @LazyInjected private var readUserByIdUseCase: ReadUserByIdUseCase
     @LazyInjected private var readLastSignedInEmailUseCase: ReadLastSignedInEmailUseCase
 
@@ -32,11 +32,7 @@ final class SignInViewModel: BaseViewModel, ViewModel, ObservableObject {
     }
 
     // MARK: Lifecycle
-
-    override func onAppear() {
-        super.onAppear()
-    }
-
+    
     // MARK: State
 
     struct State: Equatable {
@@ -82,7 +78,7 @@ final class SignInViewModel: BaseViewModel, ViewModel, ObservableObject {
         defer { state.isSigningIn = false }
         
         do {
-            let authDetails = try await loginWithCredentialsUseCase.execute(email: state.email, password: state.password)
+            let authDetails = try await signInWithCredentialsUseCase.execute(email: state.email, password: state.password)
             flowController?.signIn(uid: authDetails.uid)
         } catch AuthError.wrongCredentials {
             state.error = L.Onboarding.wrongCredentials

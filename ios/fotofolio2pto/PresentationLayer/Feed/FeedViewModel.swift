@@ -29,12 +29,10 @@ final class FeedViewModel: BaseViewModel, ViewModel, ObservableObject {
     // MARK: Init
     
     init(
-        flowController: FeedFlowController?,
-        signedInUserId: String
+        flowController: FeedFlowController?
     ) {
         self.flowController = flowController
         super.init()
-        state.signedInUserId = signedInUserId
         
         executeTask(Task { await fetchPortfolios(isRefreshing: false) })
     }
@@ -56,7 +54,6 @@ final class FeedViewModel: BaseViewModel, ViewModel, ObservableObject {
     // MARK: State
     
     struct State: Equatable {
-        var signedInUserId = ""
         var isLoading: Bool = false
         var isRefreshing: Bool = false
         var portfolios: [Portfolio] = []

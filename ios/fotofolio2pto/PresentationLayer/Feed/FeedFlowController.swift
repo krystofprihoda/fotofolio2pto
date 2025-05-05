@@ -31,7 +31,7 @@ class FeedFlowController: BaseFlowController {
     }
     
     override func setup() -> UIViewController {
-        let vm = FeedViewModel(flowController: self, signedInUserId: signedInUserId)
+        let vm = FeedViewModel(flowController: self)
         filterFeedDelegate = vm
         let view = FeedView(viewModel: vm)
         let vc = BaseHostingController(rootView: view)

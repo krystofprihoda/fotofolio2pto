@@ -40,11 +40,11 @@
 		FE4BBD3D2DB2FD3500B4619A /* Text+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4BBD3C2DB2FD2F00B4619A /* Text+Extensions.swift */; };
 		FE4BBD3F2DB3B32900B4619A /* UpdateChatReadUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4BBD3E2DB3B32300B4619A /* UpdateChatReadUseCase.swift */; };
 		FE5F8A782C296D81001EE8AF /* AuthRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE5F8A772C296D81001EE8AF /* AuthRepository.swift */; };
-		FE5F8A7C2C296ECA001EE8AF /* LoginWithCredentialsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE5F8A7B2C296ECA001EE8AF /* LoginWithCredentialsUseCase.swift */; };
+		FE5F8A7C2C296ECA001EE8AF /* SignInWithCredentialsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE5F8A7B2C296ECA001EE8AF /* SignInWithCredentialsUseCase.swift */; };
 		FE5F8A802C2971C7001EE8AF /* AuthRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE5F8A7F2C2971C7001EE8AF /* AuthRepositoryImpl.swift */; };
 		FE5F8A842C297338001EE8AF /* LocalStorageProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE5F8A832C297338001EE8AF /* LocalStorageProvider.swift */; };
 		FE5F8A862C29737F001EE8AF /* UserDefaultsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE5F8A852C29737F001EE8AF /* UserDefaultsProvider.swift */; };
-		FE5F8A892C2975FC001EE8AF /* LogoutUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE5F8A882C2975FC001EE8AF /* LogoutUseCase.swift */; };
+		FE5F8A892C2975FC001EE8AF /* SignOutUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE5F8A882C2975FC001EE8AF /* SignOutUseCase.swift */; };
 		FE7FB10D2D7B163B00428A17 /* CheckUsernameAvailableUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE7FB10C2D7B163B00428A17 /* CheckUsernameAvailableUseCase.swift */; };
 		FE7FB1102D7B1D3900428A17 /* RegisterNameAndEmailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE7FB10F2D7B1D3900428A17 /* RegisterNameAndEmailView.swift */; };
 		FE8D4E2A2D916A9A00A8BF4E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FE8D4E292D916A9A00A8BF4E /* GoogleService-Info.plist */; };
@@ -151,7 +151,7 @@
 		FEC94E092C283D4C00FFEB11 /* NotCreatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC94E082C283D4C00FFEB11 /* NotCreatorView.swift */; };
 		FEC94E0B2C2840AA00FFEB11 /* ProfileUserInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC94E0A2C2840AA00FFEB11 /* ProfileUserInfoView.swift */; };
 		FEC94E0D2C2842F500FFEB11 /* ProfilePortfoliosView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC94E0C2C2842F500FFEB11 /* ProfilePortfoliosView.swift */; };
-		FEC94E132C28504900FFEB11 /* LoginCredentialsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC94E122C28504900FFEB11 /* LoginCredentialsView.swift */; };
+		FEC94E132C28504900FFEB11 /* SignInCredentialsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC94E122C28504900FFEB11 /* SignInCredentialsView.swift */; };
 		FEC94E152C28521D00FFEB11 /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC94E142C28521D00FFEB11 /* SignInView.swift */; };
 		FEC94E172C2857D100FFEB11 /* OnboardingFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC94E162C2857D100FFEB11 /* OnboardingFlowController.swift */; };
 		FEC94E192C28661100FFEB11 /* SignInViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC94E182C28661100FFEB11 /* SignInViewModel.swift */; };
@@ -205,11 +205,11 @@
 		FE4BBD3C2DB2FD2F00B4619A /* Text+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Text+Extensions.swift"; sourceTree = "<group>"; };
 		FE4BBD3E2DB3B32300B4619A /* UpdateChatReadUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateChatReadUseCase.swift; sourceTree = "<group>"; };
 		FE5F8A772C296D81001EE8AF /* AuthRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRepository.swift; sourceTree = "<group>"; };
-		FE5F8A7B2C296ECA001EE8AF /* LoginWithCredentialsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginWithCredentialsUseCase.swift; sourceTree = "<group>"; };
+		FE5F8A7B2C296ECA001EE8AF /* SignInWithCredentialsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInWithCredentialsUseCase.swift; sourceTree = "<group>"; };
 		FE5F8A7F2C2971C7001EE8AF /* AuthRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRepositoryImpl.swift; sourceTree = "<group>"; };
 		FE5F8A832C297338001EE8AF /* LocalStorageProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStorageProvider.swift; sourceTree = "<group>"; };
 		FE5F8A852C29737F001EE8AF /* UserDefaultsProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsProvider.swift; sourceTree = "<group>"; };
-		FE5F8A882C2975FC001EE8AF /* LogoutUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoutUseCase.swift; sourceTree = "<group>"; };
+		FE5F8A882C2975FC001EE8AF /* SignOutUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignOutUseCase.swift; sourceTree = "<group>"; };
 		FE7FB10C2D7B163B00428A17 /* CheckUsernameAvailableUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckUsernameAvailableUseCase.swift; sourceTree = "<group>"; };
 		FE7FB10F2D7B1D3900428A17 /* RegisterNameAndEmailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterNameAndEmailView.swift; sourceTree = "<group>"; };
 		FE8D4E292D916A9A00A8BF4E /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -315,7 +315,7 @@
 		FEC94E082C283D4C00FFEB11 /* NotCreatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotCreatorView.swift; sourceTree = "<group>"; };
 		FEC94E0A2C2840AA00FFEB11 /* ProfileUserInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileUserInfoView.swift; sourceTree = "<group>"; };
 		FEC94E0C2C2842F500FFEB11 /* ProfilePortfoliosView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePortfoliosView.swift; sourceTree = "<group>"; };
-		FEC94E122C28504900FFEB11 /* LoginCredentialsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginCredentialsView.swift; sourceTree = "<group>"; };
+		FEC94E122C28504900FFEB11 /* SignInCredentialsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInCredentialsView.swift; sourceTree = "<group>"; };
 		FEC94E142C28521D00FFEB11 /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
 		FEC94E162C2857D100FFEB11 /* OnboardingFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingFlowController.swift; sourceTree = "<group>"; };
 		FEC94E182C28661100FFEB11 /* SignInViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewModel.swift; sourceTree = "<group>"; };
@@ -448,7 +448,7 @@
 			children = (
 				FE4BBD382DB2ED3100B4619A /* FotofolioAnimatedLogoView.swift */,
 				FE4BBD362DB2ECBF00B4619A /* SignInBackgroundView.swift */,
-				FEC94E122C28504900FFEB11 /* LoginCredentialsView.swift */,
+				FEC94E122C28504900FFEB11 /* SignInCredentialsView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -482,9 +482,9 @@
 			children = (
 				FE1815662D95941B0090E440 /* ReadLastSignedInEmailUseCase.swift */,
 				FE3D23242D91A41000DA22DB /* RegisterUserUseCase.swift */,
-				FE5F8A882C2975FC001EE8AF /* LogoutUseCase.swift */,
+				FE5F8A882C2975FC001EE8AF /* SignOutUseCase.swift */,
 				FE34A64E2D78BCF200CB4CAE /* CheckEmailAddressAvailableUseCase.swift */,
-				FE5F8A7B2C296ECA001EE8AF /* LoginWithCredentialsUseCase.swift */,
+				FE5F8A7B2C296ECA001EE8AF /* SignInWithCredentialsUseCase.swift */,
 				FEA53CBD2C2B2D3C006F0116 /* ReadLoggedInUserUseCase.swift */,
 			);
 			path = Auth;
@@ -1082,13 +1082,13 @@
 				FE9A30B52D8737650056CC0A /* UpdatePortfolioUseCase.swift in Sources */,
 				FEE211B22DA42B6D00A95907 /* EncryptedLocalStorageProvider.swift in Sources */,
 				FE3D23252D91A41400DA22DB /* RegisterUserUseCase.swift in Sources */,
-				FEC94E132C28504900FFEB11 /* LoginCredentialsView.swift in Sources */,
+				FEC94E132C28504900FFEB11 /* SignInCredentialsView.swift in Sources */,
 				FECC2AC22DC4C68300568783 /* NETChat.swift in Sources */,
 				FE7FB1102D7B1D3900428A17 /* RegisterNameAndEmailView.swift in Sources */,
 				FE18156B2D95DAFB0090E440 /* CreatorRepositoryImpl.swift in Sources */,
 				FE1815742D986A420090E440 /* ReadUserDataByCreatorIdUseCase.swift in Sources */,
 				FEC94DAF2C243EC100FFEB11 /* BaseHostingController.swift in Sources */,
-				FE5F8A892C2975FC001EE8AF /* LogoutUseCase.swift in Sources */,
+				FE5F8A892C2975FC001EE8AF /* SignOutUseCase.swift in Sources */,
 				FEC94E052C2701DF00FFEB11 /* Chat.swift in Sources */,
 				FEC94DE52C2594E200FFEB11 /* PortfolioView.swift in Sources */,
 				FE3827D62DA30EDF007A933E /* SaveUserProfilePictureUseCase.swift in Sources */,
@@ -1140,7 +1140,7 @@
 				FEC94DF72C26283400FFEB11 /* PortfolioDetailView.swift in Sources */,
 				FECC22D22DC4BFBE00568783 /* IImage.swift in Sources */,
 				FE1815632D954E920090E440 /* ReadCreatorDataUseCase.swift in Sources */,
-				FE5F8A7C2C296ECA001EE8AF /* LoginWithCredentialsUseCase.swift in Sources */,
+				FE5F8A7C2C296ECA001EE8AF /* SignInWithCredentialsUseCase.swift in Sources */,
 				FE8D56152D918A6500A8BF4E /* AuthProvider.swift in Sources */,
 				FEA53CEB2C2D5B65006F0116 /* EditCreatorDetailsView.swift in Sources */,
 				FE18156E2D95DD7E0090E440 /* CreateCreatorDataUseCase.swift in Sources */,
