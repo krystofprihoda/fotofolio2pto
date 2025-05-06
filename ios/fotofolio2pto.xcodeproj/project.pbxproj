@@ -73,7 +73,7 @@
 		FEA53CA72C29D667006F0116 /* FlagPortfolioUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CA62C29D667006F0116 /* FlagPortfolioUseCase.swift */; };
 		FEA53CA92C29D7E8006F0116 /* UnflagPortfolioUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CA82C29D7E8006F0116 /* UnflagPortfolioUseCase.swift */; };
 		FEA53CAB2C29DE1E006F0116 /* ReadFlaggedPortfoliosUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CAA2C29DE1E006F0116 /* ReadFlaggedPortfoliosUseCase.swift */; };
-		FEA53CAE2C29E08D006F0116 /* Sequence+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CAD2C29E08D006F0116 /* Sequence+Extensions.swift */; };
+		FEA53CAE2C29E08D006F0116 /* Array+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CAD2C29E08D006F0116 /* Array+Extensions.swift */; };
 		FEA53CB42C2AE81C006F0116 /* AlertData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CB32C2AE81C006F0116 /* AlertData.swift */; };
 		FEA53CB62C2AE84F006F0116 /* AlertData+SwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CB52C2AE84F006F0116 /* AlertData+SwiftUI.swift */; };
 		FEA53CB82C2AE9B1006F0116 /* UnflagAllPortfoliosUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CB72C2AE9B1006F0116 /* UnflagAllPortfoliosUseCase.swift */; };
@@ -84,7 +84,6 @@
 		FEA53CCA2C2C174B006F0116 /* UserRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CC92C2C174B006F0116 /* UserRepositoryImpl.swift */; };
 		FEA53CCC2C2C1752006F0116 /* UserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CCB2C2C1752006F0116 /* UserRepository.swift */; };
 		FEA53CD42C2C2722006F0116 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CD32C2C2722006F0116 /* ChatView.swift */; };
-		FEA53CD62C2C2CEC006F0116 /* CreateNewChatWithMessageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CD52C2C2CEC006F0116 /* CreateNewChatWithMessageUseCase.swift */; };
 		FEA53CD82C2C30BD006F0116 /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CD72C2C30BD006F0116 /* ChatViewModel.swift */; };
 		FEA53CDA2C2C3526006F0116 /* SendMessageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CD92C2C3526006F0116 /* SendMessageUseCase.swift */; };
 		FEA53CDE2C2C49DF006F0116 /* ReadChatUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53CDD2C2C49DF006F0116 /* ReadChatUseCase.swift */; };
@@ -239,7 +238,7 @@
 		FEA53CA62C29D667006F0116 /* FlagPortfolioUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlagPortfolioUseCase.swift; sourceTree = "<group>"; };
 		FEA53CA82C29D7E8006F0116 /* UnflagPortfolioUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnflagPortfolioUseCase.swift; sourceTree = "<group>"; };
 		FEA53CAA2C29DE1E006F0116 /* ReadFlaggedPortfoliosUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadFlaggedPortfoliosUseCase.swift; sourceTree = "<group>"; };
-		FEA53CAD2C29E08D006F0116 /* Sequence+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sequence+Extensions.swift"; sourceTree = "<group>"; };
+		FEA53CAD2C29E08D006F0116 /* Array+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Extensions.swift"; sourceTree = "<group>"; };
 		FEA53CB32C2AE81C006F0116 /* AlertData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertData.swift; sourceTree = "<group>"; };
 		FEA53CB52C2AE84F006F0116 /* AlertData+SwiftUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AlertData+SwiftUI.swift"; sourceTree = "<group>"; };
 		FEA53CB72C2AE9B1006F0116 /* UnflagAllPortfoliosUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnflagAllPortfoliosUseCase.swift; sourceTree = "<group>"; };
@@ -250,7 +249,6 @@
 		FEA53CC92C2C174B006F0116 /* UserRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRepositoryImpl.swift; sourceTree = "<group>"; };
 		FEA53CCB2C2C1752006F0116 /* UserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRepository.swift; sourceTree = "<group>"; };
 		FEA53CD32C2C2722006F0116 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
-		FEA53CD52C2C2CEC006F0116 /* CreateNewChatWithMessageUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewChatWithMessageUseCase.swift; sourceTree = "<group>"; };
 		FEA53CD72C2C30BD006F0116 /* ChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
 		FEA53CD92C2C3526006F0116 /* SendMessageUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendMessageUseCase.swift; sourceTree = "<group>"; };
 		FEA53CDD2C2C49DF006F0116 /* ReadChatUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadChatUseCase.swift; sourceTree = "<group>"; };
@@ -643,7 +641,7 @@
 		FEA53CAC2C29E073006F0116 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				FEA53CAD2C29E08D006F0116 /* Sequence+Extensions.swift */,
+				FEA53CAD2C29E08D006F0116 /* Array+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -663,7 +661,6 @@
 				FE4BBD3E2DB3B32300B4619A /* UpdateChatReadUseCase.swift */,
 				FE3FE2D82D9DE00800CD4B22 /* ReadChatsUseCase.swift */,
 				FE3FE2D62D9DAD1E00CD4B22 /* ReadMessagesFromChatUseCase.swift */,
-				FEA53CD52C2C2CEC006F0116 /* CreateNewChatWithMessageUseCase.swift */,
 				FEA53CD92C2C3526006F0116 /* SendMessageUseCase.swift */,
 				FEA53CDD2C2C49DF006F0116 /* ReadChatUseCase.swift */,
 			);
@@ -1091,7 +1088,6 @@
 				FEC94E012C26DD2F00FFEB11 /* SearchResultsView.swift in Sources */,
 				FEC8A8C02D75C5D5000181B8 /* Localization.swift in Sources */,
 				FEC94D9F2C24398200FFEB11 /* fotofolio2pto.xcdatamodeld in Sources */,
-				FEA53CD62C2C2CEC006F0116 /* CreateNewChatWithMessageUseCase.swift in Sources */,
 				FE9A30BB2D88473E0056CC0A /* Toast.swift in Sources */,
 				FE4BBD392DB2ED3100B4619A /* FotofolioAnimatedLogoView.swift in Sources */,
 				FE5F8A862C29737F001EE8AF /* UserDefaultsProvider.swift in Sources */,
@@ -1115,7 +1111,7 @@
 				FEC94DDD2C247D7600FFEB11 /* ProfileViewModel.swift in Sources */,
 				FEC94DB62C2447F000FFEB11 /* BaseFlowController.swift in Sources */,
 				FE9777D92D7EF25D0027DA60 /* RegisterUsernameView.swift in Sources */,
-				FEA53CAE2C29E08D006F0116 /* Sequence+Extensions.swift in Sources */,
+				FEA53CAE2C29E08D006F0116 /* Array+Extensions.swift in Sources */,
 				FE1815672D95941C0090E440 /* ReadLastSignedInEmailUseCase.swift in Sources */,
 				FE9777E12D7F695C0027DA60 /* PulsingCircleView.swift in Sources */,
 				FEC94DF22C25EF7900FFEB11 /* FilterView.swift in Sources */,

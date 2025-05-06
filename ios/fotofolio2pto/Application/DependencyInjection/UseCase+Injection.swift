@@ -46,7 +46,6 @@ public extension Resolver {
         register { RemovePortfolioUseCaseImpl(portfolioRepository: resolve()) as RemovePortfolioUseCase }
         
         /// Messages
-        register { CreateNewChatWithMessageUseCaseImpl(messageRepository: resolve()) as CreateNewChatWithMessageUseCase }
         register { SendMessageUseCaseImpl(messageRepository: resolve()) as SendMessageUseCase }
         register { ReadChatUseCaseImpl(messageRepository: resolve()) as ReadChatUseCase }
         register { ReadChatsUseCaseImpl(messageRepository: resolve()) as ReadChatsUseCase }

@@ -8,7 +8,6 @@
 import Foundation
 
 public protocol MessageRepository {
-    func createNewChatWithMessage(receiverId: String, message: String) async throws -> Chat
     func sendMessage(chatId: String, message: String) async throws -> Chat
     func sendMessage(receiverId: String, message: String) async throws -> Chat
     func readChat(receiverId: String) async throws -> Chat

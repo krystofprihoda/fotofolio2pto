@@ -17,22 +17,6 @@ public class MessageRepositoryImpl: MessageRepository {
         self.network = network
     }
     
-    public func createNewChatWithMessage(receiverId: String, message: String) async throws -> Chat {
-        let body: [String:String] = [
-            "message": message
-        ]
-        
-        let netChat: NETChat = try await network.fetch(
-            endpoint: .chat,
-            method: .POST,
-            body: body,
-            headers: nil,
-            queryParams: nil,
-            auth: true
-        )
-        return try netChat.domainModel
-    }
-    
     public func readUserChats() async throws -> [Chat] {
         let netChats: [NETChat] = try await network.fetch(
             endpoint: .chat,
