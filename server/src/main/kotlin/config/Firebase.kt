@@ -16,15 +16,13 @@ object FirebaseInitializer {
                     FirebaseApp.getInstance()
                     println("[SETUP] Firebase is already initialized")
                 } catch (e: Exception) {
-                    // Do NOT initialize here, let the auth provider do it
-                    println("[SETUP] Firebase will be initialized by auth provider")
+                    println("[SETUP] Firebase will be initialized by AuthProvider")
                 }
                 initialized = true
             }
         }
     }
 
-    // Add this method to check if Firebase is initialized without trying to initialize it
     fun isInitialized(): Boolean {
         return try {
             FirebaseApp.getInstance()

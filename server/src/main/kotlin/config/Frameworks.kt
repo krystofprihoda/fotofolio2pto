@@ -9,8 +9,6 @@ import org.koin.logger.slf4jLogger
 fun Application.configureFrameworks() {
     install(Koin) {
         slf4jLogger()
-
-        println("[SETUP] Initializing Koin Modules")
         modules(appModule)
     }
 

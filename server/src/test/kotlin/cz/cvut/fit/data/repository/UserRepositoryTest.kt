@@ -1,6 +1,6 @@
 package cz.cvut.fit.data.repository
 
-import data.source.FirestoreSource
+import data.source.DatabaseSource
 import data.source.StorageSource
 import domain.model.User
 import io.mockk.*
@@ -20,7 +20,7 @@ import data.repository.UserRepositoryImpl
 class UserRepositoryTest {
 
     @MockK
-    private lateinit var firestoreSource: FirestoreSource
+    private lateinit var databaseSource: DatabaseSource
 
     @MockK
     private lateinit var storageSource: StorageSource
@@ -30,35 +30,35 @@ class UserRepositoryTest {
     @BeforeEach
     fun setUp() {
         MockKAnnotations.init(this)
-        userRepository = UserRepositoryImpl(firestoreSource, storageSource)
+        userRepository = UserRepositoryImpl(databaseSource, storageSource)
     }
 
     @Test
     fun `isUsernameAvailable returns true when username doesn't exist`() = runBlocking {
         // Arrange
         val username = "availableUsername"
-        coEvery { firestoreSource.checkDocumentExists(Collections.USERNAMES, username) } returns false
+        coEvery { databaseSource.checkDocumentExists(Collections.USERNAMES, username) } returns false
 
         // Act
         val result = userRepository.isUsernameAvailable(username)
 
         // Assert
         assertTrue(result)
-        coVerify(exactly = 1) { firestoreSource.checkDocumentExists(Collections.USERNAMES, username) }
+        coVerify(exactly = 1) { databaseSource.checkDocumentExists(Collections.USERNAMES, username) }
     }
 
     @Test
     fun `isUsernameAvailable returns false when username exists`() = runBlocking {
         // Arrange
         val username = "takenUsername"
-        coEvery { firestoreSource.checkDocumentExists(Collections.USERNAMES, username) } returns true
+        coEvery { databaseSource.checkDocumentExists(Collections.USERNAMES, username) } returns true
 
         // Act
         val result = userRepository.isUsernameAvailable(username)
 
         // Assert
         assertFalse(result)
-        coVerify(exactly = 1) { firestoreSource.checkDocumentExists(Collections.USERNAMES, username) }
+        coVerify(exactly = 1) { databaseSource.checkDocumentExists(Collections.USERNAMES, username) }
     }
 
     @Test
@@ -71,11 +71,11 @@ class UserRepositoryTest {
             fullName = "Test User"
         )
 
-        coEvery { firestoreSource.setDocument(Collections.USERS, user.id, any()) } returns true
+        coEvery { databaseSource.setDocument(Collections.USERS, user.id, any()) } returns true
         coEvery {
-            firestoreSource.setDocument(Collections.USERNAMES, user.username, mapOf(Fields.USER_ID to user.id))
+            databaseSource.setDocument(Collections.USERNAMES, user.username, mapOf(Fields.USER_ID to user.id))
         } returns true
-        coEvery { firestoreSource.getDocument(Collections.USERS, user.id, User::class.java) } returns user
+        coEvery { databaseSource.getDocument(Collections.USERS, user.id, User::class.java) } returns user
 
         // Act
         val result = userRepository.createUser(user)
@@ -83,9 +83,9 @@ class UserRepositoryTest {
         // Assert
         assertEquals(user, result)
         coVerify {
-            firestoreSource.setDocument(Collections.USERS, user.id, any())
-            firestoreSource.setDocument(Collections.USERNAMES, user.username, mapOf(Fields.USER_ID to user.id))
-            firestoreSource.getDocument(Collections.USERS, user.id, User::class.java)
+            databaseSource.setDocument(Collections.USERS, user.id, any())
+            databaseSource.setDocument(Collections.USERNAMES, user.username, mapOf(Fields.USER_ID to user.id))
+            databaseSource.getDocument(Collections.USERS, user.id, User::class.java)
         }
     }
 
@@ -98,17 +98,17 @@ class UserRepositoryTest {
             email = "test@example.com"
         )
 
-        coEvery { firestoreSource.setDocument(Collections.USERS, user.id, any()) } returns false
+        coEvery { databaseSource.setDocument(Collections.USERS, user.id, any()) } returns false
 
         // Act & Assert
         assertThrows<InternalServerException> {
             userRepository.createUser(user)
         }
 
-        coVerify { firestoreSource.setDocument(Collections.USERS, user.id, any()) }
+        coVerify { databaseSource.setDocument(Collections.USERS, user.id, any()) }
         coVerify(exactly = 0) {
-            firestoreSource.setDocument(Collections.USERNAMES, any(), any())
-            firestoreSource.getDocument(Collections.USERS, any(), User::class.java)
+            databaseSource.setDocument(Collections.USERNAMES, any(), any())
+            databaseSource.getDocument(Collections.USERS, any(), User::class.java)
         }
     }
 
@@ -121,9 +121,9 @@ class UserRepositoryTest {
             email = "test@example.com"
         )
 
-        coEvery { firestoreSource.setDocument(Collections.USERS, user.id, any()) } returns true
+        coEvery { databaseSource.setDocument(Collections.USERS, user.id, any()) } returns true
         coEvery {
-            firestoreSource.setDocument(Collections.USERNAMES, user.username, mapOf(Fields.USER_ID to user.id))
+            databaseSource.setDocument(Collections.USERNAMES, user.username, mapOf(Fields.USER_ID to user.id))
         } returns false
 
         // Act & Assert
@@ -132,10 +132,10 @@ class UserRepositoryTest {
         }
 
         coVerify {
-            firestoreSource.setDocument(Collections.USERS, user.id, any())
-            firestoreSource.setDocument(Collections.USERNAMES, user.username, mapOf(Fields.USER_ID to user.id))
+            databaseSource.setDocument(Collections.USERS, user.id, any())
+            databaseSource.setDocument(Collections.USERNAMES, user.username, mapOf(Fields.USER_ID to user.id))
         }
-        coVerify(exactly = 0) { firestoreSource.getDocument(Collections.USERS, any(), User::class.java) }
+        coVerify(exactly = 0) { databaseSource.getDocument(Collections.USERS, any(), User::class.java) }
     }
 
     @Test
@@ -143,27 +143,27 @@ class UserRepositoryTest {
         // Arrange
         val userId = "user123"
         val mockUser = User(id = userId, username = "testUser", email = "test@example.com")
-        coEvery { firestoreSource.getDocument(Collections.USERS, userId, User::class.java) } returns mockUser
+        coEvery { databaseSource.getDocument(Collections.USERS, userId, User::class.java) } returns mockUser
 
         // Act
         val result = userRepository.getUserById(userId)
 
         // Assert
         assertEquals(mockUser, result)
-        coVerify(exactly = 1) { firestoreSource.getDocument(Collections.USERS, userId, User::class.java) }
+        coVerify(exactly = 1) { databaseSource.getDocument(Collections.USERS, userId, User::class.java) }
     }
 
     @Test
     fun `getUserById throws NotFoundException when user not found`() = runBlocking {
         // Arrange
         val userId = "nonExistentUser"
-        coEvery { firestoreSource.getDocument(Collections.USERS, userId, User::class.java) } returns null
+        coEvery { databaseSource.getDocument(Collections.USERS, userId, User::class.java) } returns null
 
         // Act & Assert
         assertThrows<NotFoundException> {
             userRepository.getUserById(userId)
         }
-        coVerify(exactly = 1) { firestoreSource.getDocument(Collections.USERS, userId, User::class.java) }
+        coVerify(exactly = 1) { databaseSource.getDocument(Collections.USERS, userId, User::class.java) }
     }
 
     @Test
@@ -178,7 +178,7 @@ class UserRepositoryTest {
             storageSource.uploadFile(path, imageBytes, Storage.CONTENT_TYPE_JPEG)
         } returns downloadUrl
         coEvery {
-            firestoreSource.updateDocument(Collections.USERS, userId, mapOf(Fields.PROFILE_PICTURE to downloadUrl))
+            databaseSource.updateDocument(Collections.USERS, userId, mapOf(Fields.PROFILE_PICTURE to downloadUrl))
         } returns true
 
         // Act
@@ -188,7 +188,7 @@ class UserRepositoryTest {
         assertEquals(downloadUrl, result)
         coVerify {
             storageSource.uploadFile(path, imageBytes, Storage.CONTENT_TYPE_JPEG)
-            firestoreSource.updateDocument(Collections.USERS, userId, mapOf(Fields.PROFILE_PICTURE to downloadUrl))
+            databaseSource.updateDocument(Collections.USERS, userId, mapOf(Fields.PROFILE_PICTURE to downloadUrl))
         }
     }
 
@@ -204,7 +204,7 @@ class UserRepositoryTest {
             storageSource.uploadFile(path, imageBytes, Storage.CONTENT_TYPE_JPEG)
         } returns downloadUrl
         coEvery {
-            firestoreSource.updateDocument(Collections.USERS, userId, mapOf(Fields.PROFILE_PICTURE to downloadUrl))
+            databaseSource.updateDocument(Collections.USERS, userId, mapOf(Fields.PROFILE_PICTURE to downloadUrl))
         } returns false
 
         // Act & Assert
@@ -214,7 +214,7 @@ class UserRepositoryTest {
 
         coVerify {
             storageSource.uploadFile(path, imageBytes, Storage.CONTENT_TYPE_JPEG)
-            firestoreSource.updateDocument(Collections.USERS, userId, mapOf(Fields.PROFILE_PICTURE to downloadUrl))
+            databaseSource.updateDocument(Collections.USERS, userId, mapOf(Fields.PROFILE_PICTURE to downloadUrl))
         }
     }
 
@@ -231,9 +231,9 @@ class UserRepositoryTest {
         )
         val expectedRatings = mapOf("existingRater" to 4, raterId to rating)
 
-        coEvery { firestoreSource.getDocument(Collections.USERS, receiverId, User::class.java) } returns existingUser
+        coEvery { databaseSource.getDocument(Collections.USERS, receiverId, User::class.java) } returns existingUser
         coEvery {
-            firestoreSource.updateDocument(Collections.USERS, receiverId, mapOf(Fields.RATING to expectedRatings))
+            databaseSource.updateDocument(Collections.USERS, receiverId, mapOf(Fields.RATING to expectedRatings))
         } returns true
 
         // Act
@@ -242,8 +242,8 @@ class UserRepositoryTest {
         // Assert
         assertTrue(result)
         coVerify {
-            firestoreSource.getDocument(Collections.USERS, receiverId, User::class.java)
-            firestoreSource.updateDocument(Collections.USERS, receiverId, mapOf(Fields.RATING to expectedRatings))
+            databaseSource.getDocument(Collections.USERS, receiverId, User::class.java)
+            databaseSource.updateDocument(Collections.USERS, receiverId, mapOf(Fields.RATING to expectedRatings))
         }
     }
 
@@ -254,15 +254,15 @@ class UserRepositoryTest {
         val raterId = "user456"
         val rating = 5
 
-        coEvery { firestoreSource.getDocument(Collections.USERS, receiverId, User::class.java) } returns null
+        coEvery { databaseSource.getDocument(Collections.USERS, receiverId, User::class.java) } returns null
 
         // Act & Assert
         assertThrows<NotFoundException> {
             userRepository.rateUser(receiverId, raterId, rating)
         }
 
-        coVerify { firestoreSource.getDocument(Collections.USERS, receiverId, User::class.java) }
-        coVerify(exactly = 0) { firestoreSource.updateDocument(any(), any(), any()) }
+        coVerify { databaseSource.getDocument(Collections.USERS, receiverId, User::class.java) }
+        coVerify(exactly = 0) { databaseSource.updateDocument(any(), any(), any()) }
     }
 
     @Test
@@ -273,15 +273,15 @@ class UserRepositoryTest {
             User(id = "user2", username = "user2")
         )
 
-        coEvery { firestoreSource.getDocuments(Collections.USERS, User::class.java) } returns allUsers
+        coEvery { databaseSource.getDocuments(Collections.USERS, User::class.java) } returns allUsers
 
         // Act
         val result = userRepository.searchUsers("")
 
         // Assert
         assertEquals(allUsers, result)
-        coVerify { firestoreSource.getDocuments(Collections.USERS, User::class.java) }
-        coVerify(exactly = 0) { firestoreSource.queryDocumentsByPrefix(any(), any(), any(), User::class.java) }
+        coVerify { databaseSource.getDocuments(Collections.USERS, User::class.java) }
+        coVerify(exactly = 0) { databaseSource.queryDocumentsByPrefix(any(), any(), any(), User::class.java) }
     }
 
     @Test
@@ -301,15 +301,15 @@ class UserRepositoryTest {
         )
 
         coEvery {
-            firestoreSource.queryDocumentsByPrefix(Collections.USERS, Fields.USERNAME, query.lowercase(), User::class.java)
+            databaseSource.queryDocumentsByPrefix(Collections.USERS, Fields.USERNAME, query.lowercase(), User::class.java)
         } returns usernameResults
 
         coEvery {
-            firestoreSource.queryDocumentsByPrefix(Collections.USERS, Fields.FULL_NAME, query.lowercase(), User::class.java)
+            databaseSource.queryDocumentsByPrefix(Collections.USERS, Fields.FULL_NAME, query.lowercase(), User::class.java)
         } returns fullNameResults
 
         coEvery {
-            firestoreSource.queryDocumentsByPrefix(Collections.USERS, Fields.LOCATION, query.lowercase(), User::class.java)
+            databaseSource.queryDocumentsByPrefix(Collections.USERS, Fields.LOCATION, query.lowercase(), User::class.java)
         } returns locationResults
 
         // Act
@@ -320,9 +320,9 @@ class UserRepositoryTest {
         assertTrue(result.containsAll(listOf(usernameResults[0], usernameResults[1], fullNameResults[0])))
 
         coVerify {
-            firestoreSource.queryDocumentsByPrefix(Collections.USERS, Fields.USERNAME, query.lowercase(), User::class.java)
-            firestoreSource.queryDocumentsByPrefix(Collections.USERS, Fields.FULL_NAME, query.lowercase(), User::class.java)
-            firestoreSource.queryDocumentsByPrefix(Collections.USERS, Fields.LOCATION, query.lowercase(), User::class.java)
+            databaseSource.queryDocumentsByPrefix(Collections.USERS, Fields.USERNAME, query.lowercase(), User::class.java)
+            databaseSource.queryDocumentsByPrefix(Collections.USERS, Fields.FULL_NAME, query.lowercase(), User::class.java)
+            databaseSource.queryDocumentsByPrefix(Collections.USERS, Fields.LOCATION, query.lowercase(), User::class.java)
         }
     }
 }

@@ -7,18 +7,18 @@ import data.repository.MessageRepositoryImpl
 import data.repository.PortfolioRepositoryImpl
 import org.koin.dsl.module
 import data.repository.UserRepositoryImpl
-import data.source.FirestoreSource
+import data.source.DatabaseSource
 import data.source.StorageSource
-import data.source.FirebaseFirestoreSource
-import data.source.FirebaseStorageSource
+import data.source.FirestoreDatabaseSource
+import data.source.CloudStorageSource
 import domain.repository.CreatorRepository
 import domain.repository.MessageRepository
 import domain.repository.PortfolioRepository
 import domain.repository.UserRepository
 
 val dataSourceModule = module {
-    single<FirestoreSource> { FirebaseFirestoreSource() }
-    single<StorageSource> { FirebaseStorageSource() }
+    single<DatabaseSource> { FirestoreDatabaseSource() }
+    single<StorageSource> { CloudStorageSource() }
 }
 
 val repositoryModule = module {

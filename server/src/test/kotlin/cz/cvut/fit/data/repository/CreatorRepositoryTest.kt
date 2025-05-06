@@ -1,6 +1,6 @@
 package cz.cvut.fit.data.repository
 
-import data.source.FirestoreSource
+import data.source.DatabaseSource
 import domain.model.Creator
 import domain.model.User
 import io.mockk.*
@@ -19,14 +19,14 @@ import data.repository.CreatorRepositoryImpl
 class CreatorRepositoryTest {
 
     @MockK
-    private lateinit var firestoreSource: FirestoreSource
+    private lateinit var databaseSource: DatabaseSource
 
     private lateinit var creatorRepository: CreatorRepositoryImpl
 
     @BeforeEach
     fun setUp() {
         MockKAnnotations.init(this)
-        creatorRepository = CreatorRepositoryImpl(firestoreSource)
+        creatorRepository = CreatorRepositoryImpl(databaseSource)
     }
 
     @Test
@@ -39,9 +39,9 @@ class CreatorRepositoryTest {
         )
         val creatorId = "creator123"
 
-        coEvery { firestoreSource.createDocument(Collections.CREATORS, any()) } returns creatorId
+        coEvery { databaseSource.createDocument(Collections.CREATORS, any()) } returns creatorId
         coEvery {
-            firestoreSource.updateDocument(Collections.USERS, creator.userId, mapOf(Fields.CREATOR_ID to creatorId))
+            databaseSource.updateDocument(Collections.USERS, creator.userId, mapOf(Fields.CREATOR_ID to creatorId))
         } returns true
 
         // Act
@@ -50,8 +50,8 @@ class CreatorRepositoryTest {
         // Assert
         assertEquals(creatorId, result)
         coVerify {
-            firestoreSource.createDocument(Collections.CREATORS, any())
-            firestoreSource.updateDocument(Collections.USERS, creator.userId, mapOf(Fields.CREATOR_ID to creatorId))
+            databaseSource.createDocument(Collections.CREATORS, any())
+            databaseSource.updateDocument(Collections.USERS, creator.userId, mapOf(Fields.CREATOR_ID to creatorId))
         }
     }
 
@@ -65,9 +65,9 @@ class CreatorRepositoryTest {
         )
         val creatorId = "creator123"
 
-        coEvery { firestoreSource.createDocument(Collections.CREATORS, any()) } returns creatorId
+        coEvery { databaseSource.createDocument(Collections.CREATORS, any()) } returns creatorId
         coEvery {
-            firestoreSource.updateDocument(Collections.USERS, creator.userId, mapOf(Fields.CREATOR_ID to creatorId))
+            databaseSource.updateDocument(Collections.USERS, creator.userId, mapOf(Fields.CREATOR_ID to creatorId))
         } returns false
 
         // Act & Assert
@@ -76,8 +76,8 @@ class CreatorRepositoryTest {
         }
 
         coVerify {
-            firestoreSource.createDocument(Collections.CREATORS, any())
-            firestoreSource.updateDocument(Collections.USERS, creator.userId, mapOf(Fields.CREATOR_ID to creatorId))
+            databaseSource.createDocument(Collections.CREATORS, any())
+            databaseSource.updateDocument(Collections.USERS, creator.userId, mapOf(Fields.CREATOR_ID to creatorId))
         }
     }
 
@@ -92,7 +92,7 @@ class CreatorRepositoryTest {
             description = "Test creator"
         )
 
-        coEvery { firestoreSource.getDocument(Collections.CREATORS, creatorId, Creator::class.java) } returns creator
+        coEvery { databaseSource.getDocument(Collections.CREATORS, creatorId, Creator::class.java) } returns creator
 
         // Act
         val result = creatorRepository.getCreatorById(creatorId)
@@ -103,7 +103,7 @@ class CreatorRepositoryTest {
         assertEquals(creator.yearsOfExperience, result.yearsOfExperience)
         assertEquals(creator.description, result.description)
 
-        coVerify { firestoreSource.getDocument(Collections.CREATORS, creatorId, Creator::class.java) }
+        coVerify { databaseSource.getDocument(Collections.CREATORS, creatorId, Creator::class.java) }
     }
 
     @Test
@@ -111,14 +111,14 @@ class CreatorRepositoryTest {
         // Arrange
         val creatorId = "nonExistentCreator"
 
-        coEvery { firestoreSource.getDocument(Collections.CREATORS, creatorId, Creator::class.java) } returns null
+        coEvery { databaseSource.getDocument(Collections.CREATORS, creatorId, Creator::class.java) } returns null
 
         // Act & Assert
         assertThrows<NotFoundException> {
             creatorRepository.getCreatorById(creatorId)
         }
 
-        coVerify { firestoreSource.getDocument(Collections.CREATORS, creatorId, Creator::class.java) }
+        coVerify { databaseSource.getDocument(Collections.CREATORS, creatorId, Creator::class.java) }
     }
 
     @Test
@@ -138,8 +138,8 @@ class CreatorRepositoryTest {
             email = "test@example.com"
         )
 
-        coEvery { firestoreSource.getDocument(Collections.CREATORS, creatorId, Creator::class.java) } returns creator
-        coEvery { firestoreSource.getDocument(Collections.USERS, userId, User::class.java) } returns user
+        coEvery { databaseSource.getDocument(Collections.CREATORS, creatorId, Creator::class.java) } returns creator
+        coEvery { databaseSource.getDocument(Collections.USERS, userId, User::class.java) } returns user
 
         // Act
         val result = creatorRepository.getUserByCreatorId(creatorId)
@@ -148,8 +148,8 @@ class CreatorRepositoryTest {
         assertEquals(user, result)
 
         coVerify {
-            firestoreSource.getDocument(Collections.CREATORS, creatorId, Creator::class.java)
-            firestoreSource.getDocument(Collections.USERS, userId, User::class.java)
+            databaseSource.getDocument(Collections.CREATORS, creatorId, Creator::class.java)
+            databaseSource.getDocument(Collections.USERS, userId, User::class.java)
         }
     }
 
@@ -158,15 +158,15 @@ class CreatorRepositoryTest {
         // Arrange
         val creatorId = "nonExistentCreator"
 
-        coEvery { firestoreSource.getDocument(Collections.CREATORS, creatorId, Creator::class.java) } returns null
+        coEvery { databaseSource.getDocument(Collections.CREATORS, creatorId, Creator::class.java) } returns null
 
         // Act & Assert
         assertThrows<NotFoundException> {
             creatorRepository.getUserByCreatorId(creatorId)
         }
 
-        coVerify { firestoreSource.getDocument(Collections.CREATORS, creatorId, Creator::class.java) }
-        coVerify(exactly = 0) { firestoreSource.getDocument(Collections.USERS, any(), Creator::class.java) }
+        coVerify { databaseSource.getDocument(Collections.CREATORS, creatorId, Creator::class.java) }
+        coVerify(exactly = 0) { databaseSource.getDocument(Collections.USERS, any(), Creator::class.java) }
     }
 
     @Test
@@ -181,8 +181,8 @@ class CreatorRepositoryTest {
             description = "Test creator"
         )
 
-        coEvery { firestoreSource.getDocument(Collections.CREATORS, creatorId, Creator::class.java) } returns creator
-        coEvery { firestoreSource.getDocument(Collections.USERS, userId, User::class.java) } returns null
+        coEvery { databaseSource.getDocument(Collections.CREATORS, creatorId, Creator::class.java) } returns creator
+        coEvery { databaseSource.getDocument(Collections.USERS, userId, User::class.java) } returns null
 
         // Act & Assert
         assertThrows<NotFoundException> {
@@ -190,8 +190,8 @@ class CreatorRepositoryTest {
         }
 
         coVerify {
-            firestoreSource.getDocument(Collections.CREATORS, creatorId, Creator::class.java)
-            firestoreSource.getDocument(Collections.USERS, userId, User::class.java)
+            databaseSource.getDocument(Collections.CREATORS, creatorId, Creator::class.java)
+            databaseSource.getDocument(Collections.USERS, userId, User::class.java)
         }
     }
 
@@ -206,14 +206,14 @@ class CreatorRepositoryTest {
             description = "Updated description"
         )
 
-        coEvery { firestoreSource.setDocument(Collections.CREATORS, creatorId, any()) } returns true
+        coEvery { databaseSource.setDocument(Collections.CREATORS, creatorId, any()) } returns true
 
         // Act
         val result = creatorRepository.updateCreator(creatorId, creator)
 
         // Assert
         assertTrue(result)
-        coVerify { firestoreSource.setDocument(Collections.CREATORS, creatorId, any()) }
+        coVerify { databaseSource.setDocument(Collections.CREATORS, creatorId, any()) }
     }
 
     @Test
@@ -227,14 +227,14 @@ class CreatorRepositoryTest {
             description = "Updated description"
         )
 
-        coEvery { firestoreSource.setDocument(Collections.CREATORS, creatorId, any()) } returns false
+        coEvery { databaseSource.setDocument(Collections.CREATORS, creatorId, any()) } returns false
 
         // Act
         val result = creatorRepository.updateCreator(creatorId, creator)
 
         // Assert
         assertFalse(result)
-        coVerify { firestoreSource.setDocument(Collections.CREATORS, creatorId, any()) }
+        coVerify { databaseSource.setDocument(Collections.CREATORS, creatorId, any()) }
     }
 
     @Test
@@ -246,14 +246,14 @@ class CreatorRepositoryTest {
             Fields.DESCRIPTION to "New description"
         )
 
-        coEvery { firestoreSource.updateDocument(Collections.CREATORS, creatorId, fields) } returns true
+        coEvery { databaseSource.updateDocument(Collections.CREATORS, creatorId, fields) } returns true
 
         // Act
         val result = creatorRepository.updateCreatorFields(creatorId, fields)
 
         // Assert
         assertTrue(result)
-        coVerify { firestoreSource.updateDocument(Collections.CREATORS, creatorId, fields) }
+        coVerify { databaseSource.updateDocument(Collections.CREATORS, creatorId, fields) }
     }
 
     @Test
@@ -268,14 +268,14 @@ class CreatorRepositoryTest {
             Fields.YEARS_EXPERIENCE to 10
         )
 
-        coEvery { firestoreSource.updateDocument(Collections.CREATORS, creatorId, filteredFields) } returns true
+        coEvery { databaseSource.updateDocument(Collections.CREATORS, creatorId, filteredFields) } returns true
 
         // Act
         val result = creatorRepository.updateCreatorFields(creatorId, fields)
 
         // Assert
         assertTrue(result)
-        coVerify { firestoreSource.updateDocument(Collections.CREATORS, creatorId, filteredFields) }
+        coVerify { databaseSource.updateDocument(Collections.CREATORS, creatorId, filteredFields) }
     }
 
     @Test
@@ -292,7 +292,7 @@ class CreatorRepositoryTest {
 
         // Assert
         assertFalse(result)
-        coVerify(exactly = 0) { firestoreSource.updateDocument(any(), any(), any()) }
+        coVerify(exactly = 0) { databaseSource.updateDocument(any(), any(), any()) }
     }
 
     @Test
@@ -304,13 +304,13 @@ class CreatorRepositoryTest {
             Fields.DESCRIPTION to "New description"
         )
 
-        coEvery { firestoreSource.updateDocument(Collections.CREATORS, creatorId, fields) } returns false
+        coEvery { databaseSource.updateDocument(Collections.CREATORS, creatorId, fields) } returns false
 
         // Act
         val result = creatorRepository.updateCreatorFields(creatorId, fields)
 
         // Assert
         assertFalse(result)
-        coVerify { firestoreSource.updateDocument(Collections.CREATORS, creatorId, fields) }
+        coVerify { databaseSource.updateDocument(Collections.CREATORS, creatorId, fields) }
     }
 }

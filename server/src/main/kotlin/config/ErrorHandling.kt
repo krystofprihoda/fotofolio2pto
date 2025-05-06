@@ -30,7 +30,6 @@ data class ErrorResponse(
 // Configure status pages for global error handling
 fun Application.configureErrorHandling() {
     install(StatusPages) {
-        // Handle our custom API exceptions
         exception<ApiException> { call, exception ->
             val errorResponse = ErrorResponse(
                 status = exception.statusCode.value,
@@ -57,7 +56,6 @@ inline fun <T> tryOrThrow(block: () -> T): T {
     return try {
         block()
     } catch (e: ApiException) {
-        // Just rethrow our custom exceptions
         throw e
     } catch (e: Exception) {
         // Map to appropriate ApiException or throw InternalServerException

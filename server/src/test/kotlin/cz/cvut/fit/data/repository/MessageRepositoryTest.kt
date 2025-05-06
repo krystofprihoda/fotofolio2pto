@@ -7,7 +7,7 @@ import cz.cvut.fit.config.UnauthorizedException
 import cz.cvut.fit.config.AppConstants.Collections
 import cz.cvut.fit.config.AppConstants.Fields
 import data.repository.MessageRepositoryImpl
-import data.source.FirestoreSource
+import data.source.DatabaseSource
 import domain.model.Chat
 import domain.model.Message
 import io.mockk.*
@@ -21,14 +21,14 @@ import org.junit.jupiter.api.assertThrows
 class MessageRepositoryTest {
 
     @MockK
-    private lateinit var firestoreSource: FirestoreSource
+    private lateinit var databaseSource: DatabaseSource
 
     private lateinit var messageRepository: MessageRepositoryImpl
 
     @BeforeEach
     fun setUp() {
         MockKAnnotations.init(this)
-        messageRepository = MessageRepositoryImpl(firestoreSource)
+        messageRepository = MessageRepositoryImpl(databaseSource)
     }
 
     @Test
@@ -44,7 +44,7 @@ class MessageRepositoryTest {
         val existingChats = emptyList<Chat>()
 
         coEvery {
-            firestoreSource.getDocumentsWhereArrayContains(
+            databaseSource.getDocumentsWhereArrayContains(
                 Collections.CHATS,
                 Fields.CHAT_OWNER_IDS,
                 senderId,
@@ -52,11 +52,11 @@ class MessageRepositoryTest {
             )
         } returns existingChats
 
-        coEvery { firestoreSource.createDocument(Collections.CHATS, any()) } returns chatId
-        coEvery { firestoreSource.createDocument(Collections.MESSAGES, any()) } returns messageId
+        coEvery { databaseSource.createDocument(Collections.CHATS, any()) } returns chatId
+        coEvery { databaseSource.createDocument(Collections.MESSAGES, any()) } returns messageId
 
         coEvery {
-            firestoreSource.updateDocument(
+            databaseSource.updateDocument(
                 Collections.CHATS,
                 chatId,
                 match { updates ->
@@ -78,7 +78,7 @@ class MessageRepositoryTest {
         )
 
         coEvery {
-            firestoreSource.getDocument(Collections.CHATS, chatId, Chat::class.java)
+            databaseSource.getDocument(Collections.CHATS, chatId, Chat::class.java)
         } returns expectedChat
 
         // Act
@@ -88,11 +88,11 @@ class MessageRepositoryTest {
         assertEquals(expectedChat, result)
 
         coVerify {
-            firestoreSource.getDocumentsWhereArrayContains(Collections.CHATS, Fields.CHAT_OWNER_IDS, senderId, Chat::class.java)
-            firestoreSource.createDocument(Collections.CHATS, any())
-            firestoreSource.createDocument(Collections.MESSAGES, any())
-            firestoreSource.updateDocument(Collections.CHATS, chatId, any())
-            firestoreSource.getDocument(Collections.CHATS, chatId, Chat::class.java)
+            databaseSource.getDocumentsWhereArrayContains(Collections.CHATS, Fields.CHAT_OWNER_IDS, senderId, Chat::class.java)
+            databaseSource.createDocument(Collections.CHATS, any())
+            databaseSource.createDocument(Collections.MESSAGES, any())
+            databaseSource.updateDocument(Collections.CHATS, chatId, any())
+            databaseSource.getDocument(Collections.CHATS, chatId, Chat::class.java)
         }
     }
 
@@ -116,7 +116,7 @@ class MessageRepositoryTest {
         )
 
         coEvery {
-            firestoreSource.getDocumentsWhereArrayContains(
+            databaseSource.getDocumentsWhereArrayContains(
                 Collections.CHATS,
                 Fields.CHAT_OWNER_IDS,
                 senderId,
@@ -131,12 +131,12 @@ class MessageRepositoryTest {
         assertEquals(existingChat, result)
 
         coVerify {
-            firestoreSource.getDocumentsWhereArrayContains(Collections.CHATS, Fields.CHAT_OWNER_IDS, senderId, Chat::class.java)
+            databaseSource.getDocumentsWhereArrayContains(Collections.CHATS, Fields.CHAT_OWNER_IDS, senderId, Chat::class.java)
         }
 
         coVerify(exactly = 0) {
-            firestoreSource.createDocument(any(), any())
-            firestoreSource.updateDocument(any(), any(), any())
+            databaseSource.createDocument(any(), any())
+            databaseSource.updateDocument(any(), any(), any())
         }
     }
 
@@ -150,7 +150,7 @@ class MessageRepositoryTest {
         val messageId = "message123"
 
         coEvery {
-            firestoreSource.getDocumentsWhereArrayContains(
+            databaseSource.getDocumentsWhereArrayContains(
                 Collections.CHATS,
                 Fields.CHAT_OWNER_IDS,
                 senderId,
@@ -158,10 +158,10 @@ class MessageRepositoryTest {
             )
         } returns emptyList()
 
-        coEvery { firestoreSource.createDocument(Collections.CHATS, any()) } returns chatId
-        coEvery { firestoreSource.createDocument(Collections.MESSAGES, any()) } returns messageId
+        coEvery { databaseSource.createDocument(Collections.CHATS, any()) } returns chatId
+        coEvery { databaseSource.createDocument(Collections.MESSAGES, any()) } returns messageId
 
-        coEvery { firestoreSource.updateDocument(Collections.CHATS, chatId, any()) } returns false
+        coEvery { databaseSource.updateDocument(Collections.CHATS, chatId, any()) } returns false
 
         // Act & Assert
         assertThrows<InternalServerException> {
@@ -169,13 +169,13 @@ class MessageRepositoryTest {
         }
 
         coVerify {
-            firestoreSource.getDocumentsWhereArrayContains(Collections.CHATS, Fields.CHAT_OWNER_IDS, senderId, Chat::class.java)
-            firestoreSource.createDocument(Collections.CHATS, any())
-            firestoreSource.createDocument(Collections.MESSAGES, any())
-            firestoreSource.updateDocument(Collections.CHATS, chatId, any())
+            databaseSource.getDocumentsWhereArrayContains(Collections.CHATS, Fields.CHAT_OWNER_IDS, senderId, Chat::class.java)
+            databaseSource.createDocument(Collections.CHATS, any())
+            databaseSource.createDocument(Collections.MESSAGES, any())
+            databaseSource.updateDocument(Collections.CHATS, chatId, any())
         }
 
-        coVerify(exactly = 0) { firestoreSource.getDocument(any(), any(), Chat::class.java) }
+        coVerify(exactly = 0) { databaseSource.getDocument(any(), any(), Chat::class.java) }
     }
 
     @Test
@@ -201,13 +201,13 @@ class MessageRepositoryTest {
         )
 
         coEvery {
-            firestoreSource.getDocument(Collections.CHATS, chatId, Chat::class.java)
+            databaseSource.getDocument(Collections.CHATS, chatId, Chat::class.java)
         } returns existingChat
 
-        coEvery { firestoreSource.createDocument(Collections.MESSAGES, any()) } returns messageId
+        coEvery { databaseSource.createDocument(Collections.MESSAGES, any()) } returns messageId
 
         coEvery {
-            firestoreSource.updateDocument(
+            databaseSource.updateDocument(
                 Collections.CHATS,
                 chatId,
                 match { updates ->
@@ -220,7 +220,7 @@ class MessageRepositoryTest {
         } returns true
 
         coEvery {
-            firestoreSource.getDocument(Collections.CHATS, chatId, Chat::class.java)
+            databaseSource.getDocument(Collections.CHATS, chatId, Chat::class.java)
         } returns updatedChat
 
         // Act
@@ -230,9 +230,9 @@ class MessageRepositoryTest {
         assertEquals(updatedChat, result)
 
         coVerify {
-            firestoreSource.getDocument(Collections.CHATS, chatId, Chat::class.java)
-            firestoreSource.createDocument(Collections.MESSAGES, any())
-            firestoreSource.updateDocument(Collections.CHATS, chatId, any())
+            databaseSource.getDocument(Collections.CHATS, chatId, Chat::class.java)
+            databaseSource.createDocument(Collections.MESSAGES, any())
+            databaseSource.updateDocument(Collections.CHATS, chatId, any())
         }
     }
 
@@ -244,7 +244,7 @@ class MessageRepositoryTest {
         val messageBody = "Hello"
 
         coEvery {
-            firestoreSource.getDocument(Collections.CHATS, chatId, Chat::class.java)
+            databaseSource.getDocument(Collections.CHATS, chatId, Chat::class.java)
         } returns null
 
         // Act & Assert
@@ -252,11 +252,11 @@ class MessageRepositoryTest {
             messageRepository.sendMessage(chatId, senderId, messageBody)
         }
 
-        coVerify { firestoreSource.getDocument(Collections.CHATS, chatId, Chat::class.java) }
+        coVerify { databaseSource.getDocument(Collections.CHATS, chatId, Chat::class.java) }
 
         coVerify(exactly = 0) {
-            firestoreSource.createDocument(any(), any())
-            firestoreSource.updateDocument(any(), any(), any())
+            databaseSource.createDocument(any(), any())
+            databaseSource.updateDocument(any(), any(), any())
         }
     }
 
@@ -273,7 +273,7 @@ class MessageRepositoryTest {
         )
 
         coEvery {
-            firestoreSource.getDocument(Collections.CHATS, chatId, Chat::class.java)
+            databaseSource.getDocument(Collections.CHATS, chatId, Chat::class.java)
         } returns existingChat
 
         // Act & Assert
@@ -281,11 +281,11 @@ class MessageRepositoryTest {
             messageRepository.sendMessage(chatId, senderId, messageBody)
         }
 
-        coVerify { firestoreSource.getDocument(Collections.CHATS, chatId, Chat::class.java) }
+        coVerify { databaseSource.getDocument(Collections.CHATS, chatId, Chat::class.java) }
 
         coVerify(exactly = 0) {
-            firestoreSource.createDocument(any(), any())
-            firestoreSource.updateDocument(any(), any(), any())
+            databaseSource.createDocument(any(), any())
+            databaseSource.updateDocument(any(), any(), any())
         }
     }
 
@@ -300,7 +300,7 @@ class MessageRepositoryTest {
         )
 
         coEvery {
-            firestoreSource.getDocumentsWhereArrayContains(
+            databaseSource.getDocumentsWhereArrayContains(
                 Collections.CHATS,
                 Fields.CHAT_OWNER_IDS,
                 userId,
@@ -319,7 +319,7 @@ class MessageRepositoryTest {
         assertEquals("chat1", result[2].id)
 
         coVerify {
-            firestoreSource.getDocumentsWhereArrayContains(Collections.CHATS, Fields.CHAT_OWNER_IDS, userId, Chat::class.java)
+            databaseSource.getDocumentsWhereArrayContains(Collections.CHATS, Fields.CHAT_OWNER_IDS, userId, Chat::class.java)
         }
     }
 
@@ -341,11 +341,11 @@ class MessageRepositoryTest {
         )
 
         coEvery {
-            firestoreSource.getDocument(Collections.CHATS, chatId, Chat::class.java)
+            databaseSource.getDocument(Collections.CHATS, chatId, Chat::class.java)
         } returns chat
 
         coEvery {
-            firestoreSource.getDocumentsWhereOrdered(
+            databaseSource.getDocumentsWhereOrdered(
                 Collections.MESSAGES,
                 Fields.CHAT_ID,
                 chatId,
@@ -357,7 +357,7 @@ class MessageRepositoryTest {
 
         // Mock updateChatRead call
         coEvery {
-            firestoreSource.updateDocument(Collections.CHATS, chatId, any())
+            databaseSource.updateDocument(Collections.CHATS, chatId, any())
         } returns true
 
         // Act
@@ -368,8 +368,8 @@ class MessageRepositoryTest {
         assertEquals(2, result.size)
 
         coVerify {
-            firestoreSource.getDocument(Collections.CHATS, chatId, Chat::class.java)
-            firestoreSource.getDocumentsWhereOrdered(
+            databaseSource.getDocument(Collections.CHATS, chatId, Chat::class.java)
+            databaseSource.getDocumentsWhereOrdered(
                 Collections.MESSAGES,
                 Fields.CHAT_ID,
                 chatId,
@@ -377,7 +377,7 @@ class MessageRepositoryTest {
                 Query.Direction.ASCENDING,
                 Message::class.java
             )
-            firestoreSource.updateDocument(Collections.CHATS, chatId, any())
+            databaseSource.updateDocument(Collections.CHATS, chatId, any())
         }
     }
 
@@ -393,7 +393,7 @@ class MessageRepositoryTest {
         )
 
         coEvery {
-            firestoreSource.getDocument(Collections.CHATS, chatId, Chat::class.java)
+            databaseSource.getDocument(Collections.CHATS, chatId, Chat::class.java)
         } returns chat
 
         // Act
@@ -402,7 +402,7 @@ class MessageRepositoryTest {
         // Assert
         assertEquals(chat, result)
 
-        coVerify { firestoreSource.getDocument(Collections.CHATS, chatId, Chat::class.java) }
+        coVerify { databaseSource.getDocument(Collections.CHATS, chatId, Chat::class.java) }
     }
 
     @Test
@@ -412,7 +412,7 @@ class MessageRepositoryTest {
         val userId = "user123"
 
         coEvery {
-            firestoreSource.getDocument(Collections.CHATS, chatId, Chat::class.java)
+            databaseSource.getDocument(Collections.CHATS, chatId, Chat::class.java)
         } returns null
 
         // Act & Assert
@@ -420,7 +420,7 @@ class MessageRepositoryTest {
             messageRepository.getChatById(chatId, userId)
         }
 
-        coVerify { firestoreSource.getDocument(Collections.CHATS, chatId, Chat::class.java) }
+        coVerify { databaseSource.getDocument(Collections.CHATS, chatId, Chat::class.java) }
     }
 
     @Test
@@ -435,7 +435,7 @@ class MessageRepositoryTest {
         )
 
         coEvery {
-            firestoreSource.getDocument(Collections.CHATS, chatId, Chat::class.java)
+            databaseSource.getDocument(Collections.CHATS, chatId, Chat::class.java)
         } returns chat
 
         // Act & Assert
@@ -443,7 +443,7 @@ class MessageRepositoryTest {
             messageRepository.getChatById(chatId, userId)
         }
 
-        coVerify { firestoreSource.getDocument(Collections.CHATS, chatId, Chat::class.java) }
+        coVerify { databaseSource.getDocument(Collections.CHATS, chatId, Chat::class.java) }
     }
 
     @Test
@@ -461,11 +461,11 @@ class MessageRepositoryTest {
         val expectedReadByIds = listOf("otherUser", userId)
 
         coEvery {
-            firestoreSource.getDocument(Collections.CHATS, chatId, Chat::class.java)
+            databaseSource.getDocument(Collections.CHATS, chatId, Chat::class.java)
         } returns chat
 
         coEvery {
-            firestoreSource.updateDocument(
+            databaseSource.updateDocument(
                 Collections.CHATS,
                 chatId,
                 mapOf(Fields.READ_BY_IDS to expectedReadByIds)
@@ -477,8 +477,8 @@ class MessageRepositoryTest {
 
         // Assert
         coVerify {
-            firestoreSource.getDocument(Collections.CHATS, chatId, Chat::class.java)
-            firestoreSource.updateDocument(Collections.CHATS, chatId, mapOf(Fields.READ_BY_IDS to expectedReadByIds))
+            databaseSource.getDocument(Collections.CHATS, chatId, Chat::class.java)
+            databaseSource.updateDocument(Collections.CHATS, chatId, mapOf(Fields.READ_BY_IDS to expectedReadByIds))
         }
     }
 
@@ -495,15 +495,15 @@ class MessageRepositoryTest {
         )
 
         coEvery {
-            firestoreSource.getDocument(Collections.CHATS, chatId, Chat::class.java)
+            databaseSource.getDocument(Collections.CHATS, chatId, Chat::class.java)
         } returns chat
 
         // Act
         messageRepository.updateChatRead(chatId, userId)
 
         // Assert
-        coVerify { firestoreSource.getDocument(Collections.CHATS, chatId, Chat::class.java) }
-        coVerify(exactly = 0) { firestoreSource.updateDocument(any(), any(), any()) }
+        coVerify { databaseSource.getDocument(Collections.CHATS, chatId, Chat::class.java) }
+        coVerify(exactly = 0) { databaseSource.updateDocument(any(), any(), any()) }
     }
 
     @Test
@@ -513,7 +513,7 @@ class MessageRepositoryTest {
         val userId = "user123"
 
         coEvery {
-            firestoreSource.getDocument(Collections.CHATS, chatId, Chat::class.java)
+            databaseSource.getDocument(Collections.CHATS, chatId, Chat::class.java)
         } returns null
 
         // Act & Assert
@@ -521,8 +521,8 @@ class MessageRepositoryTest {
             messageRepository.updateChatRead(chatId, userId)
         }
 
-        coVerify { firestoreSource.getDocument(Collections.CHATS, chatId, Chat::class.java) }
-        coVerify(exactly = 0) { firestoreSource.updateDocument(any(), any(), any()) }
+        coVerify { databaseSource.getDocument(Collections.CHATS, chatId, Chat::class.java) }
+        coVerify(exactly = 0) { databaseSource.updateDocument(any(), any(), any()) }
     }
 
     @Test
@@ -537,7 +537,7 @@ class MessageRepositoryTest {
         )
 
         coEvery {
-            firestoreSource.getDocument(Collections.CHATS, chatId, Chat::class.java)
+            databaseSource.getDocument(Collections.CHATS, chatId, Chat::class.java)
         } returns chat
 
         // Act & Assert
@@ -545,8 +545,8 @@ class MessageRepositoryTest {
             messageRepository.updateChatRead(chatId, userId)
         }
 
-        coVerify { firestoreSource.getDocument(Collections.CHATS, chatId, Chat::class.java) }
-        coVerify(exactly = 0) { firestoreSource.updateDocument(any(), any(), any()) }
+        coVerify { databaseSource.getDocument(Collections.CHATS, chatId, Chat::class.java) }
+        coVerify(exactly = 0) { databaseSource.updateDocument(any(), any(), any()) }
     }
 
     @Test
@@ -562,11 +562,11 @@ class MessageRepositoryTest {
         )
 
         coEvery {
-            firestoreSource.getDocument(Collections.CHATS, chatId, Chat::class.java)
+            databaseSource.getDocument(Collections.CHATS, chatId, Chat::class.java)
         } returns chat
 
         coEvery {
-            firestoreSource.updateDocument(Collections.CHATS, chatId, any())
+            databaseSource.updateDocument(Collections.CHATS, chatId, any())
         } returns false
 
         // Act & Assert
@@ -575,8 +575,8 @@ class MessageRepositoryTest {
         }
 
         coVerify {
-            firestoreSource.getDocument(Collections.CHATS, chatId, Chat::class.java)
-            firestoreSource.updateDocument(Collections.CHATS, chatId, any())
+            databaseSource.getDocument(Collections.CHATS, chatId, Chat::class.java)
+            databaseSource.updateDocument(Collections.CHATS, chatId, any())
         }
     }
 
@@ -598,7 +598,7 @@ class MessageRepositoryTest {
         )
 
         coEvery {
-            firestoreSource.getDocumentsWhereArrayContains(
+            databaseSource.getDocumentsWhereArrayContains(
                 Collections.CHATS,
                 Fields.CHAT_OWNER_IDS,
                 userId,
@@ -613,7 +613,7 @@ class MessageRepositoryTest {
         assertEquals(chat, result)
 
         coVerify {
-            firestoreSource.getDocumentsWhereArrayContains(Collections.CHATS, Fields.CHAT_OWNER_IDS, userId, Chat::class.java)
+            databaseSource.getDocumentsWhereArrayContains(Collections.CHATS, Fields.CHAT_OWNER_IDS, userId, Chat::class.java)
         }
     }
 
@@ -628,7 +628,7 @@ class MessageRepositoryTest {
         )
 
         coEvery {
-            firestoreSource.getDocumentsWhereArrayContains(
+            databaseSource.getDocumentsWhereArrayContains(
                 Collections.CHATS,
                 Fields.CHAT_OWNER_IDS,
                 userId,
@@ -643,7 +643,7 @@ class MessageRepositoryTest {
         assertEquals(Chat(), result) // Should return empty chat
 
         coVerify {
-            firestoreSource.getDocumentsWhereArrayContains(Collections.CHATS, Fields.CHAT_OWNER_IDS, userId, Chat::class.java)
+            databaseSource.getDocumentsWhereArrayContains(Collections.CHATS, Fields.CHAT_OWNER_IDS, userId, Chat::class.java)
         }
     }
 }

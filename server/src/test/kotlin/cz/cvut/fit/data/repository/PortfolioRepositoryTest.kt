@@ -1,6 +1,5 @@
 package data.repository
 
-import com.google.cloud.firestore.Query
 import cz.cvut.fit.application.dto.portfolio.CreatePortfolioDTO
 import cz.cvut.fit.application.dto.portfolio.UpdatePortfolioDTO
 import cz.cvut.fit.config.InternalServerException
@@ -8,7 +7,7 @@ import cz.cvut.fit.config.NotFoundException
 import cz.cvut.fit.config.AppConstants.Collections
 import cz.cvut.fit.config.AppConstants.Fields
 import cz.cvut.fit.config.AppConstants.Storage
-import data.source.FirestoreSource
+import data.source.DatabaseSource
 import data.source.StorageSource
 import domain.model.Creator
 import domain.model.Portfolio
@@ -24,7 +23,7 @@ import org.junit.jupiter.api.assertThrows
 class PortfolioRepositoryTest {
 
     @MockK
-    private lateinit var firestoreSource: FirestoreSource
+    private lateinit var databaseSource: DatabaseSource
 
     @MockK
     private lateinit var storageSource: StorageSource
@@ -34,7 +33,7 @@ class PortfolioRepositoryTest {
     @BeforeEach
     fun setUp() {
         MockKAnnotations.init(this)
-        portfolioRepository = PortfolioRepositoryImpl(firestoreSource, storageSource)
+        portfolioRepository = PortfolioRepositoryImpl(databaseSource, storageSource)
     }
 
     @Test
@@ -65,21 +64,21 @@ class PortfolioRepositoryTest {
         )
 
         coEvery {
-            firestoreSource.getDocumentsWhere(Collections.USERS, Fields.CREATOR_ID, creatorId, User::class.java)
+            databaseSource.getDocumentsWhere(Collections.USERS, Fields.CREATOR_ID, creatorId, User::class.java)
         } returns listOf(user)
 
-        coEvery { firestoreSource.createDocument(Collections.PORTFOLIOS, any()) } returns portfolioId
+        coEvery { databaseSource.createDocument(Collections.PORTFOLIOS, any()) } returns portfolioId
 
         coEvery {
             storageSource.uploadFile(any(), any(), Storage.CONTENT_TYPE_JPEG)
         } returnsMany photoUrls
 
-        coEvery { firestoreSource.setDocument(Collections.PORTFOLIOS, portfolioId, any()) } returns true
+        coEvery { databaseSource.setDocument(Collections.PORTFOLIOS, portfolioId, any()) } returns true
 
-        coEvery { firestoreSource.getDocument(Collections.CREATORS, creatorId, Creator::class.java) } returns creator
+        coEvery { databaseSource.getDocument(Collections.CREATORS, creatorId, Creator::class.java) } returns creator
 
         coEvery {
-            firestoreSource.updateDocument(Collections.CREATORS, creatorId, any())
+            databaseSource.updateDocument(Collections.CREATORS, creatorId, any())
         } returns true
 
         // Act
@@ -89,12 +88,12 @@ class PortfolioRepositoryTest {
         assertEquals(portfolioId, result)
 
         coVerify {
-            firestoreSource.getDocumentsWhere(Collections.USERS, Fields.CREATOR_ID, creatorId, User::class.java)
-            firestoreSource.createDocument(Collections.PORTFOLIOS, any())
+            databaseSource.getDocumentsWhere(Collections.USERS, Fields.CREATOR_ID, creatorId, User::class.java)
+            databaseSource.createDocument(Collections.PORTFOLIOS, any())
             storageSource.uploadFile(any(), any(), Storage.CONTENT_TYPE_JPEG)
-            firestoreSource.setDocument(Collections.PORTFOLIOS, portfolioId, any())
-            firestoreSource.getDocument(Collections.CREATORS, creatorId, Creator::class.java)
-            firestoreSource.updateDocument(Collections.CREATORS, creatorId, any())
+            databaseSource.setDocument(Collections.PORTFOLIOS, portfolioId, any())
+            databaseSource.getDocument(Collections.CREATORS, creatorId, Creator::class.java)
+            databaseSource.updateDocument(Collections.CREATORS, creatorId, any())
         }
     }
 
@@ -113,7 +112,7 @@ class PortfolioRepositoryTest {
         )
 
         coEvery {
-            firestoreSource.getDocumentsWhere(Collections.USERS, Fields.CREATOR_ID, creatorId, User::class.java)
+            databaseSource.getDocumentsWhere(Collections.USERS, Fields.CREATOR_ID, creatorId, User::class.java)
         } returns emptyList()
 
         // Act & Assert
@@ -122,13 +121,13 @@ class PortfolioRepositoryTest {
         }
 
         coVerify {
-            firestoreSource.getDocumentsWhere(Collections.USERS, Fields.CREATOR_ID, creatorId, User::class.java)
+            databaseSource.getDocumentsWhere(Collections.USERS, Fields.CREATOR_ID, creatorId, User::class.java)
         }
 
         coVerify(exactly = 0) {
-            firestoreSource.createDocument(any(), any())
+            databaseSource.createDocument(any(), any())
             storageSource.uploadFile(any(), any(), any())
-            firestoreSource.setDocument(any(), any(), any())
+            databaseSource.setDocument(any(), any(), any())
         }
     }
 
@@ -152,10 +151,10 @@ class PortfolioRepositoryTest {
         val user = User(id = userId, username = username)
 
         coEvery {
-            firestoreSource.getDocumentsWhere(Collections.USERS, Fields.CREATOR_ID, creatorId, User::class.java)
+            databaseSource.getDocumentsWhere(Collections.USERS, Fields.CREATOR_ID, creatorId, User::class.java)
         } returns listOf(user)
 
-        coEvery { firestoreSource.createDocument(Collections.PORTFOLIOS, any()) } returns portfolioId
+        coEvery { databaseSource.createDocument(Collections.PORTFOLIOS, any()) } returns portfolioId
 
         coEvery {
             storageSource.uploadFile(any(), any(), Storage.CONTENT_TYPE_JPEG)
@@ -167,14 +166,14 @@ class PortfolioRepositoryTest {
         }
 
         coVerify {
-            firestoreSource.getDocumentsWhere(Collections.USERS, Fields.CREATOR_ID, creatorId, User::class.java)
-            firestoreSource.createDocument(Collections.PORTFOLIOS, any())
+            databaseSource.getDocumentsWhere(Collections.USERS, Fields.CREATOR_ID, creatorId, User::class.java)
+            databaseSource.createDocument(Collections.PORTFOLIOS, any())
             storageSource.uploadFile(any(), any(), Storage.CONTENT_TYPE_JPEG)
         }
 
         coVerify(exactly = 0) {
-            firestoreSource.setDocument(Collections.PORTFOLIOS, any(), any())
-            firestoreSource.getDocument(Collections.CREATORS, any(), Creator::class.java)
+            databaseSource.setDocument(Collections.PORTFOLIOS, any(), any())
+            databaseSource.getDocument(Collections.CREATORS, any(), Creator::class.java)
         }
     }
 
@@ -190,7 +189,7 @@ class PortfolioRepositoryTest {
         )
 
         coEvery {
-            firestoreSource.getDocument(Collections.PORTFOLIOS, portfolioId, Portfolio::class.java)
+            databaseSource.getDocument(Collections.PORTFOLIOS, portfolioId, Portfolio::class.java)
         } returns portfolio
 
         // Act
@@ -199,7 +198,7 @@ class PortfolioRepositoryTest {
         // Assert
         assertEquals(portfolio, result)
 
-        coVerify { firestoreSource.getDocument(Collections.PORTFOLIOS, portfolioId, Portfolio::class.java) }
+        coVerify { databaseSource.getDocument(Collections.PORTFOLIOS, portfolioId, Portfolio::class.java) }
     }
 
     @Test
@@ -208,7 +207,7 @@ class PortfolioRepositoryTest {
         val portfolioId = "nonExistentPortfolio"
 
         coEvery {
-            firestoreSource.getDocument(Collections.PORTFOLIOS, portfolioId, Portfolio::class.java)
+            databaseSource.getDocument(Collections.PORTFOLIOS, portfolioId, Portfolio::class.java)
         } returns null
 
         // Act & Assert
@@ -216,7 +215,7 @@ class PortfolioRepositoryTest {
             portfolioRepository.getPortfolioById(portfolioId)
         }
 
-        coVerify { firestoreSource.getDocument(Collections.PORTFOLIOS, portfolioId, Portfolio::class.java) }
+        coVerify { databaseSource.getDocument(Collections.PORTFOLIOS, portfolioId, Portfolio::class.java) }
     }
 
     @Test
@@ -230,7 +229,7 @@ class PortfolioRepositoryTest {
         )
 
         coEvery {
-            firestoreSource.getDocument(Collections.CREATORS, creatorId, Creator::class.java)
+            databaseSource.getDocument(Collections.CREATORS, creatorId, Creator::class.java)
         } returns creator
 
         // Act
@@ -239,8 +238,8 @@ class PortfolioRepositoryTest {
         // Assert
         assertTrue(result.isEmpty())
 
-        coVerify { firestoreSource.getDocument(Collections.CREATORS, creatorId, Creator::class.java) }
-        coVerify(exactly = 0) { firestoreSource.getDocumentsByIds(any(), any(), Creator::class.java) }
+        coVerify { databaseSource.getDocument(Collections.CREATORS, creatorId, Creator::class.java) }
+        coVerify(exactly = 0) { databaseSource.getDocumentsByIds(any(), any(), Creator::class.java) }
     }
 
     @Test
@@ -260,11 +259,11 @@ class PortfolioRepositoryTest {
         )
 
         coEvery {
-            firestoreSource.getDocument(Collections.CREATORS, creatorId, Creator::class.java)
+            databaseSource.getDocument(Collections.CREATORS, creatorId, Creator::class.java)
         } returns creator
 
         coEvery {
-            firestoreSource.getDocumentsByIds(Collections.PORTFOLIOS, portfolioIds, Portfolio::class.java)
+            databaseSource.getDocumentsByIds(Collections.PORTFOLIOS, portfolioIds, Portfolio::class.java)
         } returns portfolios
 
         // Act
@@ -276,8 +275,8 @@ class PortfolioRepositoryTest {
         assertEquals("portfolio1", result[1].id)
 
         coVerify {
-            firestoreSource.getDocument(Collections.CREATORS, creatorId, Creator::class.java)
-            firestoreSource.getDocumentsByIds(Collections.PORTFOLIOS, portfolioIds, Portfolio::class.java)
+            databaseSource.getDocument(Collections.CREATORS, creatorId, Creator::class.java)
+            databaseSource.getDocumentsByIds(Collections.PORTFOLIOS, portfolioIds, Portfolio::class.java)
         }
     }
 
@@ -311,13 +310,13 @@ class PortfolioRepositoryTest {
         )
 
         coEvery {
-            firestoreSource.getDocument(Collections.PORTFOLIOS, portfolioId, Portfolio::class.java)
+            databaseSource.getDocument(Collections.PORTFOLIOS, portfolioId, Portfolio::class.java)
         } returns existingPortfolio
 
         coEvery { storageSource.deleteFile(any()) } returns true
 
         coEvery {
-            firestoreSource.updateDocument(Collections.PORTFOLIOS, portfolioId, any())
+            databaseSource.updateDocument(Collections.PORTFOLIOS, portfolioId, any())
         } returns true
 
         val updatedPortfolio = existingPortfolio.copy(
@@ -329,7 +328,7 @@ class PortfolioRepositoryTest {
         )
 
         coEvery {
-            firestoreSource.getDocument(Collections.PORTFOLIOS, portfolioId, Portfolio::class.java)
+            databaseSource.getDocument(Collections.PORTFOLIOS, portfolioId, Portfolio::class.java)
         } returns updatedPortfolio
 
         // Act
@@ -339,8 +338,8 @@ class PortfolioRepositoryTest {
         assertEquals(updatedPortfolio, result)
 
         coVerify {
-            firestoreSource.getDocument(Collections.PORTFOLIOS, portfolioId, Portfolio::class.java)
-            firestoreSource.updateDocument(Collections.PORTFOLIOS, portfolioId, any())
+            databaseSource.getDocument(Collections.PORTFOLIOS, portfolioId, Portfolio::class.java)
+            databaseSource.updateDocument(Collections.PORTFOLIOS, portfolioId, any())
         }
     }
 
@@ -366,19 +365,19 @@ class PortfolioRepositoryTest {
         )
 
         coEvery {
-            firestoreSource.getDocument(Collections.PORTFOLIOS, portfolioId, Portfolio::class.java)
+            databaseSource.getDocument(Collections.PORTFOLIOS, portfolioId, Portfolio::class.java)
         } returns portfolio
 
         coEvery { storageSource.deleteFile(any()) } returns true
 
-        coEvery { firestoreSource.deleteDocument(Collections.PORTFOLIOS, portfolioId) } returns true
+        coEvery { databaseSource.deleteDocument(Collections.PORTFOLIOS, portfolioId) } returns true
 
         coEvery {
-            firestoreSource.getDocument(Collections.CREATORS, creatorId, Creator::class.java)
+            databaseSource.getDocument(Collections.CREATORS, creatorId, Creator::class.java)
         } returns creator
 
         coEvery {
-            firestoreSource.updateDocument(Collections.CREATORS, creatorId, any())
+            databaseSource.updateDocument(Collections.CREATORS, creatorId, any())
         } returns true
 
         // Act
@@ -388,11 +387,11 @@ class PortfolioRepositoryTest {
         assertTrue(result)
 
         coVerify {
-            firestoreSource.getDocument(Collections.PORTFOLIOS, portfolioId, Portfolio::class.java)
+            databaseSource.getDocument(Collections.PORTFOLIOS, portfolioId, Portfolio::class.java)
             storageSource.deleteFile(any())
-            firestoreSource.deleteDocument(Collections.PORTFOLIOS, portfolioId)
-            firestoreSource.getDocument(Collections.CREATORS, creatorId, Creator::class.java)
-            firestoreSource.updateDocument(Collections.CREATORS, creatorId,
+            databaseSource.deleteDocument(Collections.PORTFOLIOS, portfolioId)
+            databaseSource.getDocument(Collections.CREATORS, creatorId, Creator::class.java)
+            databaseSource.updateDocument(Collections.CREATORS, creatorId,
                 match { updates ->
                     val portfolioIds = updates[Fields.PORTFOLIO_IDS] as List<*>
                     portfolioIds.size == 1 && portfolioIds.contains("otherPortfolio")
@@ -407,7 +406,7 @@ class PortfolioRepositoryTest {
         val portfolioId = "nonExistentPortfolio"
 
         coEvery {
-            firestoreSource.getDocument(Collections.PORTFOLIOS, portfolioId, Portfolio::class.java)
+            databaseSource.getDocument(Collections.PORTFOLIOS, portfolioId, Portfolio::class.java)
         } returns null
 
         // Act & Assert
@@ -415,10 +414,10 @@ class PortfolioRepositoryTest {
             portfolioRepository.deletePortfolio(portfolioId)
         }
 
-        coVerify { firestoreSource.getDocument(Collections.PORTFOLIOS, portfolioId, Portfolio::class.java) }
+        coVerify { databaseSource.getDocument(Collections.PORTFOLIOS, portfolioId, Portfolio::class.java) }
         coVerify(exactly = 0) {
             storageSource.deleteFile(any())
-            firestoreSource.deleteDocument(any(), any())
+            databaseSource.deleteDocument(any(), any())
         }
     }
 
@@ -429,7 +428,7 @@ class PortfolioRepositoryTest {
         val sortBy = "timestamp"
 
         coEvery {
-            firestoreSource.searchPortfoliosByCategories(categories, sortBy)
+            databaseSource.searchPortfoliosByCategories(categories, sortBy)
         } returns listOf(
             Portfolio(id = "portfolio1"),
             Portfolio(id = "portfolio2")
@@ -443,7 +442,7 @@ class PortfolioRepositoryTest {
         assertEquals("portfolio1", result[0].id)
         assertEquals("portfolio2", result[1].id)
 
-        coVerify { firestoreSource.searchPortfoliosByCategories(categories, sortBy) }
+        coVerify { databaseSource.searchPortfoliosByCategories(categories, sortBy) }
     }
 
     @Test
@@ -452,7 +451,7 @@ class PortfolioRepositoryTest {
         val categories = listOf("category1")
 
         coEvery {
-            firestoreSource.searchPortfoliosByCategories(categories, null)
+            databaseSource.searchPortfoliosByCategories(categories, null)
         } throws Exception("Search failed")
 
         // Act & Assert
@@ -460,6 +459,6 @@ class PortfolioRepositoryTest {
             portfolioRepository.searchPortfolios(categories, null)
         }
 
-        coVerify { firestoreSource.searchPortfoliosByCategories(categories, null) }
+        coVerify { databaseSource.searchPortfoliosByCategories(categories, null) }
     }
 }

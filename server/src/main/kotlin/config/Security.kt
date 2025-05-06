@@ -13,8 +13,11 @@ fun Application.configureSecurity() {
             val inputStream = if (localFile.exists()) {
                 localFile.inputStream()
             } else {
-                ByteArrayInputStream(System.getenv(AppConstants.Config.FIREBASE_ENV_KEY)?.toByteArray()
-                    ?: error(AppConstants.Messages.CONFIG_NOT_FOUND))
+                ByteArrayInputStream(
+                    System.getenv(AppConstants.Config.FIREBASE_ENV_KEY)
+                        ?.toByteArray()
+                    ?: error(AppConstants.Messages.CONFIG_NOT_FOUND)
+                )
             }
             adminInputStream = inputStream
             realm = AppConstants.Config.REALM

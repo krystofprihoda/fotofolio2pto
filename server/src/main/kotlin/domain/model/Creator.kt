@@ -1,13 +1,14 @@
 package domain.model
 
 import kotlinx.serialization.Serializable
+import cz.cvut.fit.config.AppConstants.DefaultValues.PROFILE_DESCRIPTION
 
 @Serializable
 data class Creator(
     val id: String = "",
     val userId: String = "",
     val yearsOfExperience: Int = 1,
-    val description: String = "Profilový popis",
+    val description: String = PROFILE_DESCRIPTION,
     val portfolioIds: List<String> = emptyList()
 )
 

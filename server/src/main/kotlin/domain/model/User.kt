@@ -1,6 +1,7 @@
 package domain.model
 
 import kotlinx.serialization.Serializable
+import cz.cvut.fit.config.AppConstants.DefaultValues.UNKNOWN_LOCATION
 
 @Serializable
 data class User(
@@ -8,7 +9,7 @@ data class User(
     val username: String = "",
     val email: String = "",
     val fullName: String = "",
-    val location: String = "Neznámé místo působení",
+    val location: String = UNKNOWN_LOCATION,
     val profilePicture: String = "",
     val rating: Map<String, Int> = emptyMap(),
     val creatorId: String = ""

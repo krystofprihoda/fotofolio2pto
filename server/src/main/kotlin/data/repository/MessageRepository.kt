@@ -1,6 +1,6 @@
 package data.repository
 
-import data.source.FirestoreSource
+import data.source.DatabaseSource
 import domain.model.Chat
 import domain.model.Message
 import domain.model.toMap
@@ -12,14 +12,14 @@ import cz.cvut.fit.config.AppConstants.Fields
 import cz.cvut.fit.config.AppConstants.Messages
 
 class MessageRepositoryImpl(
-    private val firestoreSource: FirestoreSource
+    private val databaseSource: DatabaseSource
 ) : MessageRepository {
 
     override suspend fun createChat(senderId: String, receiverId: String, message: String): Chat {
         val sortedParticipants = listOf(senderId, receiverId).sorted()
 
         // Check if chat already exists
-        val chats = firestoreSource.getDocumentsWhereArrayContains(
+        val chats = databaseSource.getDocumentsWhereArrayContains(
             Collections.CHATS,
             Fields.CHAT_OWNER_IDS,
             senderId,
@@ -37,7 +37,7 @@ class MessageRepositoryImpl(
             lastUpdated = System.currentTimeMillis()
         )
 
-        val chatId = firestoreSource.createDocument(Collections.CHATS, newChat.toMap())
+        val chatId = databaseSource.createDocument(Collections.CHATS, newChat.toMap())
 
         // Create first message
         val messageObj = Message(
@@ -48,10 +48,10 @@ class MessageRepositoryImpl(
             timestamp = System.currentTimeMillis()
         )
 
-        val messageId = firestoreSource.createDocument(Collections.MESSAGES, messageObj.toMap())
+        val messageId = databaseSource.createDocument(Collections.MESSAGES, messageObj.toMap())
 
         // Update chat with message info
-        if (!firestoreSource.updateDocument(
+        if (!databaseSource.updateDocument(
                 Collections.CHATS,
                 chatId,
                 mapOf(
@@ -66,12 +66,12 @@ class MessageRepositoryImpl(
         }
 
         // Get updated chat
-        return firestoreSource.getDocument(Collections.CHATS, chatId, Chat::class.java)
+        return databaseSource.getDocument(Collections.CHATS, chatId, Chat::class.java)
             ?: throw InternalServerException(Messages.FAILED_FETCH_CHAT)
     }
 
     override suspend fun sendMessage(chatId: String, senderId: String, message: String): Chat {
-        val chat = firestoreSource.getDocument(Collections.CHATS, chatId, Chat::class.java)
+        val chat = databaseSource.getDocument(Collections.CHATS, chatId, Chat::class.java)
             ?: throw NotFoundException(Messages.CHAT_NOT_FOUND)
 
         if (!chat.chatOwnerIds.contains(senderId)) {
@@ -86,10 +86,10 @@ class MessageRepositoryImpl(
             timestamp = System.currentTimeMillis()
         )
 
-        val messageId = firestoreSource.createDocument(Collections.MESSAGES, messageObj.toMap())
+        val messageId = databaseSource.createDocument(Collections.MESSAGES, messageObj.toMap())
 
         val updatedMessageIds = chat.messageIds + messageId
-        if (!firestoreSource.updateDocument(
+        if (!databaseSource.updateDocument(
                 Collections.CHATS,
                 chatId,
                 mapOf(
@@ -103,12 +103,12 @@ class MessageRepositoryImpl(
             throw InternalServerException(Messages.FAILED_UPDATE_CHAT_MESSAGE)
         }
 
-        return firestoreSource.getDocument(Collections.CHATS, chatId, Chat::class.java)
+        return databaseSource.getDocument(Collections.CHATS, chatId, Chat::class.java)
             ?: throw InternalServerException(Messages.FAILED_FETCH_CHAT)
     }
 
     override suspend fun getChat(userId: String, receiverId: String): Chat {
-        val chats = firestoreSource.getDocumentsWhereArrayContains(
+        val chats = databaseSource.getDocumentsWhereArrayContains(
             Collections.CHATS,
             Fields.CHAT_OWNER_IDS,
             userId,
@@ -124,7 +124,7 @@ class MessageRepositoryImpl(
     }
 
     override suspend fun getChats(userId: String): List<Chat> {
-        val chats = firestoreSource.getDocumentsWhereArrayContains(
+        val chats = databaseSource.getDocumentsWhereArrayContains(
             Collections.CHATS,
             Fields.CHAT_OWNER_IDS,
             userId,
@@ -134,7 +134,7 @@ class MessageRepositoryImpl(
     }
 
     override suspend fun getChatById(chatId: String, userId: String): Chat {
-        val chat = firestoreSource.getDocument(Collections.CHATS, chatId, Chat::class.java)
+        val chat = databaseSource.getDocument(Collections.CHATS, chatId, Chat::class.java)
             ?: throw NotFoundException(Messages.CHAT_NOT_FOUND)
 
         if (!chat.chatOwnerIds.contains(userId)) {
@@ -145,9 +145,7 @@ class MessageRepositoryImpl(
     }
 
     override suspend fun getChatMessages(chatId: String, userId: String): List<Message> {
-        val chat = getChatById(chatId, userId)
-
-        val messages = firestoreSource.getDocumentsWhereOrdered(
+        val messages = databaseSource.getDocumentsWhereOrdered(
             collection = Collections.MESSAGES,
             field = Fields.CHAT_ID,
             value = chatId,
@@ -161,7 +159,7 @@ class MessageRepositoryImpl(
     }
 
     override suspend fun updateChatRead(chatId: String, userId: String) {
-        val chat = firestoreSource.getDocument(Collections.CHATS, chatId, Chat::class.java)
+        val chat = databaseSource.getDocument(Collections.CHATS, chatId, Chat::class.java)
             ?: throw NotFoundException(Messages.CHAT_NOT_FOUND)
 
         if (!chat.chatOwnerIds.contains(userId)) {
@@ -171,7 +169,7 @@ class MessageRepositoryImpl(
         if (chat.readByIds.contains(userId)) { return }
         val updatedIds = chat.readByIds + userId
 
-        if (!firestoreSource.updateDocument(
+        if (!databaseSource.updateDocument(
                 Collections.CHATS,
                 chatId,
                 mapOf(Fields.READ_BY_IDS to updatedIds)

@@ -192,4 +192,9 @@ object AppConstants {
         const val MESSAGE = "message"
         const val PROFILE_PICTURE_URL = "profilePictureUrl"
     }
+
+    object DefaultValues {
+        const val UNKNOWN_LOCATION = "id"
+        const val PROFILE_DESCRIPTION = "Profilový popis"
+    }
 }

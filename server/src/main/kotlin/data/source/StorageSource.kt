@@ -10,7 +10,7 @@ interface StorageSource {
     suspend fun deleteFile(path: String): Boolean
 }
 
-class FirebaseStorageSource : StorageSource {
+class CloudStorageSource : StorageSource {
     private val bucket by lazy {
         try {
             StorageClient.getInstance().bucket(Config.FIREBASE_BUCKET_NAME)

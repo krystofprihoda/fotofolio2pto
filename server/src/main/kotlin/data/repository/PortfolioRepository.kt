@@ -1,9 +1,5 @@
 package data.repository
 
-import com.google.cloud.firestore.FieldPath
-import com.google.cloud.firestore.Query
-import com.google.firebase.cloud.FirestoreClient
-import com.kborowy.authprovider.firebase.await
 import cz.cvut.fit.application.dto.portfolio.CreatePortfolioDTO
 import cz.cvut.fit.application.dto.portfolio.UpdatePortfolioDTO
 import cz.cvut.fit.config.*
@@ -11,7 +7,7 @@ import cz.cvut.fit.config.AppConstants.Collections
 import cz.cvut.fit.config.AppConstants.Fields
 import cz.cvut.fit.config.AppConstants.Messages
 import cz.cvut.fit.config.AppConstants.Storage
-import data.source.FirestoreSource
+import data.source.DatabaseSource
 import data.source.StorageSource
 import domain.model.Creator
 import domain.model.Portfolio
@@ -21,7 +17,7 @@ import domain.repository.PortfolioRepository
 import java.net.URLDecoder
 
 class PortfolioRepositoryImpl(
-    private val firestoreSource: FirestoreSource,
+    private val databaseSource: DatabaseSource,
     private val storageSource: StorageSource
 ) : PortfolioRepository {
 
@@ -29,7 +25,7 @@ class PortfolioRepositoryImpl(
         createPortfolioDTO: CreatePortfolioDTO
     ): String {
         // Get user info for author username
-        val usersWithCreatorId = firestoreSource.getDocumentsWhere(
+        val usersWithCreatorId = databaseSource.getDocumentsWhere(
             Collections.USERS,
             Fields.CREATOR_ID,
             createPortfolioDTO.creatorId,
@@ -37,7 +33,7 @@ class PortfolioRepositoryImpl(
         )
 
         if (usersWithCreatorId.isEmpty()) {
-            throw NotFoundException("Creator's user not found")
+            throw NotFoundException(Messages.USER_NOT_FOUND)
         }
 
         val user = usersWithCreatorId.first()
@@ -45,7 +41,7 @@ class PortfolioRepositoryImpl(
         val authorUsername = user.username
 
         // Create portfolio document to get ID
-        val portfolioId = firestoreSource.createDocument(
+        val portfolioId = databaseSource.createDocument(
             Collections.PORTFOLIOS,
             mapOf(
                 Fields.CREATOR_ID to createPortfolioDTO.creatorId,
@@ -83,19 +79,19 @@ class PortfolioRepositoryImpl(
             timestamp = System.currentTimeMillis()
         )
 
-        if (!firestoreSource.setDocument(Collections.PORTFOLIOS, portfolioId, portfolio.toMap())) {
+        if (!databaseSource.setDocument(Collections.PORTFOLIOS, portfolioId, portfolio.toMap())) {
             throw InternalServerException(Messages.FAILED_UPDATE_PORTFOLIO_URLS)
         }
 
         // Update creator's portfolio list
-        val creator = firestoreSource.getDocument(
+        val creator = databaseSource.getDocument(
             Collections.CREATORS,
             createPortfolioDTO.creatorId,
             Creator::class.java
         ) ?: throw NotFoundException(Messages.CREATOR_NOT_FOUND)
 
         val updatedPortfolioIds = creator.portfolioIds.toMutableList().apply { add(portfolioId) }
-        if (!firestoreSource.updateDocument(
+        if (!databaseSource.updateDocument(
                 Collections.CREATORS,
                 createPortfolioDTO.creatorId,
                 mapOf(Fields.PORTFOLIO_IDS to updatedPortfolioIds)
@@ -107,7 +103,7 @@ class PortfolioRepositoryImpl(
     }
 
     override suspend fun getPortfolioById(portfolioId: String): Portfolio {
-        return firestoreSource.getDocument(
+        return databaseSource.getDocument(
             Collections.PORTFOLIOS,
             portfolioId,
             Portfolio::class.java
@@ -119,7 +115,7 @@ class PortfolioRepositoryImpl(
             return emptyList()
         }
 
-        return firestoreSource.getDocumentsByIds(
+        return databaseSource.getDocumentsByIds(
             Collections.PORTFOLIOS,
             portfolioIds,
             Portfolio::class.java
@@ -127,7 +123,7 @@ class PortfolioRepositoryImpl(
     }
 
     override suspend fun getPortfoliosByCreatorId(creatorId: String): List<Portfolio> {
-        val creator = firestoreSource.getDocument(
+        val creator = databaseSource.getDocument(
             Collections.CREATORS,
             creatorId,
             Creator::class.java
@@ -137,7 +133,7 @@ class PortfolioRepositoryImpl(
             return emptyList()
         }
 
-        return firestoreSource
+        return databaseSource
             .getDocumentsByIds(
                 Collections.PORTFOLIOS,
                 creator.portfolioIds,
@@ -151,7 +147,7 @@ class PortfolioRepositoryImpl(
         sortBy: String?
     ): List<Portfolio> {
         try {
-            return firestoreSource.searchPortfoliosByCategories(categories, sortBy)
+            return databaseSource.searchPortfoliosByCategories(categories, sortBy)
         } catch (e: Exception) {
             throw InternalServerException("${Messages.FAILED_SEARCH_PORTFOLIOS}: ${e.message}")
         }
@@ -189,7 +185,7 @@ class PortfolioRepositoryImpl(
             Fields.PHOTOS to updatePortfolioDTO.photoURLs
         )
 
-        if (!firestoreSource.updateDocument(
+        if (!databaseSource.updateDocument(
                 Collections.PORTFOLIOS,
                 updatePortfolioDTO.portfolioId,
                 updates
@@ -218,13 +214,13 @@ class PortfolioRepositoryImpl(
         }
 
         // Delete portfolio document
-        if (!firestoreSource.deleteDocument(Collections.PORTFOLIOS, portfolioId)) {
+        if (!databaseSource.deleteDocument(Collections.PORTFOLIOS, portfolioId)) {
             throw InternalServerException(Messages.FAILED_DELETE_PORTFOLIO)
         }
 
         // Update creator's portfolio list
         val creatorId = portfolio.creatorId
-        val creator = firestoreSource.getDocument(
+        val creator = databaseSource.getDocument(
             Collections.CREATORS,
             creatorId,
             Creator::class.java
@@ -232,7 +228,7 @@ class PortfolioRepositoryImpl(
 
         if (creator != null) {
             val updatedPortfolioIds = creator.portfolioIds.toMutableList().apply { remove(portfolioId) }
-            if (!firestoreSource.updateDocument(
+            if (!databaseSource.updateDocument(
                     Collections.CREATORS,
                     creatorId,
                     mapOf(Fields.PORTFOLIO_IDS to updatedPortfolioIds)

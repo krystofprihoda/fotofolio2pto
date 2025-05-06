@@ -20,7 +20,7 @@ import cz.cvut.fit.config.AppConstants.Fields
 import cz.cvut.fit.config.AppConstants.Params
 import cz.cvut.fit.config.AppConstants.Messages
 
-interface FirestoreSource {
+interface DatabaseSource {
     suspend fun <T> getDocument(
         collection: String,
         documentId: String,
@@ -120,16 +120,12 @@ interface FirestoreSource {
         categories: List<String>?,
         sortBy: String?
     ): List<Portfolio>
-
-    suspend fun getPortfoliosByIds(
-        portfolioIds: List<String>
-    ): List<Portfolio>
 }
 
-class FirebaseFirestoreSource : FirestoreSource {
+class FirestoreDatabaseSource : DatabaseSource {
     private val db: Firestore by lazy {
         if (!FirebaseInitializer.isInitialized()) {
-            // For unauthenticated endpoints, we need to create a direct Firestore connection
+            // Direct Firestore connection for unauthenticated endpoint
             println(Messages.PUBLIC_INIT)
 
             // Read the key or env variable
@@ -141,7 +137,7 @@ class FirebaseFirestoreSource : FirestoreSource {
                     ?: error(Messages.CONFIG_NOT_FOUND))
             }
 
-            // Create a direct connection to Firestore for unauthenticated endpoints only
+            // Create a direct connection to Firestore for unauthenticated endpoint
             val options = FirebaseOptions.builder()
                 .setCredentials(GoogleCredentials.fromStream(inputStream))
                 .setProjectId(Config.FIREBASE_PROJECT_ID)
@@ -160,7 +156,7 @@ class FirebaseFirestoreSource : FirestoreSource {
                 .build()
                 .service
         } else {
-            // For authenticated endpoints, use the standard FirestoreClient
+            // For authenticated endpoint, use the standard FirestoreClient
             println(Messages.INITIALIZED_ALREADY)
             FirestoreClient.getFirestore()
         }
@@ -351,17 +347,5 @@ class FirebaseFirestoreSource : FirestoreSource {
             }
             else -> portfolios // No sorting
         }
-    }
-
-    override suspend fun getPortfoliosByIds(portfolioIds: List<String>): List<Portfolio> {
-        if (portfolioIds.isEmpty()) {
-            return emptyList()
-        }
-
-        if (portfolioIds.size > Config.MAX_PORTFOLIO_IDS_PER_QUERY) {
-            throw BadRequestException(Messages.QUERY_SIZE)
-        }
-
-        return getDocumentsByIds(Collections.PORTFOLIOS, portfolioIds, Portfolio::class.java)
     }
 }
