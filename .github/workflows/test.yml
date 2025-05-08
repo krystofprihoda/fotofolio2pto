@@ -2,9 +2,9 @@ name: Kotlin Unit Tests
 
 on:
   push:
-    branches: [ actions ]
+    branches: [ main ]
   pull_request:
-    branches: [ actions ]
+    branches: [ main ]
 
 jobs:
   test:
