@@ -1,7 +1,7 @@
 val ktor_version = "2.3.0"
 val koin_version = "3.4.0"
 val junit_version = "5.9.3"
-val kotlin_version = "1.8.10" // stable Kotlin version that should work with your dependencies
+val kotlin_version = "1.8.10" // stable Kotlin version that should work with the rest of dependencies
 
 plugins {
     alias(libs.plugins.kotlin.jvm)
@@ -14,7 +14,7 @@ version = "1.0.1"
 
 application {
     mainClass = "cz.cvut.fit.ApplicationKt"
-    val isDevelopment = true
+    val isDevelopment = false
     applicationDefaultJvmArgs = listOf("-Dio.ktor.development=$isDevelopment")
 }
 
