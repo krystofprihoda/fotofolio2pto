@@ -80,13 +80,12 @@ class CreatorRepositoryTest {
             databaseSource.updateDocument(Collections.USERS, creator.userId, mapOf(Fields.CREATOR_ID to creatorId))
         }
     }
-
     @Test
     fun `getCreatorById returns creator when found`() = runBlocking {
         // Arrange
         val creatorId = "creator123"
         val creator = Creator(
-            id = "",
+            id = creatorId,
             userId = "user123",
             yearsOfExperience = 5,
             description = "Test creator"
