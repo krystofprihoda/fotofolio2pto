@@ -1,4 +1,4 @@
-name: Ktor Repository Unit Tests
+name: Kotlin Unit Tests
 
 on:
   push:
@@ -9,6 +9,10 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: server  # each step to run in the /server directory
 
     steps:
       - name: Checkout code
@@ -21,7 +25,7 @@ jobs:
           java-version: '17'
 
       - name: Grant execute permission for Gradle wrapper
-        run: chmod +x ./server/gradlew
+        run: chmod +x ./gradlew
 
       - name: Run tests
-        run: ./server/gradlew test
+        run: ./gradlew test
