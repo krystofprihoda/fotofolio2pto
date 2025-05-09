@@ -316,7 +316,7 @@ class UserRepositoryTest {
         val result = userRepository.searchUsers(query)
 
         // Assert
-        assertEquals(4, result.size) // Should be 3 because user1 appears twice
+        assertEquals(4, result.size)
         assertTrue(result.containsAll(listOf(usernameResults[0], usernameResults[1], fullNameResults[0])))
 
         coVerify {

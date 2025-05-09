@@ -40,14 +40,7 @@ struct RegisterNameAndEmailView: View {
             }
             
             Button(action: onNextTap, label: {
-                Text(L.Onboarding.next)
-                    .font(.body)
-                    .frame(height: Constants.Dimens.textFieldHeight)
-                    .frame(maxWidth: .infinity)
-                    .padding(Constants.Dimens.spaceLarge)
-                    .foregroundStyle(.white)
-                    .background(.mainLight)
-                    .cornerRadius(Constants.Dimens.radiusXSmall)
+                BaseButton(L.Onboarding.next)
             })
             .disabledOverlay(!emailVerified)
             .skeleton(showSkeleton)

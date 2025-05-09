@@ -34,14 +34,7 @@ struct RegisterFailedView: View {
             }
             
             Button(action: onTryAgain, label: {
-                Text(L.Onboarding.tryAgain)
-                    .font(.body)
-                    .frame(height: Constants.Dimens.textFieldHeight)
-                    .frame(maxWidth: .infinity)
-                    .padding(Constants.Dimens.spaceLarge)
-                    .foregroundStyle(.white)
-                    .background(.mainLight)
-                    .cornerRadius(Constants.Dimens.radiusXSmall)
+                BaseButton(L.Onboarding.tryAgain)
             })
         }
     }

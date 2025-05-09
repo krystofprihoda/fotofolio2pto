@@ -57,17 +57,12 @@ struct EditPersonalDetailsView: View {
                     .font(.footnote)
                     .foregroundColor(.black)
                 
-                TextField(
-                    L.Profile.activePlace,
+                TextFieldView(
+                    title: L.Profile.activePlace,
                     text: Binding(
                         get: { viewModel.state.updatedLocation },
                         set: { viewModel.onIntent(.setLocation($0)) })
                 )
-                    .font(.body)
-                    .frame(height: Constants.Dimens.textFieldHeight)
-                    .padding(Constants.Dimens.spaceLarge)
-                    .background(.textFieldBackground)
-                    .cornerRadius(Constants.Dimens.radiusXSmall)
             }
         }
         .padding([.horizontal, .top], Constants.Dimens.spaceLarge)

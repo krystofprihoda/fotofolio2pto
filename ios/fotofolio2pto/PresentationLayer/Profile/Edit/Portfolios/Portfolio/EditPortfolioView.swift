@@ -48,18 +48,13 @@ struct EditPortfolioView: View {
                 .font(.body)
                 .bold()
             
-            TextField(
-                L.Profile.portraitsExample,
+            TextFieldView(
+                title: L.Profile.portraitsExample,
                 text: Binding(
                     get: { viewModel.state.name },
                     set: { input in viewModel.onIntent(.setName(input)) }
                 )
             )
-            .font(.body)
-            .frame(height: Constants.Dimens.textFieldHeight)
-            .padding(Constants.Dimens.spaceLarge)
-            .background(.textFieldBackground)
-            .cornerRadius(Constants.Dimens.radiusXSmall)
         }
         .padding(.horizontal, Constants.Dimens.spaceLarge)
     }

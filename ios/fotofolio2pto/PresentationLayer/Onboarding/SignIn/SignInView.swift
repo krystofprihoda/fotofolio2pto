@@ -46,14 +46,7 @@ struct SignInView: View {
                             )
                             
                             Button(action: { viewModel.onIntent(.signIn) }, label: {
-                                Text(L.Onboarding.signInAction)
-                                    .font(.body)
-                                    .frame(height: Constants.Dimens.textFieldHeight)
-                                    .frame(maxWidth: .infinity)
-                                    .padding(Constants.Dimens.spaceLarge)
-                                    .foregroundStyle(.white)
-                                    .background(.mainLight)
-                                    .cornerRadius(Constants.Dimens.radiusXSmall)
+                                BaseButton(L.Onboarding.signInAction)
                             })
                             .disabledOverlay(!viewModel.state.isValidEmail || viewModel.state.password.isEmpty)
                             .skeleton(viewModel.state.isSigningIn)

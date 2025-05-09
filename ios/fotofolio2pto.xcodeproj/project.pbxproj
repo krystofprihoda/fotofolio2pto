@@ -172,6 +172,7 @@
 		FEE211AF2DA4298D00A95907 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = FEE211AE2DA4298D00A95907 /* KeychainAccess */; };
 		FEE211B22DA42B6D00A95907 /* EncryptedLocalStorageProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEE211B12DA42B6D00A95907 /* EncryptedLocalStorageProvider.swift */; };
 		FEE211B52DA42C3300A95907 /* KeychainProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEE211B42DA42C3300A95907 /* KeychainProvider.swift */; };
+		FEE410DD2DCDF47B00E04C36 /* BaseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEE410DC2DCDF47B00E04C36 /* BaseButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -338,6 +339,7 @@
 		FECC2AC32DC4C69300568783 /* NETMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NETMessage.swift; sourceTree = "<group>"; };
 		FEE211B12DA42B6D00A95907 /* EncryptedLocalStorageProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncryptedLocalStorageProvider.swift; sourceTree = "<group>"; };
 		FEE211B42DA42C3300A95907 /* KeychainProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainProvider.swift; sourceTree = "<group>"; };
+		FEE410DC2DCDF47B00E04C36 /* BaseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -800,6 +802,7 @@
 		FEC94DAC2C243EA400FFEB11 /* BaseViews */ = {
 			isa = PBXGroup;
 			children = (
+				FEE410DC2DCDF47B00E04C36 /* BaseButton.swift */,
 				FEA971E12DB3E5DC008112B7 /* BaseTextEditor.swift */,
 				FEA971DF2DB3E0E9008112B7 /* TextFieldView.swift */,
 				FE4BBD3A2DB2F68600B4619A /* PhotoView.swift */,
@@ -1171,6 +1174,7 @@
 				FEA53CC42C2C12EE006F0116 /* MessageRepository.swift in Sources */,
 				FECC2ABC2DC4C5BC00568783 /* NETPortfolio.swift in Sources */,
 				FECADFDA2D804DE8004023F6 /* StringConstants.swift in Sources */,
+				FEE410DD2DCDF47B00E04C36 /* BaseButton.swift in Sources */,
 				FEA971E02DB3E0F3008112B7 /* TextFieldView.swift in Sources */,
 				FEC94E0B2C2840AA00FFEB11 /* ProfileUserInfoView.swift in Sources */,
 				FE5F8A842C297338001EE8AF /* LocalStorageProvider.swift in Sources */,

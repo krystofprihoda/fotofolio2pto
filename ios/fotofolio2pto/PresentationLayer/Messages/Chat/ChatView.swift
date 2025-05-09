@@ -57,13 +57,10 @@ struct ChatView: View {
                     .fill(Color.textFieldBackground)
                 
                 HStack(spacing: Constants.Dimens.spaceNone) {
-                    TextField(L.Messages.prefill, text: Binding(
+                    TextFieldView(title: L.Messages.prefill, text: Binding(
                         get: { viewModel.state.textInput },
                         set: { viewModel.onIntent(.setTextInput($0)) }
                     ))
-                    .font(.body)
-                    .frame(height: Constants.Dimens.textFieldHeight)
-                    .padding(.leading, Constants.Dimens.spaceLarge)
 
                     Button(action: { viewModel.onIntent(.sendMessage) }) {
                         Text(L.Messages.send)
