@@ -24,12 +24,7 @@ struct SignInCredentialsView: View {
     var body: some View {
         VStack(spacing: Constants.Dimens.spaceLarge) {
             ZStack(alignment: .trailing) {
-                TextField(L.Onboarding.email, text: $email)
-                    .font(.body)
-                    .frame(height: Constants.Dimens.textFieldHeight)
-                    .padding(Constants.Dimens.spaceLarge)
-                    .background(.textFieldBackground)
-                    .cornerRadius(Constants.Dimens.radiusXSmall)
+                TextFieldView(title: L.Onboarding.email, text: $email)
                     .autocapitalization(.none)
                     .disableAutocorrection(true)
                 
@@ -52,12 +47,7 @@ struct SignInCredentialsView: View {
                         .cornerRadius(Constants.Dimens.radiusXSmall)
                         .disableAutocorrection(true)
                 } else {
-                    TextField(L.Onboarding.password, text: $password)
-                        .font(.body)
-                        .frame(height: Constants.Dimens.textFieldHeight)
-                        .padding(Constants.Dimens.spaceLarge)
-                        .background(.textFieldBackground)
-                        .cornerRadius(Constants.Dimens.radiusXSmall)
+                    TextFieldView(title: L.Onboarding.password, text: $password)
                         .disableAutocorrection(true)
                 }
                 

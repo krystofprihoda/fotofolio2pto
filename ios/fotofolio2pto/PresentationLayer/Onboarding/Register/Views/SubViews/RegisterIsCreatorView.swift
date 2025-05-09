@@ -59,25 +59,11 @@ struct RegisterIsCreatorView: View {
             
             HStack {
                 Button(action: onBackTap, label: {
-                    Text(L.General.back)
-                        .font(.body)
-                        .frame(height: Constants.Dimens.textFieldHeight)
-                        .frame(maxWidth: .infinity)
-                        .padding(Constants.Dimens.spaceLarge)
-                        .foregroundStyle(.white)
-                        .background(.mainLight)
-                        .cornerRadius(Constants.Dimens.radiusXSmall)
+                    BaseButton(L.General.back)
                 })
                 
                 Button(action: onNextTap, label: {
-                    Text(isCreator ? L.Onboarding.next : L.Onboarding.finalizeRegistration)
-                        .font(.body)
-                        .frame(height: Constants.Dimens.textFieldHeight)
-                        .frame(maxWidth: .infinity)
-                        .padding(Constants.Dimens.spaceLarge)
-                        .foregroundStyle(.white)
-                        .background(.mainLight)
-                        .cornerRadius(Constants.Dimens.radiusXSmall)
+                    BaseButton(isCreator ? L.Onboarding.next : L.Onboarding.finalizeRegistration)
                 })
             }
         }
