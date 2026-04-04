@@ -3,8 +3,6 @@
 //  SwiftUI-Shimmer
 //  Created by Vikram Kriplaney on 23.03.21.
 //
-//  Taken from https://github.com/markiv/SwiftUI-Shimmer/blob/main/Sources/Shimmer/Shimmer.swift
-//
 
 import SwiftUI
 
@@ -139,6 +137,22 @@ public extension View {
         } else {
             self
         }
+    }
+
+    /// Adds an animated shimmering effect to any view, typically to show that an operation is in progress.
+    /// - Parameters:
+    ///   - active: Convenience parameter to conditionally enable the effect. Defaults to `true`.
+    ///   - duration: The duration of a shimmer cycle in seconds.
+    ///   - bounce: Whether to bounce (reverse) the animation back and forth. Defaults to `false`.
+    ///   - delay:A delay in seconds. Defaults to `0.25`.
+    @available(*, deprecated, message: "Use shimmering(active:animation:gradient:bandSize:) instead.")
+    @ViewBuilder func shimmering(
+        active: Bool = true, duration: Double, bounce: Bool = false, delay: Double = 0.25
+    ) -> some View {
+        shimmering(
+            active: active,
+            animation: .linear(duration: duration).delay(delay).repeatForever(autoreverses: bounce)
+        )
     }
 }
 
