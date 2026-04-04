@@ -27,21 +27,10 @@ struct PhotoView: View {
                     .aspectRatio(contentMode: .fill)
 
             case .remote(let urlStr):
-                if let url = URL(string: urlStr) {
-                    AsyncImage(url: url) { image in
-                        image
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
-                    } placeholder: {
-                        RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
-                            .fill(.mainText)
-                            .brightness(Double.random(in: 0.15...0.4))
-                            .skeleton(true)
-                    }
-                } else {
+                RemoteImageView(urlString: urlStr) {
                     RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
-                        .fill(.red)
-                        .brightness(Constants.Dimens.opacityMid)
+                        .fill(.mainText)
+                        .brightness(Double.random(in: 0.15...0.4))
                         .skeleton(true)
                 }
             }

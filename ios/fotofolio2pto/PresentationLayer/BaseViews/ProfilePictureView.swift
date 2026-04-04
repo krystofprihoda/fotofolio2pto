@@ -22,18 +22,14 @@ struct ProfilePictureView: View {
     
     var body: some View {
         if let pic = profilePicture {
-            if case MyImageEnum.remote(let urlString) = pic.src, let url = URL(string: urlString) {
-                AsyncImage(url: url) { image in
-                    image
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                        .frame(width: width, height: width)
-                        .clipped()
-                        .cornerRadius(Constants.Dimens.radiusMax)
-                } placeholder: {
+            if case MyImageEnum.remote(let urlString) = pic.src {
+                RemoteImageView(urlString: urlString) {
                     placeholderView
                         .skeleton(true)
                 }
+                .frame(width: width, height: width)
+                .clipped()
+                .cornerRadius(Constants.Dimens.radiusMax)
             } else if case MyImageEnum.local(let image) = pic.src {
                 Image(uiImage: image)
                     .resizable()
