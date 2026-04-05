@@ -5,6 +5,14 @@
 ## User settings
 xcuserdata/
 
+## Swiftgen
+**/swiftgen/bin
+**/swiftgen/LICENCE
+**/swiftgen/*.md
+
+## Android SDK PWD
+**/server/local.properties
+
 ## compatibility with Xcode 8 and earlier (ignoring not required starting Xcode 9)
 *.xcscmblueprint
 *.xccheckout

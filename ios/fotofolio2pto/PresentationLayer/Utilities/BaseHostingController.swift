@@ -34,7 +34,6 @@ class BaseHostingController<Content>: UIHostingController<AnyView>, UIGestureRec
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // ADDED: Strip away the default white background of the UIHostingController
         view.backgroundColor = .clear
         
         setupSwipeBackGesture()
