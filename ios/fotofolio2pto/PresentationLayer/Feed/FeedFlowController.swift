@@ -89,7 +89,7 @@ extension FeedFlowController: UISheetPresentationControllerDelegate {
         guard let window = UIApplication.shared.keyWindow else { return }
         
         let tapView = UIView(frame: window.bounds)
-        tapView.backgroundColor = UIColor.clear
+        tapView.backgroundColor = .clear
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleBackgroundTap))
         tapView.addGestureRecognizer(tapGesture)
         

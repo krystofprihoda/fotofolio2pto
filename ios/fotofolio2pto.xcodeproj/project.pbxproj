@@ -66,6 +66,7 @@
 		FE9A30BD2D88B2000056CC0A /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE9A30BC2D88B1FC0056CC0A /* SettingsView.swift */; };
 		FE9A30C02D88B7A40056CC0A /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE9A30BF2D88B7A40056CC0A /* SettingsViewModel.swift */; };
 		FEA2FE382F8270020047EC65 /* AnimatedMeshPlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA2FE372F8270020047EC65 /* AnimatedMeshPlaceholder.swift */; };
+		FEA2FE3E2F82BAA90047EC65 /* SwiftgenAssets.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA2FE3D2F82BAA60047EC65 /* SwiftgenAssets.swift */; };
 		FEA53C962C29BF2F006F0116 /* Providers+Injection.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53C952C29BF2F006F0116 /* Providers+Injection.swift */; };
 		FEA53C982C29BF97006F0116 /* Repositories+Injection.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53C972C29BF97006F0116 /* Repositories+Injection.swift */; };
 		FEA53C9A2C29BFDF006F0116 /* UseCase+Injection.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53C992C29BFDF006F0116 /* UseCase+Injection.swift */; };
@@ -116,7 +117,7 @@
 		FEC8A8C02D75C5D5000181B8 /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC8A8BF2D75C5CE000181B8 /* Localization.swift */; };
 		FEC94D952C24398200FFEB11 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC94D942C24398200FFEB11 /* AppDelegate.swift */; };
 		FEC94D9F2C24398200FFEB11 /* fotofolio2pto.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FEC94D9D2C24398200FFEB11 /* fotofolio2pto.xcdatamodeld */; };
-		FEC94DA12C24398400FFEB11 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FEC94DA02C24398400FFEB11 /* Assets.xcassets */; };
+		FEC94DA12C24398400FFEB11 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FEC94DA02C24398400FFEB11 /* Images.xcassets */; };
 		FEC94DA42C24398400FFEB11 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = FEC94DA32C24398400FFEB11 /* Base */; };
 		FEC94DAF2C243EC100FFEB11 /* BaseHostingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC94DAE2C243EC100FFEB11 /* BaseHostingController.swift */; };
 		FEC94DB32C24475100FFEB11 /* AppFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC94DB22C24475100FFEB11 /* AppFlowController.swift */; };
@@ -235,6 +236,7 @@
 		FE9A30BC2D88B1FC0056CC0A /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		FE9A30BF2D88B7A40056CC0A /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		FEA2FE372F8270020047EC65 /* AnimatedMeshPlaceholder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedMeshPlaceholder.swift; sourceTree = "<group>"; };
+		FEA2FE3D2F82BAA60047EC65 /* SwiftgenAssets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftgenAssets.swift; sourceTree = "<group>"; };
 		FEA53C952C29BF2F006F0116 /* Providers+Injection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Providers+Injection.swift"; sourceTree = "<group>"; };
 		FEA53C972C29BF97006F0116 /* Repositories+Injection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Repositories+Injection.swift"; sourceTree = "<group>"; };
 		FEA53C992C29BFDF006F0116 /* UseCase+Injection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UseCase+Injection.swift"; sourceTree = "<group>"; };
@@ -285,7 +287,7 @@
 		FEC94D912C24398200FFEB11 /* fotofolio2pto.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = fotofolio2pto.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FEC94D942C24398200FFEB11 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FEC94D9E2C24398200FFEB11 /* fotofolio2pto.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = fotofolio2pto.xcdatamodel; sourceTree = "<group>"; };
-		FEC94DA02C24398400FFEB11 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		FEC94DA02C24398400FFEB11 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		FEC94DA32C24398400FFEB11 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FEC94DA52C24398400FFEB11 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FEC94DAE2C243EC100FFEB11 /* BaseHostingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseHostingController.swift; sourceTree = "<group>"; };
@@ -602,6 +604,24 @@
 			path = Settings;
 			sourceTree = "<group>";
 		};
+		FEA2FE3B2F82B7C50047EC65 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				FEA2FE3C2F82B9C10047EC65 /* Generated */,
+				FEC94DA02C24398400FFEB11 /* Images.xcassets */,
+				FEA64F782D7757B100B11530 /* Colors.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		FEA2FE3C2F82B9C10047EC65 /* Generated */ = {
+			isa = PBXGroup;
+			children = (
+				FEA2FE3D2F82BAA60047EC65 /* SwiftgenAssets.swift */,
+			);
+			path = Generated;
+			sourceTree = "<group>";
+		};
 		FEA53C932C29BF13006F0116 /* Application */ = {
 			isa = PBXGroup;
 			children = (
@@ -771,14 +791,13 @@
 		FEC94D932C24398200FFEB11 /* fotofolio2pto */ = {
 			isa = PBXGroup;
 			children = (
+				FEA2FE3B2F82B7C50047EC65 /* Resources */,
 				FEA53C932C29BF13006F0116 /* Application */,
 				FE5F8A7D2C297186001EE8AF /* DataLayer */,
 				FEC94DE02C25914F00FFEB11 /* DomainLayer */,
 				FEC94DB22C24475100FFEB11 /* AppFlowController.swift */,
 				FEC94DAB2C243E9A00FFEB11 /* PresentationLayer */,
 				FEC94D942C24398200FFEB11 /* AppDelegate.swift */,
-				FEA64F782D7757B100B11530 /* Colors.xcassets */,
-				FEC94DA02C24398400FFEB11 /* Assets.xcassets */,
 				FEC94DA22C24398400FFEB11 /* LaunchScreen.storyboard */,
 				FEC94DA52C24398400FFEB11 /* Info.plist */,
 				FEC94D9D2C24398200FFEB11 /* fotofolio2pto.xcdatamodeld */,
@@ -1001,6 +1020,7 @@
 				FEC94D8D2C24398200FFEB11 /* Sources */,
 				FEC94D8E2C24398200FFEB11 /* Frameworks */,
 				FEC94D8F2C24398200FFEB11 /* Resources */,
+				FEA2FE392F82B11E0047EC65 /* SwiftGen */,
 			);
 			buildRules = (
 			);
@@ -1062,7 +1082,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FEC94DA12C24398400FFEB11 /* Assets.xcassets in Resources */,
+				FEC94DA12C24398400FFEB11 /* Images.xcassets in Resources */,
 				FE8D4E2A2D916A9A00A8BF4E /* GoogleService-Info.plist in Resources */,
 				FEA64F792D7757B100B11530 /* Colors.xcassets in Resources */,
 				FEC94DA42C24398400FFEB11 /* Base in Resources */,
@@ -1070,6 +1090,28 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		FEA2FE392F82B11E0047EC65 /* SwiftGen */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/fotofolio2pto/swiftgen/swiftgen.yml",
+			);
+			name = SwiftGen;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Define the exact path to the SwiftGen binary\nSWIFTGEN_BIN=\"${PROJECT_DIR}/fotofolio2pto/swiftgen/bin/swiftgen\"\n\n# Define the exact path to your swiftgen.yml config file\nSWIFTGEN_CONFIG=\"${PROJECT_DIR}/fotofolio2pto/swiftgen/swiftgen.yml\"\n\n# Execute SwiftGen and point it directly to the config file\n\"$SWIFTGEN_BIN\" config run --config \"$SWIFTGEN_CONFIG\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		FEC94D8D2C24398200FFEB11 /* Sources */ = {
@@ -1122,6 +1164,7 @@
 				FEC94DE52C2594E200FFEB11 /* PortfolioView.swift in Sources */,
 				FE3827D62DA30EDF007A933E /* SaveUserProfilePictureUseCase.swift in Sources */,
 				FEC94DDD2C247D7600FFEB11 /* ProfileViewModel.swift in Sources */,
+				FEA2FE3E2F82BAA90047EC65 /* SwiftgenAssets.swift in Sources */,
 				FEC94DB62C2447F000FFEB11 /* BaseFlowController.swift in Sources */,
 				FE9777D92D7EF25D0027DA60 /* RegisterUsernameView.swift in Sources */,
 				FEA53CAE2C29E08D006F0116 /* Array+Extensions.swift in Sources */,
@@ -1290,7 +1333,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -1353,7 +1396,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;

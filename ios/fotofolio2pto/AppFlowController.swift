@@ -8,11 +8,13 @@
 import Foundation
 import UIKit
 import Resolver
+import SwiftUI // ADDED: Required for UIHostingController
 
 public class AppFlowController: BaseFlowController, OnboardingMainFlowDelegate {
     
     public func start() {
         setupAppearance()
+        setupGlobalBackground() // ADDED: Initialize the mesh background
         presentOnboarding()
     }
     
@@ -39,28 +41,43 @@ public class AppFlowController: BaseFlowController, OnboardingMainFlowDelegate {
         navigationController.overrideUserInterfaceStyle = .light
     }
     
-    private func setupAppearance() {
-        if #available(iOS 13.0, *) {
-            if UIApplication.shared.keyWindow!.overrideUserInterfaceStyle == .dark {
-                UIApplication.shared.keyWindow!.overrideUserInterfaceStyle = .light
-            } else {
-                UIApplication.shared.keyWindow!.overrideUserInterfaceStyle = .light
-            }
-        }
+    // MARK: - Global Background Setup
+    private func setupGlobalBackground() {
+        let meshView = AnimatedMeshPlaceholder(style: .darkCenter, isAnimating: false)
+            .ignoresSafeArea()
         
+        // 2. Wrap it in a UIHostingController
+        let hostingController = UIHostingController(rootView: meshView)
+        hostingController.view.translatesAutoresizingMaskIntoConstraints = false
+        hostingController.view.backgroundColor = .clear
+        
+        // 3. Insert it at the very bottom of the navigation controller's view stack
+        navigationController.view.insertSubview(hostingController.view, at: 0)
+        
+        // 4. Pin it to the edges of the navigation controller
+        NSLayoutConstraint.activate([
+            hostingController.view.topAnchor.constraint(equalTo: navigationController.view.topAnchor),
+            hostingController.view.bottomAnchor.constraint(equalTo: navigationController.view.bottomAnchor),
+            hostingController.view.leadingAnchor.constraint(equalTo: navigationController.view.leadingAnchor),
+            hostingController.view.trailingAnchor.constraint(equalTo: navigationController.view.trailingAnchor)
+        ])
+        
+        // Ensure the navigation controller itself is transparent
+        navigationController.view.backgroundColor = .clear
+    }
+    
+    private func setupAppearance() {
         // Navigation bar
         UINavigationBar.appearance().barTintColor = .black
-        UINavigationBar.appearance().isTranslucent = false
-        UINavigationBar.appearance().tintColor = .white
+        UINavigationBar.appearance().isTranslucent = true
         UINavigationBar.appearance().titleTextAttributes = [
-            NSAttributedString.Key.foregroundColor: UIColor.white
+            NSAttributedString.Key.foregroundColor: UIColor.black
         ]
         
         // Tab bar
         UITabBar.appearance().tintColor = .black
         UITabBar.appearance().shadowImage = UIImage()
         UITabBar.appearance().backgroundImage = UIImage()
-        UITabBar.appearance().backgroundColor = .white
     }
 }
 

@@ -43,29 +43,36 @@ public class MainFlowController: BaseFlowController {
         let tabBarVC = UITabBarController()
         var navViewControllers: [UINavigationController] = []
         
+        tabBarVC.view.backgroundColor = .clear
+        
         // MARK: Feed
         
         let feedNavController = getFeedNavigationController()
+        feedNavController.view.backgroundColor = .clear
         navViewControllers.append(feedNavController)
         
         // MARK: Selection
         
         let selectionNavController = getSelectionNavigationController()
+        selectionNavController.view.backgroundColor = .clear
         navViewControllers.append(selectionNavController)
         
         // MARK: Search
         
         let searchNavController = getSearchNavigationController()
+        searchNavController.view.backgroundColor = .clear
         navViewControllers.append(searchNavController)
         
         // MARK: Messages
         
         let messagesNavController = getMessagesNavigationController()
+        messagesNavController.view.backgroundColor = .clear
         navViewControllers.append(messagesNavController)
         
         // MARK: Profile
         
         let profileNavController = getProfileNavigationController()
+        profileNavController.view.backgroundColor = .clear
         navViewControllers.append(profileNavController)
         
         tabBarVC.setViewControllers(navViewControllers, animated: true)

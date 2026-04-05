@@ -45,8 +45,13 @@ struct AnimatedMeshPlaceholder: View {
         }
     }
     
-    let style: Style
+    private let style: Style
     @State private var isAnimating = false
+    
+    init(style: Style, isAnimating: Bool = false) {
+        self.style = style
+        self.isAnimating = isAnimating
+    }
     
     var body: some View {
         MeshGradient(
