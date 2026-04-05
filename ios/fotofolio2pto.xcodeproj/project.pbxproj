@@ -18,7 +18,6 @@
 		FE1815782D9881870090E440 /* PortfolioDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1815772D9881850090E440 /* PortfolioDetailViewModel.swift */; };
 		FE2A96D12F0AA00100A1B2C3 /* RemoteImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE2A96D02F0AA00100A1B2C3 /* RemoteImageView.swift */; };
 		FE2A96D22F0AB00100A1B2C3 /* NukeUI in Frameworks */ = {isa = PBXBuildFile; productRef = FE2A96D42F0AB00100A1B2C3 /* NukeUI */; };
-		FE2A96D52F0AC00100A1B2C3 /* PhotoPlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE2A96D62F0AC00100A1B2C3 /* PhotoPlaceholderView.swift */; };
 		FE34A64F2D78BCF200CB4CAE /* CheckEmailAddressAvailableUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE34A64E2D78BCF200CB4CAE /* CheckEmailAddressAvailableUseCase.swift */; };
 		FE3827C62DA147D4007A933E /* ReadRemoteImageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE3827C52DA147D4007A933E /* ReadRemoteImageUseCase.swift */; };
 		FE3827CB2DA2DC67007A933E /* EditPortfoliosViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE3827CA2DA2DC67007A933E /* EditPortfoliosViewModel.swift */; };
@@ -66,6 +65,7 @@
 		FE9A30BB2D88473E0056CC0A /* Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE9A30BA2D88473E0056CC0A /* Toast.swift */; };
 		FE9A30BD2D88B2000056CC0A /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE9A30BC2D88B1FC0056CC0A /* SettingsView.swift */; };
 		FE9A30C02D88B7A40056CC0A /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE9A30BF2D88B7A40056CC0A /* SettingsViewModel.swift */; };
+		FEA2FE382F8270020047EC65 /* AnimatedMeshPlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA2FE372F8270020047EC65 /* AnimatedMeshPlaceholder.swift */; };
 		FEA53C962C29BF2F006F0116 /* Providers+Injection.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53C952C29BF2F006F0116 /* Providers+Injection.swift */; };
 		FEA53C982C29BF97006F0116 /* Repositories+Injection.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53C972C29BF97006F0116 /* Repositories+Injection.swift */; };
 		FEA53C9A2C29BFDF006F0116 /* UseCase+Injection.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53C992C29BFDF006F0116 /* UseCase+Injection.swift */; };
@@ -189,7 +189,6 @@
 		FE1815732D986A380090E440 /* ReadUserDataByCreatorIdUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadUserDataByCreatorIdUseCase.swift; sourceTree = "<group>"; };
 		FE1815772D9881850090E440 /* PortfolioDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioDetailViewModel.swift; sourceTree = "<group>"; };
 		FE2A96D02F0AA00100A1B2C3 /* RemoteImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteImageView.swift; sourceTree = "<group>"; };
-		FE2A96D62F0AC00100A1B2C3 /* PhotoPlaceholderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPlaceholderView.swift; sourceTree = "<group>"; };
 		FE34A64E2D78BCF200CB4CAE /* CheckEmailAddressAvailableUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckEmailAddressAvailableUseCase.swift; sourceTree = "<group>"; };
 		FE3827C52DA147D4007A933E /* ReadRemoteImageUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadRemoteImageUseCase.swift; sourceTree = "<group>"; };
 		FE3827CA2DA2DC67007A933E /* EditPortfoliosViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPortfoliosViewModel.swift; sourceTree = "<group>"; };
@@ -235,6 +234,7 @@
 		FE9A30BA2D88473E0056CC0A /* Toast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
 		FE9A30BC2D88B1FC0056CC0A /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		FE9A30BF2D88B7A40056CC0A /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
+		FEA2FE372F8270020047EC65 /* AnimatedMeshPlaceholder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedMeshPlaceholder.swift; sourceTree = "<group>"; };
 		FEA53C952C29BF2F006F0116 /* Providers+Injection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Providers+Injection.swift"; sourceTree = "<group>"; };
 		FEA53C972C29BF97006F0116 /* Repositories+Injection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Repositories+Injection.swift"; sourceTree = "<group>"; };
 		FEA53C992C29BFDF006F0116 /* UseCase+Injection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UseCase+Injection.swift"; sourceTree = "<group>"; };
@@ -808,11 +808,11 @@
 		FEC94DAC2C243EA400FFEB11 /* BaseViews */ = {
 			isa = PBXGroup;
 			children = (
+				FEA2FE372F8270020047EC65 /* AnimatedMeshPlaceholder.swift */,
 				FEE410DC2DCDF47B00E04C36 /* BaseButton.swift */,
 				FEA971E12DB3E5DC008112B7 /* BaseTextEditor.swift */,
 				FEA971DF2DB3E0E9008112B7 /* TextFieldView.swift */,
 				FE4BBD3A2DB2F68600B4619A /* PhotoView.swift */,
-				FE2A96D62F0AC00100A1B2C3 /* PhotoPlaceholderView.swift */,
 				FE2A96D02F0AA00100A1B2C3 /* RemoteImageView.swift */,
 				FE9777E02D7F695C0027DA60 /* PulsingCircleView.swift */,
 				FE9777DE2D7F69240027DA60 /* HorizontalWheelPicker.swift */,
@@ -1215,6 +1215,7 @@
 				FEC94DDF2C247D9800FFEB11 /* ProfileFlowController.swift in Sources */,
 				FEC94DDB2C247D4B00FFEB11 /* ProfileView.swift in Sources */,
 				FEACFB092DC934400061B786 /* AuthError.swift in Sources */,
+				FEA2FE382F8270020047EC65 /* AnimatedMeshPlaceholder.swift in Sources */,
 				FEC94DC92C2479B300FFEB11 /* SelectionFlowController.swift in Sources */,
 				FEB945432D79F2BE00002A9B /* RegisterWrapperView.swift in Sources */,
 				FEA53CBE2C2B2D3D006F0116 /* ReadSignedInUserUseCase.swift in Sources */,
@@ -1222,7 +1223,6 @@
 				FEA53CF42C2D791F006F0116 /* EditPortfolioView.swift in Sources */,
 				FEA64F6D2D7711D900B11530 /* RegisterFlowController.swift in Sources */,
 				FE4BBD3B2DB2F68600B4619A /* PhotoView.swift in Sources */,
-				FE2A96D52F0AC00100A1B2C3 /* PhotoPlaceholderView.swift in Sources */,
 				FE2A96D12F0AA00100A1B2C3 /* RemoteImageView.swift in Sources */,
 				FEA53CED2C2D5BAC006F0116 /* EditPortfoliosView.swift in Sources */,
 				FE0685662D84A2A90002B217 /* CategorySelectionView.swift in Sources */,

@@ -28,10 +28,8 @@ struct PhotoView: View {
 
             case .remote(let urlStr):
                 RemoteImageView(urlString: urlStr) {
-                    RoundedRectangle(cornerRadius: Constants.Dimens.radiusXSmall)
-                        .fill(.mainText)
-                        .brightness(Double.random(in: 0.15...0.4))
-                        .skeleton(true)
+                    AnimatedMeshPlaceholder(style: .pastelEarthy)
+                        .clipShape(.rect(cornerRadius: Constants.Dimens.radiusXSmall))
                 }
             }
         }

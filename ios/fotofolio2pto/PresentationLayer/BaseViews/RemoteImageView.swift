@@ -26,13 +26,18 @@ struct RemoteImageView<Placeholder: View>: View {
     var body: some View {
         if let url = makeURL(from: urlString.trimmingCharacters(in: .whitespacesAndNewlines)) {
             LazyImage(url: url) { state in
-                if let image = state.image {
-                    image
-                        .resizable()
-                        .aspectRatio(contentMode: contentMode)
-                } else {
-                    placeholder()
+                ZStack {
+                    if let image = state.image {
+                        image
+                            .resizable()
+                            .aspectRatio(contentMode: contentMode)
+                            .transition(.opacity)
+                    } else {
+                        placeholder()
+                            .transition(.opacity)
+                    }
                 }
+                .animation(.easeInOut(duration: 0.4), value: state.image != nil)
             }
         } else {
             placeholder()
