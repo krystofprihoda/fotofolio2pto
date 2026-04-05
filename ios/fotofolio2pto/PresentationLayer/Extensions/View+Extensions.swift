@@ -25,8 +25,7 @@ extension View {
         self
             .navigationTitle(title)
             .navigationBarTitleDisplayMode(.inline)
-            .toolbarBackground(.visible, for: .navigationBar)
-            .toolbarBackground(.white, for: .navigationBar)
+            .toolbarBackground(.hidden, for: .navigationBar)
             .accentColor(
                 .black
                     .opacity(Constants.Dimens.opacityHigh)

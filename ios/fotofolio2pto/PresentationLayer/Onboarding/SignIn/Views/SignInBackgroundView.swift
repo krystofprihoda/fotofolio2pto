@@ -16,7 +16,7 @@ struct SignInBackgroundView: View {
     
     var body: some View {
         ZStack {
-            Image("sydney_opera_house")
+            Asset.sydneyOperaHouse.swiftUIImage
                 .resizable()
                 .scaledToFill()
             

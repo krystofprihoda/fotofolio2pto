@@ -60,7 +60,7 @@ struct FotofolioAnimatedLogoView: View {
             .foregroundColor(.white)
             .offset(y: Constants.Dimens.spaceXSmall)
             
-            Image("fotofolio_text_dark")
+            Asset.fotofolioTextDark.swiftUIImage
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 300)

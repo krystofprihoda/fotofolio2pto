@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 import Resolver
-import SwiftUI // ADDED: Required for UIHostingController
+import SwiftUI
 
 public class AppFlowController: BaseFlowController, OnboardingMainFlowDelegate {
     
@@ -43,37 +43,44 @@ public class AppFlowController: BaseFlowController, OnboardingMainFlowDelegate {
     
     // MARK: - Global Background Setup
     private func setupGlobalBackground() {
-        let meshView = AnimatedMeshPlaceholder(style: .darkCenter, isAnimating: false)
-            .ignoresSafeArea()
-        
-        // 2. Wrap it in a UIHostingController
-        let hostingController = UIHostingController(rootView: meshView)
-        hostingController.view.translatesAutoresizingMaskIntoConstraints = false
-        hostingController.view.backgroundColor = .clear
-        
-        // 3. Insert it at the very bottom of the navigation controller's view stack
-        navigationController.view.insertSubview(hostingController.view, at: 0)
-        
-        // 4. Pin it to the edges of the navigation controller
+        let backgroundImageView = UIImageView(image: Asset.sgrain.image)
+        backgroundImageView.contentMode = .scaleAspectFill
+        backgroundImageView.translatesAutoresizingMaskIntoConstraints = false
+
+        let blurEffect = UIBlurEffect(style: .light)
+        let blurView = UIVisualEffectView(effect: blurEffect)
+        blurView.alpha = 0.5
+        blurView.translatesAutoresizingMaskIntoConstraints = false
+
+        navigationController.view.insertSubview(backgroundImageView, at: 0)
+        navigationController.view.insertSubview(blurView, at: 1)
+
         NSLayoutConstraint.activate([
-            hostingController.view.topAnchor.constraint(equalTo: navigationController.view.topAnchor),
-            hostingController.view.bottomAnchor.constraint(equalTo: navigationController.view.bottomAnchor),
-            hostingController.view.leadingAnchor.constraint(equalTo: navigationController.view.leadingAnchor),
-            hostingController.view.trailingAnchor.constraint(equalTo: navigationController.view.trailingAnchor)
+            backgroundImageView.topAnchor.constraint(equalTo: navigationController.view.topAnchor),
+            backgroundImageView.bottomAnchor.constraint(equalTo: navigationController.view.bottomAnchor),
+            backgroundImageView.leadingAnchor.constraint(equalTo: navigationController.view.leadingAnchor),
+            backgroundImageView.trailingAnchor.constraint(equalTo: navigationController.view.trailingAnchor),
+            blurView.topAnchor.constraint(equalTo: navigationController.view.topAnchor),
+            blurView.bottomAnchor.constraint(equalTo: navigationController.view.bottomAnchor),
+            blurView.leadingAnchor.constraint(equalTo: navigationController.view.leadingAnchor),
+            blurView.trailingAnchor.constraint(equalTo: navigationController.view.trailingAnchor)
         ])
-        
-        // Ensure the navigation controller itself is transparent
+
         navigationController.view.backgroundColor = .clear
     }
     
     private func setupAppearance() {
-        // Navigation bar
-        UINavigationBar.appearance().barTintColor = .black
-        UINavigationBar.appearance().isTranslucent = true
-        UINavigationBar.appearance().titleTextAttributes = [
+        // Navigation bar - transparent
+        let navBarAppearance = UINavigationBarAppearance()
+        navBarAppearance.configureWithTransparentBackground()
+        navBarAppearance.titleTextAttributes = [
             NSAttributedString.Key.foregroundColor: UIColor.black
         ]
-        
+        UINavigationBar.appearance().standardAppearance = navBarAppearance
+        UINavigationBar.appearance().scrollEdgeAppearance = navBarAppearance
+        UINavigationBar.appearance().compactAppearance = navBarAppearance
+        UINavigationBar.appearance().isTranslucent = true
+
         // Tab bar
         UITabBar.appearance().tintColor = .black
         UITabBar.appearance().shadowImage = UIImage()

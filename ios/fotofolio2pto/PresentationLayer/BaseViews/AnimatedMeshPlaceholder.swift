@@ -64,6 +64,13 @@ struct AnimatedMeshPlaceholder: View {
             ],
             colors: style.colors
         )
+        .overlay {
+            Asset.swervegrain.swiftUIImage
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+                .blendMode(.overlay)
+        }
+        .clipped()
         .onAppear {
             withAnimation(.easeInOut(duration: 3.0).repeatForever(autoreverses: true)) {
                 isAnimating.toggle()

@@ -27,11 +27,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Firebase setup
         FirebaseApp.configure()
         
-        // Fix for flickering black navBar: https://stackoverflow.com/questions/30763979/why-is-the-uinavigationbar-turning-black
+        // Transparent nav bar for liquid glass on iOS 26
         let navBarAppearance = UINavigationBarAppearance()
-        navBarAppearance.configureWithOpaqueBackground()
+        navBarAppearance.configureWithTransparentBackground()
+        navBarAppearance.backgroundColor = .clear
+        navBarAppearance.shadowColor = .clear
         UINavigationBar.appearance().standardAppearance = navBarAppearance
         UINavigationBar.appearance().scrollEdgeAppearance = navBarAppearance
+        UINavigationBar.appearance().compactAppearance = navBarAppearance
+        UINavigationBar.appearance().isTranslucent = true
         
         // Init main window with navigation controller
         let navController = UINavigationController()
