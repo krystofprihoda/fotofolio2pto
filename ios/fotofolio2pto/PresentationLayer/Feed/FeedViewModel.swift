@@ -23,7 +23,8 @@ final class FeedViewModel: BaseViewModel, ViewModel, ObservableObject {
     @LazyInjected private var unflagPortfolioUseCase: UnflagPortfolioUseCase
     @LazyInjected private var readFlaggedPortfoliosUseCase: ReadFlaggedPortfoliosUseCase
     @LazyInjected private var readUserDataByCreatorIdUseCase: ReadUserDataByCreatorIdUseCase
-    
+    @LazyInjected private var prefetchPortfolioImagesUseCase: PrefetchPortfolioImagesUseCase
+
     private weak var flowController: FeedFlowController?
     
     // MARK: Init
@@ -77,6 +78,7 @@ final class FeedViewModel: BaseViewModel, ViewModel, ObservableObject {
         case showProfile(creatorId: String)
         case setToastData(ToastData?)
         case removeCategory(String)
+        case portfolioAppeared(index: Int)
     }
     
     @discardableResult
@@ -92,6 +94,7 @@ final class FeedViewModel: BaseViewModel, ViewModel, ObservableObject {
             case .showProfile(let creatorId): await showProfile(creatorId: creatorId)
             case .setToastData(let toast): setToastData(toast)
             case .removeCategory(let category): await removeFilterCategory(category)
+            case .portfolioAppeared(let index): prefetchNearbyImages(around: index)
             }
         })
     }
@@ -170,6 +173,13 @@ final class FeedViewModel: BaseViewModel, ViewModel, ObservableObject {
         }
     }
     
+    private func prefetchNearbyImages(around index: Int) {
+        let lower = max(0, index - 2)
+        let upper = min(state.portfolios.count - 1, index + 3)
+        let nearby = Array(state.portfolios[lower...upper])
+        prefetchPortfolioImagesUseCase.execute(portfolios: nearby)
+    }
+
     private func setToastData(_ toast: ToastData?) {
         state.toastData = toast
     }

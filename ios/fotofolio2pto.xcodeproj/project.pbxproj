@@ -177,6 +177,9 @@
 		FEE211B22DA42B6D00A95907 /* EncryptedLocalStorageProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEE211B12DA42B6D00A95907 /* EncryptedLocalStorageProvider.swift */; };
 		FEE211B52DA42C3300A95907 /* KeychainProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEE211B42DA42C3300A95907 /* KeychainProvider.swift */; };
 		FEE410DD2DCDF47B00E04C36 /* BaseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEE410DC2DCDF47B00E04C36 /* BaseButton.swift */; };
+		FEA2FE412F82CC0A0047EC65 /* ImagePrefetchProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA2FE402F82CC0A0047EC65 /* ImagePrefetchProvider.swift */; };
+		FEA2FE432F82CC1A0047EC65 /* NukeImagePrefetchProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA2FE422F82CC1A0047EC65 /* NukeImagePrefetchProvider.swift */; };
+		FEA2FE452F82CC2A0047EC65 /* PrefetchPortfolioImagesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA2FE442F82CC2A0047EC65 /* PrefetchPortfolioImagesUseCase.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -190,6 +193,9 @@
 		FE1815732D986A380090E440 /* ReadUserDataByCreatorIdUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadUserDataByCreatorIdUseCase.swift; sourceTree = "<group>"; };
 		FE1815772D9881850090E440 /* PortfolioDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioDetailViewModel.swift; sourceTree = "<group>"; };
 		FE2A96D02F0AA00100A1B2C3 /* RemoteImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteImageView.swift; sourceTree = "<group>"; };
+		FEA2FE402F82CC0A0047EC65 /* ImagePrefetchProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePrefetchProvider.swift; sourceTree = "<group>"; };
+		FEA2FE422F82CC1A0047EC65 /* NukeImagePrefetchProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NukeImagePrefetchProvider.swift; sourceTree = "<group>"; };
+		FEA2FE442F82CC2A0047EC65 /* PrefetchPortfolioImagesUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefetchPortfolioImagesUseCase.swift; sourceTree = "<group>"; };
 		FE34A64E2D78BCF200CB4CAE /* CheckEmailAddressAvailableUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckEmailAddressAvailableUseCase.swift; sourceTree = "<group>"; };
 		FE3827C52DA147D4007A933E /* ReadRemoteImageUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadRemoteImageUseCase.swift; sourceTree = "<group>"; };
 		FE3827CA2DA2DC67007A933E /* EditPortfoliosViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPortfoliosViewModel.swift; sourceTree = "<group>"; };
@@ -440,6 +446,15 @@
 			path = Network;
 			sourceTree = "<group>";
 		};
+		FEA2FE462F82CC3A0047EC65 /* ImagePrefetch */ = {
+			isa = PBXGroup;
+			children = (
+				FEA2FE402F82CC0A0047EC65 /* ImagePrefetchProvider.swift */,
+				FEA2FE422F82CC1A0047EC65 /* NukeImagePrefetchProvider.swift */,
+			);
+			path = ImagePrefetch;
+			sourceTree = "<group>";
+		};
 		FE3D2B102D93129E00DA22DB /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -533,6 +548,7 @@
 		FE5F8A812C29731A001EE8AF /* Providers */ = {
 			isa = PBXGroup;
 			children = (
+				FEA2FE462F82CC3A0047EC65 /* ImagePrefetch */,
 				FEE211B02DA42B4D00A95907 /* EncryptedLocalStorage */,
 				FE3D2B0B2D930EAD00DA22DB /* Network */,
 				FE8D56132D918A5800A8BF4E /* Authentication */,
@@ -652,6 +668,7 @@
 		FEA53C9F2C29C6FE006F0116 /* Portfolio */ = {
 			isa = PBXGroup;
 			children = (
+				FEA2FE442F82CC2A0047EC65 /* PrefetchPortfolioImagesUseCase.swift */,
 				FE3827CD2DA2EB29007A933E /* RemovePortfolioUseCase.swift */,
 				FE3827C52DA147D4007A933E /* ReadRemoteImageUseCase.swift */,
 				FEA53CA02C29C70B006F0116 /* ReadAllPortfoliosUseCase.swift */,
@@ -1279,6 +1296,9 @@
 				FE3827CB2DA2DC67007A933E /* EditPortfoliosViewModel.swift in Sources */,
 				FEA53CCC2C2C1752006F0116 /* UserRepository.swift in Sources */,
 				FEC94DCB2C2479BE00FFEB11 /* SelectionView.swift in Sources */,
+				FEA2FE412F82CC0A0047EC65 /* ImagePrefetchProvider.swift in Sources */,
+				FEA2FE432F82CC1A0047EC65 /* NukeImagePrefetchProvider.swift in Sources */,
+				FEA2FE452F82CC2A0047EC65 /* PrefetchPortfolioImagesUseCase.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

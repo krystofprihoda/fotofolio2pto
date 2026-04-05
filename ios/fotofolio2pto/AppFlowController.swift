@@ -81,6 +81,10 @@ public class AppFlowController: BaseFlowController, OnboardingMainFlowDelegate {
         UINavigationBar.appearance().compactAppearance = navBarAppearance
         UINavigationBar.appearance().isTranslucent = true
 
+        // Force dark liquid glass tint on iOS 26
+        UINavigationBar.appearance().overrideUserInterfaceStyle = .dark
+        UITabBar.appearance().overrideUserInterfaceStyle = .dark
+
         // Tab bar
         UITabBar.appearance().tintColor = .black
         UITabBar.appearance().shadowImage = UIImage()

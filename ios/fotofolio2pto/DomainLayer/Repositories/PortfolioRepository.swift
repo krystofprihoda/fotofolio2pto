@@ -19,4 +19,5 @@ public protocol PortfolioRepository {
     func removeFromFlagged(portfolioId: String)
     func removeAllFlagged()
     func removePortfolio(id: String) async throws
+    func prefetchImages(urls: [URL])
 }

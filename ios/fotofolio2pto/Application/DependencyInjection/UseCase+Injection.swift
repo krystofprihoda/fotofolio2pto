@@ -44,6 +44,7 @@ public extension Resolver {
         register { UpdatePortfolioUseCaseImpl(portfolioRepository: resolve()) as UpdatePortfolioUseCase }
         register { ReadRemoteImageUseCaseImpl(portfolioRepository: resolve()) as ReadRemoteImageUseCase }
         register { RemovePortfolioUseCaseImpl(portfolioRepository: resolve()) as RemovePortfolioUseCase }
+        register { PrefetchPortfolioImagesUseCaseImpl(portfolioRepository: resolve()) as PrefetchPortfolioImagesUseCase }
         
         /// Messages
         register { SendMessageUseCaseImpl(messageRepository: resolve()) as SendMessageUseCase }

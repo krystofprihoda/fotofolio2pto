@@ -13,11 +13,13 @@ public class PortfolioRepositoryImpl: PortfolioRepository {
     private let defaults: LocalStorageProvider
     private let encryptedStorage: EncryptedLocalStorageProvider
     private let network: NetworkProvider
-    
-    init(defaults: LocalStorageProvider, encryptedStorage: EncryptedLocalStorageProvider, network: NetworkProvider) {
+    private let imagePrefetch: ImagePrefetchProvider
+
+    init(defaults: LocalStorageProvider, encryptedStorage: EncryptedLocalStorageProvider, network: NetworkProvider, imagePrefetch: ImagePrefetchProvider) {
         self.defaults = defaults
         self.encryptedStorage = encryptedStorage
         self.network = network
+        self.imagePrefetch = imagePrefetch
     }
     
     public func readAll(categories: [String]? = nil, sortBy: SortByEnum? = nil) async throws -> [Portfolio] {
@@ -193,5 +195,9 @@ public class PortfolioRepositoryImpl: PortfolioRepository {
     
     public func removePortfolio(id: String) async throws {
         let _ = try await network.request(endpoint: .portfolioById(id), method: .DELETE, body: nil, headers: nil, queryParams: nil, auth: true)
+    }
+
+    public func prefetchImages(urls: [URL]) {
+        imagePrefetch.startPrefetching(urls: urls)
     }
 }

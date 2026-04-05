@@ -34,9 +34,9 @@ struct FeedView: View {
                         .frame(width: geo.size.width, height: geo.size.height)
                     } else {
                         LazyVStack {
-                            ForEach(viewModel.state.portfolios, id: \.id) { portfolio in
+                            ForEach(Array(viewModel.state.portfolios.enumerated()), id: \.element.id) { index, portfolio in
                                 let isFlagged = viewModel.state.flaggedPortfolioIds.contains(where: { $0 == portfolio.id })
-                                
+
                                 PortfolioView(
                                     portfolio: portfolio,
                                     mediaWidth: geo.size.width,
@@ -46,6 +46,7 @@ struct FeedView: View {
                                     openProfileAction: { viewModel.onIntent(.showProfile(creatorId: portfolio.creatorId)) }
                                 )
                                 .skeleton(viewModel.state.isRefreshing)
+                                .onAppear { viewModel.onIntent(.portfolioAppeared(index: index)) }
                             }
                         }
                         .frame(width: geo.size.width)

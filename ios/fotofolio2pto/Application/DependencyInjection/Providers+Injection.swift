@@ -14,5 +14,6 @@ public extension Resolver {
         register { KeychainProvider() as EncryptedLocalStorageProvider }
         register { FirebaseProvider() as AuthProvider }
         register { DefaultNetworkProvider(encryptedStorage: resolve()) as NetworkProvider }
+        register { NukeImagePrefetchProvider() as ImagePrefetchProvider }
     }
 }
